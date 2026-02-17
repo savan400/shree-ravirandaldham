@@ -1,0 +1,427 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   HariVani.module.css
+───────────────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap");
+
+/* ── Design Tokens ── */
+:root {
+  --hv-gold: #ffd700;
+  --hv-gold-mid: #f5a623;
+  --hv-saffron: #ff8c00;
+  --hv-saffron-mid: #ff6b00;
+  --hv-red: #dc2626;
+  --hv-font-display: "Cinzel Decorative", serif;
+  --hv-font-devanagari: "Tiro Devanagari Hindi", serif;
+  --hv-font-body: "Cormorant Garamond", serif;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes hv-bg-breathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes hv-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes hv-title-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes hv-attribution-fade {
+  from {
+    opacity: 0;
+    letter-spacing: 0.5em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.12em;
+  }
+}
+
+@keyframes hv-frame-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 30px rgba(255, 140, 0, 0.18),
+      0 20px 60px rgba(0, 0, 0, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 55px rgba(255, 140, 0, 0.35),
+      0 24px 60px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes hv-particles {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-16px) scale(1.4);
+    opacity: 0.2;
+  }
+}
+
+@keyframes hv-scan {
+  0% {
+    top: 0;
+    opacity: 0.03;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+
+  background: linear-gradient(
+    160deg,
+    #1c0800 0%,
+    #140500 35%,
+    #1e0900 65%,
+    #140500 100%
+  );
+  background-size: 200% 200%;
+  animation: hv-bg-breathe 14s ease-in-out infinite;
+}
+
+/* ─── Background Decorations ───────────────────────────────────────────────── */
+
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 140, 0, 0.07) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  opacity: 0.5;
+}
+
+.radialGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    rgba(180, 60, 0, 0.2),
+    transparent
+  );
+}
+
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 25%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.012),
+    transparent
+  );
+  animation: hv-scan 8s linear infinite;
+}
+
+.watermarkOm {
+  position: absolute;
+  left: 2%;
+  top: 50%;
+  transform: translateY(-55%) rotate(-10deg);
+  font-size: 14rem;
+  color: var(--hv-saffron);
+  opacity: 0.03;
+  user-select: none;
+  pointer-events: none;
+  font-family: serif;
+  line-height: 1;
+  z-index: 0;
+}
+
+.watermarkDanda {
+  position: absolute;
+  right: 2%;
+  bottom: 5%;
+  font-size: 8rem;
+  color: var(--hv-gold);
+  opacity: 0.03;
+  user-select: none;
+  pointer-events: none;
+  font-family: serif;
+  line-height: 1;
+  z-index: 0;
+}
+
+/* ─── Border Bands ─────────────────────────────────────────────────────────── */
+
+.borderBand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 5;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--hv-red) 10%,
+    var(--hv-saffron-mid) 30%,
+    var(--hv-gold) 50%,
+    var(--hv-saffron-mid) 70%,
+    var(--hv-red) 90%,
+    transparent 100%
+  );
+}
+
+.borderBand--top {
+  top: 0;
+}
+.borderBand--bottom {
+  bottom: 0;
+}
+
+/* ─── Floating Particles ───────────────────────────────────────────────────── */
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(0.5px);
+  animation: hv-particles var(--dur, 3.5s) ease-in-out var(--delay, 0s) infinite;
+}
+
+.particle--gold {
+  background: var(--hv-gold);
+}
+.particle--saffron {
+  background: var(--hv-saffron);
+}
+.particle--lg {
+  width: 4px;
+  height: 4px;
+}
+.particle--sm {
+  width: 3px;
+  height: 3px;
+}
+
+/* ─── Bapu Image ───────────────────────────────────────────────────────────── */
+
+.bapuImage {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/* ─── Content Container ────────────────────────────────────────────────────── */
+
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* ─── Visibility States ────────────────────────────────────────────────────── */
+
+.hidden {
+  opacity: 0;
+}
+
+.titleBlock--visible {
+  opacity: 1;
+  animation: hv-reveal-up 0.7s ease 0.1s both;
+}
+
+.quoteBlock--visible {
+  opacity: 1;
+  animation: hv-reveal-up 0.8s ease 0.3s both;
+}
+
+.attribution--visible {
+  opacity: 1;
+  animation: hv-attribution-fade 0.8s ease 0.6s both;
+}
+
+/* ─── Title Block ──────────────────────────────────────────────────────────── */
+
+.titleBlock {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tagPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.3rem 1rem;
+  background: rgba(255, 107, 0, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  border-radius: 20px;
+  margin-bottom: 0.85rem;
+}
+
+.tagDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--hv-gold);
+  box-shadow: 0 0 6px var(--hv-gold);
+  flex-shrink: 0;
+}
+
+.tagText {
+  font-family: var(--hv-font-devanagari);
+  font-size: 1rem;
+  color: rgba(255, 215, 0, 0.65);
+  letter-spacing: 0.1em;
+}
+
+/* ─── Sacred Ornament ──────────────────────────────────────────────────────── */
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 1.25rem 0 2.25rem;
+}
+
+.ornamentLine--left {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--hv-saffron-mid));
+}
+
+.ornamentLine--right {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to left, transparent, var(--hv-saffron-mid));
+}
+
+.ornamentDiamond {
+  width: 5px;
+  height: 5px;
+  background: var(--hv-saffron);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── Quote Block ──────────────────────────────────────────────────────────── */
+
+.quoteBlock {
+  max-width: 680px;
+  margin: 0 auto 2.75rem;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 140, 0, 0.04)
+  );
+  border: 1px solid rgba(255, 140, 0, 0.2);
+  border-radius: 16px;
+  position: relative;
+  animation: hv-frame-glow 5s ease-in-out infinite;
+}
+
+
+
+/* Quote ornament positions */
+.quoteOrnamentTop {
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  opacity: 0.7;
+}
+
+.quoteOrnamentBottom {
+  position: absolute;
+  bottom: -8px;
+  right: 20px;
+  opacity: 0.7;
+}
+
+/* Quote text */
+.quoteText {
+  font-family: var(--hv-font-devanagari);
+  font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+  color: rgba(255, 245, 210, 0.88);
+  line-height: 2;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  margin-bottom: 1.25rem;
+  padding-left: 0.5rem;
+}
+
+/* Attribution */
+.attribution {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.attributionLine {
+  height: 1px;
+  width: 30px;
+  background: rgba(255, 140, 0, 0.5);
+  flex-shrink: 0;
+}
+
+.attributionDiamond {
+  width: 5px;
+  height: 5px;
+  background: var(--hv-gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.attributionText {
+  font-family: var(--hv-font-body);
+  font-style: italic;
+  font-size: clamp(0.8rem, 1.4vw, 0.95rem);
+  letter-spacing: 0.12em;
+
+  background: linear-gradient(90deg, var(--hv-saffron), var(--hv-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

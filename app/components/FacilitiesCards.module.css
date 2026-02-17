@@ -1,0 +1,454 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   FacilitiesCards.module.css
+───────────────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tiro+Devanagari+Hindi&display=swap");
+
+/* ── Design Tokens ── */
+:root {
+  --fc-gold: #ffd700;
+  --fc-gold-mid: #f5a623;
+  --fc-saffron: #ff8c00;
+  --fc-saffron-mid: #ff6b00;
+  --fc-saffron-deep: #ff4500;
+  --fc-rust: #cc4400;
+  --fc-cream: #fff8dc;
+  --fc-font-display: "Cinzel Decorative", serif;
+  --fc-font-devanagari: "Tiro Devanagari Hindi", serif;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes fc-bg-breathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes fc-title-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0 4rem;
+
+  background: linear-gradient(
+    150deg,
+    #fff9f0 0%,
+    #fff5e5 35%,
+    #fffbf3 65%,
+    #fff0dc 100%
+  );
+  background-size: 200% 200%;
+  animation: fc-bg-breathe 10s ease-in-out infinite;
+}
+
+/* ─── Background Decorations ───────────────────────────────────────────────── */
+
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(245, 166, 35, 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+  opacity: 0.5;
+}
+
+.watermark {
+  position: absolute;
+  left: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16rem;
+  color: var(--fc-saffron);
+  opacity: 0.025;
+  user-select: none;
+  pointer-events: none;
+  font-family: serif;
+  line-height: 1;
+  z-index: 0;
+}
+
+.borderBand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 5;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--fc-saffron-deep) 15%,
+    var(--fc-gold) 40%,
+    var(--fc-saffron) 50%,
+    var(--fc-gold) 60%,
+    var(--fc-saffron-deep) 85%,
+    transparent 100%
+  );
+}
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* ─── Section Header ───────────────────────────────────────────────────────── */
+
+.header {
+  text-align: center;
+  margin-bottom: 0;
+  transition: opacity 0.6s ease;
+}
+
+.header--visible {
+  opacity: 1;
+}
+.header--hidden {
+  opacity: 0;
+}
+
+.headerTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.3rem 1rem;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 20px;
+  margin-bottom: 0.8rem;
+}
+
+.headerTagText {
+  font-family: var(--fc-font-devanagari);
+  font-size: 0.7rem;
+  color: rgba(180, 70, 0, 0.7);
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-family: var(--fc-font-devanagari);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  display: block;
+
+  background: linear-gradient(
+    90deg,
+    var(--fc-rust) 0%,
+    var(--fc-saffron-mid) 25%,
+    var(--fc-gold) 50%,
+    var(--fc-saffron) 75%,
+    var(--fc-rust) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fc-title-shimmer 5s linear infinite;
+}
+
+/* ─── Diamond Divider ──────────────────────────────────────────────────────── */
+
+.diamondDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0.6rem 0 2.5rem;
+}
+
+.diamondDividerLine--left {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--fc-saffron-mid));
+}
+
+.diamondDividerLine--right {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to left, transparent, var(--fc-saffron-mid));
+}
+
+.diamondLg {
+  width: 9px;
+  height: 9px;
+  background: var(--fc-gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.diamondSm {
+  width: 6px;
+  height: 6px;
+  background: var(--fc-saffron-mid);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── Facility Card ────────────────────────────────────────────────────────── */
+
+.card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 400px;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease,
+    box-shadow 0.3s ease;
+}
+
+.card--hidden {
+  opacity: 0;
+  transform: translateY(40px);
+}
+/* Visible state is applied inline for per-card stagger delay */
+
+.card:hover {
+  box-shadow:
+    0 24px 70px rgba(255, 140, 0, 0.35),
+    0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Card arch SVG */
+.cardArch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Card image */
+.cardImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+  transform: scale(1);
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s ease;
+}
+
+.card:hover .cardImage {
+  transform: scale(1.07);
+  filter: brightness(0.65);
+}
+
+/* Gradient overlay */
+.cardGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(8, 2, 0, 0.85) 0%,
+    rgba(8, 2, 0, 0.35) 55%,
+    transparent 100%
+  );
+  transition: background 0.5s ease;
+  z-index: 2;
+}
+
+.card:hover .cardGradient {
+  background: linear-gradient(
+    to top,
+    rgba(8, 2, 0, 0.95) 0%,
+    rgba(8, 2, 0, 0.55) 50%,
+    rgba(8, 2, 0, 0.15) 100%
+  );
+}
+
+/* Accent glow (uses CSS custom property for per-card color) */
+.cardAccentGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* background is set inline — per-card dynamic color via facility.accentColor */
+  opacity: 0.4;
+  transition: opacity 0.5s ease;
+}
+
+.card:hover .cardAccentGlow {
+  opacity: 1;
+}
+
+/* Corner ornament */
+.cornerOrnament {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 6;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover .cornerOrnament {
+  opacity: 0.9;
+}
+
+/* ─── Card Content ─────────────────────────────────────────────────────────── */
+
+.cardContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.75rem 1.75rem 1.5rem;
+  z-index: 4;
+}
+
+/* Tag badge */
+.cardTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.6rem;
+  opacity: 0.7;
+  transform: translateY(4px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  /* background and border set inline — per-card dynamic accent color */
+}
+
+.card:hover .cardTag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardTagEmoji {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.cardTagText {
+  font-family: var(--fc-font-devanagari);
+  font-size: 0.62rem;
+  color: var(--fc-gold);
+  letter-spacing: 0.08em;
+}
+
+/* Title */
+.cardTitle {
+  font-family: var(--fc-font-devanagari);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 700;
+  color: var(--fc-cream);
+  margin-bottom: 0.65rem;
+  line-height: 1.35;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Expanding underline */
+.cardDivider {
+  height: 1px;
+  margin-bottom: 0.75rem;
+  width: 40%;
+  transition: width 0.5s ease;
+  /* background set inline — per-card dynamic accent color */
+}
+
+.card:hover .cardDivider {
+  width: 100%;
+}
+
+/* Description — reveals on hover */
+.cardDescription {
+  font-family: var(--fc-font-devanagari);
+  font-size: 0.8rem;
+  color: rgba(255, 240, 200, 0.78);
+  line-height: 1.75;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    max-height 0.5s ease,
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  margin-bottom: 0.85rem;
+}
+
+.card:hover .cardDescription {
+  max-height: 8rem;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* View details row */
+.cardViewDetails {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s ease 0.1s,
+    transform 0.4s ease 0.1s;
+}
+
+.card:hover .cardViewDetails {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardViewDetailsText {
+  font-family: var(--fc-font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  /* color set inline — per-card dynamic accent color */
+}
+
+.cardViewDetailsDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* background set inline — per-card dynamic accent color */
+}
+
+.cardViewDetailsLine {
+  height: 1px;
+  width: 30px;
+  flex-shrink: 0;
+  /* background set inline — per-card dynamic accent color */
+}

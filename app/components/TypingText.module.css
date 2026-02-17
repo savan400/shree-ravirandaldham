@@ -1,0 +1,297 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   TypingText.module.css
+   All styles and animations for the TypingText component.
+───────────────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap");
+
+/* ── Design Tokens ── */
+:root {
+  --saffron-deep: #ff4500;
+  --saffron: #ff8c00;
+  --saffron-mid: #ff6b00;
+  --gold: #ffd700;
+  --gold-mid: #f5a623;
+  --bg-light: #fff8ee;
+  --bg-mid: #fff3dc;
+  --bg-warm: #ffecc8;
+  --font-devanagari: "Tiro Devanagari Hindi", serif;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes typing-glow-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow:
+      0 0 8px var(--saffron),
+      0 0 2px var(--gold);
+  }
+  50% {
+    opacity: 0.3;
+    box-shadow: none;
+  }
+}
+
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(300%) skewX(-20deg);
+  }
+}
+
+@keyframes tt-mount {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-lotus {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-6px) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes ornament-in {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes bg-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  padding: 1.5rem 0;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    var(--bg-light) 0%,
+    var(--bg-mid) 25%,
+    var(--bg-warm) 50%,
+    var(--bg-mid) 75%,
+    var(--bg-light) 100%
+  );
+  background-size: 300% 300%;
+  animation: bg-shift 8s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+}
+
+/* ─── Border Bands ─────────────────────────────────────────────────────────── */
+
+.borderBand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--saffron-deep) 10%,
+    var(--saffron) 30%,
+    var(--gold) 50%,
+    var(--saffron) 70%,
+    var(--saffron-deep) 90%,
+    transparent 100%
+  );
+}
+
+.borderBand--top {
+  top: 0;
+}
+.borderBand--bottom {
+  bottom: 0;
+}
+
+.borderBandThin {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 166, 35, 0.5),
+    transparent
+  );
+}
+
+.borderBandThin--top {
+  top: 5px;
+}
+.borderBandThin--bottom {
+  bottom: 5px;
+}
+
+/* ─── Shine Overlay ────────────────────────────────────────────────────────── */
+
+.shineOverlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.shineOverlay::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  animation: shine-sweep 4s ease-in-out infinite;
+}
+
+/* ─── Lotus Decorations ────────────────────────────────────────────────────── */
+
+.lotus {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .lotus {
+    display: block;
+  }
+}
+
+.lotus--left {
+  left: 2rem;
+  animation: float-lotus 3s ease-in-out infinite;
+}
+.lotus--right {
+  right: 2rem;
+  animation: float-lotus 3s ease-in-out 1.5s infinite;
+}
+
+/* ─── OM Watermarks ────────────────────────────────────────────────────────── */
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 7rem;
+  color: var(--saffron);
+  opacity: 0.05;
+  font-family: serif;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+.watermark--left {
+  left: 5%;
+}
+.watermark--right {
+  right: 5%;
+}
+
+/* ─── Main Content Container ───────────────────────────────────────────────── */
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+/* ─── Ornament Dot-chain ───────────────────────────────────────────────────── */
+
+.ornamentWrap {
+  display: flex;
+  justify-content: center;
+  transform-origin: center;
+  animation: ornament-in 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+.ornamentWrap--top {
+  margin-bottom: 0.6rem;
+}
+.ornamentWrap--bottom {
+  margin-top: 0.6rem;
+}
+
+/* ─── Typing Text ──────────────────────────────────────────────────────────── */
+
+.typingText {
+  font-family: var(--font-devanagari);
+  font-size: clamp(1.1rem, 3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.4;
+  display: inline;
+
+  background: linear-gradient(
+    135deg,
+    #cc4400 0%,
+    var(--saffron-mid) 30%,
+    var(--saffron) 50%,
+    var(--gold) 65%,
+    var(--saffron) 80%,
+    #cc4400 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(255, 140, 0, 0.2));
+}
+
+.typingText--mounted {
+  animation: tt-mount 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ─── Blinking Cursor ──────────────────────────────────────────────────────── */
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background: var(--saffron-mid);
+  vertical-align: middle;
+  margin-left: 3px;
+  border-radius: 2px;
+  animation: typing-glow-pulse 0.8s ease-in-out infinite;
+}
