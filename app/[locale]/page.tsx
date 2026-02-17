@@ -11,9 +11,30 @@ import KingOfSalangpur from "@/components/KingOfSalangpur/KingOfSalangpur";
 import LiveDarshan from "@/components/LiveDarshan/LiveDarshan";
 import StatsSection from "@/components/StatsSection/StatsSection";
 import TypingText from "@/components/TypingText/TypingText";
+import {fetchSeoData} from '@/lib/api';
+import type { Metadata } from 'next';
 
+type Props = {
+  params: Promise<{locale: string}>;
+};
 
-export default function Home() {
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const {locale} = await params;
+  const seoData = await fetchSeoData('/', locale);
+  
+  return {
+    title: seoData?.title || 'Shree Ravirandaldham',
+    description: seoData?.description || 'Spiritual Place',
+    keywords: seoData?.keywords || '',
+    openGraph: seoData?.ogImage ? {
+      images: [seoData.ogImage],
+    } : undefined,
+  };
+}
+
+export default async function Home({params}: Props) {
+  const {locale} = await params;
+
   return (
     <div className="min-h-screen">
       <Header />
