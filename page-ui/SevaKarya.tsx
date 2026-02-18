@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import styles from "../app/parichay/ParichayPage.module.css";
+import styles from "../app/ravirandaldham/parichay/ParichayPage.module.css";
 import FacilityCard, { FacilityCardData } from "@/components/FacilitiesCards/Facilitycard";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";

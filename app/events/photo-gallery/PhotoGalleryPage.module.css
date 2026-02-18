@@ -1,0 +1,616 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
+
+/* ── Animations ──────────────────────────────────────────────────────────────── */
+
+@keyframes bgBreathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Card entrance: scale + rise + un-blur for a premium reveal */
+@keyframes itemReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.84) translateY(28px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Persistent halo breathe — gentle gold pulse behind every image */
+@keyframes haloPulse {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.38;
+    transform: scale(1.07);
+  }
+}
+
+/* Arch line glow — makes the gold arch feel alive */
+@keyframes archGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 3px rgba(255, 180, 0, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.95));
+  }
+}
+
+/* Shimmer sweep across card on hover */
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(420%) skewX(-18deg);
+  }
+}
+
+/* Corner accent breath */
+@keyframes cornerPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Om symbol fade-up inside hover overlay */
+@keyframes omRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Lightbox */
+@keyframes lightboxFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lightboxSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  background: linear-gradient(
+    155deg,
+    #fff9f0 0%,
+    #fff5e5 30%,
+    #fffbf3 60%,
+    #fff0dc 100%
+  );
+  background-size: 200% 200%;
+  animation: bgBreathe 12s ease-in-out infinite;
+}
+
+/* ── Container ───────────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.header.visible {
+  opacity: 1;
+  animation: reveal 0.7s ease 0.1s both;
+}
+
+.subtitle {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  color: rgba(140, 60, 0, 0.7);
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+/* ── Gallery Grid ────────────────────────────────────────────────────────────── */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+/* ── Gallery Item ────────────────────────────────────────────────────────────── */
+
+.galleryItem {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #080200;
+
+  /* Layered saffron border + ambient shadow */
+  box-shadow:
+    0 0 0 1px rgba(245, 166, 35, 0.3),
+    0 6px 28px rgba(255, 120, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.4s ease;
+
+  opacity: 0;
+}
+
+.galleryItem.itemVisible {
+  animation: itemReveal 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.galleryItem:hover {
+  transform: translateY(-10px) scale(1.025);
+  box-shadow:
+    0 0 0 1.5px rgba(255, 210, 0, 0.75),
+    0 0 28px rgba(255, 160, 0, 0.35),
+    0 22px 55px rgba(200, 80, 0, 0.2),
+    0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+/* ── Sacred Halo ─────────────────────────────────────────────────────────────── */
+
+.sacredHalo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse 72% 56% at 50% 36%,
+    rgba(255, 185, 0, 0.2),
+    transparent
+  );
+  animation: haloPulse 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Image ───────────────────────────────────────────────────────────────────── */
+
+/* Next.js <Image fill> renders as position:absolute internally */
+.galleryImage {
+  object-fit: cover;
+  transition:
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s ease;
+  filter: brightness(0.88) saturate(1.08);
+  z-index: 0;
+}
+
+.galleryItem:hover .galleryImage {
+  transform: scale(1.1);
+  filter: brightness(0.68) saturate(1.12);
+}
+
+/* ── Permanent Vignette ──────────────────────────────────────────────────────── */
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(5, 1, 0, 0.6) 0%,
+    rgba(5, 1, 0, 0.08) 38%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* ── Arch ornament ───────────────────────────────────────────────────────────── */
+
+.archOrnament {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 4;
+  pointer-events: none;
+  animation: archGlow 4s ease-in-out infinite;
+}
+
+/* ── Shimmer ─────────────────────────────────────────────────────────────────── */
+
+.shimmer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 225, 100, 0.16),
+    transparent
+  );
+  transform: translateX(-130%) skewX(-18deg);
+}
+
+.galleryItem:hover .shimmer::after {
+  animation: shimmerSweep 0.8s ease-out forwards;
+}
+
+/* ── Hover Overlay ───────────────────────────────────────────────────────────── */
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background: linear-gradient(
+    to top,
+    rgba(6, 1, 0, 0.78) 0%,
+    rgba(6, 1, 0, 0.3) 48%,
+    rgba(80, 20, 0, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.galleryItem:hover .imageOverlay {
+  opacity: 1;
+}
+
+.overlayContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  transform: translateY(18px) scale(0.88);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.galleryItem:hover .overlayContent {
+  transform: translateY(0) scale(1);
+}
+
+/* Zoom icon ring */
+.zoomRing {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.9),
+    rgba(255, 195, 0, 0.9)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a0500;
+  box-shadow:
+    0 0 0 3px rgba(255, 215, 0, 0.55),
+    0 0 0 6px rgba(255, 140, 0, 0.2),
+    0 8px 24px rgba(255, 107, 0, 0.5);
+}
+
+/* Om glyph that rises after zoom ring */
+.overlayOm {
+  font-family: serif;
+  font-size: 1.1rem;
+  color: rgba(255, 215, 0, 0.85);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 12px rgba(255, 200, 0, 0.8);
+  animation: omRise 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  display: none; /* shown only when parent is hovered */
+}
+
+.galleryItem:hover .overlayOm {
+  display: block;
+}
+
+/* ── Corner Ornaments ────────────────────────────────────────────────────────── */
+
+.corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  z-index: 7;
+  pointer-events: none;
+  animation: cornerPulse 3s ease-in-out infinite;
+}
+
+/* Two lines forming an L */
+.corner::before,
+.corner::after {
+  content: "";
+  position: absolute;
+  border-radius: 2px;
+}
+
+/* Horizontal bar */
+.corner::before {
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: linear-gradient(90deg, #ffd700, rgba(255, 140, 0, 0.5));
+}
+/* Vertical bar */
+.corner::after {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 18px;
+  background: linear-gradient(180deg, #ffd700, rgba(255, 140, 0, 0.5));
+}
+
+.cornerTL {
+  top: 10px;
+  left: 10px;
+}
+.cornerTR {
+  top: 10px;
+  right: 10px;
+  transform: scaleX(-1);
+}
+.cornerBL {
+  bottom: 10px;
+  left: 10px;
+  transform: scaleY(-1);
+}
+.cornerBR {
+  bottom: 10px;
+  right: 10px;
+  transform: scale(-1);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────────── */
+
+.footer {
+  margin-top: 3rem;
+  opacity: 0;
+}
+.footer.visible {
+  animation: reveal 0.7s ease 0.6s both;
+}
+
+.footerBlessing {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.85rem;
+  color: rgba(180, 80, 0, 0.5);
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+/* ── Lightbox ────────────────────────────────────────────────────────────────── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.96);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: lightboxFade 0.3s ease;
+  cursor: pointer;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 46px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+.lightboxClose:hover {
+  background: rgba(255, 107, 0, 0.9);
+  border-color: #ffd700;
+  transform: scale(1.1);
+}
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+.navPrev {
+  left: 2rem;
+}
+.navNext {
+  right: 2rem;
+}
+.lightboxNav:hover {
+  background: rgba(255, 107, 0, 0.9);
+  border-color: #ffd700;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightboxContent {
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  animation: lightboxSlide 0.3s ease;
+  cursor: default;
+}
+
+.lightboxImage {
+  max-width: 100%;
+  max-height: calc(90vh - 160px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgba(255, 200, 0, 0.25),
+    0 20px 80px rgba(0, 0, 0, 0.55);
+}
+
+.lightboxInfo {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 250, 242, 0.96)
+  );
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+}
+
+.lightboxDate {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Cinzel Decorative", serif;
+  font-size: 0.68rem;
+  color: #ff6b00;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+.lightboxTitle {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3a1800;
+  margin: 0 0 0.4rem 0;
+}
+
+.lightboxCounter {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 0.65rem;
+  color: rgba(100, 50, 0, 0.55);
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .section {
+    padding: 3rem 0;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .lightbox {
+    padding: 1rem;
+  }
+  .lightboxClose {
+    top: 1rem;
+    right: 1rem;
+    width: 38px;
+    height: 38px;
+  }
+  .lightboxNav {
+    width: 40px;
+    height: 40px;
+  }
+  .navPrev {
+    left: 0.75rem;
+  }
+  .navNext {
+    right: 0.75rem;
+  }
+  .lightboxInfo {
+    padding: 1rem 1.25rem;
+  }
+}
