@@ -1,0 +1,81 @@
+.imageCard {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #fff9f0, #ffffff);
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  box-shadow: 0 16px 50px rgba(255, 140, 0, 0.12);
+}
+
+.imageFrameTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.cornerOrnament {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 3;
+}
+
+.cornerTl {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid rgba(255, 215, 0, 0.6);
+  border-left: 2px solid rgba(255, 215, 0, 0.6);
+}
+
+.cornerTr {
+  top: 10px;
+  right: 10px;
+  border-top: 2px solid rgba(255, 215, 0, 0.6);
+  border-right: 2px solid rgba(255, 215, 0, 0.6);
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageShine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 50%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.saintImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 500px;
+}
+
+.imageCaption {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.06),
+    rgba(255, 215, 0, 0.04)
+  );
+  border-top: 1px solid rgba(245, 166, 35, 0.2);
+}
+
+.captionText {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.8rem;
+  color: rgba(140, 50, 0, 0.7);
+  letter-spacing: 0.05em;
+}

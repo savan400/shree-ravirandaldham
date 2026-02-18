@@ -1,0 +1,25 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.35rem 1rem;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff8c00;
+  box-shadow: 0 0 6px #ff8c00;
+}
+
+.badgeText {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.72rem;
+  color: rgba(180, 70, 0, 0.75);
+  letter-spacing: 0.08em;
+}

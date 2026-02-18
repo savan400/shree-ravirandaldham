@@ -2,6 +2,12 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "../app/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import LotusDivider from "@/components/LotusDivider/LotusDivider";
+import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonTitle from "@/components/CommonTitle/CommonTitle";
+import CommonBadge from "@/components/CommonBadge/CommonBadge";
+import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
+import CommonImageProfileCard from "@/components/CommonImageProfileCard/CommonImageProfileCard";
 
 const AdaypatiBapuPage = () => {
     const [visible, setVisible] = useState(false);
@@ -24,83 +30,25 @@ const AdaypatiBapuPage = () => {
 
     return (
         <section ref={sectionRef} className={styles.section}>
-            {/* Background elements */}
-            <div className={styles.bgGrid} />
-            <div className={styles.bgGlow} />
-            <div className={styles.bgOm}>ॐ</div>
-            <div className={styles.topBar} />
-
+            <PageBackgroundDecorations />
             <div className={styles.container}>
                 {/* ── Header ── */}
                 <div className={visibleClass("header")}>
-                    <div className={styles.badge}>
-                        <div className={styles.badgeDot} />
-                        <span className={styles.badgeText}>॥ મહંત શ્રી રવિ રાંદલધામદડવા ॥</span>
-                    </div>
-
-                    <h1 className={styles.title}>ધર્મ સાંસદ શ્રી 1008 અક્ષયપરી બાપુ</h1>
-
-                    <div className={styles.divider}>
-                        <div className={styles.dividerLine} />
-                        <div className={styles.dividerDiamond} />
-                        <LotusSvg />
-                        <div className={styles.dividerDiamond} />
-                        <div className={styles.dividerLine} />
-                    </div>
+                    <CommonBadge text="॥ મહંત શ્રી રવિ રાંદલધામદડવા ॥" />
+                    <CommonTitle text="ધર્મ સાંસદ શ્રી 1008 અક્ષયપરી બાપુ" />
+                    <LotusDivider />
                 </div>
 
                 {/* ── Content Grid ── */}
                 <div className={styles.grid}>
                     {/* Left: Image Card */}
                     <div className={visibleClass("imageWrapper")} style={{ position: 'sticky', top: '150px' }}>
-                        <div className={styles.imageCard} >
-                            <svg
-                                className={styles.imageFrameTop}
-                                viewBox="0 0 300 40"
-                                fill="none"
-                            >
-                                <path
-                                    d="M10 40 L10 20 Q150 -10 290 20 L290 40"
-                                    fill="url(#frameGradTop)"
-                                    opacity="0.15"
-                                />
-                                <path
-                                    d="M0 4 Q150 -10 300 4"
-                                    stroke="#FFD700"
-                                    strokeWidth="2"
-                                    opacity="0.7"
-                                />
-                                <circle cx="150" cy="-2" r="4" fill="#FFD700" opacity="0.8" />
-                                <defs>
-                                    <linearGradient id="frameGradTop" x1="0" y1="0" x2="0" y2="1">
-                                        <stop stopColor="#FFD700" />
-                                        <stop offset="1" stopColor="#FFD700" stopOpacity="0" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-
-                            <div className={`${styles.cornerOrnament} ${styles.cornerTl}`} />
-                            <div className={`${styles.cornerOrnament} ${styles.cornerTr}`} />
-
-                            <div className={styles.imageContainer}>
-                                {imageLoaded && <div className={styles.imageShine} />}
-                                <Image
-                                    src="/images/akshaypari-bapu.jpeg"
-                                    alt="akshaypari-bapu"
-                                    width={400}
-                                    height={520}
-                                    className={styles.saintImage}
-                                    onLoad={() => setImageLoaded(true)}
-                                    priority
-                                />
-                            </div>
-
-                            <div className={styles.imageCaption}>
-                                <span className={styles.captionText}>
-                                    શ્રી 1008 અક્ષયપરી બાપુ
-                                </span>
-                            </div>
-                        </div>
+                        <CommonImageProfileCard
+                            src="/images/akshaypari-bapu.jpeg"
+                            alt="akshaypari-bapu"
+                            caption="શ્રી 1008 અક્ષયપરી બાપુ"
+                            priority
+                        />
                     </div>
 
                     {/* Right: Text Content */}
@@ -155,14 +103,8 @@ const AdaypatiBapuPage = () => {
 
                 {/* ── Footer ── */}
                 <div className={visibleClass("footer")}>
-                    <div className={styles.footerOrnament}>
-                        <div className={styles.footerLine} />
-                        <div className={styles.footerDiamond} />
-                        <div className={styles.footerDiamondLarge} />
-                        <div className={styles.footerDiamond} />
-                        <div className={styles.footerLine} />
-                    </div>
-                    <p className={styles.footerBlessing}>
+                    <DiamondDivider />
+                    <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
                         ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
                     </p>
                 </div>
@@ -171,33 +113,5 @@ const AdaypatiBapuPage = () => {
     );
 };
 
-/* ── Lotus SVG (extracted to keep JSX clean) ── */
-const LotusSvg = () => (
-    <svg width="24" height="20" viewBox="0 0 24 20" fill="none">
-        <ellipse cx="12" cy="15" rx="2.5" ry="5" fill="url(#lotus1)" />
-        <ellipse
-            cx="7" cy="14" rx="2" ry="4"
-            transform="rotate(-25 7 14)"
-            fill="url(#lotus2)"
-            opacity="0.8"
-        />
-        <ellipse
-            cx="17" cy="14" rx="2" ry="4"
-            transform="rotate(25 17 14)"
-            fill="url(#lotus2)"
-            opacity="0.8"
-        />
-        <defs>
-            <linearGradient id="lotus1" x1="0" y1="0" x2="0" y2="1">
-                <stop stopColor="#FFD700" />
-                <stop offset="1" stopColor="#FF8C00" />
-            </linearGradient>
-            <linearGradient id="lotus2" x1="0" y1="0" x2="1" y2="1">
-                <stop stopColor="#FFB700" />
-                <stop offset="1" stopColor="#FF6B00" />
-            </linearGradient>
-        </defs>
-    </svg>
-);
 
 export default AdaypatiBapuPage;

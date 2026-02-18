@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useRef } from "react";
 import styles from "./StatsSection.module.css";
+import CommonTitle from "../CommonTitle/CommonTitle";
+import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -25,11 +27,11 @@ interface StatCardProps {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const STATS: StatData[] = [
-  { iconKey: "height",  value: 103,    suffix: "",  label: "ફૂટ ઉંચું",      sublabel: "Height" },
-  { iconKey: "floors",  value: 11,     suffix: "",  label: "માળ",             sublabel: "Floors" },
-  { iconKey: "rooms",   value: 1050,   suffix: "",  label: "રૂમો",            sublabel: "Rooms", featured: true },
-  { iconKey: "sqft",    value: 885000, suffix: "",  label: "સ્ક્વેર ફૂટ",    sublabel: "Under Construction" },
-  { iconKey: "people",  value: 4000,   suffix: "+", label: "લોકો",            sublabel: "Capacity" },
+  { iconKey: "height", value: 103, suffix: "", label: "ફૂટ ઉંચું", sublabel: "Height" },
+  { iconKey: "floors", value: 11, suffix: "", label: "માળ", sublabel: "Floors" },
+  { iconKey: "rooms", value: 1050, suffix: "", label: "રૂમો", sublabel: "Rooms", featured: true },
+  { iconKey: "sqft", value: 885000, suffix: "", label: "સ્ક્વેર ફૂટ", sublabel: "Under Construction" },
+  { iconKey: "people", value: 4000, suffix: "+", label: "લોકો", sublabel: "Capacity" },
 ];
 
 // ─── Custom Hook ──────────────────────────────────────────────────────────────
@@ -62,7 +64,7 @@ const StatIcons: Record<IconKey, React.ReactNode> = {
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
       <rect x="12" y="2" width="8" height="28" rx="2" fill="url(#si1)" opacity="0.3" />
       <rect x="14" y="2" width="4" height="28" rx="1" fill="url(#si1)" />
-      <path d="M8 8 L16 2 L24 8"  stroke="#FFD700" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+      <path d="M8 8 L16 2 L24 8" stroke="#FFD700" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       <path d="M8 24 L16 30 L24 24" stroke="#FF8C00" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
       <circle cx="16" cy="16" r="3" fill="#FFD700" />
       <defs>
@@ -88,7 +90,7 @@ const StatIcons: Record<IconKey, React.ReactNode> = {
   rooms: (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
       <rect x="3" y="8" width="26" height="20" rx="2" stroke="url(#si3)" strokeWidth="1.5" fill="none" />
-      <rect x="7"  y="13" width="7" height="7" rx="1" fill="url(#si3)" opacity="0.7" />
+      <rect x="7" y="13" width="7" height="7" rx="1" fill="url(#si3)" opacity="0.7" />
       <rect x="18" y="13" width="7" height="7" rx="1" fill="url(#si3)" opacity="0.7" />
       <path d="M3 16 L29 16" stroke="#FFD700" strokeWidth="0.8" opacity="0.5" />
       <path d="M16 8 L16 28" stroke="#FF8C00" strokeWidth="0.8" opacity="0.4" />
@@ -103,9 +105,9 @@ const StatIcons: Record<IconKey, React.ReactNode> = {
   sqft: (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
       <rect x="3" y="3" width="26" height="26" rx="2" stroke="url(#si4)" strokeWidth="1.5" fill="none" />
-      <path d="M3 3 L10 3 M3 3 L3 10"   stroke="#FFD700" strokeWidth="2" strokeLinecap="round" />
-      <path d="M29 3 L22 3 M29 3 L29 10"  stroke="#FFD700" strokeWidth="2" strokeLinecap="round" />
-      <path d="M3 29 L10 29 M3 29 L3 22"  stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" />
+      <path d="M3 3 L10 3 M3 3 L3 10" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" />
+      <path d="M29 3 L22 3 M29 3 L29 10" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" />
+      <path d="M3 29 L10 29 M3 29 L3 22" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" />
       <path d="M29 29 L22 29 M29 29 L29 22" stroke="#FF8C00" strokeWidth="2" strokeLinecap="round" />
       <circle cx="16" cy="16" r="5" stroke="#FFD700" strokeWidth="1" fill="url(#si4)" opacity="0.4" />
       <defs>
@@ -199,8 +201,8 @@ const StatCard: React.FC<StatCardProps> = ({ stat, inView, index }) => {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const StatsSection: React.FC = () => {
-  const gridRef  = useRef<HTMLDivElement | null>(null);
-  const [inView,  setInView]  = useState(false);
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -219,18 +221,11 @@ const StatsSection: React.FC = () => {
 
   return (
     <section className={styles.section} aria-labelledby="ss-title">
-      {/* ── Background decorations ── */}
-      <div className={styles.dotGrid}    aria-hidden="true" />
-      <div className={styles.watermark}  aria-hidden="true">ॐ</div>
-      <div className={styles.borderBand} aria-hidden="true" />
-
+      <PageBackgroundDecorations />
       <div className={styles.container}>
         {/* Header */}
         <div className={`${styles.header} ${visible ? styles["header--visible"] : styles["header--hidden"]}`}>
-          <h2 id="ss-title" className={styles.title}>
-            શ્રી ગોપાળાનંદ સ્વામી
-          </h2>
-
+          <CommonTitle text=" શ્રી ગોપાળાનંદ સ્વામી" />
           <p className={`${styles.subtitle} ${visible ? styles["subtitle--visible"] : styles["subtitle--hidden"]}`}>
             નૂતન યાત્રિક ભુવનની વિશેષતાઓ
           </p>

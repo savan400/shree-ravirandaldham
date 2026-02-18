@@ -1,29 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import styles from "../app/itihas/Itihaspage.module.css";
+import LotusDivider from "@/components/LotusDivider/LotusDivider";
+import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonTitle from "@/components/CommonTitle/CommonTitle";
+import CommonBadge from "@/components/CommonBadge/CommonBadge";
+import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
 
-// ── Ornamental divider ─────────────────────────────────────────────────────
-const OrnamentDivider = () => (
-    <div className={styles.ornamentDivider}>
-        <div className={`${styles.ornamentLine} ${styles.ornamentLineLeft}`} />
-        <div className={styles.ornamentDiamond} />
-        <svg width="24" height="20" viewBox="0 0 24 20" fill="none">
-            <ellipse cx="12" cy="15" rx="2.5" ry="5" fill="url(#od1)" />
-            <ellipse cx="7" cy="14" rx="2" ry="4" transform="rotate(-25 7 14)" fill="url(#od2)" opacity="0.8" />
-            <ellipse cx="17" cy="14" rx="2" ry="4" transform="rotate(25 17 14)" fill="url(#od2)" opacity="0.8" />
-            <defs>
-                <linearGradient id="od1" x1="0" y1="0" x2="0" y2="1">
-                    <stop stopColor="#FFD700" /><stop offset="1" stopColor="#FF8C00" />
-                </linearGradient>
-                <linearGradient id="od2" x1="0" y1="0" x2="1" y2="1">
-                    <stop stopColor="#FFB700" /><stop offset="1" stopColor="#FF6B00" />
-                </linearGradient>
-            </defs>
-        </svg>
-        <div className={styles.ornamentDiamond} />
-        <div className={`${styles.ornamentLine} ${styles.ornamentLineRight}`} />
-    </div>
-);
 
 // ── Decorative quote mark SVG ──────────────────────────────────────────────
 const QuoteMark = ({ flip = false }: { flip?: boolean }) => (
@@ -81,25 +64,14 @@ const ItihasPage = () => {
 
     return (
         <section ref={sectionRef} className={styles.section}>
-
-            {/* Background decorations */}
-            <div className={styles.dotGrid} />
-            <div className={styles.radialGlow} />
-            <div className={styles.omWatermark}>ॐ</div>
-            <div className={styles.topGoldBar} />
-
+            <PageBackgroundDecorations />
             <div className={styles.container}>
 
                 {/* ── Header ── */}
                 <div className={`${styles.header} ${visible ? styles.visible : ""}`}>
-                    <div className={styles.badge}>
-                        <div className={styles.badgeDot} />
-                        <span className={styles.badgeText}>॥ ઐતિહાસિક પૃષ્ઠભૂમિ ॥</span>
-                    </div>
-
-                    <h1 className={styles.title}>ઇતિહાસ</h1>
-
-                    <OrnamentDivider />
+                    <CommonBadge text="॥ ઐતિહાસિક પૃષ્ઠભૂમિ ॥" />
+                    <CommonTitle text="ઇતિહાસ" />
+                    <LotusDivider />
                 </div>
 
                 {/* ── Content card ── */}
@@ -136,19 +108,9 @@ const ItihasPage = () => {
                             </div>
                         ))}
                     </div>
-
-                    {/* Bottom ornament */}
-                    <div className={styles.bottomOrnament}>
-                        <div className={styles.bottomOrnamentLineLeft} />
-                        <div className={styles.bottomDiamondSm} />
-                        <div className={styles.bottomDiamondLg} />
-                        <div className={styles.bottomDiamondSm} />
-                        <div className={styles.bottomOrnamentLineRight} />
-                    </div>
-
+                    <DiamondDivider />
                     <p className={styles.blessing}>॥ જય શ્રી સ્વામિનારાયણ ॥</p>
                 </div>
-
             </div>
         </section>
     );

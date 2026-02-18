@@ -38,7 +38,7 @@ const MENU_ITEMS: MenuItem[] = [
     title: "Upasna Vidhi",
     href: "#kashtabhanjan-dev",
     submenu: [
-      { title: "Darshan Timing", href: "#dev-parichay" },
+      { title: "Darshan Timing", href: "/darshan-timing" },
       { title: "Seva Punjan", href: "#dev-itihas" },
       { title: "Bhakti", href: "#dev-mahima" },
       { title: "Utsav", href: "#king-of-salangpur" },

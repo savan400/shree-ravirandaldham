@@ -3,6 +3,9 @@
 import { useRef, useEffect, useState } from "react";
 import styles from "./FacilitiesCards.module.css";
 import FacilityCard, { FacilityCardData } from "./Facilitycard";
+import CommonTitle from "../CommonTitle/CommonTitle";
+import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonBadge from "../CommonBadge/CommonBadge";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -62,23 +65,15 @@ const FacilitiesCards: React.FC = () => {
       className={styles.section}
       aria-labelledby="fc-title"
     >
-      {/* Background decorations */}
-      <div className={styles.dotGrid} aria-hidden="true" />
-      <div className={styles.watermark} aria-hidden="true">ॐ</div>
-      <div className={styles.borderBand} aria-hidden="true" />
-
+      <PageBackgroundDecorations />
       <div className={styles.container}>
         {/* Header */}
         <div
           className={`${styles.header} ${visible ? styles["header--visible"] : styles["header--hidden"]
             }`}
         >
-          <div className={styles.headerTag}>
-            <span className={styles.headerTagText}>॥ ભક્તો માટે સેવા ॥</span>
-          </div>
-          <h2 id="fc-title" className={styles.title}>
-            સુવિધાઓ
-          </h2>
+          <CommonBadge text="॥ ભક્તો માટે સેવા ॥" />
+          <CommonTitle text=" સુવિધાઓ" />
         </div>
 
         <DiamondDivider />

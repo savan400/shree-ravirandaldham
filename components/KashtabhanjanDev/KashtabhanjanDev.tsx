@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import styles from "./KashtabhanjanDev.module.css";
+import CommonButton from "../CommonButton/CommonButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -189,12 +190,8 @@ const KashtabhanjanDev: React.FC = () => {
 
           {/* CTA */}
           <div className={visible ? styles["cta--visible"] : styles.hidden}>
-            <a href="#" className={styles.ctaBtn}>
-              READ MORE
-              <span className={styles.ctaArrow} aria-hidden="true">→</span>
-            </a>
+            <CommonButton text="READ MORE" variant="primary" icon={true} />
           </div>
-
         </div>
       </div>
     </section>

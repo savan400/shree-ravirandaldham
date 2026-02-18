@@ -55,15 +55,6 @@
   }
 }
 
-@keyframes dd-title-shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
 @keyframes dd-frame-glow {
   0%,
   100% {
@@ -87,23 +78,12 @@
   }
 }
 
-@keyframes dd-badge-breathe {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(255, 107, 0, 0);
-  }
-}
-
 /* ─── Section ──────────────────────────────────────────────────────────────── */
 
 .section {
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4.5rem;
-
   background: linear-gradient(
     150deg,
     #fff9f0 0%,
@@ -113,72 +93,6 @@
   );
   background-size: 200% 200%;
   animation: dd-bg-breathe 10s ease-in-out infinite;
-}
-
-/* ─── Background Decorations ───────────────────────────────────────────────── */
-
-.dotGrid {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(
-    circle,
-    rgba(245, 166, 35, 0.1) 1px,
-    transparent 1px
-  );
-  background-size: 30px 30px;
-  opacity: 0.5;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.ambientGlow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 200px;
-  background: radial-gradient(
-    ellipse,
-    rgba(255, 140, 0, 0.12),
-    transparent 70%
-  );
-  z-index: 0;
-  pointer-events: none;
-}
-
-.watermark {
-  position: absolute;
-  right: 4%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18rem;
-  color: var(--dd-saffron);
-  opacity: 0.025;
-  user-select: none;
-  pointer-events: none;
-  font-family: serif;
-  line-height: 1;
-  z-index: 0;
-}
-
-.borderBand {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  z-index: 5;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--dd-saffron-deep) 15%,
-    var(--dd-gold) 40%,
-    var(--dd-saffron) 50%,
-    var(--dd-gold) 60%,
-    var(--dd-saffron-deep) 85%,
-    transparent 100%
-  );
 }
 
 /* ─── Layout ───────────────────────────────────────────────────────────────── */
@@ -243,88 +157,12 @@
   letter-spacing: 0.08em;
 }
 
-/* Title */
-.title {
-  font-family: var(--dd-font-devanagari);
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 0;
-
-  background: linear-gradient(
-    90deg,
-    var(--dd-rust) 0%,
-    var(--dd-saffron-mid) 25%,
-    var(--dd-gold) 50%,
-    var(--dd-saffron) 75%,
-    var(--dd-rust) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: dd-title-shimmer 5s linear infinite;
-}
-
-/* Lotus divider */
-.lotusDivider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 0.75rem 0 1.25rem;
-}
-
-.lotusDividerLine--left {
-  height: 1px;
-  width: 70px;
-  background: linear-gradient(to right, transparent, var(--dd-saffron-mid));
-}
-
-.lotusDividerLine--right {
-  height: 1px;
-  width: 70px;
-  background: linear-gradient(to left, transparent, var(--dd-saffron-mid));
-}
-
 /* ─── Date Badge ───────────────────────────────────────────────────────────── */
 
 .dateBadgeWrap {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
-}
-
-.dateBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0.35rem 1rem;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 0, 0.15),
-    rgba(255, 215, 0, 0.08)
-  );
-  border: 1px solid rgba(245, 166, 35, 0.35);
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
-}
-
-.dateBadgeDot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--dd-saffron);
-  box-shadow: 0 0 6px var(--dd-saffron);
-  flex-shrink: 0;
-}
-
-.dateBadgeText {
-  font-family: var(--dd-font-display);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: var(--dd-rust);
-  font-weight: 700;
 }
 
 /* ─── Darshan Card ─────────────────────────────────────────────────────────── */
@@ -429,45 +267,6 @@
   letter-spacing: 0.1em;
   margin-bottom: 0.6rem;
   font-style: italic;
-}
-
-/* Read More button */
-.readMoreBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 0.7rem 1.5rem;
-  background: linear-gradient(
-    135deg,
-    var(--dd-saffron-mid),
-    var(--dd-saffron),
-    var(--dd-amber)
-  );
-  color: #1a0500;
-  font-family: var(--dd-font-display);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-decoration: none;
-  margin: 0 0 1.25rem;
-  border-radius: 4px;
-  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-  box-shadow: 0 4px 20px rgba(255, 107, 0, 0.4);
-  transition:
-    filter 0.2s ease,
-    transform 0.2s ease;
-  animation: dd-badge-breathe 3s ease-in-out infinite;
-}
-
-.readMoreBtn:hover {
-  filter: brightness(1.12);
-  transform: translateY(-2px);
-}
-
-.readMoreIcon {
-  width: 14px;
-  height: 14px;
 }
 
 /* ─── View All Link ────────────────────────────────────────────────────────── */

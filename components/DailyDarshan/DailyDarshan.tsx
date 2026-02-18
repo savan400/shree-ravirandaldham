@@ -5,6 +5,11 @@ import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
 import styles from "./DailyDarshan.module.css";
+import LotusDivider from "../LotusDivider/LotusDivider";
+import CommonTitle from "../CommonTitle/CommonTitle";
+import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonBadge from "../CommonBadge/CommonBadge";
+import CommonButton from "../CommonButton/CommonButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -62,35 +67,7 @@ const ArchFrame: React.FC = () => (
   </svg>
 );
 
-// ─────────────────────────────────────────────────────────────────────────────
 
-const LotusDivider: React.FC = () => (
-  <div className={styles.lotusDivider} aria-hidden="true">
-    <div className={styles["lotusDividerLine--left"]} />
-    <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
-      <ellipse cx="12" cy="14" rx="2.5" ry="5" fill="url(#lf1)" />
-      <ellipse cx="7" cy="13" rx="2" ry="4" transform="rotate(-25 7 13)" fill="url(#lf2)" opacity="0.8" />
-      <ellipse cx="17" cy="13" rx="2" ry="4" transform="rotate(25 17 13)" fill="url(#lf2)" opacity="0.8" />
-      <ellipse cx="3" cy="12" rx="1.5" ry="3" transform="rotate(-45 3 12)" fill="url(#lf3)" opacity="0.6" />
-      <ellipse cx="21" cy="12" rx="1.5" ry="3" transform="rotate(45 21 12)" fill="url(#lf3)" opacity="0.6" />
-      <defs>
-        <linearGradient id="lf1" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#FFD700" /><stop offset="1" stopColor="#FF8C00" />
-        </linearGradient>
-        <linearGradient id="lf2" x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#FFB700" /><stop offset="1" stopColor="#FF6B00" />
-        </linearGradient>
-        <linearGradient id="lf3" x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#FFA500" stopOpacity="0.7" />
-          <stop offset="1" stopColor="#FF4500" stopOpacity="0.5" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <div className={styles["lotusDividerLine--right"]} />
-  </div>
-);
-
-// ─────────────────────────────────────────────────────────────────────────────
 
 const DarshanDateBadge: React.FC<DarshanDateBadgeProps> = ({ date, day }) => (
   <div className={styles.dateBadge}>
@@ -122,12 +99,7 @@ const DailyDarshan: React.FC = () => {
       className={styles.section}
       aria-labelledby="dd-title"
     >
-      {/* ── Background decorations ── */}
-      <div className={styles.dotGrid} aria-hidden="true" />
-      <div className={styles.ambientGlow} aria-hidden="true" />
-      <div className={styles.watermark} aria-hidden="true">ॐ</div>
-      <div className={styles.borderBand} aria-hidden="true" />
-
+      <PageBackgroundDecorations />
       <div className={styles.container}>
 
         {/* Section header */}
@@ -136,11 +108,7 @@ const DailyDarshan: React.FC = () => {
             <span className={styles.tagEmoji} aria-hidden="true">🪷</span>
             <span className={styles.tagText}>ભગવાનનાં દરરોજ દર્શન</span>
           </div>
-
-          <h2 id="dd-title" className={styles.title}>
-            ડેઈલી દર્શન
-          </h2>
-
+          <CommonTitle text="ડેઈલી દર્શન" />
           <LotusDivider />
         </div>
 
@@ -149,7 +117,7 @@ const DailyDarshan: React.FC = () => {
 
           {/* Date badge */}
           <div className={styles.dateBadgeWrap}>
-            <DarshanDateBadge date={DARSHAN_DATE} day={DARSHAN_DAY} />
+            <CommonBadge text="TUESDAY — 17-02-2026" />
           </div>
 
           {/* Card */}
@@ -183,10 +151,7 @@ const DailyDarshan: React.FC = () => {
               <p className={styles.cardDate}>
                 Daily Darshan — {DARSHAN_DATE} ({DARSHAN_DAY})
               </p>
-              <Link href="#" className={styles.readMoreBtn}>
-                READ MORE
-                <ChevronRight className={styles.readMoreIcon} aria-hidden="true" />
-              </Link>
+              <CommonButton text="READ MORE" variant="primary" icon={true} className="w-full mb-4" />
             </div>
           </div>
 

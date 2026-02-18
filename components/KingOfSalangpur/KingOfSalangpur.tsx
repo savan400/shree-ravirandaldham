@@ -3,6 +3,10 @@
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./KingOfSalangpur.module.css";
+import CommonTitle from "../CommonTitle/CommonTitle";
+import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonBadge from "../CommonBadge/CommonBadge";
+import CommonButton from "../CommonButton/CommonButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -128,11 +132,7 @@ const KingOfSalangpur: React.FC = () => {
       className={styles.section}
       aria-labelledby="ks-title"
     >
-      {/* ── Background decorations ── */}
-      <div className={styles.dotGrid} aria-hidden="true" />
-      <div className={styles.watermark} aria-hidden="true">ॐ</div>
-      <div className={styles.borderBand} aria-hidden="true" />
-
+      <PageBackgroundDecorations />
       <div className={styles.container}>
         <div className={styles.grid}>
 
@@ -177,17 +177,10 @@ const KingOfSalangpur: React.FC = () => {
           {/* ── RIGHT: Text content ── */}
           <div className={`${styles.textCol} ${visible ? styles["rightCol--visible"] : styles.hidden}`}>
 
-            {/* Sub-label badge */}
-            <div className={`${styles.badge} ${visible ? styles["badge--visible"] : styles.hidden}`}>
-              <div className={styles.badgeDot} aria-hidden="true" />
-              <span className={styles.badgeText}>ગુજરાતની ગૌરવ</span>
-            </div>
+            <CommonBadge text="ગુજરાતની ગૌરવ" />
 
             {/* Heading */}
-            <h2 id="ks-title" className={styles.title}>
-              કિંગ ઓફ સાળંગપુર
-            </h2>
-
+            <CommonTitle text="કિંગ ઓફ સાળંગપુર" />
             <DiamondRule />
 
             {/* Description */}
@@ -215,12 +208,7 @@ const KingOfSalangpur: React.FC = () => {
                 </React.Fragment>
               ))}
             </div>
-
-            {/* CTA */}
-            <a href="#" className={styles.ctaBtn}>
-              READ MORE
-              <span className={styles.ctaArrow} aria-hidden="true">→</span>
-            </a>
+            <CommonButton text="READ MORE" variant="primary" icon={true} />
 
           </div>
         </div>

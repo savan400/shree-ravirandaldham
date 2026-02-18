@@ -66,16 +66,6 @@
   }
 }
 
-@keyframes kd-btn-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(255, 140, 0, 0);
-  }
-}
-
 @keyframes kd-vignette-breathe {
   0%,
   100% {
@@ -386,41 +376,4 @@
   color: rgba(255, 248, 220, 0.82);
   line-height: 2;
   margin-bottom: 2.25rem;
-}
-
-/* ─── CTA Button ───────────────────────────────────────────────────────────── */
-
-.ctaBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0.85rem 2.25rem;
-  background: linear-gradient(
-    135deg,
-    var(--kd-saffron-mid),
-    var(--kd-saffron),
-    var(--kd-amber)
-  );
-  color: #1a0500;
-  font-family: var(--kd-font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-decoration: none;
-  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-  box-shadow: 0 8px 32px rgba(255, 107, 0, 0.4);
-  animation: kd-btn-pulse 3s ease-in-out infinite;
-  transition:
-    transform 0.2s ease,
-    filter 0.2s ease;
-}
-
-.ctaBtn:hover {
-  transform: scale(1.06) translateY(-2px);
-  filter: brightness(1.15);
-}
-
-.ctaArrow {
-  font-size: 1rem;
-  line-height: 1;
 }

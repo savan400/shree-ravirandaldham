@@ -37,15 +37,6 @@
   }
 }
 
-@keyframes pp-title-shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
 @keyframes pp-frame-glow {
   0%,
   100% {
@@ -97,71 +88,6 @@
   animation: pp-bg-breathe 12s ease-in-out infinite;
 }
 
-/* ── Background decorations ── */
-.dotGrid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(245, 166, 35, 0.1) 1px,
-    transparent 1px
-  );
-  background-size: 32px 32px;
-  opacity: 0.5;
-}
-
-.radialGlow {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 300px;
-  background: radial-gradient(
-    ellipse,
-    rgba(255, 140, 0, 0.12),
-    transparent 70%
-  );
-  z-index: 0;
-  pointer-events: none;
-}
-
-.omWatermark {
-  position: absolute;
-  right: 3%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18rem;
-  color: #ff8c00;
-  opacity: 0.025;
-  user-select: none;
-  pointer-events: none;
-  font-family: serif;
-  line-height: 1;
-  z-index: 0;
-}
-
-.topGoldBar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  z-index: 5;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    #ff4500 15%,
-    #ffd700 40%,
-    #ff8c00 50%,
-    #ffd700 60%,
-    #ff4500 85%,
-    transparent 100%
-  );
-}
-
 /* ── Inner wrapper ── */
 .container {
   max-width: 1200px;
@@ -181,80 +107,6 @@
 
 .header.visible {
   opacity: 1;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0.35rem 1rem;
-  background: rgba(255, 107, 0, 0.08);
-  border: 1px solid rgba(245, 166, 35, 0.3);
-  border-radius: 20px;
-  margin-bottom: 1rem;
-}
-
-.badgeDot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #ff8c00;
-  box-shadow: 0 0 6px #ff8c00;
-}
-
-.badgeText {
-  font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 0.72rem;
-  color: rgba(180, 70, 0, 0.75);
-  letter-spacing: 0.08em;
-}
-
-.title {
-  font-family: "Tiro Devanagari Hindi", serif;
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 700;
-  margin-bottom: 0;
-  background: linear-gradient(
-    90deg,
-    #cc4400 0%,
-    #ff6b00 25%,
-    #ffd700 50%,
-    #ff8c00 75%,
-    #cc4400 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: pp-title-shimmer 5s linear infinite;
-}
-
-/* ── Ornament divider ── */
-.ornamentDivider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 1.75rem 0 2.25rem;
-}
-
-.ornamentLine {
-  height: 1px;
-  flex: 1;
-}
-
-.ornamentLineLeft {
-  background: linear-gradient(to right, transparent, rgba(245, 166, 35, 0.6));
-}
-
-.ornamentLineRight {
-  background: linear-gradient(to left, transparent, rgba(245, 166, 35, 0.6));
-}
-
-.ornamentDiamond {
-  width: 6px;
-  height: 6px;
-  background: #ff6b00;
-  transform: rotate(45deg);
 }
 
 /* ── Content grid ── */
@@ -306,6 +158,7 @@
 .cornerOrnamentLeft {
   left: 0;
 }
+
 .cornerOrnamentRight {
   right: 0;
   transform: scaleX(-1);

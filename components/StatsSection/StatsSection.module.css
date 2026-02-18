@@ -30,15 +30,6 @@
   }
 }
 
-@keyframes ss-title-shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
 @keyframes ss-subtitle-reveal {
   from {
     opacity: 0;
@@ -56,7 +47,6 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4.5rem;
-
   background: linear-gradient(
     160deg,
     #fffcf5 0%,
@@ -66,56 +56,6 @@
   );
   background-size: 200% 200%;
   animation: ss-bg-breathe 12s ease-in-out infinite;
-}
-
-/* ─── Background Decorations ───────────────────────────────────────────────── */
-
-.dotGrid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(245, 166, 35, 0.1) 1px,
-    transparent 1px
-  );
-  background-size: 32px 32px;
-  opacity: 0.5;
-}
-
-.watermark {
-  position: absolute;
-  right: 3%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 18rem;
-  color: var(--ss-saffron);
-  opacity: 0.025;
-  user-select: none;
-  pointer-events: none;
-  font-family: serif;
-  line-height: 1;
-  z-index: 0;
-}
-
-.borderBand {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  z-index: 5;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--ss-saffron-deep) 15%,
-    var(--ss-gold) 40%,
-    var(--ss-saffron) 50%,
-    var(--ss-gold) 60%,
-    var(--ss-saffron-deep) 85%,
-    transparent 100%
-  );
 }
 
 /* ─── Layout ───────────────────────────────────────────────────────────────── */
@@ -147,27 +87,6 @@
 }
 .header--hidden {
   opacity: 0;
-}
-
-.title {
-  font-family: var(--ss-font-devanagari);
-  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-
-  background: linear-gradient(
-    90deg,
-    var(--ss-rust) 0%,
-    var(--ss-saffron-mid) 25%,
-    var(--ss-gold) 50%,
-    var(--ss-saffron) 75%,
-    var(--ss-rust) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: ss-title-shimmer 5s linear infinite;
 }
 
 .subtitle {
@@ -250,8 +169,6 @@
   padding: 2rem 1.25rem 1.75rem;
   text-align: center;
   cursor: default;
-
-  /* Transition for entrance animation; delay applied via inline style per card */
   transition:
     opacity 0.6s ease,
     transform 0.6s ease,
@@ -262,7 +179,6 @@
   opacity: 0;
   transform: translateY(24px);
 }
-/* .card--visible opacity/transform are set inline for per-card stagger */
 
 /* Default card style */
 .card--default {

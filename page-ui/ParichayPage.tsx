@@ -2,6 +2,10 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "../app/parichay/ParichayPage.module.css";
+import LotusDivider from "@/components/LotusDivider/LotusDivider";
+import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonTitle from "@/components/CommonTitle/CommonTitle";
+import CommonBadge from "@/components/CommonBadge/CommonBadge";
 
 // ── Decorative SVG arch frame overlay ──────────────────────────────────────
 const ArchFrame = () => (
@@ -52,37 +56,6 @@ const ArchFrame = () => (
     </svg>
 );
 
-// ── Ornamental divider ─────────────────────────────────────────────────────
-const OrnamentDivider = () => (
-    <div className={styles.ornamentDivider}>
-        <div className={`${styles.ornamentLine} ${styles.ornamentLineLeft}`} />
-        <div className={styles.ornamentDiamond} />
-        <svg width="24" height="20" viewBox="0 0 24 20" fill="none">
-            <ellipse cx="12" cy="15" rx="2.5" ry="5" fill="url(#od1)" />
-            <ellipse cx="7" cy="14" rx="2" ry="4" transform="rotate(-25 7 14)" fill="url(#od2)" opacity="0.8" />
-            <ellipse cx="17" cy="14" rx="2" ry="4" transform="rotate(25 17 14)" fill="url(#od2)" opacity="0.8" />
-            <ellipse cx="3" cy="13" rx="1.5" ry="3" transform="rotate(-45 3 13)" fill="url(#od3)" opacity="0.6" />
-            <ellipse cx="21" cy="13" rx="1.5" ry="3" transform="rotate(45 21 13)" fill="url(#od3)" opacity="0.6" />
-            <defs>
-                <linearGradient id="od1" x1="0" y1="0" x2="0" y2="1">
-                    <stop stopColor="#FFD700" />
-                    <stop offset="1" stopColor="#FF8C00" />
-                </linearGradient>
-                <linearGradient id="od2" x1="0" y1="0" x2="1" y2="1">
-                    <stop stopColor="#FFB700" />
-                    <stop offset="1" stopColor="#FF6B00" />
-                </linearGradient>
-                <linearGradient id="od3" x1="0" y1="0" x2="1" y2="1">
-                    <stop stopColor="#FFA500" stopOpacity="0.7" />
-                    <stop offset="1" stopColor="#FF4500" stopOpacity="0.5" />
-                </linearGradient>
-            </defs>
-        </svg>
-        <div className={styles.ornamentDiamond} />
-        <div className={`${styles.ornamentLine} ${styles.ornamentLineRight}`} />
-    </div>
-);
-
 // ── Corner ornament ────────────────────────────────────────────────────────
 const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
     <svg
@@ -118,27 +91,14 @@ const ParichayPage = () => {
 
     return (
         <section ref={sectionRef} className={styles.section}>
-
-            {/* Background decorations */}
-            <div className={styles.dotGrid} />
-            <div className={styles.radialGlow} />
-            <div className={styles.omWatermark}>ॐ</div>
-            <div className={styles.topGoldBar} />
-
+            <PageBackgroundDecorations />
             <div className={styles.container}>
-
                 {/* ── Header ── */}
                 <div className={`${styles.header} ${visible ? styles.visible : ""}`}>
-                    <div className={styles.badge}>
-                        <div className={styles.badgeDot} />
-                        <span className={styles.badgeText}>॥ મંદિર વિશે ॥</span>
-                    </div>
-
-                    <h1 className={styles.title}>પરિચય</h1>
-
-                    <OrnamentDivider />
+                    <CommonBadge text="॥ મંદિર વિશે ॥" />
+                    <CommonTitle text="પરિચય" />
+                    <LotusDivider />
                 </div>
-
                 {/* ── Content grid ── */}
                 <div className={styles.grid}>
 
