@@ -23,12 +23,12 @@ interface MenuItem {
 const MENU_ITEMS: MenuItem[] = [
   {
     title: "Ravirandal Dham",
-    href: "#salangpur-dham",``
+    href: "#salangpur-dham",
     submenu: [
       { title: "Parichay", href: "/parichay" },
       { title: "Itihas", href: "/itihas" },
       { title: "Mahima", href: "/mahima" },
-      { title: "Shree 1008 Akshaypari Bapu", href: "/adaypati-bapu" },
+      { title: "Shree 1008 Akshaypari Bapu", href: "/akshaypari-bapu" },
       { title: "Shree Ajaypari Bapu", href: "/ajaypari-bapu" },
       { title: "Shree Dineshpuri Bapu", href: "/dineshpuri-bapu" },
       { title: "Seva Karya", href: "/seva-karya" },

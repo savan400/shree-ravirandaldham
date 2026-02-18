@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "../app/akshaypari-bapu/AdaypatiBapuPage.module.css";
 
-const DineshpuriBapuPage = () => {
+const AjaypariBapuPage = () => {
     const [visible, setVisible] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
@@ -35,10 +35,10 @@ const DineshpuriBapuPage = () => {
                 <div className={visibleClass("header")}>
                     <div className={styles.badge}>
                         <div className={styles.badgeDot} />
-                        <span className={styles.badgeText}>॥ કૈલાશ નિવાસી મહંત શ્રી ॥</span>
+                        <span className={styles.badgeText}>॥ મહંત શ્રી ॥</span>
                     </div>
 
-                    <h1 className={styles.title}>પ.પૂ. શ્રી દિનેશપરી બાપુ</h1>
+                    <h1 className={styles.title}>અજયપૂરી બાપુ</h1>
 
                     <div className={styles.divider}>
                         <div className={styles.dividerLine} />
@@ -85,8 +85,8 @@ const DineshpuriBapuPage = () => {
                             <div className={styles.imageContainer}>
                                 {imageLoaded && <div className={styles.imageShine} />}
                                 <Image
-                                    src="/images/dineshpari-bapu.png"
-                                    alt="dineshpuri-bapu"
+                                    src="/images/ajaypari-bapu.jpeg"
+                                    alt="akshaypari-bapu"
                                     width={400}
                                     height={520}
                                     className={styles.saintImage}
@@ -97,7 +97,7 @@ const DineshpuriBapuPage = () => {
 
                             <div className={styles.imageCaption}>
                                 <span className={styles.captionText}>
-                                    શ્રી દિનેશપરી બાપુ
+                                    શ્રી અજયપૂરી બાપુ
                                 </span>
                             </div>
                         </div>
@@ -200,4 +200,4 @@ const LotusSvg = () => (
     </svg>
 );
 
-export default DineshpuriBapuPage;
+export default AjaypariBapuPage;

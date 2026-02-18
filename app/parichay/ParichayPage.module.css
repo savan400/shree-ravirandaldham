@@ -1,0 +1,454 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
+
+/* ── Keyframes ── */
+@keyframes pp-bg-breathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pp-reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes pp-reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes pp-title-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pp-frame-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 30px rgba(255, 140, 0, 0.2),
+      0 20px 60px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 60px rgba(255, 140, 0, 0.4),
+      0 24px 70px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes pp-image-shine {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(300%) skewX(-15deg);
+  }
+}
+
+@keyframes pp-halo-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+}
+
+/* ── Section ── */
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  background: linear-gradient(
+    155deg,
+    #fff9f0 0%,
+    #fff5e5 30%,
+    #fffbf3 60%,
+    #fff0dc 100%
+  );
+  background-size: 200% 200%;
+  animation: pp-bg-breathe 12s ease-in-out infinite;
+}
+
+/* ── Background decorations ── */
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(245, 166, 35, 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+  opacity: 0.5;
+}
+
+.radialGlow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 300px;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 140, 0, 0.12),
+    transparent 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.omWatermark {
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18rem;
+  color: #ff8c00;
+  opacity: 0.025;
+  user-select: none;
+  pointer-events: none;
+  font-family: serif;
+  line-height: 1;
+  z-index: 0;
+}
+
+.topGoldBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 5;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff4500 15%,
+    #ffd700 40%,
+    #ff8c00 50%,
+    #ffd700 60%,
+    #ff4500 85%,
+    transparent 100%
+  );
+}
+
+/* ── Inner wrapper ── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.header.visible {
+  opacity: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.35rem 1rem;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff8c00;
+  box-shadow: 0 0 6px #ff8c00;
+}
+
+.badgeText {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.72rem;
+  color: rgba(180, 70, 0, 0.75);
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0;
+  background: linear-gradient(
+    90deg,
+    #cc4400 0%,
+    #ff6b00 25%,
+    #ffd700 50%,
+    #ff8c00 75%,
+    #cc4400 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pp-title-shimmer 5s linear infinite;
+}
+
+/* ── Ornament divider ── */
+.ornamentDivider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.75rem 0 2.25rem;
+}
+
+.ornamentLine {
+  height: 1px;
+  flex: 1;
+}
+
+.ornamentLineLeft {
+  background: linear-gradient(to right, transparent, rgba(245, 166, 35, 0.6));
+}
+
+.ornamentLineRight {
+  background: linear-gradient(to left, transparent, rgba(245, 166, 35, 0.6));
+}
+
+.ornamentDiamond {
+  width: 6px;
+  height: 6px;
+  background: #ff6b00;
+  transform: rotate(45deg);
+}
+
+/* ── Content grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ── Image column ── */
+.imageCol {
+  opacity: 0;
+}
+
+.imageCol.visible {
+  animation: pp-reveal-left 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.imageFrame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  background: #0a0400;
+  box-shadow:
+    0 20px 60px rgba(255, 140, 0, 0.2),
+    0 8px 30px rgba(0, 0, 0, 0.1);
+  animation: pp-frame-glow 5s ease-in-out infinite;
+}
+
+/* SVG arch overlay */
+.archFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Corner ornament SVG */
+.cornerOrnament {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+}
+
+.cornerOrnamentLeft {
+  left: 0;
+}
+.cornerOrnamentRight {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* Halo */
+.halo {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 35%,
+    rgba(255, 180, 0, 0.15),
+    transparent
+  );
+  animation: pp-halo-pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Image container + shine */
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageShine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.imageShine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: pp-image-shine 3s ease-in-out infinite;
+}
+
+.deityImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: brightness(0.95);
+}
+
+/* Bottom gradient overlay inside frame */
+.frameBottomGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(10, 4, 0, 0.7), transparent);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Caption */
+.imageCaption {
+  text-align: center;
+  margin-top: 1rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.82rem;
+  color: rgba(140, 60, 0, 0.6);
+  font-style: italic;
+  letter-spacing: 0.06em;
+}
+
+/* ── Text column ── */
+.textCol {
+  opacity: 0;
+}
+
+.textCol.visible {
+  animation: pp-reveal-right 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+}
+
+.contentCard {
+  background: linear-gradient(145deg, #ffffff, #fff9f2);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem 2.25rem;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(255, 140, 0, 0.08);
+}
+
+.contentCardAccentBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #ff6b00, #ffd700, #ff6b00);
+  border-radius: 16px 0 0 16px;
+}
+
+.contentText {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(0.92rem, 1.6vw, 1.08rem);
+  color: #3a1800;
+  line-height: 2.1;
+  text-align: justify;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.contentCardFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(245, 166, 35, 0.15);
+}
+
+.footerDiamond {
+  width: 6px;
+  height: 6px;
+  background: #ff8c00;
+  transform: rotate(45deg);
+}
+
+.footerLine {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, rgba(245, 166, 35, 0.5), transparent);
+}
+
+.blessing {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.8rem;
+  color: rgba(180, 80, 0, 0.5);
+  text-align: center;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+  letter-spacing: 0.1em;
+}

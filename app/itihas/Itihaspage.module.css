@@ -1,0 +1,389 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
+
+/* ── Keyframes ── */
+@keyframes ih-bg-breathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes ih-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes ih-title-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes ih-para-fade {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Section ── */
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  background: linear-gradient(
+    160deg,
+    #fff9f0 0%,
+    #fff5e5 30%,
+    #fffbf3 60%,
+    #fff0dc 100%
+  );
+  background-size: 200% 200%;
+  animation: ih-bg-breathe 12s ease-in-out infinite;
+}
+
+/* ── Background decorations ── */
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(245, 166, 35, 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+  opacity: 0.5;
+}
+
+.radialGlow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(255, 140, 0, 0.1), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.omWatermark {
+  position: absolute;
+  left: 4%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-8deg);
+  font-size: 16rem;
+  color: #ff8c00;
+  opacity: 0.025;
+  user-select: none;
+  pointer-events: none;
+  font-family: serif;
+  line-height: 1;
+  z-index: 0;
+}
+
+.topGoldBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 5;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff4500 15%,
+    #ffd700 40%,
+    #ff8c00 50%,
+    #ffd700 60%,
+    #ff4500 85%,
+    transparent 100%
+  );
+}
+
+/* ── Inner wrapper ── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+}
+
+.header.visible {
+  opacity: 1;
+  animation: ih-reveal 0.7s ease 0.1s both;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.35rem 1rem;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff8c00;
+  box-shadow: 0 0 6px #ff8c00;
+}
+
+.badgeText {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.72rem;
+  color: rgba(180, 70, 0, 0.75);
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0;
+  background: linear-gradient(
+    90deg,
+    #cc4400 0%,
+    #ff6b00 25%,
+    #ffd700 50%,
+    #ff8c00 75%,
+    #cc4400 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ih-title-shimmer 5s linear infinite;
+}
+
+/* ── Ornament divider ── */
+.ornamentDivider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.ornamentLine {
+  height: 1px;
+  flex: 1;
+}
+
+.ornamentLineLeft {
+  background: linear-gradient(to right, transparent, rgba(245, 166, 35, 0.6));
+}
+.ornamentLineRight {
+  background: linear-gradient(to left, transparent, rgba(245, 166, 35, 0.6));
+}
+
+.ornamentDiamond {
+  width: 6px;
+  height: 6px;
+  background: #ff6b00;
+  transform: rotate(45deg);
+}
+
+/* ── QuoteMark ── */
+.quoteMark {
+  opacity: 0.6;
+}
+
+.quoteMarkFlipped {
+  opacity: 0.6;
+  transform: scaleX(-1) scaleY(-1);
+}
+
+/* ── Section badge ── */
+.sectionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.15),
+    rgba(255, 215, 0, 0.1)
+  );
+  border: 2px solid rgba(245, 166, 35, 0.35);
+  font-family: "Cinzel Decorative", serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #cc4400;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.1);
+}
+
+/* ── Content card ── */
+.contentCard {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff, #fff9f2);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 12px 50px rgba(255, 140, 0, 0.1);
+  opacity: 0;
+}
+
+.contentCard.visible {
+  animation: ih-reveal 0.8s ease 0.3s both;
+}
+
+.contentCardTopBar {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff6b00,
+    #ffd700,
+    #ff6b00,
+    transparent
+  );
+  border-radius: 20px 20px 0 0;
+}
+
+/* ── Paragraphs ── */
+.paraWrapper {
+  opacity: 0;
+}
+
+.paraWrapper.visible {
+  /* delay is set via CSS variable --delay */
+  animation: ih-para-fade 0.6s ease var(--delay, 0s) both;
+}
+
+.paragraph {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+  color: #3a1800;
+  line-height: 2.1;
+  text-align: justify;
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.02em;
+}
+
+.paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ── Quote block ── */
+.quoteBlock {
+  position: relative;
+  padding: 2rem 2.5rem 2rem 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.04),
+    rgba(255, 215, 0, 0.02)
+  );
+  border-left: 4px solid;
+  border-image: linear-gradient(to bottom, #ff6b00, #ffd700, #ff6b00) 1;
+  border-radius: 0 12px 12px 0;
+  margin: 2.5rem 0;
+}
+
+.quoteMarkTopLeft {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.quoteMarkBottomRight {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.quoteParagraph {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 1rem;
+  color: #dc2626;
+  line-height: 2;
+  text-align: justify;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* ── Bottom ornament ── */
+.bottomOrnament {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(245, 166, 35, 0.15);
+  justify-content: center;
+}
+
+.bottomOrnamentLineLeft {
+  height: 1px;
+  width: 100px;
+  background: linear-gradient(to right, transparent, rgba(245, 166, 35, 0.5));
+}
+
+.bottomOrnamentLineRight {
+  height: 1px;
+  width: 100px;
+  background: linear-gradient(to left, transparent, rgba(245, 166, 35, 0.5));
+}
+
+.bottomDiamondSm {
+  width: 7px;
+  height: 7px;
+  background: #ff8c00;
+  transform: rotate(45deg);
+}
+
+.bottomDiamondLg {
+  width: 10px;
+  height: 10px;
+  background: #ffd700;
+  transform: rotate(45deg);
+}
+
+/* ── Blessing ── */
+.blessing {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.8rem;
+  color: rgba(180, 80, 0, 0.5);
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  letter-spacing: 0.1em;
+}
