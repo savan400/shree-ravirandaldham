@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronDown, Menu, X, Phone, Mail } from "lucide-react";
+import LotusDivider from "./LotusDivider/LotusDivider";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -238,8 +239,10 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
             {sub.title}
           </Link>
         ))}
+
       </div>
     )}
+
   </div>
 );
 
@@ -324,41 +327,54 @@ const Header: React.FC = () => {
               </p>
             </div>
           </Link>
+          <div className="flex gap-3">
+            <div className="gap-3 items-center hidden lg:flex" aria-hidden="true">
+              <Link href="/ravirandaldham/akshaypari-bapu" >
+                <Image
+                  src="/images/bapu-2.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/ajaypari-bapu" >
+                <Image
+                  src="/images/bapu-1.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/dineshpuri-bapu" >
+                <Image
+                  src="/images/bapu-3.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover w-14 h-14"
+                />
+              </Link>
+            </div>
 
-          <div className="flex gap-3 items-center" aria-hidden="true">
-            <Image
-              src="/images/bapu-2.png"
-              alt="Bapu"
-              width={56}
-              height={56}
-              className="rounded-full object-cover"
-            />
-            <Image
-              src="/images/bapu-1.png"
-              alt="Bapu"
-              width={56}
-              height={56}
-              className="rounded-full object-cover"
-            />
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
+              onClick={() => setMobileOpen((prev) => !prev)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
+            >
+              {mobileOpen ? (
+                <X className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <Menu className="w-6 h-6" aria-hidden="true" />
+              )}
+            </button>
           </div>
-
-          {/* Mobile menu toggle */}
-          <button
-            type="button"
-            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
-            onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
-          >
-            {mobileOpen ? (
-              <X className="w-6 h-6" aria-hidden="true" />
-            ) : (
-              <Menu className="w-6 h-6" aria-hidden="true" />
-            )}
-          </button>
         </div>
-
         {/* Desktop nav */}
         <div className="bg-gradient-to-r from-saffron-dark via-primary to-saffron-dark">
           <div className="container mx-auto px-4">
@@ -377,7 +393,7 @@ const Header: React.FC = () => {
         {mobileOpen && (
           <nav
             id="mobile-nav"
-            className="lg:hidden bg-card border-t border-border max-h-[70vh] overflow-y-auto"
+            className="lg:hidden bg-card border-t border-border max-h-[80vh] overflow-y-auto"
             aria-label="Mobile navigation"
           >
             {MENU_ITEMS.map((item) => (
@@ -389,6 +405,36 @@ const Header: React.FC = () => {
                 onClose={handleMobileClose}
               />
             ))}
+            <LotusDivider />
+            <div className="gap-3 items-center flex justify-center mb-5 -mt-5" aria-hidden="true">
+              <Link href="/ravirandaldham/akshaypari-bapu" >
+                <Image
+                  src="/images/bapu-2.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/ajaypari-bapu" >
+                <Image
+                  src="/images/bapu-1.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/dineshpuri-bapu" >
+                <Image
+                  src="/images/bapu-3.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover w-14 h-14"
+                />
+              </Link>
+            </div>
           </nav>
         )}
       </header>
