@@ -1,0 +1,24 @@
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.dividerLine {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, transparent, rgba(245, 166, 35, 0.6));
+}
+
+.dividerLine:last-of-type {
+  background: linear-gradient(to left, transparent, rgba(245, 166, 35, 0.6));
+}
+
+.dividerDiamond {
+  width: 6px;
+  height: 6px;
+  background: #ff6b00;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}

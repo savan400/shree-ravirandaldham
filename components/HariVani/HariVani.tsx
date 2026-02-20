@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import styles from "./HariVani.module.css";
+import LotusDivider from "../LotusDivider/LotusDivider";
+import { useInView } from "@/hooks/useInView";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -52,45 +54,14 @@ const QuoteOrnament: React.FC<QuoteOrnamentProps> = ({ flip = false }) => (
   </svg>
 );
 
-// ─────────────────────────────────────────────────────────────────────────────
 
-const SacredOrnament: React.FC = () => (
-  <div className={styles.ornament} aria-hidden="true">
-    <div className={styles["ornamentLine--left"]} />
-    <div className={styles.ornamentDiamond} />
-    <svg width="22" height="18" viewBox="0 0 22 18" fill="none">
-      <ellipse cx="11" cy="13" rx="2.5" ry="5" fill="url(#sg1)" />
-      <ellipse cx="6" cy="12" rx="2" ry="4" transform="rotate(-25 6 12)" fill="url(#sg2)" opacity="0.8" />
-      <ellipse cx="16" cy="12" rx="2" ry="4" transform="rotate(25 16 12)" fill="url(#sg2)" opacity="0.8" />
-      <defs>
-        <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#FFD700" /><stop offset="1" stopColor="#FF8C00" />
-        </linearGradient>
-        <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1">
-          <stop stopColor="#FFB700" /><stop offset="1" stopColor="#FF6B00" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <div className={styles.ornamentDiamond} />
-    <div className={styles["ornamentLine--right"]} />
-  </div>
-);
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const HariVani: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
   return (
     <section
       ref={sectionRef}
@@ -144,7 +115,7 @@ const HariVani: React.FC = () => {
             </span>
             <div className={styles.tagDot} aria-hidden="true" />
           </div>
-          <SacredOrnament />
+          <LotusDivider />
         </div>
 
         {/* Quote block */}

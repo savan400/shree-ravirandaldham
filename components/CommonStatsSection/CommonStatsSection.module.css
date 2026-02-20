@@ -1,0 +1,353 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap");
+
+/* ── Design Tokens ── */
+:root {
+  --ss-gold: #ffd700;
+  --ss-gold-mid: #f5a623;
+  --ss-saffron: #ff8c00;
+  --ss-saffron-mid: #ff6b00;
+  --ss-saffron-deep: #ff4500;
+  --ss-rust: #cc4400;
+  --ss-brown-dark: #4a2000;
+  --ss-font-display: "Cinzel Decorative", serif;
+  --ss-font-devanagari: "Tiro Devanagari Hindi", serif;
+  --ss-font-body: "Cormorant Garamond", serif;
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────────────────── */
+
+@keyframes ss-bg-breathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes ss-subtitle-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0 4.5rem;
+  background: linear-gradient(
+    160deg,
+    #fffcf5 0%,
+    #fff8ec 35%,
+    #fffdf8 65%,
+    #fff5e0 100%
+  );
+  background-size: 200% 200%;
+  animation: ss-bg-breathe 12s ease-in-out infinite;
+}
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ─── Section Header ───────────────────────────────────────────────────────── */
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  transition: opacity 0.6s ease;
+}
+
+.header--visible {
+  opacity: 1;
+}
+.header--hidden {
+  opacity: 0;
+}
+
+.subtitle {
+  font-family: var(--ss-font-body);
+  font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+  color: #8b4513;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle--visible {
+  opacity: 1;
+  animation: ss-subtitle-reveal 0.6s ease 0.2s both;
+}
+
+.subtitle--hidden {
+  opacity: 0;
+}
+
+/* Diamond divider */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dividerLine--left {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, var(--ss-saffron-mid));
+}
+
+.dividerLine--right {
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(to left, transparent, var(--ss-saffron-mid));
+}
+
+.dividerDiamondSm {
+  width: 7px;
+  height: 7px;
+  background: var(--ss-saffron-mid);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.dividerDiamondLg {
+  width: 10px;
+  height: 10px;
+  background: var(--ss-gold);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* Footer note */
+.footerNote {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-family: var(--ss-font-devanagari);
+  font-size: 0.8rem;
+  color: rgba(140, 60, 0, 0.5);
+  letter-spacing: 0.08em;
+  transition: opacity 0.6s ease 0.8s;
+}
+
+.footerNote--visible {
+  opacity: 1;
+}
+.footerNote--hidden {
+  opacity: 0;
+}
+
+/* ─── Stat Card ────────────────────────────────────────────────────────────── */
+
+.card {
+  position: relative;
+  border-radius: 16px;
+  padding: 2rem 1.25rem 1.75rem;
+  text-align: center;
+  cursor: default;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    box-shadow 0.3s ease;
+}
+
+.card--hidden {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* Default card style */
+.card--default {
+  background: linear-gradient(145deg, #ffffff, #fff9f2);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.card--default:hover {
+  box-shadow:
+    0 16px 48px rgba(255, 140, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Featured card */
+.card--featured {
+  background: linear-gradient(145deg, #fff8e8, #fff2d0);
+  border: 1.5px solid rgba(255, 140, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(255, 140, 0, 0.15);
+}
+
+.card--featured:hover {
+  box-shadow:
+    0 16px 48px rgba(255, 140, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Featured crown badge */
+.crownBadge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--ss-saffron-mid), var(--ss-gold));
+  border-radius: 20px;
+  padding: 0.2rem 0.8rem;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.35);
+  white-space: nowrap;
+}
+
+.crownBadgeText {
+  font-family: var(--ss-font-display);
+  font-size: 0.5rem;
+  color: #1a0500;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+/* Corner accent diamonds */
+.cornerTR {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+}
+
+.cornerBL {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 4px;
+  height: 4px;
+  transform: rotate(45deg);
+}
+
+.cornerTR--featured {
+  background: var(--ss-gold);
+}
+.cornerTR--default {
+  background: rgba(245, 166, 35, 0.4);
+}
+.cornerBL--featured {
+  background: var(--ss-saffron);
+}
+.cornerBL--default {
+  background: rgba(245, 166, 35, 0.3);
+}
+
+/* Icon container */
+.iconWrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1) rotate(0deg);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.iconWrap--default {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.08),
+    rgba(255, 215, 0, 0.05)
+  );
+  border: 1.5px solid rgba(245, 166, 35, 0.2);
+}
+
+.iconWrap--featured {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.15),
+    rgba(255, 215, 0, 0.1)
+  );
+  border: 1.5px solid rgba(255, 140, 0, 0.4);
+}
+
+.card:hover .iconWrap {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.25);
+}
+
+/* Stat number */
+.statNumber {
+  font-family: var(--ss-font-display);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+
+  background: linear-gradient(
+    135deg,
+    var(--ss-rust),
+    var(--ss-saffron-mid),
+    var(--ss-gold)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Stat label */
+.statLabel {
+  font-family: var(--ss-font-devanagari);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ss-brown-dark);
+  margin-bottom: 0.15rem;
+}
+
+/* Stat sublabel */
+.statSublabel {
+  font-family: var(--ss-font-display);
+  font-size: 0.5rem;
+  color: rgba(150, 80, 0, 0.55);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Bottom accent line */
+.cardAccentLine {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 140, 0, 0.5),
+    transparent
+  );
+  border-radius: 0 0 16px 16px;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .cardAccentLine {
+  opacity: 1;
+}

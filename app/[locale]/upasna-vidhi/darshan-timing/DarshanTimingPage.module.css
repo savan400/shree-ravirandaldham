@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Cinzel+Decorative:wght@400;700&display=swap");
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Section ── */
+.darshanSection {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  background: linear-gradient(160deg, #fffdf8 0%, #fff8ee 40%, #fffcf5 100%);
+}
+
+/* ── Background dot grid ── */
+.bgGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(245, 166, 35, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+}
+
+/* ── Top gold bar ── */
+.topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 5;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff4500 15%,
+    #ffd700 40%,
+    #ff8c00 50%,
+    #ffd700 60%,
+    #ff4500 85%,
+    transparent 100%
+  );
+}
+
+/* ── Container ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3.5rem;
+  align-items: start;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ── Temple image wrapper ── */
+.templeImageWrapper {
+  position: sticky;
+  top: 150px;
+}
+
+.templeImageCard {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  box-shadow:
+    0 8px 32px rgba(255, 140, 0, 0.14),
+    0 2px 8px rgba(255, 140, 0, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  background: #fff9f0;
+}
+
+.templeImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ── Corner ornaments ── */
+.cornerOrnament {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  z-index: 3;
+}
+
+.cornerTl {
+  top: 8px;
+  left: 8px;
+  border-top: 2px solid rgba(255, 200, 50, 0.7);
+  border-left: 2px solid rgba(255, 200, 50, 0.7);
+}
+.cornerTr {
+  top: 8px;
+  right: 8px;
+  border-top: 2px solid rgba(255, 200, 50, 0.7);
+  border-right: 2px solid rgba(255, 200, 50, 0.7);
+}
+.cornerBl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 2px solid rgba(255, 200, 50, 0.7);
+  border-left: 2px solid rgba(255, 200, 50, 0.7);
+}
+.cornerBr {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 2px solid rgba(255, 200, 50, 0.7);
+  border-right: 2px solid rgba(255, 200, 50, 0.7);
+}
+
+/* ── Timing content ── */
+.timingContent {
+  padding-top: 0.5rem;
+}
+
+.timingTitle {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+  font-weight: 700;
+  color: #b91c1c;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Ornament divider ── */
+.ornamentDivider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.ornamentLine {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to right, rgba(245, 166, 35, 0.5), transparent);
+}
+
+.ornamentLine:last-child {
+  background: linear-gradient(to left, rgba(245, 166, 35, 0.5), transparent);
+}
+
+.ornamentDiamond {
+  width: 6px;
+  height: 6px;
+  background: #ff8c00;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ── Timing table ── */
+.timingTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.timingRow {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(245, 166, 35, 0.15);
+  transition: background 0.2s ease;
+}
+
+.timingRow:first-child {
+  border-top: 1px solid rgba(245, 166, 35, 0.15);
+}
+
+.timingRow:hover {
+  background: rgba(255, 140, 0, 0.03);
+  border-radius: 6px;
+}
+
+.timingLabel {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  font-weight: 700;
+  color: #1c1c1c;
+  letter-spacing: 0.01em;
+}
+
+.timingValue {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(0.88rem, 1.3vw, 0.97rem);
+  color: #4a2800;
+  line-height: 1.7;
+}
+
+@media (max-width: 540px) {
+  .timingRow {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}

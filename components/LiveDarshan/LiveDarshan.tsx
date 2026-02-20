@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import styles from "./LiveDarshan.module.css";
+import { useInView } from "@/hooks/useInView";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -68,17 +68,9 @@ const OrnamentLine: React.FC = () => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const LiveDarshan: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.12 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
 
   return (
     <section

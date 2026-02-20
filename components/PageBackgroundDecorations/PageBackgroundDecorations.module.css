@@ -1,0 +1,63 @@
+.dotGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(245, 166, 35, 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+  opacity: 0.5;
+}
+
+.radialGlow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 300px;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 140, 0, 0.12),
+    transparent 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.omWatermark {
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18rem;
+  color: #ff8c00;
+  opacity: 0.025;
+  user-select: none;
+  pointer-events: none;
+  font-family: serif;
+  line-height: 1;
+  z-index: 0;
+}
+
+.topGoldBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 5;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff4500 15%,
+    #ffd700 40%,
+    #ff8c00 50%,
+    #ffd700 60%,
+    #ff4500 85%,
+    transparent 100%
+  );
+}

@@ -14,8 +14,8 @@ export async function fetchSeoData(route: string, locale: string) {
       throw new Error('Failed to fetch SEO data');
     }
     return res.json();
-  } catch (error) {
-    console.error('Error fetching SEO data:', error);
+  } catch {
+    // Backend offline — silently return null so static defaults are used
     return null;
   }
 }

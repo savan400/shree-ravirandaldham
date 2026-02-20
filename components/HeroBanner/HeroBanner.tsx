@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./HeroBanner.module.css";
+import CommonButton from "../CommonButton/CommonButton";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -334,12 +335,8 @@ const HeroBanner: React.FC = () => {
 
         {/* CTA buttons */}
         <div className={textClass(textVisible, styles.ctaGroup)}>
-          <button type="button" className={`${styles.btn} ${styles["btn--primary"]}`}>
-            Darshan Timings
-          </button>
-          <button type="button" className={`${styles.btn} ${styles["btn--outline"]}`}>
-            Explore Dham
-          </button>
+          <CommonButton text="Darshan Timings" variant="primary" />
+          <CommonButton text="Explore Dham" variant="outline" />
         </div>
       </div>
 

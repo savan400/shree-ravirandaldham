@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
+
+/* ── Keyframes ── */
+@keyframes ih-bg-breathe {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes ih-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes ih-para-fade {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Section ── */
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+  background: linear-gradient(
+    160deg,
+    #fff9f0 0%,
+    #fff5e5 30%,
+    #fffbf3 60%,
+    #fff0dc 100%
+  );
+  background-size: 200% 200%;
+  animation: ih-bg-breathe 12s ease-in-out infinite;
+}
+
+/* ── Inner wrapper ── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+}
+
+.header.visible {
+  opacity: 1;
+  animation: ih-reveal 0.7s ease 0.1s both;
+}
+
+/* ── QuoteMark ── */
+.quoteMark {
+  opacity: 0.6;
+}
+
+.quoteMarkFlipped {
+  opacity: 0.6;
+  transform: scaleX(-1) scaleY(-1);
+}
+
+/* ── Content card ── */
+.contentCard {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff, #fff9f2);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 12px 50px rgba(255, 140, 0, 0.1);
+  opacity: 0;
+}
+
+.contentCard.visible {
+  animation: ih-reveal 0.8s ease 0.3s both;
+}
+
+.contentCardTopBar {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff6b00,
+    #ffd700,
+    #ff6b00,
+    transparent
+  );
+  border-radius: 20px 20px 0 0;
+}
+
+/* ── Paragraphs ── */
+.paraWrapper {
+  opacity: 0;
+}
+
+.paraWrapper.visible {
+  animation: ih-para-fade 0.6s ease var(--delay, 0s) both;
+}
+
+.paragraph {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+  color: #3a1800;
+  line-height: 2.1;
+  text-align: justify;
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.02em;
+}
+
+.paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ── Quote block ── */
+.quoteBlock {
+  position: relative;
+  padding: 2rem 2.5rem 2rem 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 0, 0.04),
+    rgba(255, 215, 0, 0.02)
+  );
+  border-left: 4px solid;
+  border-image: linear-gradient(to bottom, #ff6b00, #ffd700, #ff6b00) 1;
+  border-radius: 0 12px 12px 0;
+  margin: 2.5rem 0;
+}
+
+.quoteMarkTopLeft {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.quoteMarkBottomRight {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.quoteParagraph {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 1rem;
+  color: #dc2626;
+  line-height: 2;
+  text-align: justify;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* ── Blessing ── */
+.blessing {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 0.8rem;
+  color: rgba(180, 80, 0, 0.5);
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  letter-spacing: 0.1em;
+}

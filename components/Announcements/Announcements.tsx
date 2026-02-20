@@ -3,6 +3,7 @@
 import { AlertTriangle, Bell, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import styles from "./Announcements.module.css";
+import { useInView } from "@/hooks/useInView";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -52,20 +53,9 @@ const PulsingBell: React.FC = () => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const Announcements: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.15 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
   return (
     <section
       ref={sectionRef}

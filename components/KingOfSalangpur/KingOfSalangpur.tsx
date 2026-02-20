@@ -3,6 +3,11 @@
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./KingOfSalangpur.module.css";
+import CommonTitle from "../CommonTitle/CommonTitle";
+import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
+import CommonBadge from "../CommonBadge/CommonBadge";
+import CommonButton from "../CommonButton/CommonButton";
+import { useInView } from "@/hooks/useInView";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -109,18 +114,9 @@ const StatBadge: React.FC<StatBadgeProps> = ({ stat, visible, delay }) => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const KingOfSalangpur: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.12 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
   return (
     <section
       ref={sectionRef}
@@ -128,11 +124,7 @@ const KingOfSalangpur: React.FC = () => {
       className={styles.section}
       aria-labelledby="ks-title"
     >
-      {/* ── Background decorations ── */}
-      <div className={styles.dotGrid} aria-hidden="true" />
-      <div className={styles.watermark} aria-hidden="true">ॐ</div>
-      <div className={styles.borderBand} aria-hidden="true" />
-
+      <PageBackgroundDecorations />
       <div className={styles.container}>
         <div className={styles.grid}>
 
@@ -177,17 +169,10 @@ const KingOfSalangpur: React.FC = () => {
           {/* ── RIGHT: Text content ── */}
           <div className={`${styles.textCol} ${visible ? styles["rightCol--visible"] : styles.hidden}`}>
 
-            {/* Sub-label badge */}
-            <div className={`${styles.badge} ${visible ? styles["badge--visible"] : styles.hidden}`}>
-              <div className={styles.badgeDot} aria-hidden="true" />
-              <span className={styles.badgeText}>ગુજરાતની ગૌરવ</span>
-            </div>
+            <CommonBadge text="ગુજરાતની ગૌરવ" />
 
             {/* Heading */}
-            <h2 id="ks-title" className={styles.title}>
-              કિંગ ઓફ સાળંગપુર
-            </h2>
-
+            <CommonTitle text="કિંગ ઓફ સાળંગપુર" />
             <DiamondRule />
 
             {/* Description */}
@@ -215,12 +200,7 @@ const KingOfSalangpur: React.FC = () => {
                 </React.Fragment>
               ))}
             </div>
-
-            {/* CTA */}
-            <a href="#" className={styles.ctaBtn}>
-              READ MORE
-              <span className={styles.ctaArrow} aria-hidden="true">→</span>
-            </a>
+            <CommonButton text="READ MORE" variant="primary" icon={true} />
 
           </div>
         </div>

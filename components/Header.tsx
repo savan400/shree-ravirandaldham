@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { ChevronDown, Menu, X, Phone, Mail } from "lucide-react";
+import LotusDivider from "./LotusDivider/LotusDivider";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -25,36 +26,36 @@ const MENU_ITEMS: MenuItem[] = [
     title: "Ravirandal Dham",
     href: "#salangpur-dham",
     submenu: [
-      { title: "Parichay", href: "#parichay" },
-      { title: "Itihas", href: "#itihas" },
-      { title: "Mahima", href: "#mahima" },
-      { title: "Shree 1008 Adaypati Bapu", href: "#itihas" },
-      { title: "Shree Ajaypari Bapu", href: "#mahima" },
-      { title: "Shree Dineshpuri Bapu", href: "#mahima" },
-      { title: "Seva Karya", href: "#mahima" },
+      { title: "Parichay", href: "/ravirandaldham/parichay" },
+      { title: "Itihas", href: "/ravirandaldham/itihas" },
+      { title: "Mahima", href: "/ravirandaldham/mahima" },
+      { title: "Shree 1008 Akshaypari Bapu", href: "/ravirandaldham/akshaypari-bapu" },
+      { title: "Shree Ajaypari Bapu", href: "/ravirandaldham/ajaypari-bapu" },
+      { title: "Shree Dineshpuri Bapu", href: "/ravirandaldham/dineshpuri-bapu" },
+      { title: "Seva Karya", href: "/ravirandaldham/seva-karya" },
     ],
   },
   {
     title: "Upasna Vidhi",
     href: "#kashtabhanjan-dev",
     submenu: [
-      { title: "Darshan Timing", href: "#dev-parichay" },
-      { title: "Seva Punjan", href: "#dev-itihas" },
-      { title: "Bhakti", href: "#dev-mahima" },
-      { title: "Utsav", href: "#king-of-salangpur" },
-      { title: "Randal Tedvanu Booking", href: "#king-of-salangpur" },
-      { title: "Yagna Booking", href: "#king-of-salangpur" },
-      { title: "Aarti", href: "#king-of-salangpur" },
-      { title: "Mataji Darshan", href: "#king-of-salangpur" },
+      { title: "Darshan Timing", href: "/upasna-vidhi/darshan-timing" },
+      { title: "Seva Punjan", href: "/upasna-vidhi/seva-punjan" },
+      { title: "Bhakti", href: "/upasna-vidhi/bhakti" },
+      { title: "Utsav", href: "/upasna-vidhi/utsav" },
+      { title: "Randal Tedvanu Booking", href: "/upasna-vidhi/randal-booking" },
+      { title: "Yagna Booking", href: "/upasna-vidhi/yagna-booking" },
+      { title: "Aarti", href: "/upasna-vidhi/aarti" },
+      { title: "Mataji Darshan", href: "/upasna-vidhi/mataji-darshan" },
     ],
   },
   {
     title: "Facilities",
     href: "#facilities",
     submenu: [
-      { title: "Bhojan Shala", href: "#dev-parichay" },
-      { title: "108 Randal", href: "#dev-itihas" },
-      { title: "Atithi Gruh", href: "#dev-mahima" },
+      { title: "Bhojan Shala", href: "/facilities/bhojan-shala" },
+      { title: "108 Randal", href: "/facilities/108-randal" },
+      { title: "Atithi Gruh", href: "/facilities/atithi-gruh" },
     ],
   },
   {
@@ -73,27 +74,27 @@ const MENU_ITEMS: MenuItem[] = [
     title: "Events",
     href: "#events",
     submenu: [
-      { title: "Upcoming Events", href: "#dev-parichay" },
-      { title: "Video Gallery", href: "#dev-itihas" },
-      { title: "Photo Gallery", href: "#dev-mahima" },
+      { title: "Upcoming Events", href: "/events/upcoming-events" },
+      { title: "Video Gallery", href: "/events/video-gallery" },
+      { title: "Photo Gallery", href: "/events/photo-gallery" },
     ],
   },
   {
     title: "History",
     href: "#history",
     submenu: [
-      { title: "History of Randaldham", href: "#dev-parichay" },
-      { title: "Randal Prerna", href: "#dev-itihas" },
+      { title: "History of Randaldham", href: "/history/history-of-randaldham" },
+      { title: "Randal Prerna", href: "/history/randal-prerna" },
     ],
   },
   {
     title: "Downloads",
     href: "#downloads",
     submenu: [
-      { title: "Wallpaper", href: "#dev-parichay" },
-      { title: "Calendar", href: "#dev-itihas" },
-      { title: "Books", href: "#dev-itihas" },
-      { title: "Audio", href: "#dev-itihas" },
+      { title: "Wallpaper", href: "/downloads/wallpaper" },
+      { title: "Calendar", href: "/downloads/calendar" },
+      { title: "Books", href: "/downloads/books" },
+      { title: "Audio", href: "/downloads/audio" },
     ],
   },
   { title: "Thoughts of Bapu", href: "#thoughts-of-bapu" },
@@ -369,41 +370,54 @@ const Header: React.FC = () => {
               </p>
             </div>
           </Link>
+          <div className="flex gap-3">
+            <div className="gap-3 items-center hidden lg:flex" aria-hidden="true">
+              <Link href="/ravirandaldham/akshaypari-bapu" >
+                <Image
+                  src="/images/bapu-2.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/ajaypari-bapu" >
+                <Image
+                  src="/images/bapu-1.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/dineshpuri-bapu" >
+                <Image
+                  src="/images/bapu-3.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover w-14 h-14"
+                />
+              </Link>
+            </div>
 
-          <div className="flex gap-3 items-center" aria-hidden="true">
-            <Image
-              src="/images/bapu-2.png"
-              alt="Bapu"
-              width={56}
-              height={56}
-              className="rounded-full object-cover"
-            />
-            <Image
-              src="/images/bapu-1.png"
-              alt="Bapu"
-              width={56}
-              height={56}
-              className="rounded-full object-cover"
-            />
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
+              onClick={() => setMobileOpen((prev) => !prev)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
+            >
+              {mobileOpen ? (
+                <X className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <Menu className="w-6 h-6" aria-hidden="true" />
+              )}
+            </button>
           </div>
-
-          {/* Mobile menu toggle */}
-          <button
-            type="button"
-            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
-            onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
-          >
-            {mobileOpen ? (
-              <X className="w-6 h-6" aria-hidden="true" />
-            ) : (
-              <Menu className="w-6 h-6" aria-hidden="true" />
-            )}
-          </button>
         </div>
-
         {/* Desktop nav */}
         <div className="bg-gradient-to-r from-saffron-dark via-primary to-saffron-dark">
           <div className="container mx-auto px-4">
@@ -422,7 +436,7 @@ const Header: React.FC = () => {
         {mobileOpen && (
           <nav
             id="mobile-nav"
-            className="lg:hidden bg-card border-t border-border max-h-[70vh] overflow-y-auto"
+            className="lg:hidden bg-card border-t border-border max-h-[80vh] overflow-y-auto"
             aria-label="Mobile navigation"
           >
             {MENU_ITEMS.map((item) => (
@@ -434,6 +448,36 @@ const Header: React.FC = () => {
                 onClose={handleMobileClose}
               />
             ))}
+            <LotusDivider />
+            <div className="gap-3 items-center flex justify-center mb-5 -mt-5" aria-hidden="true">
+              <Link href="/ravirandaldham/akshaypari-bapu" >
+                <Image
+                  src="/images/bapu-2.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/ajaypari-bapu" >
+                <Image
+                  src="/images/bapu-1.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover"
+                />
+              </Link>
+              <Link href="/ravirandaldham/dineshpuri-bapu" >
+                <Image
+                  src="/images/bapu-3.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover w-14 h-14"
+                />
+              </Link>
+            </div>
           </nav>
         )}
       </header>

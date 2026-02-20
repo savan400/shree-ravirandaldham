@@ -249,7 +249,11 @@
   right: 0;
   bottom: 0;
 }
-
+@media screen and (max-width: 1024px) {
+  .bapuImage {
+    opacity: 0.2;
+  }
+}
 /* ─── Content Container ────────────────────────────────────────────────────── */
 
 .container {
@@ -361,8 +365,6 @@
   position: relative;
   animation: hv-frame-glow 5s ease-in-out infinite;
 }
-
-
 
 /* Quote ornament positions */
 .quoteOrnamentTop {
