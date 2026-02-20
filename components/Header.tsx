@@ -97,7 +97,7 @@ const MENU_ITEMS: MenuItem[] = [
       { title: "Audio", href: "/downloads/audio" },
     ],
   },
-  { title: "Thoughts of Bapu", href: "#thoughts-of-bapu" },
+  { title: "Thoughts of Bapu", href: "/thoughts-of-bapu" },
   { title: "Store", href: "#store" },
   { title: "Donation", href: "#donation" },
   { title: "Contact Us", href: "#contact-us" },
