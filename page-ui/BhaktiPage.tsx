@@ -2,8 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
-import sevaPunjanStyles from "../app/upasna-vidhi/seva-punjan/SevaPunjanPage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import sevaPunjanStyles from "@/app/[locale]/upasna-vidhi/seva-punjan/SevaPunjanPage.module.css";
 import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/PageBackgroundDecorations';
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';

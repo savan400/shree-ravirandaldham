@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

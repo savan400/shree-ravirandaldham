@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react'
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
 import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/PageBackgroundDecorations';
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';

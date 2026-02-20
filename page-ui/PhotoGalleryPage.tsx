@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import styles from "../app/events/photo-gallery/PhotoGalleryPage.module.css";
+import styles from "@/app/[locale]/events/photo-gallery/PhotoGalleryPage.module.css";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";

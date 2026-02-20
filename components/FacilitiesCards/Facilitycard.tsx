@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import styles from "./FacilitiesCards.module.css";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

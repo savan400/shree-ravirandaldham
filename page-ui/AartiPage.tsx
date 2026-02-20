@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Music } from "lucide-react";
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
-import cardStyles from "../app/upasna-vidhi/aarti/Aartipage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import cardStyles from "@/app/[locale]/upasna-vidhi/aarti/Aartipage.module.css";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";

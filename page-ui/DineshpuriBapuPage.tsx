@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
 import LotusSvg from "@/components/LotusSvg";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";

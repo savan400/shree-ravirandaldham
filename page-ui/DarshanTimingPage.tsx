@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
-import dStyles from "../app/upasna-vidhi/darshan-timing/DarshanTimingPage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import dStyles from "@/app/[locale]/upasna-vidhi/darshan-timing/DarshanTimingPage.module.css";
 import LotusSvg from "@/components/LotusSvg";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";

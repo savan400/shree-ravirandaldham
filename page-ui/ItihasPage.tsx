@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import styles from "../app/ravirandaldham/itihas/Itihaspage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/itihas/Itihaspage.module.css";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";

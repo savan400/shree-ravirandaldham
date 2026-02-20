@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useState, useRef, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
 import styles from "./DailyDarshan.module.css";

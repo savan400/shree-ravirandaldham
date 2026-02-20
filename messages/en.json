@@ -1,0 +1,15 @@
+{
+  "HomePage": {
+    "title": "Welcome to Shree Ravirandaldham",
+    "description": "A spiritual place for peace and devotion."
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "admin": "Admin"
+  },
+  "Admin": {
+    "title": "SEO Management",
+    "save": "Save Changes"
+  }
+}

@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Calendar, MapPin, Clock } from "lucide-react";
-import styles from "../app/events/upcoming-events/UpcomingEventsPage.module.css";
+import styles from "@/app/[locale]/events/upcoming-events/UpcomingEventsPage.module.css";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";

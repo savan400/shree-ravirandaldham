@@ -1,6 +1,6 @@
 import DiamondDivider from '@/components/DiamondDivider/DiamondDivider'
 import { visibleClass } from '@/lib/utils'
-import styles from "../app/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
+import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
 
 export default function RandalSahayate() {
   return (

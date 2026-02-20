@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { ChevronDown, Menu, X, Phone, Mail } from "lucide-react";
 import LotusDivider from "./LotusDivider/LotusDivider";
@@ -151,40 +151,68 @@ interface DesktopNavItemProps {
   item: MenuItem;
 }
 
-const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item }) => (
-  <div className="nav-item relative group">
-    <Link
-      href={item.href}
-      className="flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative
-        after:absolute after:bottom-2 after:left-3 after:right-3 after:h-0.5
-        after:bg-primary after:scale-x-0 after:origin-left
-        after:transition-transform after:duration-300 hover:after:scale-x-100"
-    >
-      {item.title}
-      {item.submenu && (
-        <ChevronDown
-          className="w-3 h-3 transition-transform group-hover:rotate-180"
-          aria-hidden="true"
-        />
-      )}
-    </Link>
+const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item }) => {
+  // Use plain <a> for hash links so the browser handles anchor scroll natively.
+  // Next.js <Link> prepends the pathname which breaks hash-only hrefs.
+  const isHash = item.href.startsWith('#');
+  const linkClass =
+    'flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative ' +
+    'after:absolute after:bottom-2 after:left-3 after:right-3 after:h-0.5 ' +
+    'after:bg-primary after:scale-x-0 after:origin-left ' +
+    'after:transition-transform after:duration-300 hover:after:scale-x-100';
 
-    {item.submenu && (
-      <div className="nav-dropdown" role="menu" aria-label={`${item.title} submenu`}>
-        {item.submenu.map((sub) => (
-          <Link
-            key={sub.title}
-            href={sub.href}
-            className="nav-dropdown-item"
-            role="menuitem"
-          >
-            {sub.title}
-          </Link>
-        ))}
-      </div>
-    )}
-  </div>
-);
+  return (
+    <div className="nav-item relative group">
+      {isHash ? (
+        <a href={item.href} className={linkClass}>
+          {item.title}
+          {item.submenu && (
+            <ChevronDown
+              className="w-3 h-3 transition-transform group-hover:rotate-180"
+              aria-hidden="true"
+            />
+          )}
+        </a>
+      ) : (
+        <Link href={item.href} className={linkClass}>
+          {item.title}
+          {item.submenu && (
+            <ChevronDown
+              className="w-3 h-3 transition-transform group-hover:rotate-180"
+              aria-hidden="true"
+            />
+          )}
+        </Link>
+      )}
+
+      {item.submenu && (
+        <div className="nav-dropdown" role="menu" aria-label={`${item.title} submenu`}>
+          {item.submenu.map((sub) => (
+            sub.href.startsWith('#') ? (
+              <a
+                key={sub.title}
+                href={sub.href}
+                className="nav-dropdown-item"
+                role="menuitem"
+              >
+                {sub.title}
+              </a>
+            ) : (
+              <Link
+                key={sub.title}
+                href={sub.href}
+                className="nav-dropdown-item"
+                role="menuitem"
+              >
+                {sub.title}
+              </Link>
+            )
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 // ─── Mobile Nav Item ──────────────────────────────────────────────────────────
 
@@ -200,51 +228,66 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
   isOpen,
   onToggle,
   onClose,
-}) => (
-  <div>
-    {item.submenu ? (
-      <button
-        type="button"
-        className="w-full flex items-center justify-between px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors"
-        onClick={() => onToggle(item.title)}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-      >
-        {item.title}
-        <ChevronDown
-          className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          aria-hidden="true"
-        />
-      </button>
-    ) : (
-      <Link
-        href={item.href}
-        className="w-full flex items-center justify-between px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors"
-        onClick={onClose}
-      >
-        {item.title}
-      </Link>
-    )}
+}) => {
+  const mobileLinkClass =
+    'w-full flex items-center justify-between px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors';
 
-    {item.submenu && isOpen && (
-      <div className="bg-secondary/50" role="menu">
-        {item.submenu.map((sub) => (
-          <Link
-            key={sub.title}
-            href={sub.href}
-            className="block px-10 py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
-            role="menuitem"
-            onClick={onClose}
-          >
-            {sub.title}
-          </Link>
-        ))}
+  return (
+    <div>
+      {item.submenu ? (
+        <button
+          type="button"
+          className={mobileLinkClass}
+          onClick={() => onToggle(item.title)}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+        >
+          {item.title}
+          <ChevronDown
+            className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            aria-hidden="true"
+          />
+        </button>
+      ) : item.href.startsWith('#') ? (
+        <a href={item.href} className={mobileLinkClass} onClick={onClose}>
+          {item.title}
+        </a>
+      ) : (
+        <Link href={item.href} className={mobileLinkClass} onClick={onClose}>
+          {item.title}
+        </Link>
+      )}
 
-      </div>
-    )}
-
-  </div>
-);
+      {item.submenu && isOpen && (
+        <div className="bg-secondary/50" role="menu">
+          {item.submenu.map((sub) => (
+            sub.href.startsWith('#') ? (
+              <a
+                key={sub.title}
+                href={sub.href}
+                className="block px-10 py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+                role="menuitem"
+                onClick={onClose}
+              >
+                {sub.title}
+              </a>
+            ) : (
+              <Link
+                key={sub.title}
+                href={sub.href}
+                className="block px-10 py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+                role="menuitem"
+                onClick={onClose}
+              >
+                {sub.title}
+              </Link>
+            )
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 // ─── Main Header ──────────────────────────────────────────────────────────────
 
