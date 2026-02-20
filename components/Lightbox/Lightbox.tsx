@@ -91,7 +91,7 @@ const Lightbox = ({
             <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
                 <Image
                     src={current.src}
-                    alt={current.alt}
+                    alt={current.alt || "Lightbox image"}
                     width={1200}
                     height={800}
                     className={styles.lightboxImage}

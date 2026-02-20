@@ -5,9 +5,9 @@ import { useState } from "react";
 import styles from "./CommonDarshanCard.module.css";
 
 interface CommonDarshanCardProps {
-    image: string;
-    date: string;
-    day: string;
+    image?: string;
+    date?: string;
+    day?: string;
     priority?: boolean;
 }
 
@@ -68,7 +68,11 @@ const CommonDarshanCard: React.FC<CommonDarshanCardProps> = ({
             {/* Image */}
             <Image
                 src={image}
-                alt={`Daily Darshan ${date} ${day}`}
+                alt={
+                    date && day
+                        ? `Daily Darshan ${date} (${day})`
+                        : "Darshan Image"
+                }
                 width={520}
                 height={390}
                 className={`${styles.darshanImage} ${imgHovered
@@ -79,11 +83,13 @@ const CommonDarshanCard: React.FC<CommonDarshanCardProps> = ({
             />
 
             {/* Bottom overlay */}
-            <div className={styles.cardOverlay}>
-                <p className={styles.cardDate}>
-                    Daily Darshan — {date} ({day})
-                </p>
-            </div>
+            {date &&
+                <div className={styles.cardOverlay}>
+                    <p className={styles.cardDate}>
+                        Daily Darshan — {date} ({day})
+                    </p>
+                </div>
+            }
         </div>
     );
 };

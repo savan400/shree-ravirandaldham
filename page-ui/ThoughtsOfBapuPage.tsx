@@ -15,55 +15,92 @@ import { visibleClass } from '@/lib/utils';
 export interface DarshanItem {
     id: string;
     image: string;
-    date: string;
-    day: string;
+    date?: string;
+    day?: string;
     title?: string;
 }
 
 export const darshanList: DarshanItem[] = [
     {
         id: "1",
-        image: "/images/salangpurhanumanji.jpg",
-        date: "17-02-2026",
-        day: "TUESDAY",
-        title: "Morning Darshan",
+        image: "/images/thoughts-bapu/d-1.webp",
     },
     {
         id: "2",
-        image: "/images/salangpurhanumanji.jpg",
-        date: "16-02-2026",
-        day: "MONDAY",
-        title: "Evening Darshan",
+        image: "/images/thoughts-bapu/d-2.webp",
     },
     {
         id: "3",
-        image: "/images/salangpurhanumanji.jpg",
-        date: "15-02-2026",
-        day: "SUNDAY",
-        title: "Special Shringar",
+        image: "/images/thoughts-bapu/d-3.webp",
     },
     {
         id: "4",
-        image: "/images/salangpurhanumanji.jpg",
-        date: "14-02-2026",
-        day: "SATURDAY",
-        title: "Festival Darshan",
+        image: "/images/thoughts-bapu/d-4.webp",
     },
     {
         id: "5",
-        image: "/images/salangpurhanumanji.jpg",
-        date: "13-02-2026",
-        day: "FRIDAY",
-        title: "Mangala Aarti",
+        image: "/images/thoughts-bapu/d-5.webp",
+    },
+    {
+        id: "6",
+        image: "/images/thoughts-bapu/d-6.webp",
+    },
+    {
+        id: "7",
+        image: "/images/thoughts-bapu/d-7.webp",
+    },
+    {
+        id: "8",
+        image: "/images/thoughts-bapu/d-8.webp",
+    },
+    {
+        id: "9",
+        image: "/images/thoughts-bapu/d-9.webp",
+    },
+    {
+        id: "10",
+        image: "/images/thoughts-bapu/d-10.webp",
+    },
+    {
+        id: "11",
+        image: "/images/thoughts-bapu/d-11.webp",
+    },
+    {
+        id: "12",
+        image: "/images/thoughts-bapu/d-12.webp",
+    },
+    {
+        id: "13",
+        image: "/images/thoughts-bapu/d-13.webp",
+    },
+    {
+        id: "14",
+        image: "/images/thoughts-bapu/d-14.webp",
+    },
+    {
+        id: "15",
+        image: "/images/thoughts-bapu/d-15.webp",
+    },
+    {
+        id: "16",
+        image: "/images/thoughts-bapu/d-16.webp",
+    },
+    {
+        id: "17",
+        image: "/images/thoughts-bapu/d-17.webp",
+    },
+    {
+        id: "18",
+        image: "/images/thoughts-bapu/d-18.webp",
     },
 ];
 
 // Map darshanList → LightboxItem shape once
 const lightboxItems: LightboxItem[] = darshanList.map((item) => ({
-    src: item.image,
-    alt: item.title ?? item.day,
-    title: item.title,
-    date: item.date,
+    src: item?.image,
+    alt: item.title || item.day || "Darshan Image",
+    title: item?.title,
+    date: item?.date,
 }));
 
 const ThoughtsOfBapuPage = () => {
@@ -100,8 +137,6 @@ const ThoughtsOfBapuPage = () => {
                                 >
                                     <CommonDarshanCard
                                         image={item.image}
-                                        date={item.date}
-                                        day={item.day}
                                         priority
                                     />
                                 </div>

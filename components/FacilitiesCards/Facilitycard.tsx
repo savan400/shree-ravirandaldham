@@ -14,7 +14,7 @@ export interface FacilityCardData {
     icon: string;
     tag: string;
     accentColor: string;
-    navigateTo?: string; 
+    navigateTo?: string;
 }
 
 export interface FacilityCardProps {
@@ -151,26 +151,28 @@ const FacilityCard: React.FC<FacilityCardProps> = ({
                 <p className={styles.cardDescription}>{facility.description}</p>
 
                 {/* View details row */}
-                <Link href={facility.navigateTo || "#"} className={styles.cardViewDetails}>
-                    <div className={styles.cardViewDetails}>
-                        <span
-                            className={styles.cardViewDetailsText}
-                            style={{ color: facility.accentColor }}
-                        >
-                            VIEW DETAILS
-                        </span>
-                        <div
-                            className={styles.cardViewDetailsLine}
-                            style={{ background: facility.accentColor }}
-                            aria-hidden="true"
-                        />
-                        <div
-                            className={styles.cardViewDetailsDot}
-                            style={{ background: facility.accentColor }}
-                            aria-hidden="true"
-                        />
-                    </div>
-                </Link>
+                {facility.navigateTo &&
+                    <Link href={facility.navigateTo || "#"} className={styles.cardViewDetails}>
+                        <div className={styles.cardViewDetails}>
+                            <span
+                                className={styles.cardViewDetailsText}
+                                style={{ color: facility.accentColor }}
+                            >
+                                VIEW DETAILS
+                            </span>
+                            <div
+                                className={styles.cardViewDetailsLine}
+                                style={{ background: facility.accentColor }}
+                                aria-hidden="true"
+                            />
+                            <div
+                                className={styles.cardViewDetailsDot}
+                                style={{ background: facility.accentColor }}
+                                aria-hidden="true"
+                            />
+                        </div>
+                    </Link>
+                }
             </div>
         </div>
     );
