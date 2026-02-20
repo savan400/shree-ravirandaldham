@@ -18,6 +18,7 @@ const FACILITIES: FacilityCardData[] = [
     icon: "🍽️",
     tag: "ભોજન સેવા",
     accentColor: "#FF6B00",
+    navigateTo: '/facilities/bhojan-shala'
   },
   {
     image: "/images/yatrik-bhuvan.webp",
@@ -27,6 +28,7 @@ const FACILITIES: FacilityCardData[] = [
     icon: "🏛️",
     tag: "આવાસ સેવા",
     accentColor: "#E8A000",
+    navigateTo: '/facilities/atithi-gruh'
   },
 ];
 

@@ -2,41 +2,24 @@
 
 import Image from "next/image";
 import styles from "./FacilitiesCards.module.css";
+import Link from "next/link";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface FacilityCardData {
-    /** Path or URL to the card's background image */
+
     image: string;
-    /** Card heading (supports Unicode / Gujarati) */
     title: string;
-    /** Body copy shown on the card */
     description: string;
-    /** Emoji or small icon rendered inside the tag badge */
     icon: string;
-    /** Short label rendered in the tag badge */
     tag: string;
-    /**
-     * CSS hex colour that drives the card's accent glow, tag badge,
-     * divider line and "VIEW DETAILS" text.
-     * @example "#FF6B00"
-     */
     accentColor: string;
+    navigateTo?: string; 
 }
 
 export interface FacilityCardProps {
     facility: FacilityCardData;
-    /**
-     * Zero-based position in a list — used to calculate the staggered
-     * entrance animation delay (`0.2 + index * 0.18` seconds).
-     * @default 0
-     */
     index?: number;
-    /**
-     * When `true` the card fades / slides into its final position.
-     * Toggle this via an IntersectionObserver in the parent.
-     * @default false
-     */
     visible?: boolean;
 }
 
@@ -82,19 +65,6 @@ const CardArch: React.FC<CardArchProps> = ({ color = "#FFD700" }) => {
     );
 };
 
-// ─── FacilityCard ─────────────────────────────────────────────────────────────
-
-/**
- * A standalone card component used inside facility / amenity sections.
- *
- * ```tsx
- * <FacilityCard
- *   facility={facilityData}
- *   index={0}
- *   visible={isInView}
- * />
- * ```
- */
 const FacilityCard: React.FC<FacilityCardProps> = ({
     facility,
     index = 0,
@@ -181,24 +151,26 @@ const FacilityCard: React.FC<FacilityCardProps> = ({
                 <p className={styles.cardDescription}>{facility.description}</p>
 
                 {/* View details row */}
-                <div className={styles.cardViewDetails}>
-                    <span
-                        className={styles.cardViewDetailsText}
-                        style={{ color: facility.accentColor }}
-                    >
-                        VIEW DETAILS
-                    </span>
-                    <div
-                        className={styles.cardViewDetailsLine}
-                        style={{ background: facility.accentColor }}
-                        aria-hidden="true"
-                    />
-                    <div
-                        className={styles.cardViewDetailsDot}
-                        style={{ background: facility.accentColor }}
-                        aria-hidden="true"
-                    />
-                </div>
+                <Link href={facility.navigateTo || "#"} className={styles.cardViewDetails}>
+                    <div className={styles.cardViewDetails}>
+                        <span
+                            className={styles.cardViewDetailsText}
+                            style={{ color: facility.accentColor }}
+                        >
+                            VIEW DETAILS
+                        </span>
+                        <div
+                            className={styles.cardViewDetailsLine}
+                            style={{ background: facility.accentColor }}
+                            aria-hidden="true"
+                        />
+                        <div
+                            className={styles.cardViewDetailsDot}
+                            style={{ background: facility.accentColor }}
+                            aria-hidden="true"
+                        />
+                    </div>
+                </Link>
             </div>
         </div>
     );
