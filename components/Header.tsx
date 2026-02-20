@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { ChevronDown, Menu, X, Phone, Mail } from "lucide-react";
+import { ChevronDown, Menu, X, Phone, Mail, Globe } from "lucide-react";
 import LotusDivider from "./LotusDivider/LotusDivider";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -107,11 +107,75 @@ const CONTACT_PHONE = "98258 35304, 05, 06";
 const CONTACT_EMAIL = "shreesalangpur@gmail.com";
 const CONTACT_ADDRESS = "P.O. Salangpur (Hanuman) Ta: Barwala, Dist. Botad, Gujarat";
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+const LANGUAGES = [
+  { code: "en", nativeLabel: "English" },
+  { code: "hi", nativeLabel: "हिन्दी" },
+  { code: "gu", nativeLabel: "ગુજરાતી" },
+];
 
-interface TopBarProps { }
+// ─── Language Dropdown (UI only) ──────────────────────────────────────────────
 
-const TopBar: React.FC<TopBarProps> = () => (
+const LanguageDropdown: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(LANGUAGES[0]);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("#lang-dropdown")) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  return (
+    <div id="lang-dropdown" className="relative z-50">
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex items-center gap-1.5 text-xs text-primary-foreground hover:opacity-80 transition-opacity px-2 py-1 rounded border border-white/20 hover:border-white/40 bg-white/5"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="Select language"
+      >
+        <Globe className="w-3 h-3 shrink-0" aria-hidden="true" />
+        <span className="hidden sm:inline">{selected.nativeLabel}</span>
+        <ChevronDown
+          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {open && (
+        <ul
+          className="absolute right-0 top-full mt-1.5 w-36 bg-red border border-border rounded-md shadow-lg overflow-hidden z-50"
+        >
+          {LANGUAGES.map((lang) => (
+            <li key={lang.code} role="option" aria-selected={lang.code === selected.code}>
+              <button
+                type="button"
+                onClick={() => { setSelected(lang); setOpen(false); }}
+                className={`w-full text-left px-3 py-2 text-sm transition-colors
+                  ${lang.code === selected.code
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-foreground hover:bg-secondary hover:text-primary"
+                  }`}
+              >
+                {lang.nativeLabel}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+// ─── Top Bar ──────────────────────────────────────────────────────────────────
+
+const TopBar: React.FC = () => (
   <div
     className="text-primary-foreground text-xs py-1.5"
     style={{
@@ -138,9 +202,14 @@ const TopBar: React.FC<TopBarProps> = () => (
           <span>{CONTACT_EMAIL}</span>
         </a>
       </div>
-      <address className="hidden sm:block not-italic text-xs">
-        {CONTACT_ADDRESS}
-      </address>
+
+      <div className="flex items-center gap-4">
+        <address className="hidden sm:block not-italic text-xs">
+          {CONTACT_ADDRESS}
+        </address>
+        {/* ── Language Switcher ── */}
+        <LanguageDropdown />
+      </div>
     </div>
   </div>
 );
@@ -152,8 +221,6 @@ interface DesktopNavItemProps {
 }
 
 const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item }) => {
-  // Use plain <a> for hash links so the browser handles anchor scroll natively.
-  // Next.js <Link> prepends the pathname which breaks hash-only hrefs.
   const isHash = item.href.startsWith('#');
   const linkClass =
     'flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative ' +
@@ -189,21 +256,11 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item }) => {
         <div className="nav-dropdown" role="menu" aria-label={`${item.title} submenu`}>
           {item.submenu.map((sub) => (
             sub.href.startsWith('#') ? (
-              <a
-                key={sub.title}
-                href={sub.href}
-                className="nav-dropdown-item"
-                role="menuitem"
-              >
+              <a key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem">
                 {sub.title}
               </a>
             ) : (
-              <Link
-                key={sub.title}
-                href={sub.href}
-                className="nav-dropdown-item"
-                role="menuitem"
-              >
+              <Link key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem">
                 {sub.title}
               </Link>
             )
@@ -296,7 +353,6 @@ const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
-  // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -308,14 +364,12 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Track scroll position for sticky header styling
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
@@ -372,7 +426,7 @@ const Header: React.FC = () => {
           </Link>
           <div className="flex gap-3">
             <div className="gap-3 items-center flex" aria-hidden="true">
-              <Link href="/ravirandaldham/akshaypari-bapu" >
+              <Link href="/ravirandaldham/akshaypari-bapu">
                 <Image
                   src="/images/bapu-2.png"
                   alt="Bapu"
@@ -390,7 +444,7 @@ const Header: React.FC = () => {
                   className="rounded-full object-cover"
                 />
               </Link>
-              <Link href="/ravirandaldham/dineshpuri-bapu" className="hidden lg:block" >
+              <Link href="/ravirandaldham/dineshpuri-bapu" className="hidden lg:block">
                 <Image
                   src="/images/bapu-3.png"
                   alt="Bapu"
@@ -418,6 +472,7 @@ const Header: React.FC = () => {
             </button>
           </div>
         </div>
+
         {/* Desktop nav */}
         <div className="bg-gradient-to-r from-saffron-dark via-primary to-saffron-dark">
           <div className="container mx-auto px-4">
@@ -450,7 +505,7 @@ const Header: React.FC = () => {
             ))}
             <LotusDivider />
             <div className="gap-3 items-center flex justify-center mb-5 -mt-5" aria-hidden="true">
-              <Link href="/ravirandaldham/ajaypari-bapu" >
+              <Link href="/ravirandaldham/ajaypari-bapu">
                 <Image
                   src="/images/bapu-1.png"
                   alt="Bapu"
@@ -459,7 +514,7 @@ const Header: React.FC = () => {
                   className="rounded-full object-cover"
                 />
               </Link>
-              <Link href="/ravirandaldham/dineshpuri-bapu" >
+              <Link href="/ravirandaldham/dineshpuri-bapu">
                 <Image
                   src="/images/bapu-3.png"
                   alt="Bapu"
