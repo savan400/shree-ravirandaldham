@@ -5,7 +5,7 @@ import { useState } from "react";
 import styles from "./CommonDarshanCard.module.css";
 
 interface CommonDarshanCardProps {
-    image?: string;
+    image: string;
     date?: string;
     day?: string;
     priority?: boolean;
