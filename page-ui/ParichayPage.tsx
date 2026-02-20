@@ -98,30 +98,32 @@ const ParichayPage = () => {
                 <div className={styles.grid}>
 
                     {/* Left: image */}
-                    <div className={`${styles.imageCol} ${visible ? styles.visible : ""}`}>
-                        <div className={styles.imageFrame}>
-                            <ArchFrame />
-                            <CornerOrnament />
-                            <CornerOrnament flip />
-                            <div className={styles.halo} />
+                    <div className="sticky-img-class">
+                        <div className={`${styles.imageCol} ${visible ? styles.visible : ""}`}>
+                            <div className={styles.imageFrame}>
+                                <ArchFrame />
+                                <CornerOrnament />
+                                <CornerOrnament flip />
+                                <div className={styles.halo} />
 
-                            <div className={styles.imageContainer}>
-                                {imageLoaded && <div className={styles.imageShine} />}
-                                <Image
-                                    src="/images/banner-1.webp"
-                                    alt="Shree Ravirandaldham Deity"
-                                    width={500}
-                                    height={650}
-                                    className={styles.deityImage}
-                                    onLoad={() => setImageLoaded(true)}
-                                    priority
-                                />
+                                <div className={styles.imageContainer}>
+                                    {imageLoaded && <div className={styles.imageShine} />}
+                                    <Image
+                                        src="/images/banner-1.webp"
+                                        alt="Shree Ravirandaldham Deity"
+                                        width={500}
+                                        height={650}
+                                        className={styles.deityImage}
+                                        onLoad={() => setImageLoaded(true)}
+                                        priority
+                                    />
+                                </div>
+
+                                <div className={styles.frameBottomGradient} />
                             </div>
 
-                            <div className={styles.frameBottomGradient} />
+                            <p className={styles.imageCaption}>॥ દિવ્ય દર્શન ॥</p>
                         </div>
-
-                        <p className={styles.imageCaption}>॥ દિવ્ય દર્શન ॥</p>
                     </div>
 
                     {/* Right: text */}

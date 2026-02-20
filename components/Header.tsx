@@ -62,12 +62,12 @@ const MENU_ITEMS: MenuItem[] = [
     title: "Pavitra Sthalo",
     href: "#pavitra-sthalo",
     submenu: [
-      { title: "Shree Ravirandal Temple", href: "#dev-parichay" },
-      { title: "Pavitra Vav", href: "#dev-itihas" },
-      { title: "Shree Shanidev Temple", href: "#dev-mahima" },
-      { title: "108 Randal", href: "#dev-mahima" },
-      { title: "Shree Dineshpuri Bapu Samadhi Sthan", href: "#dev-mahima" },
-      { title: "Dashama Temple", href: "#dev-mahima" },
+      { title: "Shree Ravirandal Temple", href: "/pavitra-sthalo/ravirandal-temple" },
+      { title: "Pavitra Vav", href: "/pavitra-sthalo/pavitra-vav" },
+      { title: "Shree Shanidev Temple", href: "/pavitra-sthalo/shanidev-temple" },
+      { title: "108 Randal", href: "/facilities/108-randal" },
+      { title: "Shree Dineshpuri Bapu Samadhi Sthan", href: "/pavitra-sthalo/dineshpuribapu-samadhi" },
+      { title: "Dashama Temple", href: "/pavitra-sthalo/dashama-temple" },
     ],
   },
   {
@@ -371,7 +371,7 @@ const Header: React.FC = () => {
             </div>
           </Link>
           <div className="flex gap-3">
-            <div className="gap-3 items-center hidden lg:flex" aria-hidden="true">
+            <div className="gap-3 items-center flex" aria-hidden="true">
               <Link href="/ravirandaldham/akshaypari-bapu" >
                 <Image
                   src="/images/bapu-2.png"
@@ -381,7 +381,7 @@ const Header: React.FC = () => {
                   className="rounded-full object-cover"
                 />
               </Link>
-              <Link href="/ravirandaldham/ajaypari-bapu" >
+              <Link href="/ravirandaldham/ajaypari-bapu" className="hidden lg:block">
                 <Image
                   src="/images/bapu-1.png"
                   alt="Bapu"
@@ -390,7 +390,7 @@ const Header: React.FC = () => {
                   className="rounded-full object-cover"
                 />
               </Link>
-              <Link href="/ravirandaldham/dineshpuri-bapu" >
+              <Link href="/ravirandaldham/dineshpuri-bapu" className="hidden lg:block" >
                 <Image
                   src="/images/bapu-3.png"
                   alt="Bapu"
@@ -450,15 +450,6 @@ const Header: React.FC = () => {
             ))}
             <LotusDivider />
             <div className="gap-3 items-center flex justify-center mb-5 -mt-5" aria-hidden="true">
-              <Link href="/ravirandaldham/akshaypari-bapu" >
-                <Image
-                  src="/images/bapu-2.png"
-                  alt="Bapu"
-                  width={56}
-                  height={56}
-                  className="rounded-full object-cover"
-                />
-              </Link>
               <Link href="/ravirandaldham/ajaypari-bapu" >
                 <Image
                   src="/images/bapu-1.png"

@@ -57,26 +57,28 @@ const BhojanShala = () => {
                     <div className={styles.grid}>
 
                         {/* Left: image */}
-                        <div className={`${styles.imageCol} ${visible ? styles.visible : ""}`} style={{ position: 'sticky', top: '150px' }}>
-                            <div className={styles.imageFrame}>
-                                <CornerOrnament />
-                                <CornerOrnament flip />
-                                <div className={styles.halo} />
+                        <div className="sticky-img-class">
+                            <div className={`${styles.imageCol} ${visible ? styles.visible : ""}`}>
+                                <div className={styles.imageFrame}>
+                                    <CornerOrnament />
+                                    <CornerOrnament flip />
+                                    <div className={styles.halo} />
 
-                                <div className={styles.imageContainer}>
-                                    {imageLoaded && <div className={styles.imageShine} />}
-                                    <Image
-                                        src="/images/banner-1.webp"
-                                        alt="Shree Ravirandaldham Deity"
-                                        width={500}
-                                        height={650}
-                                        className={styles.deityImage}
-                                        onLoad={() => setImageLoaded(true)}
-                                        priority
-                                    />
+                                    <div className={styles.imageContainer}>
+                                        {imageLoaded && <div className={styles.imageShine} />}
+                                        <Image
+                                            src="/images/banner-1.webp"
+                                            alt="Shree Ravirandaldham Deity"
+                                            width={500}
+                                            height={650}
+                                            className={styles.deityImage}
+                                            onLoad={() => setImageLoaded(true)}
+                                            priority
+                                        />
+                                    </div>
+
+                                    <div className={styles.frameBottomGradient} />
                                 </div>
-
-                                <div className={styles.frameBottomGradient} />
                             </div>
                         </div>
 
