@@ -8,6 +8,7 @@ import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import RandalSahayate from "./randalSahayate";
 import { useInView } from "@/hooks/useInView";
+import { visibleClass } from "@/lib/utils";
 
 // ── Decorative SVG arch frame overlay ──────────────────────────────────────
 const ArchFrame = () => (
@@ -88,7 +89,7 @@ const ParichayPage = () => {
             <PageBackgroundDecorations />
             <div className={styles.container}>
                 {/* ── Header ── */}
-                <div className={`${styles.header} ${visible ? styles.visible : ""}`}>
+                <div className={visibleClass("header", visible)}>
                     <CommonBadge text="॥ મંદિર વિશે ॥" />
                     <CommonTitle text="પરિચય" />
                     <LotusDivider />

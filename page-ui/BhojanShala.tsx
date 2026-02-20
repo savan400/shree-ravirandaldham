@@ -9,6 +9,7 @@ import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonStatsSection, { StatItem } from "@/components/CommonStatsSection/CommonStatsSection";
 import RandalSahayate from "./randalSahayate";
 import { useInView } from "@/hooks/useInView";
+import { visibleClass } from "@/lib/utils";
 
 // ── Corner ornament ────────────────────────────────────────────────────────
 const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
@@ -47,7 +48,7 @@ const BhojanShala = () => {
                 <PageBackgroundDecorations />
                 <div className={styles.container}>
                     {/* ── Header ── */}
-                    <div className={`${styles.header} ${visible ? styles.visible : ""}`}>
+                    <div className={visibleClass("header", visible)}>
                         <CommonBadge text="॥ મંદિર વિશે ॥" />
                         <CommonTitle text="શ્રી કષ્ટભંજનદેવ ભોજનશાળા" />
                         <LotusDivider />
