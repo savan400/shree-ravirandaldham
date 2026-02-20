@@ -6,6 +6,8 @@ import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/Pa
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 
 // ── Decorative quote mark SVG ──────────────────────────────────────────────
@@ -35,17 +37,9 @@ const SectionBadge = ({ number }: { number: string }) => (
 
 // ── Page component ─────────────────────────────────────────────────────────
 const MahimaPage = () => {
-    const [visible, setVisible] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     const paragraphs = [
         "175 વર્ષથી શ્રીકષ્ટભંજનદેવ હનુમાનજી અહીં સાળંગપુરધામમાં પ્રત્યક્ષ બિરાજે છે.",
@@ -103,9 +97,7 @@ const MahimaPage = () => {
                             </div>
                         ))}
                     </div>
-
-                    <DiamondDivider />
-                    <p className={styles.blessing}>॥ જય શ્રી સ્વામિનારાયણ ॥</p>
+                    <RandalSahayate />
                 </div>
 
             </div>

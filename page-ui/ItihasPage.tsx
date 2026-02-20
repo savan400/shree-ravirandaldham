@@ -6,6 +6,8 @@ import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/Pa
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 
 // ── Decorative quote mark SVG ──────────────────────────────────────────────
@@ -35,18 +37,9 @@ const SectionBadge = ({ number }: { number: string }) => (
 
 // ── Page component ─────────────────────────────────────────────────────────
 const ItihasPage = () => {
-    const [visible, setVisible] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
     const paragraphs = [
         "ભગવાન સ્વામિનારાયણ અક્ષરધામ સાળંગપુર મોગલાં સંવતમાં પધાર્યા હતા. મોગલા સો જી જાણી પાસે બરવાળાના ઉંડરાધાસ ટાકું હોવે ગ્રાથ રડેવા અને છોટાદાસની ઉચ્ચવાઘી ધાર્યા હતાં. ભગવાન સ્વામિનારાયણે મોગલા રાવો રાણી સાળંગપુર પેદાથી કહેથી વેગમા રસ્તી દ્વારકા સાળંગપુર મગ્યા. ભગવાન સ્વામિનારાયણે ધર્મજ્ના બ્રાન્મમની આશીર્વાદના આપ્યો સુખાર્થપુદ આ આ ગામે પર ઘવન મંદિર નિશ્ચિતના થઈ લઈને રીતિ સુશ્ર દૂર કરીને ઈશ્વ થઈશકટ.",
         "ભગવાન સ્વામિનારાયણના આશીર્વાદના શાદ લેવાના જ કલવનામા વીટબડો સદગુરુ સંત ગોપાળાનંદસ્વામી રચનામાં એક વધમા સાળંગપુર અમ કાળમાં નદીની દિશાકો બાંકે મહંદિર જે તથા નારાયણી અવર્કાવના દુષ્ટ તરામના કહેકે હોવી પડાવી. સાળંગપુર પ્રધાન કરી રહેલા જ્માનીમાં હનુમાનજી સ્વામી શ્રી પીળના તથા જ્માનીઓને રજ્ય કરવાના બાકી.",
@@ -108,8 +101,7 @@ const ItihasPage = () => {
                             </div>
                         ))}
                     </div>
-                    <DiamondDivider />
-                    <p className={styles.blessing}>॥ જય શ્રી સ્વામિનારાયણ ॥</p>
+                    <RandalSahayate />
                 </div>
             </div>
         </section>

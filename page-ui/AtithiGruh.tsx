@@ -7,6 +7,8 @@ import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/Pa
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonStatsSection, { StatItem } from "@/components/CommonStatsSection/CommonStatsSection";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 // ── Corner ornament ────────────────────────────────────────────────────────
 const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
@@ -33,18 +35,11 @@ const TEMPLE_STATS: StatItem[] = [
 ];
 // ── Page component ─────────────────────────────────────────────────────────
 const AtithiGruh = () => {
-    const [visible, setVisible] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     return (
         <>
@@ -92,15 +87,7 @@ const AtithiGruh = () => {
                                 <p className={styles.contentText}>
                                     મંદિર પરિસરમાં જ 20 વીઘાની વિશાળતમ જગ્યા પર 8,85,000 સ્ક્વેર ફૂટમાં નિર્માણાધીન શ્રી ગોપાળાનંદ સ્વામી યાત્રિક ભવન ભારતનું સૌથી મોટું યાત્રિક ભવન બની રહેશે. ઈન્ડિયન રોમન શૈલીમાં 103 ફૂટ ઊંચા યાત્રિક ભવનમાં 952 રુમો બનાવવામાં આવશે. એકસાથે 4,000થી વધુ લોકો રહી શકે તેવાં રુમ, 11,500 ફૂટમાં ફેલાયેલી કેંટીન  તેમજ એક સાથે 1,200થી વધુ કાર પાર્ક થઈ શકે તેવું વિશાળ પાર્કિંગ અહીં બની રહ્યાં છે.
                                 </p>
-
-                                <div className={styles.contentCardFooter}>
-                                    <div className={styles.footerDiamond} />
-                                    <div className={styles.footerLine} />
-                                </div>
-
-                                <p className={styles.blessing}>
-                                    ॥ જય શ્રી કષ્ટભંજનદેવ હનુમાનજી મહારાજ ॥
-                                </p>
+                                <RandalSahayate />
                             </div>
                         </div>
 

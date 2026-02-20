@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import styles from "./HariVani.module.css";
 import LotusDivider from "../LotusDivider/LotusDivider";
+import { useInView } from "@/hooks/useInView";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -58,18 +59,9 @@ const QuoteOrnament: React.FC<QuoteOrnamentProps> = ({ flip = false }) => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const HariVani: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
   return (
     <section
       ref={sectionRef}

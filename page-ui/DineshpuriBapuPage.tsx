@@ -9,32 +9,21 @@ import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
 import CommonImageProfileCard from "@/components/CommonImageProfileCard/CommonImageProfileCard";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
+import { visibleClass } from "@/lib/utils";
 
 const DineshpuriBapuPage = () => {
-    const [visible, setVisible] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     return (
         <section ref={sectionRef} className={styles.section}>
             <PageBackgroundDecorations />
             <div className={styles.container}>
                 {/* ── Header ── */}
-                <div className={visibleClass("header")}>
+                <div className={visibleClass("header", visible)}>
                     <CommonBadge text="॥ કૈલાશ નિવાસી મહંત શ્રી ॥" />
                     <CommonTitle text="પ.પૂ. શ્રી દિનેશપરી બાપુ" />
                     <LotusDivider />
@@ -43,7 +32,7 @@ const DineshpuriBapuPage = () => {
                 {/* ── Content Grid ── */}
                 <div className={styles.grid}>
                     {/* Left: Image Card */}
-                    <div className={visibleClass("imageWrapper")} style={{ position: 'sticky', top: '150px' }}>
+                    <div className={visibleClass("imageWrapper", visible)} style={{ position: 'sticky', top: '150px' }}>
                         <CommonImageProfileCard
                             src="/images/dineshpari-bapu.png"
                             alt="akshaypari-bapu"
@@ -53,7 +42,7 @@ const DineshpuriBapuPage = () => {
                     </div>
 
                     {/* Right: Text Content */}
-                    <div className={visibleClass("content")}>
+                    <div className={visibleClass("content", visible)}>
                         <div className={styles.contentIntro}>
                             <p className={styles.introText}>
                                 અનંત જીવોનાં કલ્યાણ કરવાનાં ભગવાન શ્રી સ્વામિનારાયણનાં
@@ -101,14 +90,7 @@ const DineshpuriBapuPage = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* ── Footer ── */}
-                <div className={visibleClass("footer")}>
-                    <DiamondDivider />
-                    <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                        ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
-                    </p>
-                </div>
+                <RandalSahayate />
             </div>
         </section>
     );

@@ -8,25 +8,15 @@ import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
+import { visibleClass } from "@/lib/utils";
 
 const DarshanTimingPage = () => {
-    const [visible, setVisible] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     const darshanTimings = [
         {
@@ -69,7 +59,7 @@ const DarshanTimingPage = () => {
                 <PageBackgroundDecorations />
                 <div className={styles.container}>
                     {/* ── Header ── */}
-                    <div className={visibleClass("header")}>
+                    <div className={visibleClass("header", visible)}>
                         <CommonTitle text="દિવ્ય દર્શનનો સમય" />
                         <LotusDivider />
 
@@ -105,14 +95,7 @@ const DarshanTimingPage = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* ── Footer ── */}
-                    <div className={visibleClass("footer")}>
-                        <DiamondDivider />
-                        <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                            ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
-                        </p>
-                    </div>
+                    <RandalSahayate />
                 </div>
             </section>
         </>

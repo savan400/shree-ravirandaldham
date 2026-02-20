@@ -7,6 +7,8 @@ import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/Pa
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonStatsSection, { StatItem } from "@/components/CommonStatsSection/CommonStatsSection";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 // ── Corner ornament ────────────────────────────────────────────────────────
 const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
@@ -33,18 +35,11 @@ const TEMPLE_STATS: StatItem[] = [
 ];
 // ── Page component ─────────────────────────────────────────────────────────
 const BhojanShala = () => {
-    const [visible, setVisible] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     return (
         <>
@@ -88,19 +83,10 @@ const BhojanShala = () => {
                         <div className={`${styles.textCol} ${visible ? styles.visible : ""}`}>
                             <div className={styles.contentCard}>
                                 <div className={styles.contentCardAccentBar} />
-
                                 <p className={styles.contentText}>
                                     7 વીઘા જેટલી વિશાળ જમીન પર 3,25,00 સ્ક્વેર ફીટ બાંધકામ ધરાવતું ગુજરાતનું સૌથી મોટું ભોજનાલય સાળંગપુરધામમાં આવેલું શ્રી કષ્ટભંજનદેવ ભોજનાલય છે. 4,550 સ્ક્વેર ફૂટમાં વિશાળ કિચન બનાવવામાં આવ્યું છે જ્યાં એકસાથે 20,000 લોકોની રસોઈ બને છે. વૈકલ્પિક ઉર્જાનાં શ્રેષ્ઠતમ ઉદાહરણ સમાન અહીં ગેસ, અગ્નિ અને વીજળી વગર અહીં રસોઈ કરવામાં આવે છે. 7 અલગ અલગ ડાઈનિંગ હોલમાં એક સાથે 4,000થી વધુ લોકો ડાઈનિંગ ટેબલ પર બેસીને ગરમાગરમ, સ્વાદિષ્ટ, પૌષ્ટિક અને હાઈજેનિક ભોજન જમે છે. હાઈટેક સુવિધાઓથી સભર આ ભોજનાલયમાં ત્રણ સમય વિનામૂલ્યે ભોજન પીરસવામાં આવે છે.
                                 </p>
-
-                                <div className={styles.contentCardFooter}>
-                                    <div className={styles.footerDiamond} />
-                                    <div className={styles.footerLine} />
-                                </div>
-
-                                <p className={styles.blessing}>
-                                    ॥ જય શ્રી કષ્ટભંજનદેવ હનુમાનજી મહારાજ ॥
-                                </p>
+                                <RandalSahayate />
                             </div>
                         </div>
 

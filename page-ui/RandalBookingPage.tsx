@@ -5,39 +5,27 @@ import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/Pa
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';
 import DiamondDivider from '@/components/DiamondDivider/DiamondDivider';
+import { useInView } from '@/hooks/useInView';
+import { visibleClass } from '@/lib/utils';
 const RandalBookingPage = () => {
-    const [visible, setVisible] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
     return (
         <section ref={sectionRef} className={styles.section}>
             <PageBackgroundDecorations />
             <div className={styles.container}>
-                <div className={visibleClass("header")}>
+                <div className={visibleClass("header", visible)}>
                     <CommonTitle text="રાંદલ તેડવાનું બૂકિંગ" />
                     <LotusDivider />
 
                     <>
                         {/* page content */}
                     </>
-                    <div className={visibleClass("footer")}>
+                    <div className={visibleClass("footer", visible)}>
                         <DiamondDivider />
                         <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                            ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
+                            ॥ શ્રી રવિ રાંદલ સદા સહાયતે  ॥
                         </p>
                     </div>
                 </div>

@@ -7,8 +7,8 @@ import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/Pa
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
-import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
-import CommonButton from "@/components/CommonButton/CommonButton";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 interface Event {
     id: string;
@@ -71,21 +71,10 @@ const upcomingEvents: Event[] = [
 ];
 
 const UpcomingEventsPage = () => {
-    const [visible, setVisible] = useState(false);
     const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
     return (
         <section ref={sectionRef} className={styles.section}>
             <PageBackgroundDecorations />
@@ -161,14 +150,7 @@ const UpcomingEventsPage = () => {
                         </div>
                     ))}
                 </div>
-
-                {/* Footer blessing */}
-                <div className={`${styles.footer} ${visible ? styles.visible : ""}`}>
-                    <DiamondDivider />
-                    <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                        ॥ સર્વે ભવંતુ સુખિનઃ સર્વે સંતુ નિરામયાઃ ॥
-                    </p>
-                </div>
+                <RandalSahayate />
             </div>
         </section>
     );

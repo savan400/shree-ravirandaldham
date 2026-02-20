@@ -8,6 +8,10 @@ import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
 import AartiCard, { AartiData } from "@/components/AartiCard/AartiCard";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useInView } from "@/hooks/useInView";
+import { visibleClass } from "@/lib/utils";
+import RandalSahayate from "./randalSahayate";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -101,26 +105,15 @@ const aartis: AartiData[] = [
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 const AartiPage = () => {
-    const [visible, setVisible] = useState(false);
+   
     const [playingAarti, setPlayingAarti] = useState<string | null>(null);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
     // Lifting play state — only one card plays at a time
     const handlePlayToggle = (id: string) => {
         setPlayingAarti((prev) => (prev === id ? null : id));
     };
-
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
 
     return (
         <section ref={sectionRef} className={styles.section}>
@@ -143,7 +136,7 @@ const AartiPage = () => {
                     </div>
                 ))}
 
-                <div className={visibleClass("header")}>
+                <div className={visibleClass("header", visible)}>
                     <CommonTitle text="આરતી" />
                     <LotusDivider />
 
@@ -168,13 +161,7 @@ const AartiPage = () => {
                             />
                         ))}
                     </div>
-
-                    <div className={visibleClass("footer")} style={{ marginTop: "4rem" }}>
-                        <DiamondDivider />
-                        <p className={styles.footerBlessing} style={{ marginTop: "20px" }}>
-                            ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
-                        </p>
-                    </div>
+                    <RandalSahayate />
                 </div>
             </div>
         </section>

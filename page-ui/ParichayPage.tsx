@@ -6,6 +6,8 @@ import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 // ── Decorative SVG arch frame overlay ──────────────────────────────────────
 const ArchFrame = () => (
@@ -76,18 +78,10 @@ const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
 
 // ── Page component ─────────────────────────────────────────────────────────
 const ParichayPage = () => {
-    const [visible, setVisible] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     return (
         <section ref={sectionRef} className={styles.section}>
@@ -145,15 +139,7 @@ const ParichayPage = () => {
                                 સ્વામિનારાયણ મંદિર વડતાલધામ દ્વારા શ્રીકષ્ટભંજનદેવ હનુમાનજી મંદિર,
                                 સાળંગપુરધામનું સંચાલન થાય છે.
                             </p>
-
-                            <div className={styles.contentCardFooter}>
-                                <div className={styles.footerDiamond} />
-                                <div className={styles.footerLine} />
-                            </div>
-
-                            <p className={styles.blessing}>
-                                ॥ જય શ્રી કષ્ટભંજનદેવ હનુમાનજી મહારાજ ॥
-                            </p>
+                            <RandalSahayate />
                         </div>
                     </div>
 

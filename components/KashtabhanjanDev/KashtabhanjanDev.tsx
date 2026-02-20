@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./KashtabhanjanDev.module.css";
 import CommonButton from "../CommonButton/CommonButton";
+import { useInView } from "@/hooks/useInView";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -91,19 +92,11 @@ const FloatingParticle: React.FC<FloatingParticleProps> = ({ particle }) => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const KashtabhanjanDev: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const sectionRef = useRef<HTMLElement | null>(null);
 
-  // Intersection observer — trigger entry animations once
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [scrollY, setScrollY] = useState(0);
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
 
   // Passive scroll listener for parallax
   useEffect(() => {

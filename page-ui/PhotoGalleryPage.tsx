@@ -8,6 +8,8 @@ import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
 import Lightbox, { LightboxItem } from "@/components/Lightbox/Lightbox"; // ← import
+import RandalSahayate from "./randalSahayate";
+import { useInView } from "@/hooks/useInView";
 
 interface GalleryItem {
     id: string;
@@ -80,19 +82,12 @@ const CardArch: React.FC = () => (
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 const PhotoGalleryPage = () => {
-    const [visible, setVisible] = useState(false);
+
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     const openLightbox = (index: number) => {
         setCurrentImageIndex(index);
@@ -163,14 +158,7 @@ const PhotoGalleryPage = () => {
                             </div>
                         ))}
                     </div>
-
-                    {/* Footer */}
-                    <div className={`${styles.footer} ${visible ? styles.visible : ""}`}>
-                        <DiamondDivider />
-                        <p className={styles.footerBlessing} style={{ marginTop: "20px" }}>
-                            ॥ જય શ્રી કષ્ટભંજનદેવ હનુમાનજી મહારાજ ॥
-                        </p>
-                    </div>
+                    <RandalSahayate />
                 </div>
             </section>
 

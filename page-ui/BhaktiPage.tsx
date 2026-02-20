@@ -8,6 +8,9 @@ import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/Pa
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';
 import DiamondDivider from '@/components/DiamondDivider/DiamondDivider';
+import RandalSahayate from './randalSahayate';
+import { useInView } from '@/hooks/useInView';
+import { visibleClass } from '@/lib/utils';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -136,21 +139,11 @@ const FloatingParticle = ({ delay, duration, left }: { delay: number; duration: 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const BhaktiPage = () => {
-    const [visible, setVisible] = useState(false);
+
     const [activeTab, setActiveTab] = useState('vagha');
     const [currentSlide, setCurrentSlide] = useState(0);
-    const sectionRef = useRef<HTMLElement>(null);
-
     const currentTabData = tabs.find(t => t.id === activeTab) ?? tabs[0];
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
 
     // Reset slide when tab changes
     useEffect(() => { setCurrentSlide(0); }, [activeTab]);
@@ -158,8 +151,9 @@ const BhaktiPage = () => {
     const nextSlide = () => setCurrentSlide(p => (p + 1) % currentTabData.images.length);
     const prevSlide = () => setCurrentSlide(p => (p - 1 + currentTabData.images.length) % currentTabData.images.length);
 
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     return (
         <section ref={sectionRef} className={styles.section}>
@@ -171,7 +165,7 @@ const BhaktiPage = () => {
             ))}
 
             <div className={sevaPunjanStyles.container}>
-                <div className={visibleClass("header")}>
+                <div className={visibleClass("header", visible)}>
                     <CommonTitle text="ભક્તિ" />
                     <LotusDivider />
 
@@ -304,13 +298,7 @@ const BhaktiPage = () => {
                             )}
                         </div>
                     </div>
-
-                    <div className={visibleClass("footer")} style={{ marginTop: '4rem' }}>
-                        <DiamondDivider />
-                        <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                            ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
-                        </p>
-                    </div>
+                    <RandalSahayate />
                 </div>
             </div>
         </section>

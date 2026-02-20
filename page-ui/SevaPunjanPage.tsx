@@ -8,6 +8,9 @@ import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/Pa
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';
 import DiamondDivider from '@/components/DiamondDivider/DiamondDivider';
+import RandalSahayate from './randalSahayate';
+import { useInView } from '@/hooks/useInView';
+import { visibleClass } from '@/lib/utils';
 
 const tabs = [
     { id: 'rajopchar', label: 'રાજોપચાર\nપૂજન', icon: '🙏' },
@@ -63,21 +66,12 @@ const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
 );
 
 const SevaPunjanPage = () => {
-    const [visible, setVisible] = useState(false);
+
     const [activeTab, setActiveTab] = useState('rajopchar');
     const [currentSlide, setCurrentSlide] = useState(0);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
@@ -86,9 +80,6 @@ const SevaPunjanPage = () => {
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
     };
-
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
 
     return (
         <section ref={sectionRef} className={styles.section}>
@@ -105,7 +96,7 @@ const SevaPunjanPage = () => {
             ))}
 
             <div className={sevaPunjanStyles.container}>
-                <div className={visibleClass("header")}>
+                <div className={visibleClass("header", visible)}>
                     <CommonTitle text="સેવા પુંજન" />
                     <LotusDivider />
 
@@ -143,7 +134,7 @@ const SevaPunjanPage = () => {
 
                     {/* Premium Content Card with ornaments */}
                     <div className={sevaPunjanStyles.contentCard}>
-                     
+
                         {/* Animated top border */}
                         <div className={sevaPunjanStyles.cardTopBorder} />
 
@@ -292,13 +283,7 @@ const SevaPunjanPage = () => {
                             </ul>
                         </div>
                     </div>
-
-                    <div className={visibleClass("footer")} style={{ marginTop: '4rem' }}>
-                        <DiamondDivider />
-                        <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                            ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
-                        </p>
-                    </div>
+                    <RandalSahayate />
                 </div>
             </div>
         </section>

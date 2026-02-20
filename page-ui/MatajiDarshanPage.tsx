@@ -8,6 +8,9 @@ import LotusDivider from '@/components/LotusDivider/LotusDivider';
 import DiamondDivider from '@/components/DiamondDivider/DiamondDivider';
 import CommonDarshanCard from '@/components/CommonDarshanCard/CommonDarshanCard';
 import Lightbox, { LightboxItem } from '@/components/Lightbox/Lightbox'; // ← add this
+import RandalSahayate from './randalSahayate';
+import { useInView } from '@/hooks/useInView';
+import { visibleClass } from '@/lib/utils';
 
 export interface DarshanItem {
     id: string;
@@ -64,36 +67,26 @@ const lightboxItems: LightboxItem[] = darshanList.map((item) => ({
 }));
 
 const MatajiDarshanPage = () => {
-    const [visible, setVisible] = useState(false);
+
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
+    const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+        threshold: 0.1,
+    });
 
     const openLightbox = (index: number) => {
         setCurrentIndex(index);
         setLightboxOpen(true);
     };
 
-    const visibleClass = (base: string) =>
-        `${styles[base]} ${visible ? styles.visible : ""}`;
+
 
     return (
         <>
             <section ref={sectionRef} className={styles.section}>
                 <PageBackgroundDecorations />
                 <div className={matajiDarshan.container}>
-                    <div className={visibleClass("header")}>
+                    <div className={visibleClass("header", visible)}>
                         <CommonTitle text="માતાજી દર્શન" />
                         <LotusDivider />
 
@@ -114,13 +107,7 @@ const MatajiDarshanPage = () => {
                                 </div>
                             ))}
                         </div>
-
-                        <div className={visibleClass("footer")}>
-                            <DiamondDivider />
-                            <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                                ॥ જય સદગુરુ શ્રી ગોપાળાનંદ સ્વામી ॥
-                            </p>
-                        </div>
+                        <RandalSahayate />
                     </div>
                 </div>
             </section>

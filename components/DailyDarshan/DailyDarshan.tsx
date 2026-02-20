@@ -10,62 +10,8 @@ import CommonTitle from "../CommonTitle/CommonTitle";
 import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonBadge from "../CommonBadge/CommonBadge";
 import CommonDarshanCard from "../CommonDarshanCard/CommonDarshanCard";
+import { useInView } from "@/hooks/useInView";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-interface DarshanDateBadgeProps {
-  date: string;
-  day: string;
-}
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const DARSHAN_DATE = "17-02-2026";
-const DARSHAN_DAY = "TUESDAY";
-const DARSHAN_IMG =
-  "/images/salangpurhanumanji.jpg";
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-const ArchFrame: React.FC = () => (
-  <svg
-    viewBox="0 0 400 320"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={styles.archFrame}
-    preserveAspectRatio="none"
-    aria-hidden="true"
-  >
-    <path
-      d="M12 320 L12 120 Q12 12 200 12 Q388 12 388 120 L388 320"
-      stroke="url(#arch-gold)" strokeWidth="3" fill="none" opacity="0.85"
-    />
-    <path
-      d="M28 320 L28 125 Q28 30 200 30 Q372 30 372 125 L372 320"
-      stroke="url(#arch-gold)" strokeWidth="1" fill="none" opacity="0.4"
-    />
-    <rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)" fill="#FFD700" opacity="0.9" />
-    <rect x="382" y="6" width="12" height="12" transform="rotate(45 388 12)" fill="#FFD700" opacity="0.9" />
-    <circle cx="200" cy="14" r="5" fill="#FFD700" opacity="0.9" />
-    <circle cx="200" cy="14" r="3" fill="#FFF" opacity="0.5" />
-
-    {[0.3, 0.5, 0.7].map((t, i) => (
-      <g key={i}>
-        <line x1="12" y1={120 + t * 200} x2="26" y2={120 + t * 200} stroke="#FFD700" strokeWidth="1.2" opacity="0.5" />
-        <line x1="374" y1={120 + t * 200} x2="388" y2={120 + t * 200} stroke="#FFD700" strokeWidth="1.2" opacity="0.5" />
-      </g>
-    ))}
-
-    <defs>
-      <linearGradient id="arch-gold" x1="0" y1="0" x2="1" y2="1">
-        <stop stopColor="#FF6B00" />
-        <stop offset="0.35" stopColor="#FFD700" />
-        <stop offset="0.65" stopColor="#FF8C00" />
-        <stop offset="1" stopColor="#FF6B00" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
 export interface DarshanItem {
   id: string;
   image: string;
@@ -114,18 +60,9 @@ export const darshanList: DarshanItem[] = [
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const DailyDarshan: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-  const [imgHovered, setImgHovered] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.12 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
+    threshold: 0.1,
+  });
 
   return (
     <section
