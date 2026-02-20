@@ -83,6 +83,12 @@
   position: sticky;
   top: 150px;
 }
+@media screen and (max-width: 768px) {
+  .templeImageWrapper {
+    position: unset !important;
+    top: unset !important;
+  }
+}
 
 .templeImageCard {
   position: relative;

@@ -1,10 +1,10 @@
-import HistoryOfRandaldham from '@/page-ui/HistoryOfRandaldham'
+import RavirandalTemplePage from '@/page-ui/RavirandalTemplePage'
 import React from 'react'
 
 const page = () => {
     return (
         <div>
-            <HistoryOfRandaldham />
+            <RavirandalTemplePage />
         </div>
     )
 }

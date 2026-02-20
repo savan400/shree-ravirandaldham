@@ -443,3 +443,13 @@
 .read-the-docs {
   color: #888;
 }
+.sticky-img-class {
+  position: sticky;
+  top: 150px;
+}
+@media screen and (max-width: 768px) {
+  .sticky-img-class {
+    position: unset !important;
+    top: unset !important;
+  }
+}

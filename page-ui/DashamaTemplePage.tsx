@@ -9,6 +9,7 @@ import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import RandalSahayate from "./randalSahayate";
 import { useInView } from "@/hooks/useInView";
 import { visibleClass } from "@/lib/utils";
+import CommonStatsSection, { StatItem } from "@/components/CommonStatsSection/CommonStatsSection";
 
 
 // ── Corner ornament ────────────────────────────────────────────────────────
@@ -28,8 +29,13 @@ const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
         <path d="M4 42 Q32 42 32 4" stroke="#F5A623" strokeWidth="0.5" fill="none" opacity="0.3" />
     </svg>
 );
+const TEMPLE_STATS: StatItem[] = [
+    { iconKey: "height", value: 108, suffix: "ft", label: "શિખર ઉંચાઈ", sublabel: "Shikar Height", featured: true },
+    { iconKey: "people", value: 10000, suffix: "+", label: "ભક્તો દૈનિક", sublabel: "Daily Devotees" },
+    { iconKey: "rooms", value: 52, suffix: "", label: "મંડપ", sublabel: "Mandaps" },
+];
 // ── Page component ─────────────────────────────────────────────────────────
-const RandalPrerna = () => {
+const DashamaTemplePage = () => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
         threshold: 0.1,
@@ -43,7 +49,7 @@ const RandalPrerna = () => {
                     {/* ── Header ── */}
                     <div className={visibleClass("header", visible)}>
                         <CommonBadge text="॥ મંદિર વિશે ॥" />
-                        <CommonTitle text="રાંદલ પ્રેરણા" />
+                        <CommonTitle text="દશામાં મંદિર" />
                         <LotusDivider />
                     </div>
                     {/* ── Content grid ── */}
@@ -98,8 +104,16 @@ const RandalPrerna = () => {
                     </div>
                 </div>
             </section>
+            <CommonStatsSection
+                title="દશામાં મંદિરની વિશેષતાઓ"
+                subtitle="પ્રભુ ધામની ભવ્યતા"
+                footerNote="॥ રાંદલ ના દડવા ॥"
+                stats={TEMPLE_STATS}
+                countDuration={1800}  // faster count-up
+                threshold={0.3}
+            />
         </>
     );
 };
 
-export default RandalPrerna;
+export default DashamaTemplePage;

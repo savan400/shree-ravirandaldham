@@ -29,7 +29,7 @@ const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
     </svg>
 );
 // ── Page component ─────────────────────────────────────────────────────────
-const RandalPrerna = () => {
+const HistoryOfRandaldham = () => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
         threshold: 0.1,
@@ -43,7 +43,7 @@ const RandalPrerna = () => {
                     {/* ── Header ── */}
                     <div className={visibleClass("header", visible)}>
                         <CommonBadge text="॥ મંદિર વિશે ॥" />
-                        <CommonTitle text="રાંદલ પ્રેરણા" />
+                        <CommonTitle text="History Of Randaldham" />
                         <LotusDivider />
                     </div>
                     {/* ── Content grid ── */}
@@ -102,4 +102,4 @@ const RandalPrerna = () => {
     );
 };
 
-export default RandalPrerna;
+export default HistoryOfRandaldham;

@@ -28,8 +28,9 @@ const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
         <path d="M4 42 Q32 42 32 4" stroke="#F5A623" strokeWidth="0.5" fill="none" opacity="0.3" />
     </svg>
 );
+
 // ── Page component ─────────────────────────────────────────────────────────
-const RandalPrerna = () => {
+const DineshpuriBapuSamadhiPage = () => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
         threshold: 0.1,
@@ -43,7 +44,7 @@ const RandalPrerna = () => {
                     {/* ── Header ── */}
                     <div className={visibleClass("header", visible)}>
                         <CommonBadge text="॥ મંદિર વિશે ॥" />
-                        <CommonTitle text="રાંદલ પ્રેરણા" />
+                        <CommonTitle text="શ્રી દિનેશપરી બાપુ સમાધિ સ્થળ" />
                         <LotusDivider />
                     </div>
                     {/* ── Content grid ── */}
@@ -102,4 +103,4 @@ const RandalPrerna = () => {
     );
 };
 
-export default RandalPrerna;
+export default DineshpuriBapuSamadhiPage;

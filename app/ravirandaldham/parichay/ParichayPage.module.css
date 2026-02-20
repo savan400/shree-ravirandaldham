@@ -130,8 +130,8 @@
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(245, 166, 35, 0.25);
-  background: #0a0400;
+  /* border: 1px solid rgba(245, 166, 35, 0.25);
+  background: #0a0400; */
   box-shadow:
     0 20px 60px rgba(255, 140, 0, 0.2),
     0 8px 30px rgba(0, 0, 0, 0.1);

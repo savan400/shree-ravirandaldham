@@ -32,15 +32,16 @@ const AdaypatiBapuPage = () => {
                 {/* ── Content Grid ── */}
                 <div className={styles.grid}>
                     {/* Left: Image Card */}
-                    <div className={visibleClass("imageWrapper", visible)} style={{ position: 'sticky', top: '150px' }}>
-                        <CommonImageProfileCard
-                            src="/images/akshaypari-bapu.jpeg"
-                            alt="akshaypari-bapu"
-                            caption="શ્રી 1008 અક્ષયપરી બાપુ"
-                            priority
-                        />
+                    <div className="sticky-img-class">
+                        <div className={visibleClass("imageWrapper", visible)}>
+                            <CommonImageProfileCard
+                                src="/images/akshaypari-bapu.jpeg"
+                                alt="akshaypari-bapu"
+                                caption="શ્રી 1008 અક્ષયપરી બાપુ"
+                                priority
+                            />
+                        </div>
                     </div>
-
                     {/* Right: Text Content */}
                     <div className={visibleClass("content", visible)}>
                         <div className={styles.contentIntro}>
