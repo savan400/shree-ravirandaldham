@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Calendar, X, ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "../app/events/photo-gallery/PhotoGalleryPage.module.css";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
+import Lightbox, { LightboxItem } from "@/components/Lightbox/Lightbox"; // ← import
 
 interface GalleryItem {
     id: string;
@@ -35,6 +35,14 @@ const galleryItems: GalleryItem[] = [
     { id: "16", date: "12/02/2026", title: "12-02-2026 Evening Aarti", image: "/images/gallery/p-16.png" },
     { id: "17", date: "12/02/2026", title: "12-02-2026 Evening Aarti", image: "/images/gallery/p-17.png" },
 ];
+
+// Map gallery items → LightboxItem shape
+const lightboxItems: LightboxItem[] = galleryItems.map((item) => ({
+    src: item.image,
+    alt: item.title,
+    title: item.title,
+    date: item.date,
+}));
 
 // ── Arch SVG ornament ──────────────────────────────────────────────────────────
 const CardArch: React.FC = () => (
@@ -86,21 +94,16 @@ const PhotoGalleryPage = () => {
         return () => observer.disconnect();
     }, []);
 
-    const openLightbox = (index: number) => { setCurrentImageIndex(index); setLightboxOpen(true); document.body.style.overflow = "hidden"; };
-    const closeLightbox = () => { setLightboxOpen(false); document.body.style.overflow = "auto"; };
-    const nextImage = () => setCurrentImageIndex((p) => (p + 1) % galleryItems.length);
-    const prevImage = () => setCurrentImageIndex((p) => (p - 1 + galleryItems.length) % galleryItems.length);
+    const openLightbox = (index: number) => {
+        setCurrentImageIndex(index);
+        setLightboxOpen(true);
+    };
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (!lightboxOpen) return;
-            if (e.key === "Escape") closeLightbox();
-            if (e.key === "ArrowRight") nextImage();
-            if (e.key === "ArrowLeft") prevImage();
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [lightboxOpen]);
+    const nextImage = () =>
+        setCurrentImageIndex((p) => (p + 1) % lightboxItems.length);
+
+    const prevImage = () =>
+        setCurrentImageIndex((p) => (p - 1 + lightboxItems.length) % lightboxItems.length);
 
     return (
         <>
@@ -129,10 +132,7 @@ const PhotoGalleryPage = () => {
                                 role="button"
                                 aria-label={`View ${item.title}`}
                             >
-                                {/* Sacred ambient halo */}
                                 <div className={styles.sacredHalo} aria-hidden="true" />
-
-                                {/* Photo */}
                                 <Image
                                     src={item.image}
                                     alt={item.title}
@@ -140,17 +140,9 @@ const PhotoGalleryPage = () => {
                                     sizes="(max-width: 640px) 50vw, (max-width: 1200px) 33vw, 25vw"
                                     className={styles.galleryImage}
                                 />
-
-                                {/* Permanent vignette */}
                                 <div className={styles.vignette} aria-hidden="true" />
-
-                                {/* Arch ornament */}
                                 <CardArch />
-
-                                {/* Shimmer sweep on hover */}
                                 <div className={styles.shimmer} aria-hidden="true" />
-
-                                {/* Hover overlay */}
                                 <div className={styles.imageOverlay} aria-hidden="true">
                                     <div className={styles.overlayContent}>
                                         <div className={styles.zoomRing}>
@@ -164,8 +156,6 @@ const PhotoGalleryPage = () => {
                                         <span className={styles.overlayOm} aria-hidden="true">ॐ</span>
                                     </div>
                                 </div>
-
-                                {/* Four corner ornaments */}
                                 <span className={`${styles.corner} ${styles.cornerTL}`} aria-hidden="true" />
                                 <span className={`${styles.corner} ${styles.cornerTR}`} aria-hidden="true" />
                                 <span className={`${styles.corner} ${styles.cornerBL}`} aria-hidden="true" />
@@ -184,37 +174,15 @@ const PhotoGalleryPage = () => {
                 </div>
             </section>
 
-            {/* Lightbox */}
-            {lightboxOpen && (
-                <div className={styles.lightbox} onClick={closeLightbox}>
-                    <button className={styles.lightboxClose} onClick={closeLightbox} aria-label="Close">
-                        <X size={20} />
-                    </button>
-                    <button className={`${styles.lightboxNav} ${styles.navPrev}`} onClick={(e) => { e.stopPropagation(); prevImage(); }} aria-label="Previous">
-                        <ChevronLeft />
-                    </button>
-                    <button className={`${styles.lightboxNav} ${styles.navNext}`} onClick={(e) => { e.stopPropagation(); nextImage(); }} aria-label="Next">
-                        <ChevronRight />
-                    </button>
-                    <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
-                        <Image
-                            src={galleryItems[currentImageIndex].image}
-                            alt={galleryItems[currentImageIndex].title}
-                            width={1200}
-                            height={800}
-                            className={styles.lightboxImage}
-                        />
-                        <div className={styles.lightboxInfo}>
-                            <div className={styles.lightboxDate}>
-                                <Calendar size={14} />
-                                {galleryItems[currentImageIndex].date}
-                            </div>
-                            <h3 className={styles.lightboxTitle}>{galleryItems[currentImageIndex].title}</h3>
-                            <p className={styles.lightboxCounter}>{currentImageIndex + 1} / {galleryItems.length}</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* ── Reusable Lightbox ─────────────────────────────────────────── */}
+            <Lightbox
+                items={lightboxItems}
+                currentIndex={currentImageIndex}
+                isOpen={lightboxOpen}
+                onClose={() => setLightboxOpen(false)}
+                onNext={nextImage}
+                onPrev={prevImage}
+            />
         </>
     );
 };

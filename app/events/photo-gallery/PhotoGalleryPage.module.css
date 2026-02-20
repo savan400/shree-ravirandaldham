@@ -25,7 +25,6 @@
   }
 }
 
-/* Card entrance: scale + rise + un-blur for a premium reveal */
 @keyframes itemReveal {
   from {
     opacity: 0;
@@ -39,7 +38,6 @@
   }
 }
 
-/* Persistent halo breathe — gentle gold pulse behind every image */
 @keyframes haloPulse {
   0%,
   100% {
@@ -52,7 +50,6 @@
   }
 }
 
-/* Arch line glow — makes the gold arch feel alive */
 @keyframes archGlow {
   0%,
   100% {
@@ -63,7 +60,6 @@
   }
 }
 
-/* Shimmer sweep across card on hover */
 @keyframes shimmerSweep {
   0% {
     transform: translateX(-130%) skewX(-18deg);
@@ -73,7 +69,6 @@
   }
 }
 
-/* Corner accent breath */
 @keyframes cornerPulse {
   0%,
   100% {
@@ -84,7 +79,6 @@
   }
 }
 
-/* Om symbol fade-up inside hover overlay */
 @keyframes omRise {
   from {
     opacity: 0;
@@ -93,26 +87,6 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-/* Lightbox */
-@keyframes lightboxFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes lightboxSlide {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -182,17 +156,13 @@
   overflow: hidden;
   cursor: pointer;
   background: #080200;
-
-  /* Layered saffron border + ambient shadow */
   box-shadow:
     0 0 0 1px rgba(245, 166, 35, 0.3),
     0 6px 28px rgba(255, 120, 0, 0.1),
     0 2px 8px rgba(0, 0, 0, 0.08);
-
   transition:
     transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 0.4s ease;
-
   opacity: 0;
 }
 
@@ -226,7 +196,6 @@
 
 /* ── Image ───────────────────────────────────────────────────────────────────── */
 
-/* Next.js <Image fill> renders as position:absolute internally */
 .galleryImage {
   object-fit: cover;
   transition:
@@ -335,7 +304,6 @@
   transform: translateY(0) scale(1);
 }
 
-/* Zoom icon ring */
 .zoomRing {
   width: 56px;
   height: 56px;
@@ -355,7 +323,6 @@
     0 8px 24px rgba(255, 107, 0, 0.5);
 }
 
-/* Om glyph that rises after zoom ring */
 .overlayOm {
   font-family: serif;
   font-size: 1.1rem;
@@ -363,7 +330,7 @@
   letter-spacing: 0.05em;
   text-shadow: 0 0 12px rgba(255, 200, 0, 0.8);
   animation: omRise 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
-  display: none; /* shown only when parent is hovered */
+  display: none;
 }
 
 .galleryItem:hover .overlayOm {
@@ -381,7 +348,6 @@
   animation: cornerPulse 3s ease-in-out infinite;
 }
 
-/* Two lines forming an L */
 .corner::before,
 .corner::after {
   content: "";
@@ -389,7 +355,6 @@
   border-radius: 2px;
 }
 
-/* Horizontal bar */
 .corner::before {
   top: 0;
   left: 0;
@@ -397,7 +362,7 @@
   height: 2px;
   background: linear-gradient(90deg, #ffd700, rgba(255, 140, 0, 0.5));
 }
-/* Vertical bar */
+
 .corner::after {
   top: 0;
   left: 0;
@@ -445,139 +410,6 @@
   letter-spacing: 0.1em;
 }
 
-/* ── Lightbox ────────────────────────────────────────────────────────────────── */
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.96);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  animation: lightboxFade 0.3s ease;
-  cursor: pointer;
-}
-
-.lightboxClose {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  width: 46px;
-  height: 46px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(8px);
-  z-index: 10;
-}
-.lightboxClose:hover {
-  background: rgba(255, 107, 0, 0.9);
-  border-color: #ffd700;
-  transform: scale(1.1);
-}
-
-.lightboxNav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(8px);
-  z-index: 10;
-}
-.navPrev {
-  left: 2rem;
-}
-.navNext {
-  right: 2rem;
-}
-.lightboxNav:hover {
-  background: rgba(255, 107, 0, 0.9);
-  border-color: #ffd700;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.lightboxContent {
-  max-width: 90%;
-  max-height: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  animation: lightboxSlide 0.3s ease;
-  cursor: default;
-}
-
-.lightboxImage {
-  max-width: 100%;
-  max-height: calc(90vh - 160px);
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
-  box-shadow:
-    0 0 0 1px rgba(255, 200, 0, 0.25),
-    0 20px 80px rgba(0, 0, 0, 0.55);
-}
-
-.lightboxInfo {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.96),
-    rgba(255, 250, 242, 0.96)
-  );
-  padding: 1.25rem 2rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(245, 166, 35, 0.2);
-}
-
-.lightboxDate {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: "Cinzel Decorative", serif;
-  font-size: 0.68rem;
-  color: #ff6b00;
-  margin-bottom: 0.6rem;
-  letter-spacing: 0.08em;
-}
-
-.lightboxTitle {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #3a1800;
-  margin: 0 0 0.4rem 0;
-}
-
-.lightboxCounter {
-  font-family: "Cinzel Decorative", serif;
-  font-size: 0.65rem;
-  color: rgba(100, 50, 0, 0.55);
-  margin: 0;
-  letter-spacing: 0.1em;
-}
-
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
@@ -590,27 +422,5 @@
   .gallery {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
-  }
-  .lightbox {
-    padding: 1rem;
-  }
-  .lightboxClose {
-    top: 1rem;
-    right: 1rem;
-    width: 38px;
-    height: 38px;
-  }
-  .lightboxNav {
-    width: 40px;
-    height: 40px;
-  }
-  .navPrev {
-    left: 0.75rem;
-  }
-  .navNext {
-    right: 0.75rem;
-  }
-  .lightboxInfo {
-    padding: 1rem 1.25rem;
   }
 }

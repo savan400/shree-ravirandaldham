@@ -9,7 +9,7 @@ import LotusDivider from "../LotusDivider/LotusDivider";
 import CommonTitle from "../CommonTitle/CommonTitle";
 import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonBadge from "../CommonBadge/CommonBadge";
-import CommonButton from "../CommonButton/CommonButton";
+import CommonDarshanCard from "../CommonDarshanCard/CommonDarshanCard";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -66,16 +66,51 @@ const ArchFrame: React.FC = () => (
     </defs>
   </svg>
 );
+export interface DarshanItem {
+  id: string;
+  image: string;
+  date: string;
+  day: string;
+  title?: string;
+}
 
-
-
-const DarshanDateBadge: React.FC<DarshanDateBadgeProps> = ({ date, day }) => (
-  <div className={styles.dateBadge}>
-    <div className={styles.dateBadgeDot} aria-hidden="true" />
-    <span className={styles.dateBadgeText}>{day} — {date}</span>
-  </div>
-);
-
+export const darshanList: DarshanItem[] = [
+  {
+    id: "1",
+    image: "/images/salangpurhanumanji.jpg",
+    date: "17-02-2026",
+    day: "TUESDAY",
+    title: "Morning Darshan",
+  },
+  {
+    id: "2",
+    image: "/images/salangpurhanumanji.jpg",
+    date: "16-02-2026",
+    day: "MONDAY",
+    title: "Evening Darshan",
+  },
+  {
+    id: "3",
+    image: "/images/salangpurhanumanji.jpg",
+    date: "15-02-2026",
+    day: "SUNDAY",
+    title: "Special Shringar",
+  },
+  {
+    id: "4",
+    image: "/images/salangpurhanumanji.jpg",
+    date: "14-02-2026",
+    day: "SATURDAY",
+    title: "Festival Darshan",
+  },
+  {
+    id: "5",
+    image: "/images/salangpurhanumanji.jpg",
+    date: "13-02-2026",
+    day: "FRIDAY",
+    title: "Mangala Aarti",
+  },
+];
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const DailyDarshan: React.FC = () => {
@@ -120,44 +155,19 @@ const DailyDarshan: React.FC = () => {
             <CommonBadge text="TUESDAY — 17-02-2026" />
           </div>
 
-          {/* Card */}
-          <div
-            className={styles.card}
-            onMouseEnter={() => setImgHovered(true)}
-            onMouseLeave={() => setImgHovered(false)}
-          >
-            <ArchFrame />
-
-            {/* Glow halo */}
-            <div className={styles.glowHalo} aria-hidden="true" />
-
-            {/* Shine sweep */}
-            <div className={styles.shineSweepWrap} aria-hidden="true">
-              <div className={`${styles.shineSweep} ${imgHovered ? styles["shineSweep--active"] : ""}`} />
-            </div>
-
-            {/* Darshan image */}
-            <Image
-              src={DARSHAN_IMG}
-              alt={`Daily Darshan ${DARSHAN_DATE} ${DARSHAN_DAY}`}
-              width={520}
-              height={390}
-              className={`${styles.darshanImage} ${imgHovered ? styles["darshanImage--hovered"] : styles["darshanImage--idle"]}`}
+          {darshanList.slice(0, 1).map((item) => (
+            <CommonDarshanCard
+              key={item.id}
+              image={item.image}
+              date={item.date}
+              day={item.day}
               priority
             />
-
-            {/* Bottom overlay */}
-            <div className={styles.cardOverlay}>
-              <p className={styles.cardDate}>
-                Daily Darshan — {DARSHAN_DATE} ({DARSHAN_DAY})
-              </p>
-              <CommonButton text="READ MORE" variant="primary" icon={true} className="w-full mb-4" />
-            </div>
-          </div>
+          ))}
 
           {/* View all */}
           <div className={styles.viewAllWrap}>
-            <Link href="#" className={styles.viewAllLink}>
+            <Link href="/upasna-vidhi/mataji-darshan" className={styles.viewAllLink}>
               VIEW ALL DARSHAN
               <ChevronRight className={styles.viewAllIcon} aria-hidden="true" />
             </Link>

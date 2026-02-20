@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
+
+@keyframes lightboxFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightboxSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Backdrop ────────────────────────────────────────────────────────────────── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.96);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: lightboxFade 0.3s ease;
+  cursor: pointer;
+}
+
+/* ── Close button ────────────────────────────────────────────────────────────── */
+
+.lightboxClose {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 46px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+.lightboxClose:hover {
+  background: rgba(255, 107, 0, 0.9);
+  border-color: #ffd700;
+  transform: scale(1.1);
+}
+
+/* ── Navigation ──────────────────────────────────────────────────────────────── */
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+.navPrev {
+  left: 2rem;
+}
+.navNext {
+  right: 2rem;
+}
+
+.lightboxNav:hover {
+  background: rgba(255, 107, 0, 0.9);
+  border-color: #ffd700;
+}
+.navPrev:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+.navNext:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* ── Content wrapper ─────────────────────────────────────────────────────────── */
+
+.lightboxContent {
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  animation: lightboxSlide 0.3s ease;
+  cursor: default;
+}
+
+/* ── Image ───────────────────────────────────────────────────────────────────── */
+
+.lightboxImage {
+  max-width: 100%;
+  max-height: calc(90vh - 160px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px rgba(255, 200, 0, 0.25),
+    0 20px 80px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Info panel ──────────────────────────────────────────────────────────────── */
+
+.lightboxInfo {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.96),
+    rgba(255, 250, 242, 0.96)
+  );
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+}
+
+.lightboxDate {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Cinzel Decorative", serif;
+  font-size: 0.68rem;
+  color: #ff6b00;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+.lightboxTitle {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3a1800;
+  margin: 0 0 0.4rem;
+}
+
+.lightboxCounter {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 0.65rem;
+  color: rgba(100, 50, 0, 0.55);
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .lightbox {
+    padding: 1rem;
+  }
+  .lightboxClose {
+    top: 1rem;
+    right: 1rem;
+    width: 38px;
+    height: 38px;
+  }
+  .lightboxNav {
+    width: 40px;
+    height: 40px;
+  }
+  .navPrev {
+    left: 0.75rem;
+  }
+  .navNext {
+    right: 0.75rem;
+  }
+  .lightboxInfo {
+    padding: 1rem 1.25rem;
+  }
+  .lightboxTitle {
+    font-size: 1rem;
+  }
+}
