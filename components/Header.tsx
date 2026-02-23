@@ -119,49 +119,42 @@ const LanguageDropdown: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(LANGUAGES[0]);
 
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest("#lang-dropdown")) setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [open]);
-
   return (
-    <div id="lang-dropdown" className="relative z-50">
+    <div className="relative z-[100]">
       <button
         type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center gap-1.5 text-xs text-primary-foreground hover:opacity-80 transition-opacity px-2 py-1 rounded border border-white/20 hover:border-white/40 bg-white/5"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label="Select language"
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1.5 text-xs text-primary-foreground
+                   hover:opacity-80 transition-opacity
+                   px-2 py-1 rounded border border-white/20
+                   hover:border-white/40 bg-white/5"
       >
-        <Globe className="w-3 h-3 shrink-0" aria-hidden="true" />
+        <Globe className="w-3 h-3 shrink-0" />
         <span className="hidden sm:inline">{selected.nativeLabel}</span>
         <ChevronDown
-          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          aria-hidden="true"
+          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""
+            }`}
         />
       </button>
 
       {open && (
         <ul
-          className="absolute right-0 top-full mt-1.5 w-36 bg-red border border-border rounded-md shadow-lg overflow-hidden z-50"
+          className="absolute right-0 top-full mt-2 w-36
+                     bg-white text-black
+                     border border-gray-200
+                     rounded-md shadow-xl
+                     overflow-hidden
+                     z-[9999]"
         >
           {LANGUAGES.map((lang) => (
-            <li key={lang.code} role="option" aria-selected={lang.code === selected.code}>
+            <li key={lang.code}>
               <button
-                type="button"
-                onClick={() => { setSelected(lang); setOpen(false); }}
-                className={`w-full text-left px-3 py-2 text-sm transition-colors
-                  ${lang.code === selected.code
-                    ? "bg-primary/10 text-primary font-semibold"
-                    : "text-foreground hover:bg-secondary hover:text-primary"
-                  }`}
+                onClick={() => {
+                  setSelected(lang);
+                  setOpen(false);
+                }}
+                className="w-full text-left px-3 py-2 text-sm
+                           hover:bg-gray-100"
               >
                 {lang.nativeLabel}
               </button>
