@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap");
+
+/* ── Wrapper ── */
+.csWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px 70px;
+  position: relative;
+}
+
+/* ── Labels & Headings ── */
+.csLabel {
+  font-family: "Cinzel", serif;
+  font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  color: #c8922a;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+
+.csTitle {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #8b1a1a 0%, #c45400 50%, #8b1a1a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.csSubtitle {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #a05020;
+  text-align: center;
+  margin-bottom: 36px;
+  opacity: 0.8;
+}
+
+/* ── Card ── */
+.csCard {
+  position: relative;
+  background: linear-gradient(135deg, #fffdf8 0%, #fef5e0 100%);
+  border: 1px solid rgba(200, 146, 42, 0.35);
+  border-radius: 4px;
+  padding: 28px 36px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow:
+    0 4px 24px rgba(139, 26, 26, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  outline: 2px solid rgba(200, 146, 42, 0.15);
+  outline-offset: 6px;
+}
+
+.csCard::before,
+.csCard::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #f0b040;
+  border-style: solid;
+}
+
+.csCard::before {
+  top: -2px;
+  left: -2px;
+  border-width: 2.5px 0 0 2.5px;
+}
+
+.csCard::after {
+  bottom: -2px;
+  right: -2px;
+  border-width: 0 2.5px 2.5px 0;
+}
+
+.csCardText {
+  font-family: "Playfair Display", serif;
+  font-size: 0.95rem;
+  color: #6b3010;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+}
+
+/* ── Notify Row ── */
+.csNotifyRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.csDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d4500a;
+  animation: dotPulse 1.8s ease-in-out infinite;
+}
+
+.csDot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.csDot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.csNotifyText {
+  font-family: "Cinzel", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: #c8922a;
+  text-transform: uppercase;
+}
+
+/* ── Animations ── */
+@keyframes dotPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .csCard {
+    padding: 22px 20px;
+  }
+}

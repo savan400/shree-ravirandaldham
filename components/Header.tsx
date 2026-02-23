@@ -99,7 +99,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   { title: "Thoughts of Bapu", href: "/thoughts-of-bapu" },
   { title: "Store", href: "#store" },
-  { title: "Donation", href: "#donation" },
+  { title: "Donation", href: "/donation" },
   { title: "Contact Us", href: "#contact-us" },
 ];
 
