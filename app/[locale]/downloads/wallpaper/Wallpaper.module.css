@@ -1,0 +1,468 @@
+/* ═══════════════════════════════════════════════════════════════════
+   WallpaperPage.module.css  —  Sacred / Temple Aesthetic
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Section Heading ─────────────────────────────────────────────── */
+.sectionHeading {
+  position: relative;
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #8b1a1a;
+  text-align: center;
+  margin: 48px 0 32px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-bottom: 18px;
+}
+.container {
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+.sectionHeading::before,
+.sectionHeading::after {
+  content: "✦";
+  color: #f0b040;
+  font-size: 0.9rem;
+  margin: 0 14px;
+  vertical-align: middle;
+  display: inline-block;
+  animation: starSpin 5s linear infinite;
+}
+
+.sectionHeading::after {
+  animation-direction: reverse;
+}
+
+@keyframes starSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+    color: #f0b040;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+    color: #ff8c00;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    color: #f0b040;
+  }
+}
+
+/* gold underline bar */
+.headingLine {
+  display: block;
+  margin: 8px auto 0;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f0b040,
+    #d4500a,
+    #f0b040,
+    transparent
+  );
+  border-radius: 2px;
+}
+
+/* ── Grid ────────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  gap: 32px;
+  margin-bottom: 12px;
+}
+
+.gridDesktop {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.gridMobile {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* ── Card ────────────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  border-radius: 4px;
+  overflow: visible;
+  background: #fffdf5;
+  border: 1px solid rgba(200, 146, 42, 0.45);
+  outline: 2px solid rgba(200, 146, 42, 0.25);
+  outline-offset: 5px;
+
+  box-shadow:
+    0 4px 24px rgba(139, 26, 26, 0.12),
+    0 1px 4px rgba(200, 146, 42, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  transition:
+    transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.45s ease,
+    outline-color 0.35s ease,
+    outline-offset 0.35s ease;
+
+  animation: cardRise 0.65s ease both;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.card:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.25s;
+}
+
+@keyframes cardRise {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.016);
+  outline-color: rgba(240, 176, 64, 0.7);
+  outline-offset: 7px;
+  box-shadow:
+    0 0 28px rgba(212, 80, 10, 0.22),
+    0 20px 50px rgba(139, 26, 26, 0.2),
+    0 0 0 1px rgba(240, 176, 64, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* corner brackets */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 20px;
+  height: 20px;
+  border-top: 2.5px solid #f0b040;
+  border-left: 2.5px solid #f0b040;
+  border-radius: 2px 0 0 0;
+  z-index: 3;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    width 0.3s ease,
+    height 0.3s ease;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 20px;
+  height: 20px;
+  border-bottom: 2.5px solid #f0b040;
+  border-right: 2.5px solid #f0b040;
+  border-radius: 0 0 2px 0;
+  z-index: 3;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    width 0.3s ease,
+    height 0.3s ease;
+}
+
+.card:hover::before,
+.card:hover::after {
+  border-color: #ff8c00;
+  width: 28px;
+  height: 28px;
+}
+
+/* ── Card Image ──────────────────────────────────────────────────── */
+.cardImg {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5e9d0 0%, #ede0c0 100%);
+}
+
+.cardImgDesktop {
+  aspect-ratio: 16 / 9;
+}
+.cardImgMobile {
+  aspect-ratio: 9 / 16;
+}
+
+.cardImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition:
+    transform 0.65s cubic-bezier(0.23, 1, 0.32, 1),
+    filter 0.4s ease;
+  filter: brightness(0.97) saturate(1.05);
+}
+
+.card:hover .cardImg img {
+  transform: scale(1.09);
+  filter: brightness(1.04) saturate(1.12);
+}
+
+/* saffron flame top bar */
+.cardImg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d4500a 20%,
+    #f0b040 50%,
+    #d4500a 80%,
+    transparent
+  );
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.card:hover .cardImg::before {
+  opacity: 1;
+}
+
+/* shimmer sweep */
+.cardImg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 200, 80, 0.16) 50%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  background-position: -150% 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: none;
+}
+
+.card:hover .cardImg::after {
+  background-position: 200% 0;
+  transition: background-position 0.75s ease;
+}
+
+/* ── Hover label overlay ─────────────────────────────────────────── */
+.cardLabel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px 14px 10px;
+  background: linear-gradient(
+    to top,
+    rgba(92, 15, 15, 0.78) 0%,
+    transparent 100%
+  );
+  color: #ffe4aa;
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.38s ease,
+    transform 0.38s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.card:hover .cardLabel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Card Footer ─────────────────────────────────────────────────── */
+.cardFooter {
+  padding: 14px 18px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fffdf8 0%, #fef3dc 100%);
+  border-top: 1px solid rgba(200, 146, 42, 0.28);
+  position: relative;
+}
+
+/* ── Download Button ─────────────────────────────────────────────── */
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 30px;
+  border-radius: 40px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    #5c0f0f 0%,
+    #c45400 35%,
+    #c8922a 65%,
+    #c45400 100%
+  );
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+
+  color: #fff8e7;
+  font-family: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+
+  box-shadow:
+    0 3px 12px rgba(212, 80, 10, 0.45),
+    0 0 0 1px rgba(240, 176, 64, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  transition:
+    background-position 0.55s ease,
+    box-shadow 0.35s ease,
+    transform 0.2s ease;
+}
+
+/* light sweep on hover */
+.downloadBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.downloadBtn:hover::before {
+  left: 160%;
+  transition: left 0.55s ease;
+}
+
+.downloadBtn:hover {
+  background-position: 100% 50%;
+  transform: scale(1.07) translateY(-1px);
+  box-shadow:
+    0 8px 24px rgba(212, 80, 10, 0.55),
+    0 0 0 2px rgba(240, 176, 64, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.downloadBtn:active {
+  transform: scale(0.97);
+}
+
+.downloadBtn svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+  animation: nudgeDown 2.2s ease-in-out infinite;
+}
+
+@keyframes nudgeDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2.5px);
+  }
+}
+
+/* ── Ornamental flame divider ────────────────────────────────────── */
+.ornamentDivider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 44px auto 0;
+  max-width: 360px;
+  justify-content: center;
+}
+
+.ornamentDivider span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c8922a, transparent);
+}
+
+.ornamentDivider em {
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #d4500a;
+  display: inline-block;
+  animation: flamePulse 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(212, 80, 10, 0.6));
+}
+
+@keyframes flamePulse {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 5px rgba(212, 80, 10, 0.5));
+  }
+  50% {
+    transform: scale(1.22) translateY(-2px);
+    filter: drop-shadow(0 0 12px rgba(240, 176, 64, 0.9));
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gridDesktop {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .gridMobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .card:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+}
+
+@media (max-width: 480px) {
+  .gridDesktop {
+    grid-template-columns: 1fr;
+  }
+  .sectionHeading {
+    font-size: 1.15rem;
+  }
+  .downloadBtn {
+    padding: 10px 22px;
+    font-size: 0.62rem;
+  }
+}

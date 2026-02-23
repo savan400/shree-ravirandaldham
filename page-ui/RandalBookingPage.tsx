@@ -7,6 +7,7 @@ import LotusDivider from '@/components/LotusDivider/LotusDivider';
 import DiamondDivider from '@/components/DiamondDivider/DiamondDivider';
 import { useInView } from '@/hooks/useInView';
 import { visibleClass } from '@/lib/utils';
+import RandalSahayate from './randalSahayate';
 const RandalBookingPage = () => {
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
         threshold: 0.1,
@@ -22,12 +23,7 @@ const RandalBookingPage = () => {
                     <>
                         {/* page content */}
                     </>
-                    <div className={visibleClass("footer", visible)}>
-                        <DiamondDivider />
-                        <p className={styles.footerBlessing} style={{ marginTop: '20px' }}>
-                            ॥ શ્રી રવિ રાંદલ સદા સહાયતે  ॥
-                        </p>
-                    </div>
+                    <RandalSahayate />
                 </div>
             </div>
         </section>

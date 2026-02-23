@@ -1,5 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
 .title {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: "Cinzel Decorative", "Palatino Linotype", serif;
   font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 0;
