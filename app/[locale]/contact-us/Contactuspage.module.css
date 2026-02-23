@@ -144,7 +144,7 @@
   color: #3c1a08;
   margin: 0;
   line-height: 1.55;
-    text-align: left;
+  text-align: left;
 }
 
 .cuInfoValue a {
@@ -527,11 +527,10 @@
   .cuMapFrameWrap iframe {
     height: 300px;
   }
-}
-.container {
-  z-index: 2;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
+  .container {
+    padding: 0 1rem;
+  } 
+  .cuFormWrap{
+    padding: 15px;
+  }
 }

@@ -438,6 +438,21 @@
     filter: drop-shadow(0 0 12px rgba(240, 176, 64, 0.9));
   }
 }
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 0;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .sectionHeading {
+    margin-bottom: 10px;
+  }
+}
 
 /* ── Responsive ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
@@ -464,5 +479,11 @@
   .downloadBtn {
     padding: 10px 22px;
     font-size: 0.62rem;
+  }
+}
+@media (max-width: 420px) {
+  .gridMobile {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 30px;
   }
 }

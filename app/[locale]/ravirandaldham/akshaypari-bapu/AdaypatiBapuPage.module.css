@@ -174,3 +174,20 @@
   letter-spacing: 0.1em;
   margin: 0;
 }
+@media screen and (max-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  .header {
+    margin-bottom: 1.5rem;
+  }
+  .contentCard {
+    padding: 1.5rem;
+  }
+  .grid {
+    gap: 1.5rem;
+  }
+}

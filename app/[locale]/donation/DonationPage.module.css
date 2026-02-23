@@ -184,7 +184,7 @@
   letter-spacing: 0.08em;
   color: #c45400;
   margin: 0;
-    text-align: left;
+  text-align: left;
   text-transform: uppercase;
 }
 
@@ -380,6 +380,18 @@
 }
 
 /* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 0;
+  }
+  .container {
+    padding: 0 1rem !important;
+  }
+  .sectionHeading {
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 640px) {
   .donGrid {
     grid-template-columns: 1fr;

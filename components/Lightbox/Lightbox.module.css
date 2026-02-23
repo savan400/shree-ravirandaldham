@@ -178,7 +178,11 @@
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
-
+@media screen and (max-width: 768px) {
+  .lightbox {
+    height: 100vh;
+  }
+}
 @media (max-width: 640px) {
   .lightbox {
     padding: 1rem;

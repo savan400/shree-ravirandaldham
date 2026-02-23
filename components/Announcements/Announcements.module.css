@@ -632,3 +632,8 @@
   border-radius: 0 0 12px 12px;
   background: linear-gradient(to bottom, rgba(255, 140, 0, 0.1), transparent);
 }
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+}

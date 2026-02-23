@@ -231,3 +231,21 @@
   padding: 0 2rem;
   position: relative;
 }
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 0;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .header {
+    margin-bottom: 3rem;
+  }
+}

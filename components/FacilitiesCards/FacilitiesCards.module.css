@@ -353,4 +353,12 @@
   .container {
     padding: 0 1rem;
   }
+  .cardDescription {
+    max-height: 8rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cardContent {
+    padding: 1rem;
+  }
 }
