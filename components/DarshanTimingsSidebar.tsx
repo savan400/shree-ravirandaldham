@@ -10,12 +10,12 @@ const DarshanTimingsSidebar = () => {
       {/* Fixed sidebar button with glow */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed right-0 top-1/3 z-50 bg-primary text-primary-foreground px-2.5 py-4 rounded-l-xl shadow-lg hover:bg-saffron-dark transition-all duration-300 animate-pulse-glow hover:pr-4"
+        className="fixed right-3 md:right-0 bottom-3 md:bottom-1/3  z-50 bg-primary text-primary-foreground p-3 md:px-2.5 md:py-4 rounded-full md:rounded-none md:rounded-r-0 md:rounded-l-xl shadow-lg hover:bg-saffron-dark transition-all duration-300 animate-pulse-glow hover:pr-4"
         style={{ writingMode: "vertical-rl" }}
       >
         <span className="flex items-center gap-2 text-sm font-semibold">
-          <Clock className="w-4 h-4" />
-          Darshan Timings
+          <Clock className="md:w-4 md:h-4 h-5 w-5" />
+          <span className="hidden md:block">Darshan Timings</span>
         </span>
       </button>
 
