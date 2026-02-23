@@ -518,7 +518,13 @@
     transform: translateY(0);
   }
 }
-
+.container {
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
 /* ── Responsive ──────────────────────────────── */
 @media (max-width: 768px) {
   .cuWrap {
@@ -529,8 +535,8 @@
   }
   .container {
     padding: 0 1rem;
-  } 
-  .cuFormWrap{
+  }
+  .cuFormWrap {
     padding: 15px;
   }
 }
