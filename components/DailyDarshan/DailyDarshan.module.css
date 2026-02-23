@@ -164,3 +164,8 @@
   width: 14px;
   height: 14px;
 }
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

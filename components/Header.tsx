@@ -401,7 +401,8 @@ const Header: React.FC = () => {
         <div className="container mx-auto flex items-center justify-between px-4 py-2">
           <Link href="/" className="flex items-center gap-3 group" aria-label="Go to homepage">
             <Image
-              src="/images/logo.webp"
+              src="/logo-optional.png"
+              // src="/logo.png"
               alt="Shree Ravirandaldham logo"
               width={64}
               height={64}

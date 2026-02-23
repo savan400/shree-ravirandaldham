@@ -39,7 +39,7 @@ const Footer: React.FC = () => (
         <div>
           <div className="flex items-center gap-3 mb-4">
             <Image
-              src="/images/logo.webp"
+              src="/logo-optional.png"
               alt="Shree Ravirandaldham logo"
               width={48}
               height={48}

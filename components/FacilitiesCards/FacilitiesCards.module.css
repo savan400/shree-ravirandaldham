@@ -349,3 +349,8 @@
   flex-shrink: 0;
   /* background set inline — per-card dynamic accent color */
 }
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

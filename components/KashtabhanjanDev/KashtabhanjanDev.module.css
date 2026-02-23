@@ -377,3 +377,11 @@
   line-height: 2;
   margin-bottom: 2.25rem;
 }
+@media screen and (max-width: 768px) {
+  .contentWrap {
+    padding: 5rem 1rem;
+  }
+  .section {
+    min-height: unset;
+  }
+}

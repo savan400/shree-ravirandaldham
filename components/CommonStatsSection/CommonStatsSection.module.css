@@ -351,3 +351,8 @@
 .card:hover .cardAccentLine {
   opacity: 1;
 }
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

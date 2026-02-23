@@ -509,3 +509,8 @@
   color: rgba(255, 220, 150, 0.45);
   letter-spacing: 0.06em;
 }
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

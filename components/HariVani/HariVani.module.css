@@ -427,3 +427,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

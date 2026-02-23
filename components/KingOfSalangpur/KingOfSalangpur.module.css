@@ -271,3 +271,16 @@
   letter-spacing: 0.05em;
   margin-top: 2px;
 }
+@media screen and (max-width: 768px) {
+  .statueImage {
+    width: auto;
+    height: auto;
+  }
+  .statueCol{
+    flex: unset;
+    min-height: unset;
+  }
+  .container{
+    padding: 0 1rem;
+  }
+}
