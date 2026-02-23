@@ -485,38 +485,42 @@ const Header: React.FC = () => {
         {mobileOpen && (
           <nav
             id="mobile-nav"
-            className="lg:hidden bg-card border-t border-border max-h-[80vh] overflow-y-auto"
+            className="lg:hidden bg-card border-t border-border pb-1"
             aria-label="Mobile navigation"
           >
-            {MENU_ITEMS.map((item) => (
-              <MobileNavItem
-                key={item.title}
-                item={item}
-                isOpen={openSubmenu === item.title}
-                onToggle={handleSubmenuToggle}
-                onClose={handleMobileClose}
-              />
-            ))}
-            <LotusDivider />
-            <div className="gap-3 items-center flex justify-center mb-5 -mt-5" aria-hidden="true">
-              <Link href="/ravirandaldham/ajaypari-bapu">
-                <Image
-                  src="/images/bapu-1.png"
-                  alt="Bapu"
-                  width={56}
-                  height={56}
-                  className="rounded-full object-cover"
+            <div className="max-h-[400px] overflow-y-auto">
+              {MENU_ITEMS.map((item) => (
+                <MobileNavItem
+                  key={item.title}
+                  item={item}
+                  isOpen={openSubmenu === item.title}
+                  onToggle={handleSubmenuToggle}
+                  onClose={handleMobileClose}
                 />
-              </Link>
-              <Link href="/ravirandaldham/dineshpuri-bapu">
-                <Image
-                  src="/images/bapu-3.png"
-                  alt="Bapu"
-                  width={56}
-                  height={56}
-                  className="rounded-full object-cover w-14 h-14"
-                />
-              </Link>
+              ))}
+            </div>
+            <div className="mb-5 -mt-3 ">
+              <LotusDivider />
+              <div className="gap-3 items-center flex justify-center " aria-hidden="true">
+                <Link href="/ravirandaldham/ajaypari-bapu">
+                  <Image
+                    src="/images/bapu-1.png"
+                    alt="Bapu"
+                    width={56}
+                    height={56}
+                    className="rounded-full object-cover"
+                  />
+                </Link>
+                <Link href="/ravirandaldham/dineshpuri-bapu">
+                  <Image
+                    src="/images/bapu-3.png"
+                    alt="Bapu"
+                    width={56}
+                    height={56}
+                    className="rounded-full object-cover w-14 h-14"
+                  />
+                </Link>
+              </div>
             </div>
           </nav>
         )}
