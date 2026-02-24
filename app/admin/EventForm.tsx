@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { EventEntry, saveEvent, getImageUrl } from '@/lib/api';
 import { AdminButton, Card } from './components/AdminUI';
-import { X, Upload, Trash2, CheckCircle2, Plus, AlertCircle } from 'lucide-react';
+import { X, CheckCircle2, AlertCircle } from 'lucide-react';
+import ImageUploadGrid, { GridImage } from './components/ImageUploadGrid';
 
 interface EventFormProps {
   event?: EventEntry;
@@ -17,25 +18,31 @@ export default function EventForm({ event, onClose, onSave }: EventFormProps) {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<Locale>('en');
   const [errors, setErrors] = useState<string[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [formData, setFormData] = useState({
     title: event?.title || { en: '', hi: '', gu: '' },
     description: event?.description || { en: '', hi: '', gu: '' },
     location: event?.location || { en: '', hi: '', gu: '' },
     time: event?.time || { en: '', hi: '', gu: '' },
     date: event?.date || '',
-    coverImage: event?.coverImage || ''
   });
 
-  const [existingImages, setExistingImages] = useState(event?.images || []);
-  const [newImages, setNewImages] = useState<File[]>([]);
+  // Unified image list (existing pre-signed URLs + new file uploads)
+  const [images, setImages] = useState<GridImage[]>(() => [
+    ...(event?.images || []).map((url, i) => ({
+      id: `existing-${i}-${url.slice(-12)}`,
+      isNew: false,
+      url: getImageUrl(url),
+    })),
+  ]);
+  const [coverId, setCoverId] = useState<string>(
+    event?.coverImage
+      ? `existing-0-${getImageUrl(event.coverImage).slice(-12)}`
+      : ''
+  );
 
   const handleTranslationChange = (field: 'title' | 'description' | 'location' | 'time', lang: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: { ...prev[field], [lang]: value }
-    }));
+    setFormData(prev => ({ ...prev, [field]: { ...prev[field as keyof typeof prev], [lang]: value } }));
     if (errors.length > 0) setErrors([]);
   };
 
@@ -44,39 +51,31 @@ export default function EventForm({ event, onClose, onSave }: EventFormProps) {
     if (errors.length > 0) setErrors([]);
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setNewImages(prev => [...prev, ...Array.from(e.target.files!)]);
-    }
-  };
+  const handleAdd = useCallback((files: File[]) => {
+    setImages(prev => [
+      ...prev,
+      ...files.map(file => ({
+        id: `new-${Date.now()}-${Math.random()}`,
+        isNew: true,
+        url: URL.createObjectURL(file),
+        file,
+      })),
+    ]);
+  }, []);
 
-  const removeExistingImage = (img: string) => {
-    setExistingImages(prev => prev.filter(i => i !== img));
-    if (formData.coverImage === img) {
-      setFormData(prev => ({ ...prev, coverImage: '' }));
-    }
-  };
-
-  const removeNewImage = (index: number) => {
-    setNewImages(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const setAsCoverImage = (img: string) => {
-    setFormData(prev => ({ ...prev, coverImage: img }));
-  };
+  const handleRemove = useCallback((id: string) => {
+    setImages(prev => prev.filter(img => img.id !== id));
+    if (coverId === id) setCoverId('');
+  }, [coverId]);
 
   const validateForm = () => {
     const newErrors: string[] = [];
-    if (!formData.date) newErrors.push("Event Date is required");
-    if (!formData.time.en) newErrors.push("Event Time is required");
-    if (!formData.title.en.trim()) newErrors.push("English Title is required");
-    if (!formData.title.gu.trim()) newErrors.push("Gujarati Title is required");
-    if (!formData.title.hi.trim()) newErrors.push("Hindi Title is required");
-    
-    if (existingImages.length === 0 && newImages.length === 0) {
-      newErrors.push("At least one event image is required");
-    }
-
+    if (!formData.date) newErrors.push('Event Date is required');
+    if (!formData.time.en) newErrors.push('Event Time is required');
+    if (!formData.title.en.trim()) newErrors.push('English Title is required');
+    if (!formData.title.gu.trim()) newErrors.push('Gujarati Title is required');
+    if (!formData.title.hi.trim()) newErrors.push('Hindi Title is required');
+    if (images.length === 0) newErrors.push('At least one event image is required');
     setErrors(newErrors);
     return newErrors.length === 0;
   };
@@ -84,20 +83,22 @@ export default function EventForm({ event, onClose, onSave }: EventFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
     setLoading(true);
 
     try {
       const data = new FormData();
+      // Existing images: send their original URLs so backend can reverse-map to keys
+      const existingUrls = images.filter(img => !img.isNew).map(img => img.url);
+      // Cover: send the URL of the selected cover tile
+      const coverImg = images.find(img => img.id === coverId);
       data.append('data', JSON.stringify({
         ...formData,
-        images: existingImages
+        images: existingUrls,
+        coverImage: coverImg?.url || '',
       }));
-
-      newImages.forEach(file => {
-        data.append('images', file);
+      images.filter(img => img.isNew && img.file).forEach(img => {
+        data.append('images', img.file!);
       });
-
       await saveEvent(data, event?._id);
       onSave();
     } catch (error) {
@@ -237,80 +238,16 @@ export default function EventForm({ event, onClose, onSave }: EventFormProps) {
 
           {/* Right Column: Image Uploads */}
           <div className="space-y-6">
-            <Card className="p-6 space-y-6">
-              <div className="flex items-center justify-between border-b pb-2">
-                <h3 className="font-bold text-gray-900">Event Gallery</h3>
-                <button 
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="text-xs font-bold text-orange-500 hover:text-orange-600 flex items-center gap-1"
-                >
-                  <Upload className="w-3 h-3" />
-                  Upload Images
-                </button>
-                <input 
-                  type="file" 
-                  ref={fileInputRef} 
-                  onChange={handleImageUpload} 
-                  multiple 
-                  className="hidden" 
-                  accept="image/*"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {existingImages.map((img, idx) => (
-                  <div key={`existing-${idx}`} className="relative group aspect-[4/5] rounded-xl overflow-hidden border border-orange-100 bg-orange-50">
-                    <img src={getImageUrl(img)} alt="" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                      <button 
-                        type="button"
-                        onClick={() => setAsCoverImage(img)}
-                        className={`p-2 rounded-full ${formData.coverImage === img ? 'bg-green-500 text-white' : 'bg-white/20 text-white hover:bg-white/40'}`}
-                      >
-                        <CheckCircle2 className="w-4 h-4" />
-                      </button>
-                      <button 
-                        type="button"
-                        onClick={() => removeExistingImage(img)}
-                        className="p-2 rounded-full bg-red-500/80 text-white hover:bg-red-500"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-
-                {newImages.map((file, idx) => (
-                  <div key={`new-${idx}`} className="relative group aspect-[4/5] rounded-xl overflow-hidden border border-orange-100 bg-orange-50 shadow-inner">
-                    <div className="w-full h-full flex flex-col items-center justify-center text-orange-300 text-[10px] text-center p-2">
-                      <Upload className="w-6 h-6 mb-1 opacity-50" />
-                      <span className="truncate w-full">{file.name}</span>
-                      <span className="text-green-600 font-bold mt-1">Pending</span>
-                    </div>
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <button 
-                        type="button"
-                        onClick={() => removeNewImage(idx)}
-                        className="p-2 rounded-full bg-red-500/80 text-white hover:bg-red-500"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-
-                <button 
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="aspect-[4/5] rounded-xl border-2 border-dashed border-orange-200 bg-orange-50/50 flex flex-col items-center justify-center text-orange-300 hover:border-orange-400 hover:text-orange-400 transition-colors"
-                >
-                  <Plus className="w-8 h-8 mb-2" />
-                  <span className="text-xs font-bold">Add Image</span>
-                </button>
-              </div>
-
-              {formData.coverImage && (
+            <Card className="p-6 space-y-4">
+              <ImageUploadGrid
+                images={images}
+                coverId={coverId}
+                onAdd={handleAdd}
+                onRemove={handleRemove}
+                onSetCover={setCoverId}
+                title="Event Gallery"
+              />
+              {coverId && (
                 <div className="bg-green-50 text-green-700 p-3 rounded-xl text-xs font-bold flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
                   Cover photo selected

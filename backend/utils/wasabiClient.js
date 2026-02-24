@@ -31,7 +31,13 @@ const wasabiClient = new S3Client({
     secretAccessKey: process.env.WASABI_SECRET_KEY,
   },
   forcePathStyle: true,
+  // Wasabi doesn't support AWS SDK v3 flexible checksums.
+  // Without these flags, the SDK injects `x-amz-checksum-mode=ENABLED`
+  // into pre-signed URLs, which Wasabi rejects causing 403/400 on every image.
+  requestChecksumCalculation: 'WHEN_REQUIRED',
+  responseChecksumValidation: 'WHEN_REQUIRED',
 });
+
 
 /**
  * Generate presigned GET URL for a given key

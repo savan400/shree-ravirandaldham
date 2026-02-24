@@ -30,15 +30,7 @@ const EventSchema = new mongoose.Schema({
   }],
   coverImage: {
     type: String
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
   }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Event', EventSchema);

@@ -118,14 +118,27 @@ export interface EventEntry {
   updatedAt: string;
 }
 
-export async function fetchEvents(): Promise<EventEntry[]> {
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
+export async function fetchEvents(
+  page = 1,
+  limit = 10
+): Promise<PaginatedResponse<EventEntry>> {
   try {
-    const res = await fetch(`${API_URL}/events`, { cache: 'no-store' });
-    if (!res.ok) return [];
+    const res = await fetch(
+      `${API_URL}/events?page=${page}&limit=${limit}`,
+      { cache: 'no-store' }
+    );
+    if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
     return res.json();
   } catch (error) {
     console.error('Error fetching events:', error);
-    return [];
+    return { data: [], total: 0, page, totalPages: 0 };
   }
 }
 
@@ -158,3 +171,82 @@ export function getImageUrl(path: string) {
   // Wasabi storage via backend proxy/redirection
   return `${API_URL}/events/image/${path}`;
 }
+
+// ─────────────────────────────────────────────
+// Galleries
+// ─────────────────────────────────────────────
+
+export interface GalleryImageItem {
+  _id: string;
+  url: string;         // pre-signed URL (resolved by backend)
+  description: LocalizedString;
+}
+
+export interface GalleryEntry {
+  _id: string;
+  title: LocalizedString;
+  coverImage: string;  // pre-signed URL (resolved by backend)
+  images: GalleryImageItem[];
+  isEnabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Public: enabled galleries only, paginated */
+export async function fetchGalleries(
+  page = 1,
+  limit = 9
+): Promise<PaginatedResponse<GalleryEntry>> {
+  try {
+    const res = await fetch(
+      `${API_URL}/galleries?page=${page}&limit=${limit}`,
+      { cache: 'no-store' }
+    );
+    if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
+    return res.json();
+  } catch {
+    return { data: [], total: 0, page, totalPages: 0 };
+  }
+}
+
+/** Public + Admin: single gallery by id */
+export async function fetchGallery(id: string): Promise<GalleryEntry | null> {
+  try {
+    const res = await fetch(`${API_URL}/galleries/${id}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+/** Admin: all galleries (including disabled), paginated */
+export async function fetchGalleriesAdmin(
+  page = 1,
+  limit = 9
+): Promise<PaginatedResponse<GalleryEntry>> {
+  try {
+    const res = await fetch(
+      `${API_URL}/galleries/admin?page=${page}&limit=${limit}`,
+      { cache: 'no-store' }
+    );
+    if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
+    return res.json();
+  } catch {
+    return { data: [], total: 0, page, totalPages: 0 };
+  }
+}
+
+export async function saveGallery(data: FormData, id?: string): Promise<GalleryEntry> {
+  const url = id ? `${API_URL}/galleries/admin/${id}` : `${API_URL}/galleries/admin`;
+  const method = id ? 'PUT' : 'POST';
+  const res = await fetch(url, { method, body: data });
+  if (!res.ok) throw new Error('Failed to save gallery');
+  return res.json();
+}
+
+export async function deleteGallery(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/galleries/admin/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Failed to delete gallery');
+}
+

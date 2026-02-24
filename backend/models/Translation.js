@@ -22,16 +22,8 @@ const TranslationSchema = new mongoose.Schema({
   gu: {
     type: String,
     default: ''
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
   }
-});
+}, { timestamps: true });
 
 // Composite unique index on section + key
 TranslationSchema.index({ section: 1, key: 1 }, { unique: true });

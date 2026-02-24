@@ -24,16 +24,8 @@ const SeoMetaSchema = new mongoose.Schema({
   },
   ogImage: {
     type: String
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
   }
-});
+}, { timestamps: true });
 
 // Composite index for route and locale
 SeoMetaSchema.index({ route: 1, locale: 1 }, { unique: true });
