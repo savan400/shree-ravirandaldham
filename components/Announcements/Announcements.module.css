@@ -2,7 +2,7 @@
    Announcements.module.css
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tiro+Devanagari+Hindi:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap");
+
 
 /* ── Design Tokens ── */
 :root {
@@ -16,19 +16,21 @@
   --ann-brown-mid: #6b3a00;
   --ann-red: #dc2626;
   --ann-red-dark: #b91c1c;
-  --ann-font-display: "Cinzel Decorative", serif;
-  --ann-font-devanagari: "Tiro Devanagari Hindi", serif;
-  --ann-font-body: "Cormorant Garamond", serif;
+  --ann-font-display: var(--font-cinzel);
+  --ann-font-devanagari: var(--font-hindi);
+  --ann-font-body: var(--font-cormorant);
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
 
 @keyframes bell-ring-outer {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.15;
   }
+
   50% {
     transform: scale(1.5);
     opacity: 0;
@@ -36,11 +38,13 @@
 }
 
 @keyframes bell-ring-inner {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.2;
   }
+
   50% {
     transform: scale(1.4);
     opacity: 0;
@@ -48,20 +52,25 @@
 }
 
 @keyframes bell-shake {
+
   0%,
   90%,
   100% {
     transform: rotate(0deg);
   }
+
   92% {
     transform: rotate(-10deg);
   }
+
   94% {
     transform: rotate(10deg);
   }
+
   96% {
     transform: rotate(-8deg);
   }
+
   98% {
     transform: rotate(8deg);
   }
@@ -72,6 +81,7 @@
     opacity: 0;
     transform: translateX(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -83,6 +93,7 @@
     opacity: 0;
     transform: translateX(50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -90,10 +101,12 @@
 }
 
 @keyframes fraud-pulse {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.3);
   }
+
   50% {
     box-shadow: 0 0 0 6px rgba(220, 38, 38, 0);
   }
@@ -103,6 +116,7 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
@@ -113,6 +127,7 @@
     height: 0;
     opacity: 0;
   }
+
   to {
     height: 100%;
     opacity: 1;
@@ -120,10 +135,12 @@
 }
 
 @keyframes section-bg-breathe {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -136,13 +153,11 @@
   padding: 3.5rem 0;
   overflow: hidden;
 
-  background: linear-gradient(
-    160deg,
-    #fff9f0 0%,
-    #fff5e6 40%,
-    #fffbf4 70%,
-    #fff5e0 100%
-  );
+  background: linear-gradient(160deg,
+      #fff9f0 0%,
+      #fff5e6 40%,
+      #fffbf4 70%,
+      #fff5e0 100%);
   background-size: 200% 200%;
   animation: section-bg-breathe 10s ease-in-out infinite;
 }
@@ -186,11 +201,9 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(245, 166, 35, 0.12) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle,
+      rgba(245, 166, 35, 0.12) 1px,
+      transparent 1px);
   background-size: 28px 28px;
   opacity: 0.5;
 }
@@ -202,11 +215,13 @@
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 1rem;
   }
 }
+
 .grid {
   display: flex;
   flex-direction: row;
@@ -296,14 +311,12 @@
   line-height: 1.2;
   margin-bottom: 1rem;
 
-  background: linear-gradient(
-    90deg,
-    #cc4400 0%,
-    var(--ann-saffron-mid) 25%,
-    var(--ann-gold) 50%,
-    var(--ann-saffron) 75%,
-    #cc4400 100%
-  );
+  background: linear-gradient(90deg,
+      #cc4400 0%,
+      var(--ann-saffron-mid) 25%,
+      var(--ann-gold) 50%,
+      var(--ann-saffron) 75%,
+      #cc4400 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -321,11 +334,9 @@
 
 .stackedBar {
   height: 3px;
-  background: linear-gradient(
-    to right,
-    var(--ann-saffron-mid),
-    var(--ann-gold)
-  );
+  background: linear-gradient(to right,
+      var(--ann-saffron-mid),
+      var(--ann-gold));
   border-radius: 2px;
 }
 
@@ -333,10 +344,12 @@
   width: 140px;
   opacity: 1;
 }
+
 .stackedBar--md {
   width: 105px;
   opacity: 0.5;
 }
+
 .stackedBar--sm {
   width: 70px;
   opacity: 0.25;
@@ -367,6 +380,7 @@
 .dividerLine--left {
   background: linear-gradient(to right, transparent, var(--ann-gold-mid));
 }
+
 .dividerLine--right {
   background: linear-gradient(to left, transparent, var(--ann-gold-mid));
 }
@@ -400,11 +414,9 @@
 
 .accentBarSegment {
   width: 4px;
-  background: linear-gradient(
-    to bottom,
-    var(--ann-saffron-mid),
-    var(--ann-gold)
-  );
+  background: linear-gradient(to bottom,
+      var(--ann-saffron-mid),
+      var(--ann-gold));
   border-radius: 2px;
 }
 
@@ -412,10 +424,12 @@
   height: 24px;
   opacity: 1;
 }
+
 .accentBarSegment--md {
   height: 16px;
   opacity: 0.6;
 }
+
 .accentBarSegment--sm {
   height: 10px;
   opacity: 0.3;
@@ -458,14 +472,12 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--ann-saffron-deep),
-    var(--ann-saffron),
-    var(--ann-gold),
-    var(--ann-saffron),
-    var(--ann-saffron-deep)
-  );
+  background: linear-gradient(90deg,
+      var(--ann-saffron-deep),
+      var(--ann-saffron),
+      var(--ann-gold),
+      var(--ann-saffron),
+      var(--ann-saffron-deep));
 }
 
 /* Left accent bar */
@@ -475,12 +487,10 @@
   bottom: 0;
   left: 0;
   width: 3px;
-  background: linear-gradient(
-    to bottom,
-    var(--ann-saffron-mid),
-    var(--ann-gold),
-    var(--ann-saffron-mid)
-  );
+  background: linear-gradient(to bottom,
+      var(--ann-saffron-mid),
+      var(--ann-gold),
+      var(--ann-saffron-mid));
   animation: vertical-line-grow 0.8s ease-out 0.5s both;
 }
 
@@ -503,11 +513,9 @@
 /* Thin divider line inside card */
 .cardDivider {
   height: 1px;
-  background: linear-gradient(
-    to right,
-    rgba(245, 166, 35, 0.5),
-    rgba(245, 166, 35, 0.1)
-  );
+  background: linear-gradient(to right,
+      rgba(245, 166, 35, 0.5),
+      rgba(245, 166, 35, 0.1));
   margin-bottom: 1.25rem;
 }
 
@@ -520,11 +528,9 @@
   padding: 0.6rem 1rem;
   margin-bottom: 1.25rem;
   border-radius: 10px;
-  background: linear-gradient(
-    135deg,
-    rgba(254, 226, 226, 0.9),
-    rgba(254, 202, 202, 0.7)
-  );
+  background: linear-gradient(135deg,
+      rgba(254, 226, 226, 0.9),
+      rgba(254, 202, 202, 0.7));
   border: 1px solid rgba(220, 38, 38, 0.3);
   animation: fraud-pulse 2s ease-in-out infinite;
 }
@@ -632,6 +638,7 @@
   border-radius: 0 0 12px 12px;
   background: linear-gradient(to bottom, rgba(255, 140, 0, 0.1), transparent);
 }
+
 @media screen and (max-width: 768px) {
   .card {
     padding: 1.5rem;

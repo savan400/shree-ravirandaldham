@@ -2,7 +2,6 @@
    FacilitiesCards.module.css
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Tiro+Devanagari+Hindi&display=swap");
 
 /* ── Design Tokens ── */
 :root {
@@ -13,17 +12,19 @@
   --fc-saffron-deep: #ff4500;
   --fc-rust: #cc4400;
   --fc-cream: #fff8dc;
-  --fc-font-display: "Cinzel Decorative", serif;
-  --fc-font-devanagari: "Tiro Devanagari Hindi", serif;
+  --fc-font-display: var(--font-display);
+  --fc-font-devanagari: var(--font-hindi);
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
 
 @keyframes fc-bg-breathe {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -35,13 +36,11 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4rem;
-  background: linear-gradient(
-    150deg,
-    #fff9f0 0%,
-    #fff5e5 35%,
-    #fffbf3 65%,
-    #fff0dc 100%
-  );
+  background: linear-gradient(150deg,
+      #fff9f0 0%,
+      #fff5e5 35%,
+      #fffbf3 65%,
+      #fff0dc 100%);
   background-size: 200% 200%;
   animation: fc-bg-breathe 10s ease-in-out infinite;
 }
@@ -73,6 +72,7 @@
 .header--visible {
   opacity: 1;
 }
+
 .header--hidden {
   opacity: 0;
 }
@@ -175,23 +175,19 @@
 .cardGradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(8, 2, 0, 0.85) 0%,
-    rgba(8, 2, 0, 0.35) 55%,
-    transparent 100%
-  );
+  background: linear-gradient(to top,
+      rgba(8, 2, 0, 0.85) 0%,
+      rgba(8, 2, 0, 0.35) 55%,
+      transparent 100%);
   transition: background 0.5s ease;
   z-index: 2;
 }
 
 .card:hover .cardGradient {
-  background: linear-gradient(
-    to top,
-    rgba(8, 2, 0, 0.95) 0%,
-    rgba(8, 2, 0, 0.55) 50%,
-    rgba(8, 2, 0, 0.15) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(8, 2, 0, 0.95) 0%,
+      rgba(8, 2, 0, 0.55) 50%,
+      rgba(8, 2, 0, 0.15) 100%);
 }
 
 /* Accent glow (background set inline — per-card dynamic color) */
@@ -349,15 +345,18 @@
   flex-shrink: 0;
   /* background set inline — per-card dynamic accent color */
 }
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 1rem;
   }
+
   .cardDescription {
     max-height: 8rem;
     opacity: 1;
     transform: translateY(0);
   }
+
   .cardContent {
     padding: 1rem;
   }

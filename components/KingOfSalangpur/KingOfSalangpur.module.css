@@ -2,8 +2,6 @@
    KingOfSalangpur.module.css
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap");
-
 /* ── Design Tokens ── */
 :root {
   --ks-gold: #ffd700;
@@ -15,8 +13,9 @@
   --ks-rust: #cc4400;
   --ks-brown-dark: #4a2800;
   --ks-brown-mid: rgba(100, 50, 0, 0.75);
-  --ks-font-display: "Cinzel Decorative", serif;
-  --ks-font-devanagari: "Tiro Devanagari Hindi", serif;
+  --ks-font-display: var(--font-display);
+  --ks-font-devanagari: var(--font-hindi);
+  --ks-font--cinzel: var(--font-cinzel);
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
@@ -26,6 +25,7 @@
     opacity: 0;
     transform: translateX(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -37,6 +37,7 @@
     opacity: 0;
     transform: translateX(50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -44,22 +45,24 @@
 }
 
 @keyframes ks-glow-image {
+
   0%,
   100% {
-    filter: drop-shadow(0 0 25px rgba(255, 180, 0, 0.25))
-      drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 0 25px rgba(255, 180, 0, 0.25)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
   }
+
   50% {
-    filter: drop-shadow(0 0 45px rgba(255, 180, 0, 0.45))
-      drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 0 45px rgba(255, 180, 0, 0.45)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
   }
 }
 
 @keyframes ks-bg-breathe {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -69,6 +72,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -80,13 +84,11 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4rem;
-  background: linear-gradient(
-    150deg,
-    #fff9f0 0%,
-    #fff5e5 30%,
-    #fffbf3 60%,
-    #fff0dc 100%
-  );
+  background: linear-gradient(150deg,
+      #fff9f0 0%,
+      #fff5e5 30%,
+      #fffbf3 60%,
+      #fff0dc 100%);
   background-size: 200% 200%;
   animation: ks-bg-breathe 10s ease-in-out infinite;
 }
@@ -139,11 +141,9 @@
   top: 10%;
   left: 15%;
   border-radius: 50%;
-  background: radial-gradient(
-    ellipse,
-    rgba(255, 180, 0, 0.18),
-    transparent 70%
-  );
+  background: radial-gradient(ellipse,
+      rgba(255, 180, 0, 0.18),
+      transparent 70%);
   filter: blur(30px);
   z-index: 1;
   pointer-events: none;
@@ -232,11 +232,9 @@
   display: flex;
   gap: 2rem;
   padding: 1.25rem 1.5rem;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 0, 0.06),
-    rgba(255, 215, 0, 0.04)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 0, 0.06),
+      rgba(255, 215, 0, 0.04));
   border: 1px solid rgba(245, 166, 35, 0.2);
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -255,7 +253,7 @@
 }
 
 .statNumber {
-  font-family: var(--ks-font-display);
+  font-family: var(--ks-font--cinzel);
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 900;
   background: linear-gradient(135deg, var(--ks-saffron-mid), var(--ks-gold));
@@ -271,16 +269,19 @@
   letter-spacing: 0.05em;
   margin-top: 2px;
 }
+
 @media screen and (max-width: 768px) {
   .statueImage {
     width: auto;
     height: auto;
   }
-  .statueCol{
+
+  .statueCol {
     flex: unset;
     min-height: unset;
   }
-  .container{
+
+  .container {
     padding: 0 1rem;
   }
 }

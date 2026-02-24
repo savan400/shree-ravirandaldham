@@ -1,17 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
 .title {
-  font-family: "Cinzel Decorative", "Palatino Linotype", serif;
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 700;
   margin-bottom: 0;
-  background: linear-gradient(
-    90deg,
-    #cc4400 0%,
-    #ff6b00 25%,
-    #ffd700 50%,
-    #ff8c00 75%,
-    #cc4400 100%
-  );
+  background: linear-gradient(90deg,
+      #cc4400 0%,
+      #ff6b00 25%,
+      #ffd700 50%,
+      #ff8c00 75%,
+      #cc4400 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -23,6 +20,7 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }

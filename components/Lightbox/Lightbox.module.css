@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
-
 /* ── Animations ─────────────────────────────────────────────────────────────── */
 
 @keyframes lightboxFade {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -16,6 +15,7 @@
     opacity: 0;
     transform: scale(0.94) translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -60,6 +60,7 @@
   backdrop-filter: blur(8px);
   z-index: 10;
 }
+
 .lightboxClose:hover {
   background: rgba(255, 107, 0, 0.9);
   border-color: #ffd700;
@@ -89,9 +90,11 @@
   backdrop-filter: blur(8px);
   z-index: 10;
 }
+
 .navPrev {
   left: 2rem;
 }
+
 .navNext {
   right: 2rem;
 }
@@ -100,9 +103,11 @@
   background: rgba(255, 107, 0, 0.9);
   border-color: #ffd700;
 }
+
 .navPrev:hover {
   transform: translateY(-50%) scale(1.1);
 }
+
 .navNext:hover {
   transform: translateY(-50%) scale(1.1);
 }
@@ -137,11 +142,9 @@
 /* ── Info panel ──────────────────────────────────────────────────────────────── */
 
 .lightboxInfo {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.96),
-    rgba(255, 250, 242, 0.96)
-  );
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(255, 250, 242, 0.96));
   padding: 1.25rem 2rem;
   border-radius: 12px;
   text-align: center;
@@ -154,7 +157,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-family: "Cinzel Decorative", serif;
+  font-family: var(--font-display);
   font-size: 0.68rem;
   color: #ff6b00;
   margin-bottom: 0.6rem;
@@ -162,7 +165,7 @@
 }
 
 .lightboxTitle {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-cormorant);
   font-size: 1.2rem;
   font-weight: 600;
   color: #3a1800;
@@ -170,7 +173,7 @@
 }
 
 .lightboxCounter {
-  font-family: "Cinzel Decorative", serif;
+  font-family: var(--font-display);
   font-size: 0.65rem;
   color: rgba(100, 50, 0, 0.55);
   margin: 0;
@@ -183,29 +186,36 @@
     height: 100vh;
   }
 }
+
 @media (max-width: 640px) {
   .lightbox {
     padding: 1rem;
   }
+
   .lightboxClose {
     top: 1rem;
     right: 1rem;
     width: 38px;
     height: 38px;
   }
+
   .lightboxNav {
     width: 40px;
     height: 40px;
   }
+
   .navPrev {
     left: 0.75rem;
   }
+
   .navNext {
     right: 0.75rem;
   }
+
   .lightboxInfo {
     padding: 1rem 1.25rem;
   }
+
   .lightboxTitle {
     font-size: 1rem;
   }

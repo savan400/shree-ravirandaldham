@@ -1,11 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap");
 @import "tailwindcss";
 
 @theme {
-  /* Font families */
-  --font-sans: "Poppins", sans-serif;
-  --font-hindi: "Tiro Devanagari Hindi", serif;
-
   /* Border radius */
   --radius: 0.5rem;
   --radius-lg: var(--radius);
@@ -77,88 +72,109 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
   }
+
   @keyframes ken-burns {
     0% {
       transform: scale(1);
     }
+
     100% {
       transform: scale(1.1);
     }
   }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
       transform: translateY(30px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
   @keyframes fadeInLeft {
     from {
       opacity: 0;
       transform: translateX(-30px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
+
   @keyframes fadeInRight {
     from {
       opacity: 0;
       transform: translateX(30px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
+
   @keyframes shimmer {
     0% {
       background-position: -200% 0;
     }
+
     100% {
       background-position: 200% 0;
     }
   }
+
   @keyframes float {
+
     0%,
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-10px);
     }
   }
+
   @keyframes pulse-glow {
+
     0%,
     100% {
       box-shadow: 0 0 20px hsl(24 100% 50% / 0.3);
     }
+
     50% {
       box-shadow:
         0 0 40px hsl(24 100% 50% / 0.6),
         0 0 60px hsl(43 100% 50% / 0.3);
     }
   }
+
   @keyframes logo-spin {
     from {
       transform: rotate(0deg);
     }
+
     to {
       transform: rotate(360deg);
     }
@@ -284,12 +300,10 @@
   .info-card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to top,
-      rgb(0 0 0 / 0.8),
-      rgb(0 0 0 / 0.3),
-      transparent
-    );
+    background: linear-gradient(to top,
+        rgb(0 0 0 / 0.8),
+        rgb(0 0 0 / 0.3),
+        transparent);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -310,12 +324,10 @@
     height: 0.25rem;
     margin: 0 auto;
     border-radius: 9999px;
-    background: linear-gradient(
-      90deg,
-      var(--color-saffron),
-      var(--color-gold),
-      var(--color-saffron)
-    );
+    background: linear-gradient(90deg,
+        var(--color-saffron),
+        var(--color-gold),
+        var(--color-saffron));
   }
 
   .btn-glow {
@@ -331,11 +343,9 @@
   }
 
   .gradient-text {
-    background: linear-gradient(
-      135deg,
-      var(--color-saffron),
-      var(--color-gold)
-    );
+    background: linear-gradient(135deg,
+        var(--color-saffron),
+        var(--color-gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -352,12 +362,10 @@
     inset: 0;
     opacity: 0;
     transition: opacity 0.5s;
-    background: linear-gradient(
-      135deg,
-      hsl(43 100% 50% / 0.1),
-      transparent 50%,
-      hsl(24 100% 50% / 0.05)
-    );
+    background: linear-gradient(135deg,
+        hsl(43 100% 50% / 0.1),
+        transparent 50%,
+        hsl(24 100% 50% / 0.05));
   }
 
   .card-shine:hover::before {
@@ -365,15 +373,12 @@
   }
 
   .ornament-border {
-    border-image: linear-gradient(
-        90deg,
+    border-image: linear-gradient(90deg,
         transparent,
         var(--color-gold),
         var(--color-saffron),
         var(--color-gold),
-        transparent
-      )
-      1;
+        transparent) 1;
   }
 }
 
@@ -443,10 +448,12 @@
 .read-the-docs {
   color: #888;
 }
+
 .sticky-img-class {
   position: sticky;
   top: 150px;
 }
+
 @media screen and (max-width: 768px) {
   .sticky-img-class {
     position: unset !important;

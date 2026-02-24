@@ -1,33 +1,37 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
-
 @keyframes imageShine {
   0% {
     transform: translateX(-100%) skewX(-15deg);
   }
+
   100% {
     transform: translateX(300%) skewX(-15deg);
   }
 }
 
 @keyframes glowPulse {
+
   0%,
   100% {
     opacity: 0.3;
   }
+
   50% {
     opacity: 0.6;
   }
 }
 
 @keyframes cornerGlow {
+
   0%,
   100% {
     box-shadow: 0 0 6px rgba(255, 140, 0, 0.3);
   }
+
   50% {
     box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
   }
 }
+
 .card {
   position: relative;
   background: linear-gradient(145deg, #ffffff, #fff9f2);
@@ -58,11 +62,9 @@
   align-items: center;
   gap: 6px;
   padding: 0.4rem 0.85rem;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 0, 0.95),
-    rgba(255, 180, 0, 0.95)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 0, 0.95),
+      rgba(255, 180, 0, 0.95));
   border-radius: 20px;
   box-shadow: 0 4px 16px rgba(255, 107, 0, 0.4);
   backdrop-filter: blur(8px);
@@ -94,11 +96,9 @@
 .imageGlow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    ellipse 60% 50% at 50% 40%,
-    rgba(255, 180, 0, 0.12),
-    transparent
-  );
+  background: radial-gradient(ellipse 60% 50% at 50% 40%,
+      rgba(255, 180, 0, 0.12),
+      transparent);
   animation: glowPulse 4s ease-in-out infinite;
   pointer-events: none;
   z-index: 2;
@@ -118,12 +118,10 @@
   top: 0;
   bottom: 0;
   width: 40%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent);
   animation: imageShine 0.8s ease-out;
 }
 
@@ -156,7 +154,7 @@
 }
 
 .cardTitle {
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-cormorant);
   font-size: 1.25rem;
   font-weight: 600;
   color: #3a1800;
@@ -175,7 +173,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: "Cormorant Garamond", serif;
+  font-family: var(--font-cormorant);
   font-size: 0.88rem;
   color: rgba(100, 50, 0, 0.75);
 }
@@ -218,6 +216,7 @@
   width: 2px;
   height: 20px;
 }
+
 .cardViewDetails {
   display: flex;
   align-items: center;
@@ -235,7 +234,7 @@
 }
 
 .cardViewDetailsText {
-  font-family: var(--fc-font-display);
+  font-family: var(--font-display);
   font-size: 0.6rem;
   letter-spacing: 0.18em;
   color: #ff6b00;

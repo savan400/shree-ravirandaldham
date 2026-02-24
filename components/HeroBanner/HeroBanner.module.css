@@ -4,7 +4,7 @@
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* ── Google Fonts ── */
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Devanagari:wght@400;600&display=swap");
+
 
 /* ── Design Tokens ── */
 :root {
@@ -15,9 +15,9 @@
   --saffron-darkest: #ff5500;
   --overlay-dark: rgba(10, 5, 0, 0.55);
   --overlay-bottom: rgba(15, 5, 0, 0.9);
-  --font-display: "Cinzel Decorative", serif;
-  --font-body: "EB Garamond", serif;
-  --font-devanagari: "Noto Sans Devanagari", serif;
+  --font-display: var(--font-display);
+  --font-body: var(--font-serif);
+  --font-devanagari: var(--font-noto-hindi);
 }
 
 /* ─── Keyframe Animations ──────────────────────────────────────────────────── */
@@ -26,6 +26,7 @@
   0% {
     transform: scale(1.08) translateX(0px);
   }
+
   100% {
     transform: scale(1) translateX(-20px);
   }
@@ -36,6 +37,7 @@
     opacity: 0.7;
     transform: scaleY(0.9) translateY(1px);
   }
+
   100% {
     opacity: 1;
     transform: scaleY(1.1) translateY(-1px);
@@ -47,6 +49,7 @@
     opacity: 0.8;
     transform: translateY(0) scale(1);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-40px) scale(0.5);
@@ -57,6 +60,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -66,6 +70,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(-360deg);
   }
@@ -75,16 +80,19 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
 }
 
 @keyframes dot-pulse {
+
   0%,
   100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.15);
   }
@@ -112,6 +120,7 @@
   opacity: 1;
   z-index: 1;
 }
+
 .slide--inactive {
   opacity: 0;
   z-index: 0;
@@ -141,11 +150,9 @@
 }
 
 .overlay--vignette {
-  background: radial-gradient(
-    ellipse 80% 70% at 50% 50%,
-    transparent 30%,
-    rgba(20, 8, 0, 0.75) 100%
-  );
+  background: radial-gradient(ellipse 80% 70% at 50% 50%,
+      transparent 30%,
+      rgba(20, 8, 0, 0.75) 100%);
 }
 
 .overlay--topGlow {
@@ -165,12 +172,10 @@
   right: 0;
   top: auto;
   height: 220px;
-  background: linear-gradient(
-    to top,
-    var(--overlay-bottom) 0%,
-    rgba(80, 30, 0, 0.3) 60%,
-    transparent 100%
-  );
+  background: linear-gradient(to top,
+      var(--overlay-bottom) 0%,
+      rgba(80, 30, 0, 0.3) 60%,
+      transparent 100%);
 }
 
 /* ─── Mandala Decorations ──────────────────────────────────────────────────── */
@@ -239,16 +244,19 @@
   top: 1.5rem;
   left: 1.5rem;
 }
+
 .corner--tr {
   top: 1.5rem;
   right: 1.5rem;
   transform: scaleX(-1);
 }
+
 .corner--bl {
   bottom: 1.5rem;
   left: 1.5rem;
   transform: scaleY(-1);
 }
+
 .corner--br {
   bottom: 1.5rem;
   right: 1.5rem;
@@ -264,21 +272,20 @@
   z-index: 20;
   pointer-events: none;
   height: 5px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--saffron-deep) 15%,
-    var(--gold-bright) 35%,
-    var(--saffron) 50%,
-    var(--gold-bright) 65%,
-    var(--saffron-deep) 85%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--saffron-deep) 15%,
+      var(--gold-bright) 35%,
+      var(--saffron) 50%,
+      var(--gold-bright) 65%,
+      var(--saffron-deep) 85%,
+      transparent 100%);
 }
 
 .borderBand--top {
   top: 0;
 }
+
 .borderBand--bottom {
   bottom: 0;
 }
@@ -291,12 +298,10 @@
   z-index: 20;
   height: 1px;
   pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(245, 166, 35, 0.4),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(245, 166, 35, 0.4),
+      transparent);
 }
 
 /* ─── Hero Text Content ────────────────────────────────────────────────────── */
@@ -374,6 +379,7 @@
 .dividerLine--left {
   background: linear-gradient(to right, transparent, var(--gold-mid));
 }
+
 .dividerLine--right {
   background: linear-gradient(to left, transparent, var(--gold-mid));
 }
@@ -394,15 +400,13 @@
   line-height: 1.1;
   margin-bottom: 0.75rem;
 
-  background: linear-gradient(
-    90deg,
-    var(--gold-bright) 0%,
-    var(--saffron) 20%,
-    var(--gold-bright) 40%,
-    #fff8dc 60%,
-    var(--saffron) 80%,
-    var(--gold-bright) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--gold-bright) 0%,
+      var(--saffron) 20%,
+      var(--gold-bright) 40%,
+      #fff8dc 60%,
+      var(--saffron) 80%,
+      var(--gold-bright) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -489,6 +493,7 @@
 .navBtn--prev {
   left: 1.5rem;
 }
+
 .navBtn--next {
   right: 1.5rem;
 }

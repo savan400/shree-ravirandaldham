@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
-
 /* ── Keyframes ── */
 @keyframes ih-bg-breathe {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -17,6 +17,7 @@
     transform: translateY(30px);
     filter: blur(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -29,6 +30,7 @@
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -40,13 +42,11 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 0;
-  background: linear-gradient(
-    160deg,
-    #fff9f0 0%,
-    #fff5e5 30%,
-    #fffbf3 60%,
-    #fff0dc 100%
-  );
+  background: linear-gradient(160deg,
+      #fff9f0 0%,
+      #fff5e5 30%,
+      #fffbf3 60%,
+      #fff0dc 100%);
   background-size: 200% 200%;
   animation: ih-bg-breathe 12s ease-in-out infinite;
 }
@@ -103,14 +103,12 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ff6b00,
-    #ffd700,
-    #ff6b00,
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      #ff6b00,
+      #ffd700,
+      #ff6b00,
+      transparent);
   border-radius: 20px 20px 0 0;
 }
 
@@ -124,7 +122,7 @@
 }
 
 .paragraph {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: clamp(0.92rem, 1.5vw, 1.05rem);
   color: #3a1800;
   line-height: 2.1;
@@ -141,11 +139,9 @@
 .quoteBlock {
   position: relative;
   padding: 2rem 2.5rem 2rem 3rem;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 0, 0.04),
-    rgba(255, 215, 0, 0.02)
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 107, 0, 0.04),
+      rgba(255, 215, 0, 0.02));
   border-left: 4px solid;
   border-image: linear-gradient(to bottom, #ff6b00, #ffd700, #ff6b00) 1;
   border-radius: 0 12px 12px 0;
@@ -165,7 +161,7 @@
 }
 
 .quoteParagraph {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: 1rem;
   color: #dc2626;
   line-height: 2;
@@ -176,7 +172,7 @@
 
 /* ── Blessing ── */
 .blessing {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: 0.8rem;
   color: rgba(180, 80, 0, 0.5);
   text-align: center;
@@ -184,19 +180,24 @@
   margin-bottom: 0;
   letter-spacing: 0.1em;
 }
+
 @media screen and (max-width: 768px) {
   .section {
     padding: 2rem 0;
   }
+
   .container {
     padding: 0 1rem;
   }
+
   .grid {
     gap: 1rem;
   }
+
   .contentCard {
     padding: 1.5rem 1.5rem;
   }
+
   .header {
     margin-bottom: 1.5rem;
   }

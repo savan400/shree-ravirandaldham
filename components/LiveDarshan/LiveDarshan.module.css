@@ -2,7 +2,7 @@
    LiveDarshan.module.css
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&display=swap");
+
 
 /* ── Design Tokens ── */
 :root {
@@ -15,19 +15,21 @@
   --ld-red-bright: #ff4444;
   --ld-green: #22c55e;
   --ld-cream: #fff8dc;
-  --ld-font-display: "Cinzel Decorative", serif;
-  --ld-font-devanagari: "Tiro Devanagari Hindi", serif;
+  --ld-font-display: var(--font-display);
+  --ld-font-devanagari: var(--font-hindi);
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
 
 @keyframes live-dot-pulse {
+
   0%,
   100% {
     opacity: 1;
     transform: scale(1);
     box-shadow: 0 0 6px var(--ld-red-bright);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(1.3);
@@ -41,6 +43,7 @@
     transform: translateY(30px);
     filter: blur(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -49,12 +52,14 @@
 }
 
 @keyframes ld-frame-glow {
+
   0%,
   100% {
     box-shadow:
       0 0 30px rgba(255, 140, 0, 0.2),
       0 20px 60px rgba(0, 0, 0, 0.4);
   }
+
   50% {
     box-shadow:
       0 0 60px rgba(255, 140, 0, 0.4),
@@ -63,10 +68,12 @@
 }
 
 @keyframes ld-bg-shift {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -77,6 +84,7 @@
     top: 0;
     opacity: 0.04;
   }
+
   100% {
     top: 100%;
     opacity: 0;
@@ -84,10 +92,12 @@
 }
 
 @keyframes ld-title-glow {
+
   0%,
   100% {
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
   }
+
   50% {
     text-shadow:
       0 0 40px rgba(255, 215, 0, 0.7),
@@ -96,11 +106,13 @@
 }
 
 @keyframes ld-particle {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
     opacity: 0.6;
   }
+
   50% {
     transform: translateY(-14px) scale(1.4);
     opacity: 0.2;
@@ -114,13 +126,11 @@
   overflow: hidden;
   padding: 5rem 0;
 
-  background: linear-gradient(
-    160deg,
-    #1a0800 0%,
-    #120500 35%,
-    #1f0a00 65%,
-    #150600 100%
-  );
+  background: linear-gradient(160deg,
+      #1a0800 0%,
+      #120500 35%,
+      #1f0a00 65%,
+      #150600 100%);
   background-size: 200% 200%;
   animation: ld-bg-shift 12s ease-in-out infinite;
 }
@@ -130,11 +140,9 @@
 .dotGrid {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 140, 0, 0.08) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle,
+      rgba(255, 140, 0, 0.08) 1px,
+      transparent 1px);
   background-size: 28px 28px;
   opacity: 0.5;
   z-index: 0;
@@ -146,11 +154,9 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    rgba(180, 60, 0, 0.18),
-    transparent
-  );
+  background: radial-gradient(ellipse 70% 60% at 50% 50%,
+      rgba(180, 60, 0, 0.18),
+      transparent);
 }
 
 .scanLine {
@@ -160,12 +166,10 @@
   height: 30%;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.015),
-    transparent
-  );
+  background: linear-gradient(to bottom,
+      transparent,
+      rgba(255, 255, 255, 0.015),
+      transparent);
   animation: ld-scan-line 6s linear infinite;
 }
 
@@ -179,7 +183,7 @@
   opacity: 0.025;
   user-select: none;
   pointer-events: none;
-  font-family: serif;
+  font-family: var(--font-serif);
   line-height: 1;
   z-index: 0;
 }
@@ -192,21 +196,20 @@
   right: 0;
   height: 4px;
   z-index: 5;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--ld-red) 15%,
-    var(--ld-saffron-mid) 35%,
-    var(--ld-gold) 50%,
-    var(--ld-saffron-mid) 65%,
-    var(--ld-red) 85%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--ld-red) 15%,
+      var(--ld-saffron-mid) 35%,
+      var(--ld-gold) 50%,
+      var(--ld-saffron-mid) 65%,
+      var(--ld-red) 85%,
+      transparent 100%);
 }
 
 .borderBand--top {
   top: 0;
 }
+
 .borderBand--bottom {
   bottom: 0;
 }
@@ -227,6 +230,7 @@
 .particle--gold {
   background: var(--ld-gold);
 }
+
 .particle--saffron {
   background: var(--ld-saffron-mid);
 }
@@ -283,11 +287,9 @@
   align-items: center;
   gap: 8px;
   padding: 0.4rem 1rem;
-  background: linear-gradient(
-    135deg,
-    rgba(220, 38, 38, 0.9),
-    rgba(180, 20, 20, 0.95)
-  );
+  background: linear-gradient(135deg,
+      rgba(220, 38, 38, 0.9),
+      rgba(180, 20, 20, 0.95));
   border-radius: 3px;
   border: 1px solid rgba(255, 100, 100, 0.4);
   box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
@@ -372,14 +374,12 @@
   position: relative;
   padding: 3px;
   border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    var(--ld-saffron-deep),
-    var(--ld-saffron),
-    var(--ld-gold),
-    var(--ld-saffron),
-    var(--ld-saffron-deep)
-  );
+  background: linear-gradient(135deg,
+      var(--ld-saffron-deep),
+      var(--ld-saffron),
+      var(--ld-gold),
+      var(--ld-saffron),
+      var(--ld-saffron-deep));
   animation: ld-frame-glow 5s ease-in-out infinite;
 }
 
@@ -400,6 +400,7 @@
   top: 0;
   left: 0;
 }
+
 .corner--br {
   bottom: 0;
   right: 0;
@@ -412,11 +413,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.6rem 1.25rem;
-  background: linear-gradient(
-    90deg,
-    rgba(20, 5, 0, 0.95),
-    rgba(35, 12, 0, 0.95)
-  );
+  background: linear-gradient(90deg,
+      rgba(20, 5, 0, 0.95),
+      rgba(35, 12, 0, 0.95));
   border-bottom: 1px solid rgba(255, 140, 0, 0.2);
 }
 
@@ -468,11 +467,9 @@
 /* Bottom status bar */
 .statusBar {
   padding: 0.55rem 1.25rem;
-  background: linear-gradient(
-    90deg,
-    rgba(20, 5, 0, 0.95),
-    rgba(35, 12, 0, 0.95)
-  );
+  background: linear-gradient(90deg,
+      rgba(20, 5, 0, 0.95),
+      rgba(35, 12, 0, 0.95));
   border-top: 1px solid rgba(255, 140, 0, 0.2);
   display: flex;
   align-items: center;
@@ -509,6 +506,7 @@
   color: rgba(255, 220, 150, 0.45);
   letter-spacing: 0.06em;
 }
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 1rem;
