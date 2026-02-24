@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import { Calendar, MapPin, Clock, Radio, CheckCircle2 } from "lucide-react";
 import styles from "./EventCard.module.css";
 import Link from "next/link";
@@ -47,8 +46,7 @@ function getDateStatus(dateStr?: string): DateStatus {
   const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
   if (diffDays === 0) return { type: "live" };
-  if (diffDays > 0 && diffDays <= 7)
-    return { type: "upcoming", daysLeft: diffDays };
+  if (diffDays > 0 && diffDays <= 7) return { type: "upcoming", daysLeft: diffDays };
   if (diffDays < 0) return { type: "past" };
   return { type: "raw", label: dateStr };
 }
@@ -71,8 +69,7 @@ const DateBadge = ({ dateStr }: DateBadgeProps) => {
   }
 
   if (status.type === "upcoming") {
-    const label =
-      status.daysLeft === 1 ? "TOMORROW" : `IN ${status.daysLeft} DAYS`;
+    const label = status.daysLeft === 1 ? "TOMORROW" : `IN ${status.daysLeft} DAYS`;
     return (
       <div className={`${styles.dateBadge} ${styles.dateBadgeCountdown}`}>
         <Calendar className={styles.dateIcon} />
@@ -130,13 +127,18 @@ const EventCard = ({
         <div className={styles.imageGlow} />
         {hovered && <div className={styles.imageShine} />}
 
-        <Image
-          src={image}
-          alt={title}
-          width={400}
-          height={500}
-          className={styles.eventImage}
-        />
+        {image ? (
+          // Use plain <img> so Next.js optimizer doesn't intercept pre-signed URLs
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt={title}
+            className={styles.eventImage}
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          />
+        ) : (
+          <div className={styles.eventImage} style={{ background: "#1a0800" }} />
+        )}
 
         {/* Overlay gradient */}
         <div className={styles.imageOverlay} />

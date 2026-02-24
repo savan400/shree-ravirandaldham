@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050/api';
+const UPLOADS_URL = API_URL.replace('/api', '/uploads');
 
 // ─────────────────────────────────────────────
 // SEO
@@ -93,4 +94,67 @@ export async function deleteTranslation(id: string): Promise<void> {
     method: 'DELETE',
   });
   if (!res.ok) throw new Error('Failed to delete translation');
+}
+
+// ─────────────────────────────────────────────
+// Events
+// ─────────────────────────────────────────────
+
+export interface LocalizedString {
+  en: string;
+  hi: string;
+  gu: string;
+}
+
+export interface EventEntry {
+  _id: string;
+  title: LocalizedString;
+  description: LocalizedString;
+  location: LocalizedString;
+  time: LocalizedString;
+  date: string;
+  images: string[];
+  coverImage?: string;
+  updatedAt: string;
+}
+
+export async function fetchEvents(): Promise<EventEntry[]> {
+  try {
+    const res = await fetch(`${API_URL}/events`, { cache: 'no-store' });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    return [];
+  }
+}
+
+export async function saveEvent(data: FormData, id?: string): Promise<EventEntry> {
+  const url = id ? `${API_URL}/events/admin/${id}` : `${API_URL}/events/admin`;
+  const method = id ? 'PUT' : 'POST';
+  
+  const res = await fetch(url, {
+    method,
+    body: data,
+  });
+  if (!res.ok) throw new Error('Failed to save event');
+  return res.json();
+}
+
+export async function deleteEvent(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/events/admin/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) throw new Error('Failed to delete event');
+}
+
+export function getImageUrl(path: string) {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  if (path.startsWith('/uploads')) {
+    // Legacy local uploads
+    return `${API_URL.replace('/api', '')}${path}`;
+  }
+  // Wasabi storage via backend proxy/redirection
+  return `${API_URL}/events/image/${path}`;
 }
