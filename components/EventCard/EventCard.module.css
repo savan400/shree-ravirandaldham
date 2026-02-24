@@ -221,17 +221,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  opacity: 0;
-  transform: translateY(10px);
   transition:
     opacity 0.4s ease 0.1s,
     transform 0.4s ease 0.1s;
 }
 
-.card:hover .cardViewDetails {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .cardViewDetailsText {
   font-family: var(--font-display);
@@ -253,4 +247,149 @@
   width: 30px;
   flex-shrink: 0;
   background: #ff6b00;
+}
+
+/* ── Smart Status Badge ─────────────────────────────────────────── */
+
+.statusBadge {
+  position: absolute;
+  top: 3.5rem;
+  /* Positioned below the date badge */
+  right: 1rem;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: white;
+  text-transform: uppercase;
+}
+
+.live {
+  background: #ff0000;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+}
+
+.countdown {
+  background: #3a1800;
+  border: 1px solid rgba(255, 180, 0, 0.5);
+}
+
+.past {
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0.8;
+}
+
+.pulseIcon {
+  width: 10px;
+  height: 10px;
+  animation: badgePulse 1.5s infinite;
+}
+
+@keyframes badgePulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Ensure the card container can handle the extra badge height */
+.cardVisible {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dateBadgeLive {
+  background: linear-gradient(135deg,
+      rgba(220, 20, 20, 0.95),
+      rgba(255, 60, 0, 0.95));
+  box-shadow: 0 4px 16px rgba(220, 20, 20, 0.5);
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+/* COUNTDOWN badge — green to signal urgency */
+.dateBadgeCountdown {
+  background: linear-gradient(135deg,
+      rgba(20, 160, 80, 0.95),
+      rgba(80, 200, 120, 0.95));
+  box-shadow: 0 4px 16px rgba(20, 160, 80, 0.45);
+}
+
+/* DONE badge — muted grey/slate */
+.dateBadgeDone {
+  background: linear-gradient(135deg,
+      rgba(90, 90, 100, 0.92),
+      rgba(130, 130, 145, 0.92));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Card done state — desaturated, slightly dimmed */
+.cardDone {
+  filter: grayscale(60%) brightness(0.92);
+  opacity: 0.85;
+}
+
+.cardDone:hover {
+  filter: grayscale(30%) brightness(0.96);
+  opacity: 1;
+}
+
+/* Blinking dot shown next to "LIVE TODAY" */
+.liveDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  margin-left: 2px;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes livePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 16px rgba(220, 20, 20, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 4px 24px rgba(255, 60, 0, 0.85);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }

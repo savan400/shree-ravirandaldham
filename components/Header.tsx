@@ -32,14 +32,21 @@ interface MenuItem {
 const MENU_ITEMS: MenuItem[] = [
   {
     title: "Ravirandal Dham",
+    key: "ravirandal_dham",
     href: "#",
     submenu: [
       { title: "Parichay", href: "/ravirandaldham/parichay" },
       { title: "Itihas", href: "/ravirandaldham/itihas" },
       { title: "Mahima", href: "/ravirandaldham/mahima" },
-      { title: "Shree 1008 Akshaypari Bapu", href: "/ravirandaldham/akshaypari-bapu" },
+      {
+        title: "Shree 1008 Akshaypari Bapu",
+        href: "/ravirandaldham/akshaypari-bapu",
+      },
       { title: "Shree Ajaypari Bapu", href: "/ravirandaldham/ajaypari-bapu" },
-      { title: "Shree Dineshpuri Bapu", href: "/ravirandaldham/dineshpuri-bapu" },
+      {
+        title: "Shree Dineshpuri Bapu",
+        href: "/ravirandaldham/dineshpuri-bapu",
+      },
       { title: "Seva Karya", href: "/ravirandaldham/seva-karya" },
     ],
   },
@@ -70,11 +77,20 @@ const MENU_ITEMS: MenuItem[] = [
     title: "Pavitra Sthalo",
     href: "#",
     submenu: [
-      { title: "Shree Ravirandal Temple", href: "/pavitra-sthalo/ravirandal-temple" },
+      {
+        title: "Shree Ravirandal Temple",
+        href: "/pavitra-sthalo/ravirandal-temple",
+      },
       { title: "Pavitra Vav", href: "/pavitra-sthalo/pavitra-vav" },
-      { title: "Shree Shanidev Temple", href: "/pavitra-sthalo/shanidev-temple" },
+      {
+        title: "Shree Shanidev Temple",
+        href: "/pavitra-sthalo/shanidev-temple",
+      },
       { title: "108 Randal", href: "/facilities/108-randal" },
-      { title: "Shree Dineshpuri Bapu Samadhi Sthan", href: "/pavitra-sthalo/dineshpuribapu-samadhi" },
+      {
+        title: "Shree Dineshpuri Bapu Samadhi Sthan",
+        href: "/pavitra-sthalo/dineshpuribapu-samadhi",
+      },
       { title: "Dashama Temple", href: "/pavitra-sthalo/dashama-temple" },
     ],
   },
@@ -91,7 +107,10 @@ const MENU_ITEMS: MenuItem[] = [
     title: "History",
     href: "#",
     submenu: [
-      { title: "History of Randaldham", href: "/history/history-of-randaldham" },
+      {
+        title: "History of Randaldham",
+        href: "/history/history-of-randaldham",
+      },
       { title: "Randal Prerna", href: "/history/randal-prerna" },
     ],
   },
@@ -113,7 +132,8 @@ const MENU_ITEMS: MenuItem[] = [
 
 const CONTACT_PHONE = "98258 35304, 05, 06";
 const CONTACT_EMAIL = "shreesalangpur@gmail.com";
-const CONTACT_ADDRESS = "P.O. Salangpur (Hanuman) Ta: Barwala, Dist. Botad, Gujarat";
+const CONTACT_ADDRESS =
+  "P.O. Salangpur (Hanuman) Ta: Barwala, Dist. Botad, Gujarat";
 
 const LANGUAGES = [
   { code: "en", nativeLabel: "English" },
@@ -147,8 +167,9 @@ const LanguageDropdown: React.FC = () => {
         <Globe className="w-3 h-3 shrink-0" />
         <span className="hidden sm:inline">{selected.nativeLabel}</span>
         <ChevronDown
-          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""
-            }`}
+          className={`w-3 h-3 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
         />
       </button>
 
@@ -226,13 +247,18 @@ interface DesktopNavItemProps {
   closeSubmenu: () => void;
 }
 
-const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item, closeSubmenu }) => {
-  const isHash = item.href.startsWith('#');
+const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
+  item,
+  closeSubmenu,
+}) => {
+  const isHash = item.href.startsWith("#");
   const linkClass =
-    'flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative ' +
-    'after:absolute after:bottom-2 after:left-3 after:right-3 after:h-0.5 ' +
-    'after:bg-primary after:scale-x-0 after:origin-left ' +
-    'after:transition-transform after:duration-300 hover:after:scale-x-100';
+    "flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative " +
+    "after:absolute after:bottom-2 after:left-3 after:right-3 after:h-0.5 " +
+    "after:bg-primary after:scale-x-0 after:origin-left " +
+    "after:transition-transform after:duration-300 hover:after:scale-x-100";
+
+  const t = useTranslations("menuitems");
 
   return (
     <div className="nav-item relative group">
@@ -259,18 +285,34 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item, closeSubmenu }) =
       )}
 
       {item.submenu && (
-        <div className="nav-dropdown" role="menu" aria-label={`${item.title} submenu`} >
-          {item.submenu.map((sub) => (
-            sub.href.startsWith('#') ? (
-              <a key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem" onClick={closeSubmenu}>
+        <div
+          className="nav-dropdown"
+          role="menu"
+          aria-label={`${item.title} submenu`}
+        >
+          {item.submenu.map((sub) =>
+            sub.href.startsWith("#") ? (
+              <a
+                key={sub.title}
+                href={sub.href}
+                className="nav-dropdown-item"
+                role="menuitem"
+                onClick={closeSubmenu}
+              >
                 {sub.title}
               </a>
             ) : (
-              <Link key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem" onClick={closeSubmenu}>
+              <Link
+                key={sub.title}
+                href={sub.href}
+                className="nav-dropdown-item"
+                role="menuitem"
+                onClick={closeSubmenu}
+              >
                 {sub.title}
               </Link>
-            )
-          ))}
+            ),
+          )}
         </div>
       )}
     </div>
@@ -293,7 +335,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
   onClose,
 }) => {
   const mobileLinkClass =
-    'w-full flex items-center justify-between px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors';
+    "w-full flex items-center justify-between px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors";
 
   return (
     <div>
@@ -307,11 +349,11 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
         >
           {item.title}
           <ChevronDown
-            className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
             aria-hidden="true"
           />
         </button>
-      ) : item.href.startsWith('#') ? (
+      ) : item.href.startsWith("#") ? (
         <a href={item.href} className={mobileLinkClass} onClick={onClose}>
           {item.title}
         </a>
@@ -323,8 +365,8 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
 
       {item.submenu && isOpen && (
         <div className="bg-secondary/50" role="menu">
-          {item.submenu.map((sub) => (
-            sub.href.startsWith('#') ? (
+          {item.submenu.map((sub) =>
+            sub.href.startsWith("#") ? (
               <a
                 key={sub.title}
                 href={sub.href}
@@ -344,8 +386,8 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
               >
                 {sub.title}
               </Link>
-            )
-          ))}
+            ),
+          )}
         </div>
       )}
     </div>
@@ -397,8 +439,11 @@ const Header: React.FC = () => {
       <TopBar />
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-card/95 backdrop-blur-md shadow-lg" : "bg-card shadow-sm"
-          }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-card/95 backdrop-blur-md shadow-lg"
+            : "bg-card shadow-sm"
+        }`}
       >
         {/* Decorative bottom gradient border */}
         <div
@@ -412,7 +457,11 @@ const Header: React.FC = () => {
 
         {/* Logo + Bapu images row */}
         <div className="container mx-auto flex items-center justify-between px-4 py-2">
-          <Link href="/" className="flex items-center gap-3 group" aria-label="Go to homepage">
+          <Link
+            href="/"
+            className="flex items-center gap-3 group"
+            aria-label="Go to homepage"
+          >
             <Image
               src="/logo-optional.png"
               // src="/logo.png"
@@ -442,7 +491,10 @@ const Header: React.FC = () => {
                   className="rounded-full object-cover"
                 />
               </Link>
-              <Link href="/ravirandaldham/ajaypari-bapu" className="hidden lg:block">
+              <Link
+                href="/ravirandaldham/ajaypari-bapu"
+                className="hidden lg:block"
+              >
                 <Image
                   src="/images/bapu-1.png"
                   alt="Bapu"
@@ -451,7 +503,10 @@ const Header: React.FC = () => {
                   className="rounded-full object-cover"
                 />
               </Link>
-              <Link href="/ravirandaldham/dineshpuri-bapu" className="hidden lg:block">
+              <Link
+                href="/ravirandaldham/dineshpuri-bapu"
+                className="hidden lg:block"
+              >
                 <Image
                   src="/images/bapu-3.png"
                   alt="Bapu"
@@ -488,7 +543,11 @@ const Header: React.FC = () => {
               aria-label="Main navigation"
             >
               {MENU_ITEMS.map((item) => (
-                <DesktopNavItem key={item.title} item={item} closeSubmenu={() => setOpenSubmenu(null)} />
+                <DesktopNavItem
+                  key={item.title}
+                  item={item}
+                  closeSubmenu={() => setOpenSubmenu(null)}
+                />
               ))}
             </nav>
           </div>
@@ -514,7 +573,10 @@ const Header: React.FC = () => {
             </div>
             <div className="mb-5 -mt-3 ">
               <LotusDivider />
-              <div className="gap-3 items-center flex justify-center " aria-hidden="true">
+              <div
+                className="gap-3 items-center flex justify-center "
+                aria-hidden="true"
+              >
                 <Link href="/ravirandaldham/ajaypari-bapu">
                   <Image
                     src="/images/bapu-1.png"
