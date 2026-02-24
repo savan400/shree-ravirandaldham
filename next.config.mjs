@@ -9,12 +9,20 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
-        port: '5050',
+        port: '5051',
         pathname: '/api/**',
       },
       {
         protocol: 'https',
         hostname: '**.wasabisys.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
       },
     ],
   },

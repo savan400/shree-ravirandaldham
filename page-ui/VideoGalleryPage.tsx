@@ -1,32 +1,21 @@
 "use client"
-import React from 'react'
+import { useState, useEffect, useCallback } from "react";
 import styles from "@/app/[locale]/ravirandaldham/akshaypari-bapu/AdaypatiBapuPage.module.css";
 import galleryStyles from "@/app/[locale]/events/video-gallery/VideoGalleryPage.module.css";
 import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/PageBackgroundDecorations';
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';
-import DiamondDivider from '@/components/DiamondDivider/DiamondDivider';
 import { useInView } from '@/hooks/useInView';
 import { visibleClass } from '@/lib/utils';
 import RandalSahayate from './randalSahayate';
+import { fetchVideoGalleries, VideoGalleryEntry } from "@/lib/api";
+import { useLocale } from "next-intl";
+import VideoPlayerModal, { youtubeThumbnailUrl, extractYouTubeId } from "@/components/VideoPlayerModal/VideoPlayerModal";
+import Pagination from "@/components/Pagination/Pagination";
+import { Video as VideoIcon, Play } from "lucide-react";
+import Image from "next/image";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-interface VideoItem {
-    id: string;
-    title: string;
-    youtubeId: string;
-    category: 'aarti' | 'sandhya';
-}
-
-// ─── Sample Data ──────────────────────────────────────────────────────────────
-const VIDEO_DATA: VideoItem[] = [
-    { id: '1', title: 'Aarti Darshan Salangpur', youtubeId: 'dRNhVR4srZY?si=cxbtTYUJXfp0BoB7', category: 'aarti' },
-    { id: '2', title: 'Sandhya Aarti Darshan Salangpur', youtubeId: 'jLmgUBe7NpY?si=I1J4qoq31B0_marw', category: 'sandhya' },
-    { id: '3', title: 'Aarti Darshan Salangpur', youtubeId: 'RlYcw3a8beQ?si=qbp0CNwE-tFds0EC', category: 'aarti' },
-    { id: '4', title: 'Sandhya Aarti Darshan Salangpur', youtubeId: 'RqWt9Kcqid4?si=tsFIIFj2pPnmAoZD', category: 'sandhya' },
-    { id: '5', title: 'Aarti Darshan Salangpur', youtubeId: 'nHWm64GdFo4?si=vPXjU8b67SRS2tcg', category: 'aarti' },
-    { id: '6', title: 'Sandhya Aarti Darshan Salangpur', youtubeId: 'K3wVUV-vcoI?si=KJBrY37U957-qHsd', category: 'sandhya' },
-];
+const PER_PAGE = 12;
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 const OmSymbol = () => (
@@ -36,40 +25,97 @@ const OmSymbol = () => (
 );
 
 // ─── Video Card ───────────────────────────────────────────────────────────────
-const VideoCard: React.FC<{ video: VideoItem; index: number; isVisible: boolean }> = ({
-    video, index, isVisible
-}) => (
-    <div
-        className={`${galleryStyles.card} ${isVisible ? galleryStyles.cardVisible : ''}`}
-        style={{ animationDelay: `${index * 120}ms` }}
-    >
-        {/* Decorative corner mandala */}
-        <div className={galleryStyles.cardCorner} aria-hidden="true">
-            <OmSymbol />
-        </div>
+const VideoCard: React.FC<{ 
+    video: VideoGalleryEntry; 
+    index: number; 
+    isVisible: boolean; 
+    onOpen: (v: VideoGalleryEntry) => void;
+    locale: 'en' | 'hi' | 'gu';
+}> = ({
+    video, index, isVisible, onOpen, locale
+}) => {
+    const ytId = video.videoType === 'link' ? extractYouTubeId(video.videoUrl || '') : null;
+    const thumbUrl = video.thumbnailUrl || (ytId ? youtubeThumbnailUrl(ytId) : null);
 
-        {/* Player */}
-        <div className={galleryStyles.thumbnailWrap}>
-            <iframe
-                className={galleryStyles.iframe}
-                src={`https://www.youtube.com/embed/${video.youtubeId}&autoplay=1&rel=0`}
-                title={video.title}
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-            />
-        </div>
+    return (
+        <div
+            className={`${galleryStyles.card} ${isVisible ? galleryStyles.cardVisible : ''}`}
+            style={{ animationDelay: `${index * 80}ms` }}
+            onClick={() => onOpen(video)}
+            role="button"
+            aria-label={`Play video: ${video.title[locale] || video.title.en}`}
+        >
+            {/* Decorative corner mandala */}
+            <div className={galleryStyles.cardCorner} aria-hidden="true">
+                <OmSymbol />
+            </div>
 
-        {/* Card body */}
-        <div className={galleryStyles.cardBody}>
-            <div className={galleryStyles.cardDivider} />
-            <h3 className={galleryStyles.cardTitle}>{video.title}</h3>
+            {/* Thumbnail */}
+            <div className={galleryStyles.thumbnailWrap}>
+                {thumbUrl ? (
+                    <Image 
+                        src={thumbUrl}
+                        alt={video.title[locale] || video.title.en}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-amber-950/20">
+                        <VideoIcon className="w-12 h-12 text-amber-200/30" />
+                    </div>
+                )}
+                
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition-colors">
+                    <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-xl transform transition-transform duration-300 hover:scale-110">
+                        <Play className="w-6 h-6 text-white ml-1 fill-white" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Card body */}
+            <div className={galleryStyles.cardBody}>
+                <div className={galleryStyles.cardDivider} />
+                <h3 className={galleryStyles.cardTitle}>
+                    {video.title[locale] || video.title.en}
+                </h3>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 const VideoGalleryPage = () => {
+    const locale = useLocale() as "en" | "hi" | "gu";
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({ threshold: 0.1 });
+
+    const [items, setItems] = useState<VideoGalleryEntry[]>([]);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true);
+
+    const [selectedVideo, setSelectedVideo] = useState<VideoGalleryEntry | null>(null);
+
+    const load = useCallback(async (p: number) => {
+        setLoading(true);
+        try {
+            const result = await fetchVideoGalleries(p, PER_PAGE);
+            setItems(result.data ?? []);
+            setTotal(result.total ?? 0);
+        } catch (err) {
+            console.error("Failed to load videos:", err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => { load(page); }, [page, load]);
+
+    const handlePageChange = (p: number) => {
+        setPage(p);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     return (
         <section ref={sectionRef} className={styles.section}>
@@ -87,15 +133,51 @@ const VideoGalleryPage = () => {
                     <CommonTitle text="Video Gallery" />
                     <LotusDivider />
 
-                    <div className={galleryStyles.grid}>
-                        {VIDEO_DATA.map((video, idx) => (
-                            <VideoCard key={video.id} video={video} index={idx} isVisible={visible} />
-                        ))}
-                    </div>
+                    {loading ? (
+                        <div className="flex items-center justify-center py-24">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600" />
+                        </div>
+                    ) : items.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-20 text-center text-gray-400">
+                            <VideoIcon className="w-16 h-16 mb-4 opacity-25" />
+                            <p className="text-sm font-medium">No videos available yet.</p>
+                        </div>
+                    ) : (
+                        <>
+                            <div className={galleryStyles.grid}>
+                                {items.map((video, idx) => (
+                                    <VideoCard 
+                                        key={video._id} 
+                                        video={video} 
+                                        index={idx} 
+                                        isVisible={visible} 
+                                        onOpen={setSelectedVideo}
+                                        locale={locale}
+                                    />
+                                ))}
+                            </div>
+
+                            <Pagination
+                                page={page}
+                                total={total}
+                                perPage={PER_PAGE}
+                                onChange={handlePageChange}
+                                className="mt-12"
+                            />
+                        </>
+                    )}
 
                     <RandalSahayate />
                 </div>
             </div>
+
+            {selectedVideo && (
+                <VideoPlayerModal 
+                    video={selectedVideo}
+                    isOpen={!!selectedVideo}
+                    onClose={() => setSelectedVideo(null)}
+                />
+            )}
         </section>
     );
 };

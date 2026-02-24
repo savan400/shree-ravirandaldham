@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050/api';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5051/api';
 const UPLOADS_URL = API_URL.replace('/api', '/uploads');
 
 // ─────────────────────────────────────────────
@@ -250,3 +250,131 @@ export async function deleteGallery(id: string): Promise<void> {
   if (!res.ok) throw new Error('Failed to delete gallery');
 }
 
+
+// ─────────────────────────────────────────────
+// Video Galleries
+// ─────────────────────────────────────────────
+
+export interface VideoGalleryEntry {
+  _id: string;
+  title: LocalizedString;
+  videoType: 'link' | 'file';
+  videoUrl: string;   // YouTube / external URL (when videoType === 'link')
+  videoKey: string;   // Wasabi object key (when videoType === 'file')
+  thumbnailKey: string;
+  thumbnailUrl: string; // pre-signed URL (resolved by backend)
+  isEnabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Public: enabled video galleries, paginated */
+export async function fetchVideoGalleries(
+  page = 1,
+  limit = 8
+): Promise<PaginatedResponse<VideoGalleryEntry>> {
+  try {
+    const res = await fetch(`${API_URL}/video-galleries?page=${page}&limit=${limit}`, { cache: 'no-store' });
+    if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
+    return res.json();
+  } catch {
+    return { data: [], total: 0, page, totalPages: 0 };
+  }
+}
+
+/** Admin: all video galleries, paginated */
+export async function fetchVideoGalleriesAdmin(
+  page = 1,
+  limit = 8
+): Promise<PaginatedResponse<VideoGalleryEntry>> {
+  try {
+    const res = await fetch(`${API_URL}/video-galleries/admin?page=${page}&limit=${limit}`, { cache: 'no-store' });
+    if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
+    return res.json();
+  } catch {
+    return { data: [], total: 0, page, totalPages: 0 };
+  }
+}
+
+/** Get pre-signed upload URLs from backend */
+export async function getPresignedUploadUrls(params: {
+  videoType: 'link' | 'file';
+  videoExt?: string;
+  thumbExt?: string;
+}) {
+  const query = new URLSearchParams(params as any).toString();
+  const res = await fetch(`${API_URL}/video-galleries/presign-upload?${query}`);
+  if (!res.ok) throw new Error('Failed to get upload URLs');
+  return res.json();
+}
+
+/** Create or update a video gallery using JSON (for direct-to-wasabi flow) */
+export async function saveVideoGalleryJson(
+  data: any,
+  id?: string
+): Promise<VideoGalleryEntry> {
+  const url = id ? `${API_URL}/video-galleries/admin/${id}` : `${API_URL}/video-galleries/admin`;
+  const method = id ? 'PUT' : 'POST';
+
+  const res = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: 'Save failed' }));
+    throw new Error(err.error || 'Failed to save video gallery');
+  }
+  return res.json();
+}
+
+/** Create or update a video gallery (Legacy multipart/form-data) */
+export async function saveVideoGallery(
+  data: FormData,
+  id?: string,
+  onProgress?: (percent: number) => void
+): Promise<VideoGalleryEntry> {
+  const url = id ? `${API_URL}/video-galleries/admin/${id}` : `${API_URL}/video-galleries/admin`;
+  const method = id ? 'PUT' : 'POST';
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+
+    if (xhr.upload && onProgress) {
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const percent = Math.round((e.loaded / e.total) * 100);
+          onProgress(percent);
+        }
+      };
+    }
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          resolve(JSON.parse(xhr.responseText));
+        } catch (err) {
+          reject(new Error('Failed to parse response'));
+        }
+      } else {
+        reject(new Error(xhr.statusText || 'Failed to save video gallery'));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.send(data);
+  });
+}
+
+
+/** Delete a video gallery */
+export async function deleteVideoGallery(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/video-galleries/admin/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Failed to delete video gallery');
+}
+
+/** Returns the streaming URL for a raw video file */
+export function getVideoStreamUrl(key: string): string {
+  return `${API_URL}/video-galleries/stream/${key}`;
+}

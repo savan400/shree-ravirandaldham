@@ -3,10 +3,14 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { pipeline } = require('stream');
 const mongoose = require('mongoose');
+const Busboy = require('busboy');
 const SeoMeta = require('../models/SeoMeta');
 const Translation = require('../models/Translation');
 const Event = require('../models/Event');
+const Gallery = require('../models/Gallery');
+const VideoGallery = require('../models/VideoGallery');
 const wasabi = require('../utils/wasabiClient');
 
 // ─────────────────────────────────────────────
@@ -38,6 +42,14 @@ const syncToWasabi = async (files, eventId) => {
     uploadedKeys.push(wasabiKey);
   }
   return uploadedKeys;
+};
+
+const validateLocalized = (obj, fieldName) => {
+  if (!obj || typeof obj !== 'object') return `${fieldName} is required`;
+  if (!obj.en || !obj.en.trim()) return `${fieldName} (English) is required`;
+  if (!obj.hi || !obj.hi.trim()) return `${fieldName} (Hindi) is required`;
+  if (!obj.gu || !obj.gu.trim()) return `${fieldName} (Gujarati) is required`;
+  return null;
 };
 
 /**
@@ -209,9 +221,18 @@ router.post('/events/admin', upload.array('images', 10), async (req, res) => {
        return res.status(400).json({ error: 'Missing event data' });
     }
     const eventData = JSON.parse(req.body.data);
-    const eventId = new mongoose.Types.ObjectId();
+
+    // Strict Validations
+    const titleErr = validateLocalized(eventData.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
+    if (!eventData.date) return res.status(400).json({ error: 'Event date is required' });
+    if (!eventData.time?.en) return res.status(400).json({ error: 'Event time is required' });
+    if (!req.files || req.files.length === 0) {
+      // For new events, we need at least one image
+      return res.status(400).json({ error: 'At least one event image is required' });
+    }
     
-    const wasabiKeys = await syncToWasabi(req.files || [], eventId.toString());
+    const eventId = new mongoose.Types.ObjectId();
     
     const newEvent = new Event({
       ...eventData,
@@ -236,6 +257,11 @@ router.put('/events/admin/:id', upload.array('images', 10), async (req, res) => 
       return res.status(400).json({ error: 'Missing event data' });
     }
     const eventData = JSON.parse(req.body.data);
+
+    // Strict Validations
+    const titleErr = validateLocalized(eventData.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
+    if (!eventData.date) return res.status(400).json({ error: 'Event date is required' });
 
     // ── Key safety helper ──────────────────────────────────────────
     // The frontend sends pre-signed URLs in `images[]` and `coverImage`
@@ -341,10 +367,8 @@ router.delete('/events/admin/:id', async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // Gallery Routes
 // ─────────────────────────────────────────────
-const Gallery = require('../models/Gallery');
 
 // Helper: resolve gallery keys to pre-signed URLs
 const resolveGallery = async (gallery) => {
@@ -422,6 +446,14 @@ router.get('/galleries/:id', async (req, res) => {
 router.post('/galleries/admin', upload.array('images'), async (req, res) => {
   try {
     const data = JSON.parse(req.body.data || '{}');
+
+    // Strict Validations
+    const titleErr = validateLocalized(data.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ error: 'At least one image is required for gallery' });
+    }
+
     const galleryId = new mongoose.Types.ObjectId();
 
     // Upload new images to Wasabi
@@ -462,6 +494,10 @@ router.put('/galleries/admin/:id', upload.array('images'), async (req, res) => {
     if (!gallery) return res.status(404).json({ error: 'Gallery not found' });
 
     const data = JSON.parse(req.body.data || '{}');
+
+    // Strict Validations
+    const titleErr = validateLocalized(data.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
 
     // Upload new images
     for (const file of (req.files || [])) {
@@ -527,6 +563,405 @@ router.delete('/galleries/admin/:id', async (req, res) => {
     res.json({ success: true });
   } catch (error) {
     console.error('Error deleting gallery:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+// Video Gallery Routes
+// ─────────────────────────────────────────────
+
+// Helper: resolve thumbnail pre-signed URL
+const resolveThumbnailUrl = async (key) => {
+  if (!key) return '';
+  try { return await wasabi.presignGetUrl(key); } catch { return ''; }
+};
+
+// GET /api/video-galleries — public paginated list (enabled only)
+router.get('/video-galleries', async (req, res) => {
+  try {
+    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 8);
+    const skip  = (page - 1) * limit;
+    const filter = { isEnabled: true };
+
+    const [total, docs] = await Promise.all([
+      VideoGallery.countDocuments(filter),
+      VideoGallery.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    ]);
+
+    const data = await Promise.all(docs.map(async (v) => ({
+      ...v,
+      thumbnailUrl: await resolveThumbnailUrl(v.thumbnailKey),
+    })));
+
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
+  } catch (error) {
+    console.error('Error fetching video galleries:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// GET /api/video-galleries/admin — admin paginated list (all)
+router.get('/video-galleries/admin', async (req, res) => {
+  try {
+    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 8);
+    const skip  = (page - 1) * limit;
+
+    const [total, docs] = await Promise.all([
+      VideoGallery.countDocuments(),
+      VideoGallery.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    ]);
+
+    const data = await Promise.all(docs.map(async (v) => ({
+      ...v,
+      thumbnailUrl: await resolveThumbnailUrl(v.thumbnailKey),
+    })));
+
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
+  } catch (error) {
+    console.error('Error fetching video galleries (admin):', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// GET /api/video-galleries/stream/:key — range-aware streaming proxy for raw videos
+const { GetObjectCommand, HeadObjectCommand: HeadCommand } = require('@aws-sdk/client-s3');
+router.get('/video-galleries/stream/*', async (req, res) => {
+  try {
+    const key = req.params[0];
+    if (!key) return res.status(400).send('Missing key');
+
+    const BUCKET = process.env.WASABI_BUCKET;
+
+    // HEAD: get file size and content type
+    const head = await wasabi.headObject(key);
+    const fileSize   = head.ContentLength;
+    const contentType = head.ContentType || 'video/mp4';
+
+    const range = req.headers.range;
+    if (range) {
+      const [startStr, endStr] = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(startStr, 10);
+      const end   = endStr ? parseInt(endStr, 10) : Math.min(start + 2 * 1024 * 1024 - 1, fileSize - 1);
+      const chunkSize = end - start + 1;
+
+      const cmd = new GetObjectCommand({
+        Bucket: BUCKET,
+        Key: key,
+        Range: `bytes=${start}-${end}`,
+      });
+      const { Body } = await wasabi.wasabiClient.send(cmd);
+
+      res.writeHead(206, {
+        'Content-Range':  `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges':  'bytes',
+        'Content-Length': chunkSize,
+        'Content-Type':   contentType,
+      });
+      pipeline(Body, res, (err) => {
+        if (err && err.code !== 'ERR_STREAM_PREMATURE_CLOSE') {
+          console.error('Pipeline error (stream):', err);
+        }
+      });
+    } else {
+      const cmd = new GetObjectCommand({ Bucket: BUCKET, Key: key });
+      const { Body } = await wasabi.wasabiClient.send(cmd);
+      res.writeHead(200, {
+        'Content-Length': fileSize,
+        'Content-Type':   contentType,
+        'Accept-Ranges':  'bytes',
+      });
+      pipeline(Body, res, (err) => {
+        if (err && err.code !== 'ERR_STREAM_PREMATURE_CLOSE') {
+          console.error('Pipeline error (download):', err);
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error streaming video:', error);
+    res.status(500).send('Error streaming video');
+  }
+});
+
+
+// GET /api/video-galleries/presign-upload — get PUT urls for direct upload
+router.get('/video-galleries/presign-upload', async (req, res) => {
+  try {
+    const { videoType, videoExt, thumbExt } = req.query;
+    const id = new mongoose.Types.ObjectId();
+    const results = { id, video: null, thumbnail: null };
+
+    if (videoType === 'file' && videoExt) {
+      const videoKey = `video-galleries/${id}/video/${Date.now()}-${Math.round(Math.random() * 1E9)}.${videoExt}`;
+      results.video = {
+        key: videoKey,
+        url: await wasabi.presignPutUrl(videoKey, `video/${videoExt === 'mp4' ? 'mp4' : 'octet-stream'}`),
+      };
+    }
+
+    if (thumbExt) {
+      const thumbKey = `video-galleries/${id}/thumbnail/${Date.now()}-${Math.round(Math.random() * 1E9)}.${thumbExt}`;
+      results.thumbnail = {
+        key: thumbKey,
+        url: await wasabi.presignPutUrl(thumbKey, `image/${thumbExt === 'jpg' ? 'jpeg' : thumbExt}`),
+      };
+    }
+
+    res.json(results);
+  } catch (error) {
+    console.error('Presign error:', error);
+    res.status(500).json({ error: 'Failed to generate upload URLs' });
+  }
+});
+
+
+// POST /api/video-galleries/admin — create
+router.post('/video-galleries/admin', async (req, res) => {
+  // Support JSON for direct metadata submission (after direct Wasabi upload)
+  if (req.headers['content-type']?.includes('application/json')) {
+    try {
+      const data = req.body;
+      const titleErr = validateLocalized(data.title, 'Title');
+      if (titleErr) return res.status(400).json({ error: titleErr });
+
+      const doc = await VideoGallery.create({
+        title: data.title,
+        videoType: data.videoType || 'link',
+        videoUrl: data.videoType === 'link' ? (data.videoUrl || '') : '',
+        videoKey: data.videoType === 'file' ? (data.videoKey || '') : '',
+        thumbnailKey: data.thumbnailKey || '',
+        isEnabled: data.isEnabled !== false,
+      });
+      return res.status(201).json(doc);
+    } catch (err) {
+      return res.status(500).json({ error: 'Failed to create record', message: err.message });
+    }
+  }
+
+  // Fallback to Busboy for traditional uploads (backward compatibility)
+  const busboy = Busboy({ headers: req.headers });
+  const id = new mongoose.Types.ObjectId();
+  const fields = {};
+  const uploads = [];
+  let videoKey = '';
+  let thumbnailKey = '';
+  let errorSent = false;
+
+  busboy.on('field', (name, val) => {
+    fields[name] = val;
+  });
+
+  busboy.on('file', (name, file, info) => {
+    const { filename, mimeType } = info;
+    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(filename);
+    
+    let key = '';
+    if (name === 'video') {
+      key = `video-galleries/${id}/video/${uniqueName}`;
+      videoKey = key;
+    } else if (name === 'thumbnail') {
+      key = `video-galleries/${id}/thumbnail/${uniqueName}`;
+      thumbnailKey = key;
+    } else {
+      file.resume();
+      return;
+    }
+
+    const uploadPromise = wasabi.uploadObject(key, file, mimeType);
+    uploads.push(uploadPromise);
+  });
+
+  busboy.on('finish', async () => {
+    try {
+      if (errorSent) return;
+      await Promise.all(uploads);
+      
+      const data = JSON.parse(fields.data || '{}');
+      const titleErr = validateLocalized(data.title, 'Title');
+      if (titleErr) return res.status(400).json({ error: titleErr });
+
+      if (data.videoType === 'link' && !data.videoUrl) {
+        return res.status(400).json({ error: 'Video URL is required for link type' });
+      }
+      if (data.videoType === 'file' && !videoKey) {
+        return res.status(400).json({ error: 'Video file is required for file type' });
+      }
+
+      const doc = await VideoGallery.create({
+        _id: id,
+        title: data.title || { en: '' },
+        videoType: data.videoType || 'link',
+        videoUrl: data.videoType === 'link' ? (data.videoUrl || '') : '',
+        videoKey: data.videoType === 'file' ? videoKey : '',
+        thumbnailKey,
+        isEnabled: data.isEnabled !== false,
+      });
+
+      res.status(201).json(doc);
+    } catch (err) {
+      console.error('Busboy finish error:', err);
+      if (!errorSent) res.status(500).json({ error: 'Upload failed', message: err.message });
+    }
+  });
+
+  busboy.on('error', (err) => {
+    console.error('Busboy error:', err);
+    errorSent = true;
+    res.status(500).json({ error: 'Upload interrupted', message: err.message });
+  });
+
+  req.pipe(busboy);
+});
+
+// PUT /api/video-galleries/admin/:id — update
+router.put('/video-galleries/admin/:id', async (req, res) => {
+  // Support JSON for direct metadata submission (after direct Wasabi upload)
+  if (req.headers['content-type']?.includes('application/json')) {
+    try {
+      const doc = await VideoGallery.findById(req.params.id);
+      if (!doc) return res.status(404).json({ error: 'Not found' });
+
+      const data = req.body;
+      const titleErr = validateLocalized(data.title, 'Title');
+      if (titleErr) return res.status(400).json({ error: titleErr });
+
+      if (data.title) doc.title = data.title;
+      if (data.videoType) doc.videoType = data.videoType;
+      if (data.videoType === 'link') {
+        doc.videoUrl = data.videoUrl || '';
+        if (doc.videoKey) {
+           try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
+           doc.videoKey = '';
+        }
+      }
+      if (data.isEnabled !== undefined) doc.isEnabled = data.isEnabled;
+
+      if (data.videoKey) {
+        if (doc.videoKey && doc.videoKey !== data.videoKey) {
+           try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
+        }
+        doc.videoKey = data.videoKey;
+      }
+
+      if (data.thumbnailKey) {
+        if (doc.thumbnailKey && doc.thumbnailKey !== data.thumbnailKey) {
+           try { await wasabi.deleteObjects([doc.thumbnailKey]); } catch {}
+        }
+        doc.thumbnailKey = data.thumbnailKey;
+      }
+
+      await doc.save();
+      return res.json(doc);
+    } catch (err) {
+      return res.status(500).json({ error: 'Failed to update record', message: err.message });
+    }
+  }
+
+  try {
+    const doc = await VideoGallery.findById(req.params.id);
+    if (!doc) return res.status(404).json({ error: 'Not found' });
+
+    const busboy = Busboy({ headers: req.headers });
+    const fields = {};
+    const uploads = [];
+    let newVideoKey = '';
+    let newThumbnailKey = '';
+    let errorSent = false;
+
+    busboy.on('field', (name, val) => {
+      fields[name] = val;
+    });
+
+    busboy.on('file', (name, file, info) => {
+      const { filename, mimeType } = info;
+      const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(filename);
+      
+      let key = '';
+      if (name === 'video') {
+        key = `video-galleries/${doc._id}/video/${uniqueName}`;
+        newVideoKey = key;
+      } else if (name === 'thumbnail') {
+        key = `video-galleries/${doc._id}/thumbnail/${uniqueName}`;
+        newThumbnailKey = key;
+      } else {
+        file.resume();
+        return;
+      }
+
+      const uploadPromise = wasabi.uploadObject(key, file, mimeType);
+      uploads.push(uploadPromise);
+    });
+
+    busboy.on('finish', async () => {
+      try {
+        if (errorSent) return;
+        await Promise.all(uploads);
+        
+        const data = JSON.parse(fields.data || '{}');
+        const titleErr = validateLocalized(data.title, 'Title');
+        if (titleErr) return res.status(400).json({ error: titleErr });
+
+        if (data.title) doc.title = data.title;
+        if (data.videoType) doc.videoType = data.videoType;
+        if (data.videoType === 'link') {
+          doc.videoUrl = data.videoUrl || '';
+          if (doc.videoKey) {
+             try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
+             doc.videoKey = '';
+          }
+        }
+        if (data.isEnabled !== undefined) doc.isEnabled = data.isEnabled;
+
+        if (newVideoKey) {
+          if (doc.videoKey) {
+             try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
+          }
+          doc.videoKey = newVideoKey;
+        }
+
+        if (newThumbnailKey) {
+          if (doc.thumbnailKey) {
+             try { await wasabi.deleteObjects([doc.thumbnailKey]); } catch {}
+          }
+          doc.thumbnailKey = newThumbnailKey;
+        }
+
+        await doc.save();
+        res.json(doc);
+      } catch (err) {
+        console.error('Busboy finish error:', err);
+        if (!errorSent) res.status(500).json({ error: 'Update failed', message: err.message });
+      }
+    });
+
+    busboy.on('error', (err) => {
+      errorSent = true;
+      res.status(500).json({ error: 'Update interrupted', message: err.message });
+    });
+
+    req.pipe(busboy);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// DELETE /api/video-galleries/admin/:id — delete
+router.delete('/video-galleries/admin/:id', async (req, res) => {
+  try {
+    const doc = await VideoGallery.findById(req.params.id);
+    if (!doc) return res.status(404).json({ error: 'Not found' });
+
+    const keys = [doc.videoKey, doc.thumbnailKey].filter(Boolean);
+    if (keys.length) {
+      try { await wasabi.deleteObjects(keys); } catch {}
+    }
+
+    await VideoGallery.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting video gallery:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

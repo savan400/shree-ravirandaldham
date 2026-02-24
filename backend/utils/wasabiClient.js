@@ -55,6 +55,22 @@ async function presignGetUrl(key, { expiresIn } = {}) {
 }
 
 /**
+ * Generate presigned PUT URL for a given key
+ */
+async function presignPutUrl(key, contentType = 'application/octet-stream', { expiresIn } = {}) {
+  if (!WASABI_BUCKET) throw new Error('WASABI_BUCKET not configured');
+  const ttl = Number(expiresIn || DEFAULT_PRESIGN_EXPIRES) || DEFAULT_PRESIGN_EXPIRES;
+
+  const cmd = new PutObjectCommand({
+    Bucket: WASABI_BUCKET,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  return getSignedUrl(wasabiClient, cmd, { expiresIn: ttl });
+}
+
+/**
  * Upload object
  */
 async function uploadObject(key, body, contentType = 'application/octet-stream') {
@@ -271,9 +287,10 @@ module.exports = {
   headObject,
   listObjects,
   listAllObjectsWithPrefix, // <-- added
-  deleteObjects,            // now returns { deleted, failed }
+  deleteObjects,
   objectUrl,
   presignGetUrl,
+  presignPutUrl,
   getBucketSize,
   getBucketSizeAsNumber
 };
