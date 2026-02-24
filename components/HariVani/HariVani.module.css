@@ -2,8 +2,6 @@
    HariVani.module.css
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap");
-
 /* ── Design Tokens ── */
 :root {
   --hv-gold: #ffd700;
@@ -11,18 +9,20 @@
   --hv-saffron: #ff8c00;
   --hv-saffron-mid: #ff6b00;
   --hv-red: #dc2626;
-  --hv-font-display: "Cinzel Decorative", serif;
-  --hv-font-devanagari: "Tiro Devanagari Hindi", serif;
-  --hv-font-body: "Cormorant Garamond", serif;
+  --hv-font-display: var(--font-display);
+  --hv-font-devanagari: var(--font-hindi);
+  --hv-font-serif: var(--font-cormorant);
 }
 
 /* ─── Keyframes ────────────────────────────────────────────────────────────── */
 
 @keyframes hv-bg-breathe {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -34,6 +34,7 @@
     transform: translateY(28px);
     filter: blur(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -45,6 +46,7 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
@@ -55,6 +57,7 @@
     opacity: 0;
     letter-spacing: 0.5em;
   }
+
   to {
     opacity: 1;
     letter-spacing: 0.12em;
@@ -62,12 +65,14 @@
 }
 
 @keyframes hv-frame-glow {
+
   0%,
   100% {
     box-shadow:
       0 0 30px rgba(255, 140, 0, 0.18),
       0 20px 60px rgba(0, 0, 0, 0.08);
   }
+
   50% {
     box-shadow:
       0 0 55px rgba(255, 140, 0, 0.35),
@@ -76,11 +81,13 @@
 }
 
 @keyframes hv-particles {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
     opacity: 0.6;
   }
+
   50% {
     transform: translateY(-16px) scale(1.4);
     opacity: 0.2;
@@ -92,6 +99,7 @@
     top: 0;
     opacity: 0.03;
   }
+
   100% {
     top: 100%;
     opacity: 0;
@@ -105,13 +113,11 @@
   overflow: hidden;
   padding: 5rem 0;
 
-  background: linear-gradient(
-    160deg,
-    #1c0800 0%,
-    #140500 35%,
-    #1e0900 65%,
-    #140500 100%
-  );
+  background: linear-gradient(160deg,
+      #1c0800 0%,
+      #140500 35%,
+      #1e0900 65%,
+      #140500 100%);
   background-size: 200% 200%;
   animation: hv-bg-breathe 14s ease-in-out infinite;
 }
@@ -123,11 +129,9 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 140, 0, 0.07) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle,
+      rgba(255, 140, 0, 0.07) 1px,
+      transparent 1px);
   background-size: 28px 28px;
   opacity: 0.5;
 }
@@ -137,11 +141,9 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 40%,
-    rgba(180, 60, 0, 0.2),
-    transparent
-  );
+  background: radial-gradient(ellipse 70% 60% at 50% 40%,
+      rgba(180, 60, 0, 0.2),
+      transparent);
 }
 
 .scanLine {
@@ -151,12 +153,10 @@
   height: 25%;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.012),
-    transparent
-  );
+  background: linear-gradient(to bottom,
+      transparent,
+      rgba(255, 255, 255, 0.012),
+      transparent);
   animation: hv-scan 8s linear infinite;
 }
 
@@ -197,21 +197,20 @@
   right: 0;
   height: 4px;
   z-index: 5;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--hv-red) 10%,
-    var(--hv-saffron-mid) 30%,
-    var(--hv-gold) 50%,
-    var(--hv-saffron-mid) 70%,
-    var(--hv-red) 90%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--hv-red) 10%,
+      var(--hv-saffron-mid) 30%,
+      var(--hv-gold) 50%,
+      var(--hv-saffron-mid) 70%,
+      var(--hv-red) 90%,
+      transparent 100%);
 }
 
 .borderBand--top {
   top: 0;
 }
+
 .borderBand--bottom {
   bottom: 0;
 }
@@ -230,13 +229,16 @@
 .particle--gold {
   background: var(--hv-gold);
 }
+
 .particle--saffron {
   background: var(--hv-saffron);
 }
+
 .particle--lg {
   width: 4px;
   height: 4px;
 }
+
 .particle--sm {
   width: 3px;
   height: 3px;
@@ -249,11 +251,13 @@
   right: 0;
   bottom: 0;
 }
+
 @media screen and (max-width: 1024px) {
   .bapuImage {
     opacity: 0.2;
   }
 }
+
 /* ─── Content Container ────────────────────────────────────────────────────── */
 
 .container {
@@ -355,11 +359,9 @@
   max-width: 680px;
   margin: 0 auto 2.75rem;
   padding: 2rem 2.5rem;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.04),
-    rgba(255, 140, 0, 0.04)
-  );
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 140, 0, 0.04));
   border: 1px solid rgba(255, 140, 0, 0.2);
   border-radius: 16px;
   position: relative;
@@ -427,6 +429,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 1rem;

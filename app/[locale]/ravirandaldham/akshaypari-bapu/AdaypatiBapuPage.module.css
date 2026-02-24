@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Tiro+Devanagari+Hindi&family=Cormorant+Garamond:ital,wght@0,400;0,600&display=swap");
-
 /* ── Keyframes ── */
 @keyframes bgBreathe {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -17,6 +17,7 @@
     transform: translateY(30px);
     filter: blur(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -28,13 +29,11 @@
 .section {
   position: relative;
   padding: 5rem 0;
-  background: linear-gradient(
-    160deg,
-    #fff9f0 0%,
-    #fff5e5 30%,
-    #fffbf3 60%,
-    #fff0dc 100%
-  );
+  background: linear-gradient(160deg,
+      #fff9f0 0%,
+      #fff5e5 30%,
+      #fffbf3 60%,
+      #fff0dc 100%);
   background-size: 200% 200%;
   animation: bgBreathe 12s ease-in-out infinite;
 }
@@ -97,7 +96,7 @@
 }
 
 .introText {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: clamp(0.9rem, 1.4vw, 1rem);
   color: #5a2a00;
   line-height: 2;
@@ -121,19 +120,17 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ff6b00,
-    #ffd700,
-    #ff6b00,
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      #ff6b00,
+      #ffd700,
+      #ff6b00,
+      transparent);
   border-radius: 20px 20px 0 0;
 }
 
 .sectionTitle {
-  font-family: "Cinzel Decorative", serif;
+  font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 700;
   color: #cc4400;
@@ -143,7 +140,7 @@
 }
 
 .sectionText p {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: clamp(0.88rem, 1.4vw, 1rem);
   color: #3a1800;
   line-height: 2.1;
@@ -168,25 +165,30 @@
 }
 
 .footerBlessing {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: 0.8rem;
   color: rgba(180, 80, 0, 0.55);
   letter-spacing: 0.1em;
   margin: 0;
 }
+
 @media screen and (max-width: 768px) {
   .section {
     padding: 2rem 0;
   }
+
   .container {
     padding: 0 1rem;
   }
+
   .header {
     margin-bottom: 1.5rem;
   }
+
   .contentCard {
     padding: 1.5rem;
   }
+
   .grid {
     gap: 1.5rem;
   }

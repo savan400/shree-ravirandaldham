@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap");
-
 /* ── Wrapper ── */
 .csWrapper {
   display: flex;
@@ -12,7 +10,7 @@
 
 /* ── Labels & Headings ── */
 .csLabel {
-  font-family: "Cinzel", serif;
+  font-family: var(--font-cinzel);
   font-size: clamp(0.6rem, 1.5vw, 0.75rem);
   font-weight: 700;
   letter-spacing: 0.45em;
@@ -23,7 +21,7 @@
 }
 
 .csTitle {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-playfair);
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 600;
   text-align: center;
@@ -37,7 +35,7 @@
 }
 
 .csSubtitle {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-playfair);
   font-style: italic;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
   color: #a05020;
@@ -85,7 +83,7 @@
 }
 
 .csCardText {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-playfair);
   font-size: 0.95rem;
   color: #6b3010;
   line-height: 1.75;
@@ -112,12 +110,13 @@
 .csDot:nth-child(2) {
   animation-delay: 0.3s;
 }
+
 .csDot:nth-child(3) {
   animation-delay: 0.6s;
 }
 
 .csNotifyText {
-  font-family: "Cinzel", serif;
+  font-family: var(--font-cinzel);
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   color: #c8922a;
@@ -126,11 +125,13 @@
 
 /* ── Animations ── */
 @keyframes dotPulse {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.6;
   }
+
   50% {
     transform: scale(1.5);
     opacity: 1;

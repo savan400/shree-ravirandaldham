@@ -1,10 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Cinzel+Decorative:wght@400;700&display=swap");
-
 @keyframes fadeUp {
   from {
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -25,11 +24,9 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(245, 166, 35, 0.08) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle,
+      rgba(245, 166, 35, 0.08) 1px,
+      transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -41,16 +38,14 @@
   right: 0;
   height: 3px;
   z-index: 5;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    #ff4500 15%,
-    #ffd700 40%,
-    #ff8c00 50%,
-    #ffd700 60%,
-    #ff4500 85%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      #ff4500 15%,
+      #ffd700 40%,
+      #ff8c00 50%,
+      #ffd700 60%,
+      #ff4500 85%,
+      transparent 100%);
 }
 
 /* ── Container ── */
@@ -83,6 +78,7 @@
   position: sticky;
   top: 150px;
 }
+
 @media screen and (max-width: 768px) {
   .templeImageWrapper {
     position: unset !important;
@@ -123,18 +119,21 @@
   border-top: 2px solid rgba(255, 200, 50, 0.7);
   border-left: 2px solid rgba(255, 200, 50, 0.7);
 }
+
 .cornerTr {
   top: 8px;
   right: 8px;
   border-top: 2px solid rgba(255, 200, 50, 0.7);
   border-right: 2px solid rgba(255, 200, 50, 0.7);
 }
+
 .cornerBl {
   bottom: 8px;
   left: 8px;
   border-bottom: 2px solid rgba(255, 200, 50, 0.7);
   border-left: 2px solid rgba(255, 200, 50, 0.7);
 }
+
 .cornerBr {
   bottom: 8px;
   right: 8px;
@@ -148,7 +147,7 @@
 }
 
 .timingTitle {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: clamp(1.3rem, 2.8vw, 1.9rem);
   font-weight: 700;
   color: #b91c1c;
@@ -208,7 +207,7 @@
 }
 
 .timingLabel {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: clamp(0.9rem, 1.4vw, 1rem);
   font-weight: 700;
   color: #1c1c1c;
@@ -216,7 +215,7 @@
 }
 
 .timingValue {
-  font-family: "Tiro Devanagari Hindi", serif;
+  font-family: var(--font-hindi);
   font-size: clamp(0.88rem, 1.3vw, 0.97rem);
   color: #4a2800;
   line-height: 1.7;

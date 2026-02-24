@@ -1,10 +1,12 @@
 /* ─── Darshan Card ─────────────────────────────────────────────────────────── */
 @keyframes dd-glow-halo {
+
   0%,
   100% {
     opacity: 0.3;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.55;
     transform: scale(1.05);
@@ -12,12 +14,14 @@
 }
 
 @keyframes dd-frame-glow {
+
   0%,
   100% {
     box-shadow:
       0 0 30px rgba(255, 140, 0, 0.2),
       0 20px 50px rgba(0, 0, 0, 0.1);
   }
+
   50% {
     box-shadow:
       0 0 55px rgba(255, 140, 0, 0.4),
@@ -29,10 +33,12 @@
   0% {
     transform: translateX(-100%) skewX(-15deg);
   }
+
   100% {
     transform: translateX(300%) skewX(-15deg);
   }
 }
+
 .card {
   position: relative;
   border-radius: 20px;
@@ -58,11 +64,9 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: radial-gradient(
-    ellipse 60% 50% at 50% 35%,
-    rgba(255, 180, 0, 0.12),
-    transparent
-  );
+  background: radial-gradient(ellipse 60% 50% at 50% 35%,
+      rgba(255, 180, 0, 0.12),
+      transparent);
   animation: dd-glow-halo 4s ease-in-out infinite;
   pointer-events: none;
 }
@@ -81,12 +85,10 @@
   top: 0;
   bottom: 0;
   width: 35%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.06),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.06),
+      transparent);
 }
 
 .shineSweep--active {
@@ -106,6 +108,7 @@
 .darshanImage--hovered {
   transform: scale(1.04);
 }
+
 .darshanImage--idle {
   transform: scale(1);
 }
@@ -117,17 +120,15 @@
   left: 0;
   right: 0;
   z-index: 4;
-  background: linear-gradient(
-    to top,
-    rgba(10, 3, 0, 0.92) 0%,
-    rgba(10, 3, 0, 0.6) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(to top,
+      rgba(10, 3, 0, 0.92) 0%,
+      rgba(10, 3, 0, 0.6) 50%,
+      transparent 100%);
   padding: 2rem 1.5rem 0;
 }
 
 .cardDate {
-  font-family: var(--dd-font-body);
+  font-family: var(--font-serif);
   font-size: 0.8rem;
   color: rgba(255, 215, 0, 0.7);
   letter-spacing: 0.1em;

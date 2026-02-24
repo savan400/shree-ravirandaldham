@@ -16,12 +16,10 @@
 }
 
 .btn--primary {
-  background: linear-gradient(
-    135deg,
-    var(--saffron-deep),
-    var(--saffron),
-    var(--gold-bright)
-  );
+  background: linear-gradient(135deg,
+      var(--saffron-deep),
+      var(--saffron),
+      var(--gold-bright));
   color: #1a0500;
   animation: border-glow 3s ease-in-out infinite;
 }
@@ -44,6 +42,7 @@
   border-color: rgba(245, 166, 35, 1);
   transform: scale(1.05);
 }
+
 .ctaArrow {
   font-size: 1rem;
   line-height: 1;
