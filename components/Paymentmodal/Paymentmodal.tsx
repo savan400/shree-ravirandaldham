@@ -2,6 +2,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import styles from "./Paymentmodal.module.css";
+import { Download } from "lucide-react";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -42,6 +43,27 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   const upiId = "randaldhaam@paytm";
   const payeeName = "Shri Randal Dham Trust";
 
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&tn=${encodeURIComponent(categoryTitle)}&cu=INR`;
+
+  const handleDownloadQR = async () => {
+    try {
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = `donation-qr-${categoryTitle.replace(/\s+/g, "-").toLowerCase()}-₹${amount}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(objectUrl);
+    } catch (error) {
+      // Fallback: open QR image in a new tab if fetch fails (e.g. due to CORS)
+      window.open(qrUrl, "_blank");
+    }
+  };
+
   return (
     <div
       className={styles.overlay}
@@ -76,10 +98,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           {/* QR Section */}
           <div className={styles.qrSection}>
             <div className={styles.qrFrame}>
-              {/* Dummy QR — replace src with real generated QR */}
               <img
                 className={styles.qrImage}
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&tn=${encodeURIComponent(categoryTitle)}&cu=INR`}
+                src={qrUrl}
                 alt="Paytm Payment QR Code"
                 width={220}
                 height={220}
@@ -90,6 +111,15 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               <div className={styles.qrCorner} data-pos="br" />
             </div>
             <p className={styles.qrHint}>Scan with Paytm / Any UPI App</p>
+
+            {/* ── Download QR Button ── */}
+            <button
+              className={styles.downloadQrBtn}
+              onClick={handleDownloadQR}
+              title="Download QR Code"
+            >
+              <Download /> <span>Download QR</span>
+            </button>
           </div>
 
           {/* ── Divider ── */}

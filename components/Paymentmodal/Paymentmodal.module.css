@@ -343,3 +343,19 @@
         font-size: 1rem;
     }
 }
+
+.downloadQrBtn {
+    background: transparent;
+    color: #c45400;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.downloadQrBtn svg {
+    height: 15px;
+    width: 15px;
+}
