@@ -15,7 +15,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const res = await fetch(
       `${baseUrl}/api/translations?locale=${locale}`,
-      { cache: 'no-store' }
+      { next: { revalidate: 120 } }
     );
 
     if (res.ok) {
