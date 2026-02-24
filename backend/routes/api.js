@@ -158,22 +158,20 @@ router.post('/admin/seo', async (req, res) => {
  */
 router.get('/translations', async (req, res) => {
   try {
+    const locale = req.query.locale || 'en';
     const docs = await Translation.find({}).lean();
-
     const result = {};
+
     for (const doc of docs) {
       if (!result[doc.section]) result[doc.section] = {};
-      result[doc.section][doc.key] = {
-        _id: doc._id,
-        en: doc.en,
-        hi: doc.hi,
-        gu: doc.gu,
-      };
+      // Return only the selected locale's value for the key
+      result[doc.section][doc.key] = doc[locale] || '';
     }
+
     res.json(result);
   } catch (error) {
-    console.error('Error fetching translations:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Fetch translations error:', error);
+    res.status(500).json({ message: 'Error fetching translations' });
   }
 });
 

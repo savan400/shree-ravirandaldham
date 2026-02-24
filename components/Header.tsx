@@ -1,20 +1,28 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
 import Image from "next/image";
 import { ChevronDown, Menu, X, Phone, Mail, Globe } from "lucide-react";
 import LotusDivider from "./LotusDivider/LotusDivider";
+import { useTranslations, useLocale } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+interface DesktopNavItemProps {
+  item: MenuItem;
+  closeSubmenu: () => void;
+}
+
 interface SubmenuItem {
   title: string;
+  key?: string;
   href: string;
 }
 
 interface MenuItem {
   title: string;
+  key?: string;
   href: string;
   submenu?: SubmenuItem[];
 }
@@ -113,11 +121,18 @@ const LANGUAGES = [
   { code: "gu", nativeLabel: "ગુજરાતી" },
 ];
 
-// ─── Language Dropdown (UI only) ──────────────────────────────────────────────
-
 const LanguageDropdown: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(LANGUAGES[0]);
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const selected = LANGUAGES.find((l) => l.code === locale) || LANGUAGES[0];
+
+  const handleLanguageChange = (langCode: string) => {
+    router.replace(pathname, { locale: langCode as any });
+    setOpen(false);
+  };
 
   return (
     <div className="relative z-[100]">
@@ -149,12 +164,9 @@ const LanguageDropdown: React.FC = () => {
           {LANGUAGES.map((lang) => (
             <li key={lang.code}>
               <button
-                onClick={() => {
-                  setSelected(lang);
-                  setOpen(false);
-                }}
-                className="w-full text-left px-3 py-2 text-sm
-                           hover:bg-gray-100"
+                onClick={() => handleLanguageChange(lang.code)}
+                className={`w-full text-left px-3 py-2 text-sm transition-colors
+                           ${locale === lang.code ? "bg-primary/10 text-primary font-medium" : "hover:bg-gray-100"}`}
               >
                 {lang.nativeLabel}
               </button>
