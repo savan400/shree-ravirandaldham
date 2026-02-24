@@ -1,12 +1,5 @@
-import PhotoGalleryPage from '@/page-ui/PhotoGalleryPage'
-import React from 'react'
+import PhotoGalleryPage from '@/page-ui/PhotoGalleryPage';
 
-const page = () => {
-    return (
-        <div>
-            <PhotoGalleryPage />
-        </div>
-    )
+export default function PhotoGalleryRoute() {
+  return <PhotoGalleryPage />;
 }
-
-export default page
