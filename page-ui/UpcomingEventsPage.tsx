@@ -84,6 +84,7 @@ const UpcomingEventsPage = () => {
                 location={event.location[locale] || event.location.en}
                 time={event.time[locale] || event.time.en}
                 visible={visible}
+                navigateLink={`/${locale}/events/${event?._id}`}
                 animationDelay={0.1 + (indexOffset + i) * 0.08}
             />
         ));

@@ -17,40 +17,110 @@ import Pagination from "@/components/Pagination/Pagination";
 const PER_PAGE = 12;
 
 // ── Arch SVG ornament ──────────────────────────────────────────────────────────
+export interface GalleryImage {
+  src: string;
+  alt: string;
+}
+
+export interface GalleryGroup {
+  id: string;
+  date: string;
+  title: string;
+  images: GalleryImage[];
+}
+
+export const groupedGalleryItems: GalleryGroup[] = [
+  {
+    id: "g1",
+    date: "17/02/2026",
+    title: "Maruti yagna 17-02-2026",
+    images: [{ src: "/images/gallery/p-1.jpeg", alt: "Maruti yagna" }],
+  },
+  {
+    id: "g2",
+    date: "16/02/2026",
+    title: "Sandhya Aarti Darshan Salangpur",
+    images: [
+      { src: "/images/gallery/p-2.jpeg", alt: "Aarti Darshan 1" },
+      { src: "/images/gallery/p-3.jpeg", alt: "Aarti Darshan 2" },
+    ],
+  },
+  {
+    id: "g3",
+    date: "12/02/2026",
+    title: "Evening Aarti Celebration",
+    images: [
+      { src: "/images/gallery/p-9.jpeg", alt: "Aarti 1" },
+      { src: "/images/gallery/p-10.jpeg", alt: "Aarti 2" },
+      { src: "/images/gallery/p-11.jpeg", alt: "Aarti 3" },
+      { src: "/images/gallery/p-12.jpeg", alt: "Aarti 4" },
+      { src: "/images/gallery/p-13.jpeg", alt: "Aarti 5" },
+      { src: "/images/gallery/p-14.jpeg", alt: "Aarti 6" },
+      { src: "/images/gallery/p-15.jpeg", alt: "Aarti 7" },
+    ],
+  },
+  {
+    id: "g1",
+    date: "17/02/2026",
+    title: "Maruti yagna 17-02-2026",
+    images: [{ src: "/images/gallery/p-1.jpeg", alt: "Maruti yagna" }],
+  },
+  {
+    id: "g2",
+    date: "16/02/2026",
+    title: "Sandhya Aarti Darshan Salangpur",
+    images: [
+      { src: "/images/gallery/p-2.jpeg", alt: "Aarti Darshan 1" },
+      { src: "/images/gallery/p-3.jpeg", alt: "Aarti Darshan 2" },
+    ],
+  },
+  {
+    id: "g3",
+    date: "12/02/2026",
+    title: "Evening Aarti Celebration",
+    images: [
+      { src: "/images/gallery/p-9.jpeg", alt: "Aarti 1" },
+      { src: "/images/gallery/p-10.jpeg", alt: "Aarti 2" },
+      { src: "/images/gallery/p-11.jpeg", alt: "Aarti 3" },
+      { src: "/images/gallery/p-12.jpeg", alt: "Aarti 4" },
+      { src: "/images/gallery/p-13.jpeg", alt: "Aarti 5" },
+      { src: "/images/gallery/p-14.jpeg", alt: "Aarti 6" },
+      { src: "/images/gallery/p-15.jpeg", alt: "Aarti 7" },
+    ],
+  },
+];
 const CardArch: React.FC = () => (
-    <svg
-        viewBox="0 0 400 80"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={styles.archOrnament}
-        preserveAspectRatio="none"
-        aria-hidden="true"
-    >
-        <path d="M0 80 L0 38 Q200 -22 400 38 L400 80" fill="url(#arch-wash)" opacity="0.22" />
-        <path d="M0 6 Q200 -26 400 6" stroke="url(#arch-line)" strokeWidth="2.5" fill="none" opacity="0.9" />
-        <path d="M20 10 Q200 -14 380 10" stroke="url(#arch-line)" strokeWidth="1" fill="none" opacity="0.35" />
-        <circle cx="200" cy="-2" r="5" fill="#FFD700" opacity="0.95" />
-        <circle cx="200" cy="-2" r="2.5" fill="#FFF" opacity="0.7" />
-        <circle cx="0" cy="6" r="3.5" fill="#FF8C00" opacity="0.8" />
-        <circle cx="400" cy="6" r="3.5" fill="#FF8C00" opacity="0.8" />
-        <line x1="0" y1="6" x2="14" y2="6" stroke="#FFD700" strokeWidth="1.2" opacity="0.6" />
-        <line x1="400" y1="6" x2="386" y2="6" stroke="#FFD700" strokeWidth="1.2" opacity="0.6" />
-        <defs>
-            <linearGradient id="arch-wash" x1="0" y1="0" x2="0" y2="1">
-                <stop stopColor="#FFD700" />
-                <stop offset="1" stopColor="#FFD700" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="arch-line" x1="0" y1="0" x2="1" y2="0">
-                <stop stopColor="#FF6B00" />
-                <stop offset="0.35" stopColor="#FFD700" />
-                <stop offset="0.65" stopColor="#FF8C00" />
-                <stop offset="1" stopColor="#FF6B00" />
-            </linearGradient>
-        </defs>
-    </svg>
+  <svg
+    viewBox="0 0 400 80"
+    fill="none"
+    className={styles.archOrnament}
+    preserveAspectRatio="none"
+  >
+    <path
+      d="M0 80 L0 38 Q200 -22 400 38 L400 80"
+      fill="url(#arch-wash)"
+      opacity="0.22"
+    />
+    <path
+      d="M0 6 Q200 -26 400 6"
+      stroke="url(#arch-line)"
+      strokeWidth="2.5"
+      fill="none"
+    />
+    <defs>
+      <linearGradient id="arch-wash" x1="0" y1="0" x2="0" y2="1">
+        <stop stopColor="#FFD700" />
+        <stop offset="1" stopColor="#FFD700" stopOpacity="0" />
+      </linearGradient>
+      <linearGradient id="arch-line" x1="0" y1="0" x2="1" y2="0">
+        <stop stopColor="#FF6B00" />
+        <stop offset="0.5" stopColor="#FFD700" />
+        <stop offset="1" stopColor="#FF6B00" />
+      </linearGradient>
+    </defs>
+  </svg>
 );
 
-// ── Main Component ─────────────────────────────────────────────────────────────
 const PhotoGalleryPage = () => {
     const locale = useLocale() as "en" | "hi" | "gu";
 

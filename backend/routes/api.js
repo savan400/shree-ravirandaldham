@@ -947,22 +947,205 @@ router.put('/video-galleries/admin/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/video-galleries/admin/:id — delete
-router.delete('/video-galleries/admin/:id', async (req, res) => {
-  try {
-    const doc = await VideoGallery.findById(req.params.id);
-    if (!doc) return res.status(404).json({ error: 'Not found' });
+// ── Photo Gallery Routes ───────────────────────────────────────────────────
 
-    const keys = [doc.videoKey, doc.thumbnailKey].filter(Boolean);
-    if (keys.length) {
+// GET /api/galleries — public list
+router.get('/galleries', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 9;
+    const skip = (page - 1) * limit;
+
+    const query = { isEnabled: true };
+    const [data, total] = await Promise.all([
+      Gallery.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Gallery.countDocuments(query)
+    ]);
+
+    // Convert keys to URLs
+    const processed = data.map(g => ({
+      ...g,
+      coverImage: g.coverImage ? wasabi.getFileUrl(g.coverImage) : '',
+      images: g.images.map(img => ({
+        ...img,
+        url: wasabi.getFileUrl(img.key)
+      }))
+    }));
+
+    res.json({ data: processed, total, page, totalPages: Math.ceil(total / limit) });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// GET /api/galleries/:id — public single
+router.get('/galleries/:id', async (req, res) => {
+  try {
+    const gallery = await Gallery.findById(req.params.id).lean();
+    if (!gallery || !gallery.isEnabled) return res.status(404).json({ error: 'Not found' });
+
+    gallery.coverImage = gallery.coverImage ? wasabi.getFileUrl(gallery.coverImage) : '';
+    gallery.images = gallery.images.map(img => ({
+      ...img,
+      url: wasabi.getFileUrl(img.key)
+    }));
+
+    res.json(gallery);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// GET /api/galleries/admin — admin list
+router.get('/galleries/admin', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 9;
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      Gallery.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Gallery.countDocuments()
+    ]);
+
+    const processed = data.map(g => ({
+      ...g,
+      coverImage: g.coverImage ? wasabi.getFileUrl(g.coverImage) : '',
+      images: g.images.map(img => ({
+        ...img,
+        url: wasabi.getFileUrl(img.key)
+      }))
+    }));
+
+    res.json({ data: processed, total });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// POST /api/galleries — create
+router.post('/galleries', upload.array('images'), async (req, res) => {
+  try {
+    const data = JSON.parse(req.body.data || '{}');
+    const titleErr = validateLocalized(data.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
+
+    const totalImgErr = validateLocalized(data.title, 'Title'); // Reusing title check just for mandatory GU/HI
+
+    const galleryId = new mongoose.Types.ObjectId();
+    const imageItems = [];
+
+    if (req.files && req.files.length > 0) {
+      for (let i = 0; i < req.files.length; i++) {
+        const file = req.files[i];
+        const key = `galleries/${galleryId}/${Date.now()}-${i}${path.extname(file.originalname)}`;
+        const stream = fs.createReadStream(file.path);
+        await wasabi.uploadObject(key, stream, file.mimetype);
+        fs.unlinkSync(file.path);
+
+        const desc = data.imageDescriptions_new?.[i] || { en: '', hi: '', gu: '' };
+        imageItems.push({ key, description: desc });
+      }
+    }
+
+    // Identify coverImage key
+    let coverKey = '';
+    if (data.coverImageId && data.coverImageId.startsWith('new-')) {
+       // Backend would need to know which index this "new-" maps to. 
+       // For simplicity, if not provided, use first image.
+       coverKey = imageItems[0]?.key || '';
+    } else {
+       coverKey = imageItems[0]?.key || '';
+    }
+
+    const gallery = await Gallery.create({
+      _id: galleryId,
+      title: data.title,
+      isEnabled: data.isEnabled !== false,
+      images: imageItems,
+      coverImage: coverKey
+    });
+
+    res.status(201).json(gallery);
+  } catch (error) {
+    console.error('Create gallery error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /api/galleries/:id — update
+router.put('/galleries/:id', upload.array('images'), async (req, res) => {
+  try {
+    const gallery = await Gallery.findById(req.params.id);
+    if (!gallery) return res.status(404).json({ error: 'Not found' });
+
+    const data = JSON.parse(req.body.data || '{}');
+    if (data.title) gallery.title = data.title;
+    if (data.isEnabled !== undefined) gallery.isEnabled = data.isEnabled;
+
+    // 1. Remove images not in keepImageIds
+    const keepIds = data.keepImageIds || [];
+    const imagesToRemove = gallery.images.filter(img => !keepIds.includes(img._id.toString()));
+    if (imagesToRemove.length > 0) {
+      const keys = imagesToRemove.map(img => img.key);
+      try { await wasabi.deleteObjects(keys); } catch {}
+    }
+    gallery.images = gallery.images.filter(img => keepIds.includes(img._id.toString()));
+
+    // 2. Update existing descriptions
+    if (data.imageDescriptions) {
+      gallery.images.forEach(img => {
+        if (data.imageDescriptions[img._id.toString()]) {
+          img.description = data.imageDescriptions[img._id.toString()];
+        }
+      });
+    }
+
+    // 3. Add new images
+    if (req.files && req.files.length > 0) {
+      for (let i = 0; i < req.files.length; i++) {
+        const file = req.files[i];
+        const key = `galleries/${gallery._id}/${Date.now()}-${i}${path.extname(file.originalname)}`;
+        const stream = fs.createReadStream(file.path);
+        await wasabi.uploadObject(key, stream, file.mimetype);
+        fs.unlinkSync(file.path);
+
+        const desc = data.imageDescriptions_new?.[i] || { en: '', hi: '', gu: '' };
+        gallery.images.push({ key, description: desc });
+      }
+    }
+
+    // 4. Update coverImage
+    if (data.coverImageId) {
+      const coverImg = gallery.images.find(img => img._id.toString() === data.coverImageId);
+      if (coverImg) gallery.coverImage = coverImg.key;
+    } else if (gallery.images.length > 0 && !gallery.images.some(img => img.key === gallery.coverImage)) {
+      gallery.coverImage = gallery.images[0].key;
+    }
+
+    await gallery.save();
+    res.json(gallery);
+  } catch (error) {
+    console.error('Update gallery error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// DELETE /api/galleries/:id — delete
+router.delete('/galleries/:id', async (req, res) => {
+  try {
+    const gallery = await Gallery.findById(req.params.id);
+    if (!gallery) return res.status(404).json({ error: 'Not found' });
+
+    const keys = gallery.images.map(img => img.key);
+    if (keys.length > 0) {
       try { await wasabi.deleteObjects(keys); } catch {}
     }
 
-    await VideoGallery.findByIdAndDelete(req.params.id);
+    await Gallery.findByIdAndDelete(req.params.id);
     res.json({ success: true });
   } catch (error) {
-    console.error('Error deleting video gallery:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
