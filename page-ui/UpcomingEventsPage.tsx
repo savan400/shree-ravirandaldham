@@ -1,65 +1,29 @@
 "use client";
+
+import { useState, useEffect } from "react";
 import styles from "@/app/[locale]/events/upcoming-events/UpcomingEventsPage.module.css";
 import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/PageBackgroundDecorations";
 import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import RandalSahayate from "./randalSahayate";
-import EventCard, { EventCardProps } from "@/components/EventCard/EventCard";
+import EventCard from "@/components/EventCard/EventCard";
 import { useInView } from "@/hooks/useInView";
+import { fetchEvents, EventEntry, getImageUrl } from "@/lib/api";
+import { useLocale } from "next-intl";
 
-const upcomingEvents: Omit<EventCardProps, "visible" | "animationDelay">[] = [
-    {
-        id: "1",
-        date: "02.04.2026",
-        title: "Shri Hanuman Jayanti 2026",
-        image: "/images/events/hanuman-jayanti-2026.jpg",
-        location: "Salangpur Dham",
-        time: "6:00 AM onwards",
-    },
-    {
-        id: "2",
-        date: "03.03.2026",
-        title: "Maha Shivratri Utsav",
-        image: "/images/events/maha-shivratri-2026.jpg",
-        location: "Salangpur Dham",
-        time: "All Day",
-    },
-    {
-        id: "3",
-        date: "15.02.2026",
-        title: "Divyang Vrundavana Samgath",
-        image: "/images/events/divyang-samgath.jpg",
-        location: "Salangpur Dham",
-        time: "9:00 AM",
-    },
-    {
-        id: "4",
-        date: "15.02.2026",
-        title: "Patotsav 2026",
-        image: "/images/events/patotsav-2026.jpg",
-        location: "Salangpur Dham",
-        time: "Morning Session",
-    },
-    {
-        id: "5",
-        date: "01.02.2026",
-        title: "Murti Pratishtha Mahotsav",
-        image: "/images/events/murti-pratishtha.jpg",
-        location: "Salangpur Dham",
-        time: "10:00 AM",
-    },
-    {
-        id: "6",
-        date: "28.01.2026",
-        title: "Punam List 2026",
-        image: "/images/events/punam-list-2026.jpg",
-        location: "Salangpur Dham",
-        time: "Monthly Schedule",
-    },
-];
+// Hardcoded events removed
 
-const UpcomingEventsPage = () => {
+const UpcomingEventsPage = ({ 
+    initialEvents, 
+    isLoading = false 
+}: { 
+    initialEvents: EventEntry[],
+    isLoading?: boolean
+}) => {
+    const locale = useLocale() as "en" | "hi" | "gu";
+    const [events] = useState<EventEntry[]>(initialEvents);
+
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
         threshold: 0.1,
     });
@@ -80,14 +44,29 @@ const UpcomingEventsPage = () => {
 
                 {/* Events Grid */}
                 <div className={styles.grid}>
-                    {upcomingEvents.map((event, index) => (
-                        <EventCard
-                            key={event.id}
-                            {...event}
-                            visible={visible}
-                            animationDelay={0.1 + index * 0.08}
-                        />
-                    ))}
+                    {isLoading ? (
+                         <div className="col-span-full flex items-center justify-center p-12">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a0800]"></div>
+                        </div>
+                    ) : events.length > 0 ? (
+                        events.map((event, index) => (
+                            <EventCard
+                                key={event._id}
+                                id={event._id}
+                                date={event.date}
+                                title={event.title[locale] || event.title.en}
+                                image={event.coverImage || (event.images.length > 0 ? event.images[0] : "")}
+                                location={event.location[locale] || event.location.en}
+                                time={event.time[locale] || event.time.en}
+                                visible={visible}
+                                animationDelay={0.1 + index * 0.08}
+                            />
+                        ))
+                    ) : (
+                        <div className="col-span-full text-center py-12 text-gray-400">
+                            No upcoming events found.
+                        </div>
+                    )}
                 </div>
 
                 <RandalSahayate />

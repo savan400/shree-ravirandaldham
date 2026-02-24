@@ -29,7 +29,7 @@ const EventCard = ({
     navigateLink
 }: EventCardProps) => {
     const [hovered, setHovered] = useState(false);
-
+console.log('image', image);
     return (
         <div
             className={`${styles.card} ${visible ? styles.cardVisible : ""}`}
@@ -48,13 +48,18 @@ const EventCard = ({
                 <div className={styles.imageGlow} />
                 {hovered && <div className={styles.imageShine} />}
 
-                <Image
-                    src={image}
-                    alt={title}
-                    width={400}
-                    height={500}
-                    className={styles.eventImage}
-                />
+                {image ? (
+                    // Use plain <img> so Next.js optimizer doesn't intercept pre-signed URLs
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                        src={image}
+                        alt={title}
+                        className={styles.eventImage}
+                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                    />
+                ) : (
+                    <div className={styles.eventImage} style={{ background: '#1a0800' }} />
+                )}
 
                 {/* Overlay gradient */}
                 <div className={styles.imageOverlay} />

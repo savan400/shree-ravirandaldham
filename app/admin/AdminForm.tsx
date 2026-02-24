@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { saveSeoData } from '@/lib/api';
 import TranslationCMS from './TranslationCMS';
+import EventsCMS from './EventsCMS';
 import { AdminButton, Card } from './components/AdminUI';
-import { Settings, Globe, LogOut, LayoutDashboard, ChevronRight, Menu, X } from 'lucide-react';
+import { Settings, Globe, LogOut, LayoutDashboard, ChevronRight, Menu, X, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
-type Tab = 'seo' | 'translations';
+type Tab = 'seo' | 'translations' | 'events';
 
 export default function AdminForm({ locale }: { locale: string }) {
   const t = useTranslations('Admin');
@@ -99,6 +100,19 @@ export default function AdminForm({ locale }: { locale: string }) {
             <Globe className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Translations</span>
             {activeTab === 'translations' && <ChevronRight className="w-4 h-4" />}
+          </button>
+
+          <button
+            onClick={() => { setActiveTab('events'); setIsSidebarOpen(false); }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              activeTab === 'events' 
+              ? 'bg-orange-500/10 text-orange-400 font-bold' 
+              : 'hover:bg-white/5 text-orange-100/60'
+            }`}
+          >
+            <Calendar className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="flex-1 text-left text-sm">Events Management</span>
+            {activeTab === 'events' && <ChevronRight className="w-4 h-4" />}
           </button>
         </nav>
 
@@ -239,6 +253,12 @@ export default function AdminForm({ locale }: { locale: string }) {
             {activeTab === 'translations' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <TranslationCMS />
+              </div>
+            )}
+
+            {activeTab === 'events' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <EventsCMS />
               </div>
             )}
           </div>

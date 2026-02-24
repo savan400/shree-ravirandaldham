@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -33,6 +34,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(cors());
 app.use(express.json());
 
+// Request logger for debugging
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shree-ravirandaldham', {
   useNewUrlParser: true,
@@ -45,6 +52,9 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shree-rav
 app.get('/', (req, res) => {
   res.send('Shree Ravirandaldham Backend API');
 });
+
+// Static files for uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Import API routes
 const apiRoutes = require('./routes/api');
