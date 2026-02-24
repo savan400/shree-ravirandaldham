@@ -271,9 +271,11 @@
   line-height: 2.1;
   text-align: justify;
   letter-spacing: 0.02em;
-  margin: 0;
+  margin: 0px 0px 20px 0px;
 }
-
+.contentText:last-child {
+  margin: 0px;
+}
 .contentCardFooter {
   display: flex;
   align-items: center;
@@ -327,7 +329,7 @@
     left: 0;
     bottom: unset;
   }
-  .contentCard{
+  .contentCard {
     overflow: hidden;
   }
 }

@@ -19,11 +19,11 @@ const desktopWallpapers = [
 ];
 
 const mobileWallpapers = [
-    { id: 4, label: "Bapu Blessings", src: "/images/wallpapers/mobile/mb-1.jpg", downloadUrl: "/images/wallpapers/mobile/mb-1.jpg" },
-    { id: 5, label: "Temple Spire", src: "/images/wallpapers/mobile/mb-2.jpg", downloadUrl: "/images/wallpapers/mobile/mb-2.jpg" },
-    { id: 6, label: "Temple Spire", src: "/images/wallpapers/mobile/mb-1.jpg", downloadUrl: "/images/wallpapers/mobile/mb-1.jpg" },
-    { id: 7, label: "Temple Spire", src: "/images/wallpapers/mobile/mb-2.jpg", downloadUrl: "/images/wallpapers/mobile/mb-2.jpg" },
-    { id: 8, label: "Temple Spire", src: "/images/wallpapers/mobile/mb-1.jpg", downloadUrl: "/images/wallpapers/mobile/mb-1.jpg" },
+    { id: 4, label: "Randal Sada Sahayte", src: "/images/wallpapers/mobile/mb-1.png", downloadUrl: "/images/wallpapers/mobile/mb-1.png" },
+    { id: 5, label: "Randal Sada Sahayte", src: "/images/wallpapers/mobile/mb-2.png", downloadUrl: "/images/wallpapers/mobile/mb-2.png" },
+    { id: 6, label: "Randal Sada Sahayte", src: "/images/wallpapers/mobile/mb-3.png", downloadUrl: "/images/wallpapers/mobile/mb-3.png" },
+    { id: 7, label: "Randal Sada Sahayte", src: "/images/wallpapers/mobile/mb-4.png", downloadUrl: "/images/wallpapers/mobile/mb-4.png" },
+    { id: 8, label: "Randal Sada Sahayte", src: "/images/wallpapers/mobile/mb-1.png", downloadUrl: "/images/wallpapers/mobile/mb-1.png" },
 ];
 
 // ── Icons ─────────────────────────────────────────────────────────────────────

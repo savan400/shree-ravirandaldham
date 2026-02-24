@@ -145,13 +145,6 @@ const Announcements: React.FC = () => {
 
               {/* Bottom divider + Read More */}
               <OrnamentalDivider opacity={0.5} />
-
-              <div className={styles.readMoreWrap}>
-                <button type="button" className={styles.readMoreBtn}>
-                  READ MORE
-                  <ChevronRight className={styles.readMoreIcon} aria-hidden="true" />
-                </button>
-              </div>
             </article>
 
             {/* Shadow strip below card */}

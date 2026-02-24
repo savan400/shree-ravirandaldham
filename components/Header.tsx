@@ -24,7 +24,7 @@ interface MenuItem {
 const MENU_ITEMS: MenuItem[] = [
   {
     title: "Ravirandal Dham",
-    href: "#salangpur-dham",
+    href: "#",
     submenu: [
       { title: "Parichay", href: "/ravirandaldham/parichay" },
       { title: "Itihas", href: "/ravirandaldham/itihas" },
@@ -37,7 +37,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "Upasna Vidhi",
-    href: "#kashtabhanjan-dev",
+    href: "#",
     submenu: [
       { title: "Darshan Timing", href: "/upasna-vidhi/darshan-timing" },
       { title: "Seva Punjan", href: "/upasna-vidhi/seva-punjan" },
@@ -51,7 +51,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "Facilities",
-    href: "#facilities",
+    href: "#",
     submenu: [
       { title: "Bhojan Shala", href: "/facilities/bhojan-shala" },
       { title: "108 Randal", href: "/facilities/108-randal" },
@@ -60,7 +60,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "Pavitra Sthalo",
-    href: "#pavitra-sthalo",
+    href: "#",
     submenu: [
       { title: "Shree Ravirandal Temple", href: "/pavitra-sthalo/ravirandal-temple" },
       { title: "Pavitra Vav", href: "/pavitra-sthalo/pavitra-vav" },
@@ -72,7 +72,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "Events",
-    href: "#events",
+    href: "#",
     submenu: [
       { title: "Upcoming Events", href: "/events/upcoming-events" },
       { title: "Video Gallery", href: "/events/video-gallery" },
@@ -81,7 +81,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "History",
-    href: "#history",
+    href: "#",
     submenu: [
       { title: "History of Randaldham", href: "/history/history-of-randaldham" },
       { title: "Randal Prerna", href: "/history/randal-prerna" },
@@ -89,7 +89,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "Downloads",
-    href: "#downloads",
+    href: "#",
     submenu: [
       { title: "Wallpaper", href: "/downloads/wallpaper" },
       { title: "Calendar", href: "/downloads/calendar" },
@@ -211,9 +211,10 @@ const TopBar: React.FC = () => (
 
 interface DesktopNavItemProps {
   item: MenuItem;
+  closeSubmenu: () => void;
 }
 
-const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item }) => {
+const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item, closeSubmenu }) => {
   const isHash = item.href.startsWith('#');
   const linkClass =
     'flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative ' +
@@ -246,14 +247,14 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({ item }) => {
       )}
 
       {item.submenu && (
-        <div className="nav-dropdown" role="menu" aria-label={`${item.title} submenu`}>
+        <div className="nav-dropdown" role="menu" aria-label={`${item.title} submenu`} >
           {item.submenu.map((sub) => (
             sub.href.startsWith('#') ? (
-              <a key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem">
+              <a key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem" onClick={closeSubmenu}>
                 {sub.title}
               </a>
             ) : (
-              <Link key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem">
+              <Link key={sub.title} href={sub.href} className="nav-dropdown-item" role="menuitem" onClick={closeSubmenu}>
                 {sub.title}
               </Link>
             )
@@ -475,7 +476,7 @@ const Header: React.FC = () => {
               aria-label="Main navigation"
             >
               {MENU_ITEMS.map((item) => (
-                <DesktopNavItem key={item.title} item={item} />
+                <DesktopNavItem key={item.title} item={item} closeSubmenu={() => setOpenSubmenu(null)} />
               ))}
             </nav>
           </div>

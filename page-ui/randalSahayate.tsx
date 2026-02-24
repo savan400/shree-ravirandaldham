@@ -6,7 +6,7 @@ export default function RandalSahayate() {
   return (
     <div className={visibleClass("footer", true)} style={{ marginTop: "4rem" }}>
         <DiamondDivider />
-        <p className={styles.footerBlessing} style={{ marginTop: "20px", fontWeight: 'bold' }}>
+        <p className={styles.footerBlessing} style={{ marginTop: "20px", fontWeight: 900 }}>
             ॥ શ્રી રવિ રાંદલ સદા સહાયતે  ॥
         </p>
     </div>
