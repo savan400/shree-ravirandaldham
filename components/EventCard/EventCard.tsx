@@ -18,11 +18,21 @@ export interface EventCardProps {
 
 // Parses "DD.MM.YYYY" → Date (midnight local)
 function parseEventDate(dateStr: string): Date | null {
-  const parts = dateStr.split(".");
-  if (parts.length !== 3) return null;
-  const [day, month, year] = parts.map(Number);
-  if (!day || !month || !year) return null;
-  return new Date(year, month - 1, day);
+  // Check if format is YYYY-MM-DD (Hyphens)
+  if (dateStr.includes("-")) {
+    const [year, month, day] = dateStr.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  // Check if format is DD.MM.YYYY (Dots)
+  if (dateStr.includes(".")) {
+    const parts = dateStr.split(".");
+    if (parts.length !== 3) return null;
+    const [day, month, year] = parts.map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  return null;
 }
 
 type DateStatus =
@@ -31,23 +41,37 @@ type DateStatus =
   | { type: "past" }
   | { type: "raw"; label: string };
 
-// Returns status relative to today (within 7 days shows countdown, today shows live)
+// Returns status relative to today
 function getDateStatus(dateStr?: string): DateStatus {
   if (!dateStr) return { type: "past" };
 
   const eventDate = parseEventDate(dateStr);
   if (!eventDate) return { type: "raw", label: dateStr };
 
+  // Get "Today" at midnight
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  // Ensure eventDate is at midnight
   eventDate.setHours(0, 0, 0, 0);
 
+  // Calculate difference in milliseconds
   const diffMs = eventDate.getTime() - today.getTime();
-  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+  // Convert to days using Math.floor to get clear integer steps
+  // 86400000 ms = 1 day
+  const diffDays = Math.floor(diffMs / 86400000);
 
   if (diffDays === 0) return { type: "live" };
-  if (diffDays > 0 && diffDays <= 7) return { type: "upcoming", daysLeft: diffDays };
+
+  // Logic: 0 < diffDays <= 7 (This covers tomorrow up to next week)
+  if (diffDays > 0 && diffDays <= 7) {
+    return { type: "upcoming", daysLeft: diffDays };
+  }
+
   if (diffDays < 0) return { type: "past" };
+
+  // Default: If more than 7 days away, show the actual date
   return { type: "raw", label: dateStr };
 }
 
@@ -57,7 +81,7 @@ interface DateBadgeProps {
 
 const DateBadge = ({ dateStr }: DateBadgeProps) => {
   const status = getDateStatus(dateStr);
-
+  console.log(status, "status");
   if (status.type === "live") {
     return (
       <div className={`${styles.dateBadge} ${styles.dateBadgeLive}`}>
@@ -69,7 +93,8 @@ const DateBadge = ({ dateStr }: DateBadgeProps) => {
   }
 
   if (status.type === "upcoming") {
-    const label = status.daysLeft === 1 ? "TOMORROW" : `IN ${status.daysLeft} DAYS`;
+    const label =
+      status.daysLeft === 1 ? "TOMORROW" : `IN ${status.daysLeft} DAYS`;
     return (
       <div className={`${styles.dateBadge} ${styles.dateBadgeCountdown}`}>
         <Calendar className={styles.dateIcon} />
@@ -137,7 +162,10 @@ const EventCard = ({
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
           />
         ) : (
-          <div className={styles.eventImage} style={{ background: "#1a0800" }} />
+          <div
+            className={styles.eventImage}
+            style={{ background: "#1a0800" }}
+          />
         )}
 
         {/* Overlay gradient */}
