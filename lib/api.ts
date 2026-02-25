@@ -1,5 +1,6 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5051/api';
-const UPLOADS_URL = API_URL.replace('/api', '/uploads');
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050/api";
+const UPLOADS_URL = API_URL.replace("/api", "/uploads");
 
 // ─────────────────────────────────────────────
 // SEO
@@ -8,11 +9,11 @@ const UPLOADS_URL = API_URL.replace('/api', '/uploads');
 export async function fetchSeoData(route: string, locale: string) {
   try {
     const res = await fetch(`${API_URL}/seo?route=${route}&locale=${locale}`, {
-      next: { revalidate: 60 }
+      next: { revalidate: 60 },
     });
     if (!res.ok) {
       if (res.status === 404) return null;
-      throw new Error('Failed to fetch SEO data');
+      throw new Error("Failed to fetch SEO data");
     }
     return res.json();
   } catch {
@@ -24,14 +25,14 @@ export async function fetchSeoData(route: string, locale: string) {
 export async function saveSeoData(data: any) {
   try {
     const res = await fetch(`${API_URL}/admin/seo`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error('Failed to save SEO data');
+    if (!res.ok) throw new Error("Failed to save SEO data");
     return res.json();
   } catch (error) {
-    console.error('Error saving SEO data:', error);
+    console.error("Error saving SEO data:", error);
     throw error;
   }
 }
@@ -53,18 +54,20 @@ export interface TranslationEntry {
 export async function fetchTranslationsFlat(): Promise<TranslationEntry[]> {
   try {
     const res = await fetch(`${API_URL}/translations/flat`, {
-      cache: 'no-store',
+      cache: "no-store",
     });
     if (!res.ok) return [];
     return res.json();
   } catch (error) {
-    console.error('Error fetching translations:', error);
+    console.error("Error fetching translations:", error);
     return [];
   }
 }
 
 /** Fetch all translations as nested object (for runtime i18n merging) */
-export async function fetchTranslationsNested(): Promise<Record<string, Record<string, { en: string; hi: string; gu: string }>>> {
+export async function fetchTranslationsNested(): Promise<
+  Record<string, Record<string, { en: string; hi: string; gu: string }>>
+> {
   try {
     const res = await fetch(`${API_URL}/translations`, {
       next: { revalidate: 30 },
@@ -72,28 +75,30 @@ export async function fetchTranslationsNested(): Promise<Record<string, Record<s
     if (!res.ok) return {};
     return res.json();
   } catch (error) {
-    console.error('Error fetching translations nested:', error);
+    console.error("Error fetching translations nested:", error);
     return {};
   }
 }
 
 /** Upsert a translation key */
-export async function saveTranslation(data: Omit<TranslationEntry, '_id'>): Promise<TranslationEntry> {
+export async function saveTranslation(
+  data: Omit<TranslationEntry, "_id">,
+): Promise<TranslationEntry> {
   const res = await fetch(`${API_URL}/admin/translations`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to save translation');
+  if (!res.ok) throw new Error("Failed to save translation");
   return res.json();
 }
 
 /** Delete a translation by ID */
 export async function deleteTranslation(id: string): Promise<void> {
   const res = await fetch(`${API_URL}/admin/translations/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
-  if (!res.ok) throw new Error('Failed to delete translation');
+  if (!res.ok) throw new Error("Failed to delete translation");
 }
 
 // ─────────────────────────────────────────────
@@ -127,46 +132,48 @@ export interface PaginatedResponse<T> {
 
 export async function fetchEvents(
   page = 1,
-  limit = 10
+  limit = 10,
 ): Promise<PaginatedResponse<EventEntry>> {
   try {
-    const res = await fetch(
-      `${API_URL}/events?page=${page}&limit=${limit}`,
-      { cache: 'no-store' }
-    );
+    const res = await fetch(`${API_URL}/events?page=${page}&limit=${limit}`, {
+      cache: "no-store",
+    });
     if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
     return res.json();
   } catch (error) {
-    console.error('Error fetching events:', error);
+    console.error("Error fetching events:", error);
     return { data: [], total: 0, page, totalPages: 0 };
   }
 }
 
-export async function saveEvent(data: FormData, id?: string): Promise<EventEntry> {
+export async function saveEvent(
+  data: FormData,
+  id?: string,
+): Promise<EventEntry> {
   const url = id ? `${API_URL}/events/admin/${id}` : `${API_URL}/events/admin`;
-  const method = id ? 'PUT' : 'POST';
-  
+  const method = id ? "PUT" : "POST";
+
   const res = await fetch(url, {
     method,
     body: data,
   });
-  if (!res.ok) throw new Error('Failed to save event');
+  if (!res.ok) throw new Error("Failed to save event");
   return res.json();
 }
 
 export async function deleteEvent(id: string): Promise<void> {
   const res = await fetch(`${API_URL}/events/admin/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
-  if (!res.ok) throw new Error('Failed to delete event');
+  if (!res.ok) throw new Error("Failed to delete event");
 }
 
 export function getImageUrl(path: string) {
-  if (!path) return '';
-  if (path.startsWith('http')) return path;
-  if (path.startsWith('/uploads')) {
+  if (!path) return "";
+  if (path.startsWith("http")) return path;
+  if (path.startsWith("/uploads")) {
     // Legacy local uploads
-    return `${API_URL.replace('/api', '')}${path}`;
+    return `${API_URL.replace("/api", "")}${path}`;
   }
   // Wasabi storage via backend proxy/redirection
   return `${API_URL}/events/image/${path}`;
@@ -178,14 +185,14 @@ export function getImageUrl(path: string) {
 
 export interface GalleryImageItem {
   _id: string;
-  url: string;         // pre-signed URL (resolved by backend)
+  url: string; // pre-signed URL (resolved by backend)
   description: LocalizedString;
 }
 
 export interface GalleryEntry {
   _id: string;
   title: LocalizedString;
-  coverImage: string;  // pre-signed URL (resolved by backend)
+  coverImage: string; // pre-signed URL (resolved by backend)
   images: GalleryImageItem[];
   isEnabled: boolean;
   createdAt: string;
@@ -195,12 +202,12 @@ export interface GalleryEntry {
 /** Public: enabled galleries only, paginated */
 export async function fetchGalleries(
   page = 1,
-  limit = 9
+  limit = 9,
 ): Promise<PaginatedResponse<GalleryEntry>> {
   try {
     const res = await fetch(
       `${API_URL}/galleries?page=${page}&limit=${limit}`,
-      { cache: 'no-store' }
+      { cache: "no-store" },
     );
     if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
     return res.json();
@@ -212,7 +219,9 @@ export async function fetchGalleries(
 /** Public + Admin: single gallery by id */
 export async function fetchGallery(id: string): Promise<GalleryEntry | null> {
   try {
-    const res = await fetch(`${API_URL}/galleries/${id}`, { cache: 'no-store' });
+    const res = await fetch(`${API_URL}/galleries/${id}`, {
+      cache: "no-store",
+    });
     if (!res.ok) return null;
     return res.json();
   } catch {
@@ -223,12 +232,12 @@ export async function fetchGallery(id: string): Promise<GalleryEntry | null> {
 /** Admin: all galleries (including disabled), paginated */
 export async function fetchGalleriesAdmin(
   page = 1,
-  limit = 9
+  limit = 9,
 ): Promise<PaginatedResponse<GalleryEntry>> {
   try {
     const res = await fetch(
       `${API_URL}/galleries/admin?page=${page}&limit=${limit}`,
-      { cache: 'no-store' }
+      { cache: "no-store" },
     );
     if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
     return res.json();
@@ -237,19 +246,25 @@ export async function fetchGalleriesAdmin(
   }
 }
 
-export async function saveGallery(data: FormData, id?: string): Promise<GalleryEntry> {
-  const url = id ? `${API_URL}/galleries/admin/${id}` : `${API_URL}/galleries/admin`;
-  const method = id ? 'PUT' : 'POST';
+export async function saveGallery(
+  data: FormData,
+  id?: string,
+): Promise<GalleryEntry> {
+  const url = id
+    ? `${API_URL}/galleries/admin/${id}`
+    : `${API_URL}/galleries/admin`;
+  const method = id ? "PUT" : "POST";
   const res = await fetch(url, { method, body: data });
-  if (!res.ok) throw new Error('Failed to save gallery');
+  if (!res.ok) throw new Error("Failed to save gallery");
   return res.json();
 }
 
 export async function deleteGallery(id: string): Promise<void> {
-  const res = await fetch(`${API_URL}/galleries/admin/${id}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error('Failed to delete gallery');
+  const res = await fetch(`${API_URL}/galleries/admin/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete gallery");
 }
-
 
 // ─────────────────────────────────────────────
 // Video Galleries
@@ -258,9 +273,9 @@ export async function deleteGallery(id: string): Promise<void> {
 export interface VideoGalleryEntry {
   _id: string;
   title: LocalizedString;
-  videoType: 'link' | 'file';
-  videoUrl: string;   // YouTube / external URL (when videoType === 'link')
-  videoKey: string;   // Wasabi object key (when videoType === 'file')
+  videoType: "link" | "file";
+  videoUrl: string; // YouTube / external URL (when videoType === 'link')
+  videoKey: string; // Wasabi object key (when videoType === 'file')
   thumbnailKey: string;
   thumbnailUrl: string; // pre-signed URL (resolved by backend)
   isEnabled: boolean;
@@ -271,10 +286,13 @@ export interface VideoGalleryEntry {
 /** Public: enabled video galleries, paginated */
 export async function fetchVideoGalleries(
   page = 1,
-  limit = 8
+  limit = 8,
 ): Promise<PaginatedResponse<VideoGalleryEntry>> {
   try {
-    const res = await fetch(`${API_URL}/video-galleries?page=${page}&limit=${limit}`, { cache: 'no-store' });
+    const res = await fetch(
+      `${API_URL}/video-galleries?page=${page}&limit=${limit}`,
+      { cache: "no-store" },
+    );
     if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
     return res.json();
   } catch {
@@ -285,10 +303,13 @@ export async function fetchVideoGalleries(
 /** Admin: all video galleries, paginated */
 export async function fetchVideoGalleriesAdmin(
   page = 1,
-  limit = 8
+  limit = 8,
 ): Promise<PaginatedResponse<VideoGalleryEntry>> {
   try {
-    const res = await fetch(`${API_URL}/video-galleries/admin?page=${page}&limit=${limit}`, { cache: 'no-store' });
+    const res = await fetch(
+      `${API_URL}/video-galleries/admin?page=${page}&limit=${limit}`,
+      { cache: "no-store" },
+    );
     if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
     return res.json();
   } catch {
@@ -298,32 +319,34 @@ export async function fetchVideoGalleriesAdmin(
 
 /** Get pre-signed upload URLs from backend */
 export async function getPresignedUploadUrls(params: {
-  videoType: 'link' | 'file';
+  videoType: "link" | "file";
   videoExt?: string;
   thumbExt?: string;
 }) {
   const query = new URLSearchParams(params as any).toString();
   const res = await fetch(`${API_URL}/video-galleries/presign-upload?${query}`);
-  if (!res.ok) throw new Error('Failed to get upload URLs');
+  if (!res.ok) throw new Error("Failed to get upload URLs");
   return res.json();
 }
 
 /** Create or update a video gallery using JSON (for direct-to-wasabi flow) */
 export async function saveVideoGalleryJson(
   data: any,
-  id?: string
+  id?: string,
 ): Promise<VideoGalleryEntry> {
-  const url = id ? `${API_URL}/video-galleries/admin/${id}` : `${API_URL}/video-galleries/admin`;
-  const method = id ? 'PUT' : 'POST';
+  const url = id
+    ? `${API_URL}/video-galleries/admin/${id}`
+    : `${API_URL}/video-galleries/admin`;
+  const method = id ? "PUT" : "POST";
 
   const res = await fetch(url, {
     method,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: 'Save failed' }));
-    throw new Error(err.error || 'Failed to save video gallery');
+    const err = await res.json().catch(() => ({ error: "Save failed" }));
+    throw new Error(err.error || "Failed to save video gallery");
   }
   return res.json();
 }
@@ -332,10 +355,12 @@ export async function saveVideoGalleryJson(
 export async function saveVideoGallery(
   data: FormData,
   id?: string,
-  onProgress?: (percent: number) => void
+  onProgress?: (percent: number) => void,
 ): Promise<VideoGalleryEntry> {
-  const url = id ? `${API_URL}/video-galleries/admin/${id}` : `${API_URL}/video-galleries/admin`;
-  const method = id ? 'PUT' : 'POST';
+  const url = id
+    ? `${API_URL}/video-galleries/admin/${id}`
+    : `${API_URL}/video-galleries/admin`;
+  const method = id ? "PUT" : "POST";
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -355,23 +380,24 @@ export async function saveVideoGallery(
         try {
           resolve(JSON.parse(xhr.responseText));
         } catch (err) {
-          reject(new Error('Failed to parse response'));
+          reject(new Error("Failed to parse response"));
         }
       } else {
-        reject(new Error(xhr.statusText || 'Failed to save video gallery'));
+        reject(new Error(xhr.statusText || "Failed to save video gallery"));
       }
     };
 
-    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.onerror = () => reject(new Error("Network error"));
     xhr.send(data);
   });
 }
 
-
 /** Delete a video gallery */
 export async function deleteVideoGallery(id: string): Promise<void> {
-  const res = await fetch(`${API_URL}/video-galleries/admin/${id}`, { method: 'DELETE' });
-  if (!res.ok) throw new Error('Failed to delete video gallery');
+  const res = await fetch(`${API_URL}/video-galleries/admin/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete video gallery");
 }
 
 /** Returns the streaming URL for a raw video file */

@@ -214,7 +214,7 @@
 }
 
 .cardTitle {
-  font-family: var(--font-title);
+  font-family: var(--font-cinzel);
   font-size: clamp(0.92rem, 2vw, 1.05rem);
   font-weight: 700;
   color: var(--crimson);

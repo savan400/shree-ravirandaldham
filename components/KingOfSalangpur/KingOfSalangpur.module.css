@@ -253,7 +253,7 @@
 }
 
 .statNumber {
-  font-family: var(--ks-font--cinzel);
+  font-family: var(--font-cinzel);
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 900;
   background: linear-gradient(135deg, var(--ks-saffron-mid), var(--ks-gold));
