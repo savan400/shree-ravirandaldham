@@ -400,7 +400,81 @@ export async function deleteVideoGallery(id: string): Promise<void> {
   if (!res.ok) throw new Error("Failed to delete video gallery");
 }
 
+
 /** Returns the streaming URL for a raw video file */
 export function getVideoStreamUrl(key: string): string {
   return `${API_URL}/video-galleries/stream/${key}`;
+}
+
+// ─────────────────────────────────────────────
+// CMS Pages
+// ─────────────────────────────────────────────
+
+export interface CMSPageAnalytics {
+  key?: string;
+  value?: string;
+  image?: string; // pre-signed URL (raw Wasabi key in DB)
+  title?: LocalizedString;
+  description?: LocalizedString;
+}
+
+export interface CMSPageEntry {
+  _id: string;
+  key: string;
+  title: LocalizedString;
+  badgeText: LocalizedString;
+  description: LocalizedString; // Rich text HTML
+  quote?: LocalizedString;
+  images: string[]; // pre-signed URLs
+  analytics: CMSPageAnalytics[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function fetchCMSPage(key: string): Promise<CMSPageEntry | null> {
+  try {
+    const res = await fetch(`${API_URL}/cms-pages/${key}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchCMSPagesAdmin(
+  page = 1,
+  limit = 10,
+): Promise<PaginatedResponse<CMSPageEntry>> {
+  try {
+    const res = await fetch(
+      `${API_URL}/admin/cms-pages?page=${page}&limit=${limit}`,
+      { cache: "no-store" },
+    );
+    if (!res.ok) return { data: [], total: 0, page, totalPages: 0 };
+    return res.json();
+  } catch {
+    return { data: [], total: 0, page, totalPages: 0 };
+  }
+}
+
+export async function saveCMSPage(
+  data: FormData,
+  id?: string,
+): Promise<CMSPageEntry> {
+  const url = id
+    ? `${API_URL}/admin/cms-pages/${id}`
+    : `${API_URL}/admin/cms-pages`;
+  const method = id ? "PUT" : "POST";
+  const res = await fetch(url, { method, body: data });
+  if (!res.ok) throw new Error("Failed to save CMS page");
+  return res.json();
+}
+
+export async function deleteCMSPage(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/admin/cms-pages/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete CMS page");
 }

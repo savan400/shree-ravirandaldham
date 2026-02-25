@@ -11,6 +11,7 @@ const Translation = require('../models/Translation');
 const Event = require('../models/Event');
 const Gallery = require('../models/Gallery');
 const VideoGallery = require('../models/VideoGallery');
+const CMSPage = require('../models/CMSPage');
 const wasabi = require('../utils/wasabiClient');
 
 // ─────────────────────────────────────────────
@@ -1146,6 +1147,193 @@ router.delete('/galleries/:id', async (req, res) => {
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+// ─────────────────────────────────────────────
+// CMS Page Routes
+// ─────────────────────────────────────────────
+
+// Helper: resolve CMS Page image keys to pre-signed URLs
+const resolveCMSPage = async (page) => {
+  const resolveKey = async (key) => {
+    if (!key) return '';
+    try { return await wasabi.presignGetUrl(key); } catch { return ''; }
+  };
+
+  const images = await Promise.all((page.images || []).map(resolveKey));
+  const analytics = await Promise.all((page.analytics || []).map(async (item) => ({
+    ...item,
+    image: await resolveKey(item.image)
+  })));
+
+  return { ...page, images, analytics };
+};
+
+// GET /api/cms-pages/:key — public fetching by key
+router.get('/cms-pages/:key', async (req, res) => {
+  try {
+    const page = await CMSPage.findOne({ key: req.params.key }).lean();
+    if (!page) return res.status(404).json({ error: 'CMS Page not found' });
+    res.json(await resolveCMSPage(page));
+  } catch (error) {
+    console.error('Error fetching CMS page:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// GET /api/cms-pages/admin — admin list (paginated)
+router.get('/admin/cms-pages', async (req, res) => {
+  try {
+    const pageNum  = Math.max(1, parseInt(req.query.page)  || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 10);
+    const skip  = (pageNum - 1) * limit;
+
+    const [total, pages] = await Promise.all([
+      CMSPage.countDocuments(),
+      CMSPage.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    ]);
+
+    const data = await Promise.all(pages.map(resolveCMSPage));
+    res.json({ data, total, page: pageNum, totalPages: Math.ceil(total / limit) });
+  } catch (error) {
+    console.error('Error fetching CMS pages (admin):', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// POST /api/admin/cms-pages — create CMS page
+router.post('/admin/cms-pages', upload.array('images'), async (req, res) => {
+  try {
+    const data = JSON.parse(req.body.data || '{}');
+    
+    // Strict Validations
+    if (!data.key) return res.status(400).json({ error: 'Page key is required' });
+    if (!/^[a-z0-9-]+$/.test(data.key)) {
+      return res.status(400).json({ error: 'Page key must be lowercase alphanumeric and hyphens only' });
+    }
+
+    const existing = await CMSPage.findOne({ key: data.key });
+    if (existing) return res.status(400).json({ error: 'A page with this key already exists' });
+
+    const titleErr = validateLocalized(data.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
+
+    const badgeErr = validateLocalized(data.badgeText, 'Badge Text');
+    if (badgeErr) return res.status(400).json({ error: badgeErr });
+
+    const descErr = validateLocalized(data.description, 'Description');
+    if (descErr) return res.status(400).json({ error: descErr });
+
+    const pageId = new mongoose.Types.ObjectId();
+    const uploadedImages = [];
+    
+    // Handle main images
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const key = `cms-pages/${pageId}/images/${file.filename}`;
+        const stream = fs.createReadStream(file.path);
+        await wasabi.uploadObject(key, stream, file.mimetype);
+        if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+        uploadedImages.push(key);
+      }
+    }
+
+    const newPage = await CMSPage.create({
+      ...data,
+      _id: pageId,
+      images: uploadedImages,
+    });
+
+    res.status(201).json(newPage);
+  } catch (error) {
+    console.error('Error creating CMS page:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: error.message });
+  }
+});
+
+// PUT /api/admin/cms-pages/:id — update CMS page
+router.put('/admin/cms-pages/:id', upload.array('images'), async (req, res) => {
+  try {
+    const pageId = req.params.id;
+    const existingPage = await CMSPage.findById(pageId);
+    if (!existingPage) return res.status(404).json({ error: 'CMS Page not found' });
+
+    const data = JSON.parse(req.body.data || '{}');
+
+    // Strict Validations
+    if (data.key && data.key !== existingPage.key) {
+      if (!/^[a-z0-9-]+$/.test(data.key)) {
+        return res.status(400).json({ error: 'Page key must be lowercase alphanumeric and hyphens only' });
+      }
+      const duplicate = await CMSPage.findOne({ key: data.key });
+      if (duplicate) return res.status(400).json({ error: 'A page with this key already exists' });
+    }
+
+    const titleErr = validateLocalized(data.title, 'Title');
+    if (titleErr) return res.status(400).json({ error: titleErr });
+
+    const badgeErr = validateLocalized(data.badgeText, 'Badge Text');
+    if (badgeErr) return res.status(400).json({ error: badgeErr });
+
+    const descErr = validateLocalized(data.description, 'Description');
+    if (descErr) return res.status(400).json({ error: descErr });
+
+    const uploadedImages = [];
+
+    // Handle new main images
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const key = `cms-pages/${pageId}/images/${file.filename}`;
+        const stream = fs.createReadStream(file.path);
+        await wasabi.uploadObject(key, stream, file.mimetype);
+        if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+        uploadedImages.push(key);
+      }
+    }
+
+    // Determine which old images to keep
+    const keepImages = data.keepImages || []; // raw keys
+    const finalImages = [...keepImages, ...uploadedImages];
+
+    // Clean up deleted images from Wasabi
+    const toDelete = (existingPage.images || []).filter(k => !keepImages.includes(k));
+    if (toDelete.length > 0) {
+      try { await wasabi.deleteObjects(toDelete); } catch (err) { console.error('Wasabi cleanup error:', err); }
+    }
+
+    const updatedPage = await CMSPage.findByIdAndUpdate(
+      pageId,
+      { ...data, images: finalImages, updatedAt: Date.now() },
+      { new: true }
+    );
+
+    res.json(updatedPage);
+  } catch (error) {
+    console.error('Error updating CMS page:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// DELETE /api/admin/cms-pages/:id — delete CMS page
+router.delete('/admin/cms-pages/:id', async (req, res) => {
+  try {
+    const page = await CMSPage.findById(req.params.id);
+    if (!page) return res.status(404).json({ error: 'CMS Page not found' });
+
+    const keys = [...(page.images || [])];
+    (page.analytics || []).forEach(item => { if (item.image) keys.push(item.image); });
+
+    if (keys.length > 0) {
+      try { await wasabi.deleteObjects([...new Set(keys)]); } catch (err) { console.error('Wasabi cleanup error:', err); }
+    }
+
+    await CMSPage.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting CMS page:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

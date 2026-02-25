@@ -7,11 +7,12 @@ import TranslationCMS from './TranslationCMS';
 import EventsCMS from './EventsCMS';
 import GalleryCMS from './GalleryCMS';
 import VideoGalleryCMS from './VideoGalleryCMS';
+import PagesCMS from './PagesCMS';
 import { AdminButton, Card } from './components/AdminUI';
-import { Settings, Globe, LogOut, LayoutDashboard, ChevronRight, Menu, X, Calendar, Images, Video } from 'lucide-react';
+import { Settings, Globe, LogOut, LayoutDashboard, ChevronRight, Menu, X, Calendar, Images, Video, FileText } from 'lucide-react';
 import Link from 'next/link';
 
-type Tab = 'seo' | 'translations' | 'events' | 'gallery' | 'video-gallery';
+type Tab = 'seo' | 'translations' | 'events' | 'gallery' | 'video-gallery' | 'cms-pages';
 
 export default function AdminForm({ locale }: { locale: string }) {
   const t = useTranslations('Admin');
@@ -141,6 +142,19 @@ export default function AdminForm({ locale }: { locale: string }) {
             <Video className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Video Gallery</span>
             {activeTab === 'video-gallery' && <ChevronRight className="w-4 h-4" />}
+          </button>
+          
+          <button
+            onClick={() => { setActiveTab('cms-pages'); setIsSidebarOpen(false); }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              activeTab === 'cms-pages' 
+              ? 'bg-orange-500/10 text-orange-400 font-bold' 
+              : 'hover:bg-white/5 text-orange-100/60'
+            }`}
+          >
+            <FileText className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="flex-1 text-left text-sm">CMS Pages</span>
+            {activeTab === 'cms-pages' && <ChevronRight className="w-4 h-4" />}
           </button>
         </nav>
 
@@ -299,6 +313,12 @@ export default function AdminForm({ locale }: { locale: string }) {
             {activeTab === 'video-gallery' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <VideoGalleryCMS />
+              </div>
+            )}
+
+            {activeTab === 'cms-pages' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <PagesCMS />
               </div>
             )}
 
