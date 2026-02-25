@@ -22,7 +22,7 @@ const cmsPageSchema = new mongoose.Schema({
     hi: { type: String },
     gu: { type: String }
   },
-  images: [{ type: String }], // Wasabi keys
+  images: [{ url: { type: String, required: true }, caption: { en: { type: String }, hi: { type: String }, gu: { type: String } } }], // Wasabi keys
   analytics: [{
     key: { type: String },
     value: { type: String },

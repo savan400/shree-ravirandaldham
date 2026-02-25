@@ -1162,7 +1162,16 @@ const resolveCMSPage = async (page) => {
     try { return await wasabi.presignGetUrl(key); } catch { return ''; }
   };
 
-  const images = await Promise.all((page.images || []).map(resolveKey));
+  const images = await Promise.all((page.images || []).map(async (img) => {
+    // Structural compatibility: handle both old string keys and new object structure
+    const key = typeof img === 'string' ? img : img.url;
+    return {
+      ...(typeof img === 'object' ? img : {}),
+      url: await resolveKey(key),
+      key: key // Preserve the raw key for admin updates
+    };
+  }));
+
   const analytics = await Promise.all((page.analytics || []).map(async (item) => ({
     ...item,
     image: await resolveKey(item.image)
@@ -1243,7 +1252,7 @@ router.post('/admin/cms-pages', upload.array('images'), async (req, res) => {
     const newPage = await CMSPage.create({
       ...data,
       _id: pageId,
-      images: uploadedImages,
+      images: uploadedImages.map(key => ({ url: key })),
     });
 
     res.status(201).json(newPage);
@@ -1293,12 +1302,24 @@ router.put('/admin/cms-pages/:id', upload.array('images'), async (req, res) => {
       }
     }
 
-    // Determine which old images to keep
-    const keepImages = data.keepImages || []; // raw keys
-    const finalImages = [...keepImages, ...uploadedImages];
+    // Determine which old images to keep and update their captions
+    let keepImages = [];
+    if (data.images && Array.isArray(data.images)) {
+      keepImages = data.images.map(img => ({
+        url: img.key || img.url, // use raw key if provided, else hope url is the key
+        caption: img.caption
+      }));
+    } else if (data.keepImages && Array.isArray(data.keepImages)) {
+      keepImages = data.keepImages.map(k => ({ url: k }));
+    }
+
+    const finalImages = [...keepImages, ...uploadedImages.map(key => ({ url: key }))];
 
     // Clean up deleted images from Wasabi
-    const toDelete = (existingPage.images || []).filter(k => !keepImages.includes(k));
+    const finalKeys = finalImages.map(img => img.url);
+    const toDelete = (existingPage.images || []).map(img => typeof img === 'string' ? img : img.url)
+      .filter(k => !finalKeys.includes(k));
+    
     if (toDelete.length > 0) {
       try { await wasabi.deleteObjects(toDelete); } catch (err) { console.error('Wasabi cleanup error:', err); }
     }

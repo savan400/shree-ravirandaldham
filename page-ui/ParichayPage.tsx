@@ -11,8 +11,9 @@ import { useInView } from "@/hooks/useInView";
 import { visibleClass } from "@/lib/utils";
 import ClickableImage from "@/components/ClickableImage";
 import { CMSPageEntry } from "@/lib/api";
+import { useLocale } from "next-intl";
 
-export type Locale = 'en' | 'hi' | 'gu';
+export type Locale = "en" | "hi" | "gu";
 
 // ── Decorative SVG arch frame overlay ──────────────────────────────────────
 const ArchFrame = () => (
@@ -139,14 +140,14 @@ const CornerOrnament = ({ flip = false }: { flip?: boolean }) => (
 // ── Page component ─────────────────────────────────────────────────────────
 interface ParichayPageProps {
   cmsData?: CMSPageEntry | null;
-  locale?: Locale;
 }
 
-const ParichayPage = ({ cmsData, locale = 'gu' }: ParichayPageProps) => {
+const ParichayPage = ({ cmsData }: ParichayPageProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
+  const locale = useLocale();
 
   const title = cmsData?.title?.[locale] || "પરિચય";
   const badge = cmsData?.badgeText?.[locale] || "॥ મંદિર વિશે ॥";
@@ -154,15 +155,22 @@ const ParichayPage = ({ cmsData, locale = 'gu' }: ParichayPageProps) => {
   const quote = cmsData?.quote?.[locale] || cmsData?.quote?.en || "";
 
   if (content && quote) {
-    content = content.replace(/{quote}/g, `<blockquote class="cms-quote text-xl font-bold text-orange-600 my-6 pl-4 border-l-4 border-orange-500 italic">"${quote}"</blockquote>`);
+    content = content.replace(
+      /{quote}/g,
+      `<blockquote class="cms-quote text-xl font-bold text-orange-600 my-6 pl-4 border-l-4 border-orange-500 italic">"${quote}"</blockquote>`,
+    );
   }
 
-  const images = cmsData?.images || ["/images/banner-1.webp"];
-  const displayImage = images[0];
+  const images = cmsData?.images || [];
+  const displayImage = images[0]
+    ? typeof images[0] === "string"
+      ? images[0]
+      : (images[0] as any).url
+    : "/images/banner-1.webp";
 
   useEffect(() => {
-    console.log('cmsData', cmsData);
-  }, [cmsData])
+    console.log("locale", locale);
+  }, [cmsData]);
 
   return (
     <section ref={sectionRef} className={styles.section}>
@@ -220,23 +228,23 @@ const ParichayPage = ({ cmsData, locale = 'gu' }: ParichayPageProps) => {
               <div className={styles.contentCardAccentBar} />
 
               {content ? (
-                <div 
-                  className={`${styles.contentText} cms-rich-content`} 
-                  dangerouslySetInnerHTML={{ __html: content }} 
+                <div
+                  className={`${styles.contentText} cms-rich-content`}
+                  dangerouslySetInnerHTML={{ __html: content }}
                 />
               ) : (
                 <p className={styles.contentText}>
                   ભારતનાં ગુજરાત રાજ્યમાં અમદાવાદથી આશરે 140 કિલોમીટરનાં અંતરે
                   બોટાદ જિલ્લાનાં બરવાળા તાલુકામાં આવેલું તીર્થધામ સાળંગપુરધામ.
-                  ભગવાન સ્વામિનારાયણની પદરજ્થી પવિત્ર થયેલા સાળંગપુરધામમાં સદગુરુ
-                  સંત ગોપાળાનંદ સ્વામીએ સંવત 1905માં શ્રીકષ્ટભંજનદેવ હનુમાનજી
-                  મહારાજની મૂર્તિમાં પ્રાણ પ્રતિષ્ઠા કરી હતી. ગોપાળાનંદ સ્વામીએ
-                  યોગિક શક્તિઓની મૂર્તિમાં હનુમાનદાદાનાં પ્રશક્ત તેજ અને થાપોનો
-                  આશિર્વાદ કર્યો કે તે મૂર્તિ કષ્ટણ કરવા લાગો હતી. ત્યારથી આજ દિન
-                  પર્યંત સાળંગપુરધામમાં વિરાજતા શ્રીકષ્ટભંજનદેવ હનુમાનજી સૌ કાંઇની
-                  આર્શિ, વ્યાધિ અને ઉપાધિ તમામ કષ્ટ દૂર કરે છે. શ્રી સ્વામિનારાયણ
-                  મંદિર વડતાલધામ દ્વારા શ્રીકષ્ટભંજનદેવ હનુમાનજી મંદિર,
-                  સાળંગપુરધામનું સંચાલન થાય છે.
+                  ભગવાન સ્વામિનારાયણની પદરજ્થી પવિત્ર થયેલા સાળંગપુરધામમાં
+                  સદગુરુ સંત ગોપાળાનંદ સ્વામીએ સંવત 1905માં શ્રીકષ્ટભંજનદેવ
+                  હનુમાનજી મહારાજની મૂર્તિમાં પ્રાણ પ્રતિષ્ઠા કરી હતી. ગોપાળાનંદ
+                  સ્વામીએ યોગિક શક્તિઓની મૂર્તિમાં હનુમાનદાદાનાં પ્રશક્ત તેજ અને
+                  થાપોનો આશિર્વાદ કર્યો કે તે મૂર્તિ કષ્ટણ કરવા લાગો હતી.
+                  ત્યારથી આજ દિન પર્યંત સાળંગપુરધામમાં વિરાજતા શ્રીકષ્ટભંજનદેવ
+                  હનુમાનજી સૌ કાંઇની આર્શિ, વ્યાધિ અને ઉપાધિ તમામ કષ્ટ દૂર કરે
+                  છે. શ્રી સ્વામિનારાયણ મંદિર વડતાલધામ દ્વારા શ્રીકષ્ટભંજનદેવ
+                  હનુમાનજી મંદિર, સાળંગપુરધામનું સંચાલન થાય છે.
                 </p>
               )}
               <RandalSahayate />
@@ -246,24 +254,26 @@ const ParichayPage = ({ cmsData, locale = 'gu' }: ParichayPageProps) => {
       </div>
 
       <style jsx global>{`
-        .cms-rich-content h1, .cms-rich-content h2, .cms-rich-content h3 { 
-          color: #ff6b00; 
-          font-weight: 800; 
-          margin-top: 1.5rem; 
-          margin-bottom: 1rem; 
+        .cms-rich-content h1,
+        .cms-rich-content h2,
+        .cms-rich-content h3 {
+          color: #ff6b00;
+          font-weight: 800;
+          margin-top: 1.5rem;
+          margin-bottom: 1rem;
         }
-        .cms-rich-content p { 
-          margin-bottom: 1rem; 
+        .cms-rich-content p {
+          margin-bottom: 1rem;
           line-height: 1.8;
           color: #4a5568;
         }
-        .cms-rich-content ul { 
-          list-style-type: disc; 
-          padding-left: 1.5rem; 
-          margin-bottom: 1rem; 
+        .cms-rich-content ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+          margin-bottom: 1rem;
         }
         .cms-rich-content blockquote.cms-quote {
-           font-family: inherit;
+          font-family: inherit;
         }
       `}</style>
     </section>

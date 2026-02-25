@@ -170,8 +170,8 @@ export async function deleteEvent(id: string): Promise<void> {
 
 export function getImageUrl(path: string) {
   if (!path) return "";
-  if (path.startsWith("http")) return path;
-  if (path.startsWith("/uploads")) {
+  if (path?.startsWith?.("http")) return path;
+  if (path?.startsWith?.("/uploads")) {
     // Legacy local uploads
     return `${API_URL.replace("/api", "")}${path}`;
   }
@@ -400,7 +400,6 @@ export async function deleteVideoGallery(id: string): Promise<void> {
   if (!res.ok) throw new Error("Failed to delete video gallery");
 }
 
-
 /** Returns the streaming URL for a raw video file */
 export function getVideoStreamUrl(key: string): string {
   return `${API_URL}/video-galleries/stream/${key}`;
@@ -418,6 +417,11 @@ export interface CMSPageAnalytics {
   description?: LocalizedString;
 }
 
+export interface CMSPageImage {
+  url: string;
+  caption?: LocalizedString;
+}
+
 export interface CMSPageEntry {
   _id: string;
   key: string;
@@ -425,7 +429,7 @@ export interface CMSPageEntry {
   badgeText: LocalizedString;
   description: LocalizedString; // Rich text HTML
   quote?: LocalizedString;
-  images: string[]; // pre-signed URLs
+  images: CMSPageImage[]; // pre-signed URLs with captions
   analytics: CMSPageAnalytics[];
   createdAt: string;
   updatedAt: string;
