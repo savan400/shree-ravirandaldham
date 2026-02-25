@@ -49,12 +49,35 @@ const CornerGlow: React.FC<CornerGlowProps> = ({ position }) => (
     className={`${styles.corner} ${CORNER_CLASSES[position]}`}
     aria-hidden="true"
   >
-    <path d="M5 85 L5 5 L85 5" stroke="#FFD700" strokeWidth="2" fill="none" opacity="0.6" />
-    <path d="M5 5 L20 5 M5 5 L5 20" stroke="#FF8C00" strokeWidth="1" opacity="0.8" />
+    <path
+      d="M5 85 L5 5 L85 5"
+      stroke="#FFD700"
+      strokeWidth="2"
+      fill="none"
+      opacity="0.6"
+    />
+    <path
+      d="M5 5 L20 5 M5 5 L5 20"
+      stroke="#FF8C00"
+      strokeWidth="1"
+      opacity="0.8"
+    />
     <circle cx="5" cy="5" r="4" fill="#FFD700" opacity="0.9" />
     <circle cx="5" cy="5" r="2" fill="#FFF" opacity="0.6" />
-    <path d="M5 30 Q22 30 22 5" stroke="#F5A623" strokeWidth="0.6" fill="none" opacity="0.3" />
-    <path d="M5 45 Q35 45 35 5" stroke="#F5A623" strokeWidth="0.4" fill="none" opacity="0.2" />
+    <path
+      d="M5 30 Q22 30 22 5"
+      stroke="#F5A623"
+      strokeWidth="0.6"
+      fill="none"
+      opacity="0.3"
+    />
+    <path
+      d="M5 45 Q35 45 35 5"
+      stroke="#F5A623"
+      strokeWidth="0.4"
+      fill="none"
+      opacity="0.2"
+    />
   </svg>
 );
 
@@ -92,7 +115,6 @@ const FloatingParticle: React.FC<FloatingParticleProps> = ({ particle }) => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const KashtabhanjanDev: React.FC = () => {
-
   const [scrollY, setScrollY] = useState(0);
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
@@ -127,11 +149,26 @@ const KashtabhanjanDev: React.FC = () => {
       />
 
       {/* ── Overlay stack ── */}
-      <div className={`${styles.overlay} ${styles["overlay--horizontal"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--vertical"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--amberGlow"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--vignette"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--noise"]}`} aria-hidden="true" />
+      <div
+        className={`${styles.overlay} ${styles["overlay--horizontal"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--vertical"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--amberGlow"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--vignette"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--noise"]}`}
+        aria-hidden="true"
+      />
 
       {/* ── Corner ornaments ── */}
       <CornerGlow position="top-left" />
@@ -140,8 +177,14 @@ const KashtabhanjanDev: React.FC = () => {
       <CornerGlow position="bottom-right" />
 
       {/* ── Border bands ── */}
-      <div className={`${styles.borderBand} ${styles["borderBand--top"]}`} aria-hidden="true" />
-      <div className={`${styles.borderBand} ${styles["borderBand--bottom"]}`} aria-hidden="true" />
+      <div
+        className={`${styles.borderBand} ${styles["borderBand--top"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.borderBand} ${styles["borderBand--bottom"]}`}
+        aria-hidden="true"
+      />
 
       {/* ── Floating particles ── */}
       {PARTICLES.map((p, i) => (
@@ -151,11 +194,12 @@ const KashtabhanjanDev: React.FC = () => {
       {/* ── Main content ── */}
       <div className={styles.contentWrap}>
         <div className={styles.contentInner}>
-
           {/* Badge */}
-          <div className={`${styles.badge} ${visible ? styles["badge--visible"] : styles.hidden}`}>
+          <div
+            className={`${styles.badge} ${visible ? styles["badge--visible"] : styles.hidden}`}
+          >
             <div className={styles.badgeDot} aria-hidden="true" />
-            <span className={styles.badgeText}>॥ જય હનુમાન ॥</span>
+            <span className={styles.badgeText}>॥ રાંદલના દડવા ॥</span>
             <div className={styles.badgeDot} aria-hidden="true" />
           </div>
 
@@ -164,7 +208,7 @@ const KashtabhanjanDev: React.FC = () => {
             id="kd-title"
             className={`${styles.title} ${visible ? styles["title--visible"] : styles.hidden}`}
           >
-            શ્રી કષ્ટભંજન દેવ
+            શ્રી રવિરાંદલ માં
           </h2>
 
           {/* Gold rule */}
@@ -173,17 +217,26 @@ const KashtabhanjanDev: React.FC = () => {
           </div>
 
           {/* Body paragraph */}
-          <p className={`${styles.para} ${visible ? styles["para--visible"] : styles.hidden}`}>
-            શ્રી કષ્ટભંજનદેવની શરણમાં આવેલો જીવ ક્યારેય ખાલી હાથે પાછો ગયો
-            નથી. તેમની મનોકામના સદૈવ પૂર્ણ થઈ છે. દાદાનાં દર્શન, સાધના અને
-            સેવાથી એવા એક નહીં પણ અસંખ્ય માનવીઓ અને પરિવારોએ શાંતિ, સુરક્ષા
-            અને સુખ મેળવ્યાં છે. દેશ-વિદેશની અગણિત પેઢીઓ હનુમાનજીનાં
-            આશીર્વાદ થકી સમૃદ્ધ થઈ છે.
+          <p
+            className={`${styles.para} ${visible ? styles["para--visible"] : styles.hidden}`}
+          >
+            શ્રી કષ્ટભંજનદેવની શરણમાં આવેલો જીવ ક્યારેય ખાલી હાથે પાછો ગયો નથી.
+            તેમની મનોકામના સદૈવ પૂર્ણ થઈ છે. દાદાનાં દર્શન, સાધના અને સેવાથી એવા
+            એક નહીં પણ અસંખ્ય માનવીઓ અને પરિવારોએ શાંતિ, સુરક્ષા અને સુખ
+            મેળવ્યાં છે. દેશ-વિદેશની અગણિત પેઢીઓ હનુમાનજીનાં આશીર્વાદ થકી સમૃદ્ધ
+            થઈ છે.
           </p>
 
           {/* CTA */}
           <div className={visible ? styles["cta--visible"] : styles.hidden}>
-            <CommonButton text="READ MORE" variant="primary" icon={true} />
+            <CommonButton
+              text="READ MORE"
+              variant="primary"
+              icon={true}
+              onClick={() =>
+                (window.location.href = "/upasna-vidhi/darshan-timing")
+              }
+            />
           </div>
         </div>
       </div>

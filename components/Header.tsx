@@ -25,6 +25,7 @@ interface MenuItem {
   key?: string;
   href: string;
   submenu?: SubmenuItem[];
+  comingSoon?: boolean;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -39,14 +40,15 @@ const MENU_ITEMS: MenuItem[] = [
       { title: "Itihas", href: "/ravirandaldham/itihas" },
       { title: "Mahima", href: "/ravirandaldham/mahima" },
       {
+        title: "Shree Dineshpuri Bapu",
+        href: "/ravirandaldham/dineshpuri-bapu",
+      },
+      {
         title: "Shree 1008 Akshaypari Bapu",
         href: "/ravirandaldham/akshaypari-bapu",
       },
       { title: "Shree Ajaypari Bapu", href: "/ravirandaldham/ajaypari-bapu" },
-      {
-        title: "Shree Dineshpuri Bapu",
-        href: "/ravirandaldham/dineshpuri-bapu",
-      },
+
       { title: "Seva Karya", href: "/ravirandaldham/seva-karya" },
     ],
   },
@@ -125,7 +127,7 @@ const MENU_ITEMS: MenuItem[] = [
     ],
   },
   { title: "Thoughts of Bapu", href: "/thoughts-of-bapu" },
-  { title: "Store", href: "#store" },
+  { title: "Store", href: "#store", comingSoon: true },
   { title: "Donation", href: "/donation" },
   { title: "Contact Us", href: "/contact-us" },
 ];
@@ -265,6 +267,11 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
       {isHash ? (
         <a href={item.href} className={linkClass}>
           {item.title}
+          {item.comingSoon && (
+            <span className="ml-1.5 text-[9px] font-bold uppercase tracking-wide bg-yellow-400 text-yellow-900 px-1.5 py-0.5 rounded-full leading-none">
+              Soon
+            </span>
+          )}
           {item.submenu && (
             <ChevronDown
               className="w-3 h-3 transition-transform group-hover:rotate-180"
@@ -348,6 +355,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
           aria-haspopup="true"
         >
           {item.title}
+
           <ChevronDown
             className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
             aria-hidden="true"
@@ -356,6 +364,11 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
       ) : item.href.startsWith("#") ? (
         <a href={item.href} className={mobileLinkClass} onClick={onClose}>
           {item.title}
+          {item.comingSoon && (
+            <span className="text-[9px] font-bold uppercase tracking-wide bg-yellow-400 text-yellow-900 px-1.5 py-0.5 rounded-full leading-none">
+              Soon
+            </span>
+          )}
         </a>
       ) : (
         <Link href={item.href} className={mobileLinkClass} onClick={onClose}>
@@ -482,6 +495,18 @@ const Header: React.FC = () => {
           </Link>
           <div className="flex gap-3">
             <div className="gap-3 items-center flex" aria-hidden="true">
+              <Link
+                href="/ravirandaldham/dineshpuri-bapu"
+                className="hidden lg:block"
+              >
+                <Image
+                  src="/images/bapu-3.png"
+                  alt="Bapu"
+                  width={56}
+                  height={56}
+                  className="rounded-full object-cover w-14 h-14"
+                />
+              </Link>
               <Link href="/ravirandaldham/akshaypari-bapu">
                 <Image
                   src="/images/bapu-2.png"
@@ -501,18 +526,6 @@ const Header: React.FC = () => {
                   width={56}
                   height={56}
                   className="rounded-full object-cover"
-                />
-              </Link>
-              <Link
-                href="/ravirandaldham/dineshpuri-bapu"
-                className="hidden lg:block"
-              >
-                <Image
-                  src="/images/bapu-3.png"
-                  alt="Bapu"
-                  width={56}
-                  height={56}
-                  className="rounded-full object-cover w-14 h-14"
                 />
               </Link>
             </div>
@@ -577,15 +590,6 @@ const Header: React.FC = () => {
                 className="gap-3 items-center flex justify-center "
                 aria-hidden="true"
               >
-                <Link href="/ravirandaldham/ajaypari-bapu">
-                  <Image
-                    src="/images/bapu-1.png"
-                    alt="Bapu"
-                    width={56}
-                    height={56}
-                    className="rounded-full object-cover"
-                  />
-                </Link>
                 <Link href="/ravirandaldham/dineshpuri-bapu">
                   <Image
                     src="/images/bapu-3.png"
@@ -593,6 +597,15 @@ const Header: React.FC = () => {
                     width={56}
                     height={56}
                     className="rounded-full object-cover w-14 h-14"
+                  />
+                </Link>
+                <Link href="/ravirandaldham/ajaypari-bapu">
+                  <Image
+                    src="/images/bapu-1.png"
+                    alt="Bapu"
+                    width={56}
+                    height={56}
+                    className="rounded-full object-cover"
                   />
                 </Link>
               </div>

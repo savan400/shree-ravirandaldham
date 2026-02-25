@@ -4,6 +4,7 @@
   gap: 2rem;
   margin-bottom: 4rem;
 }
+
 .container {
   z-index: 2;
   max-width: 1280px;
@@ -11,12 +12,32 @@
   padding: 0 2rem;
   position: relative;
 }
+
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .container{
-        padding: 0 1rem;
+
+  .container {
+    padding: 0 1rem;
   }
+}
+
+.photoCountPill {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  color: #fde68a;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(253, 230, 138, 0.25);
+  pointer-events: none;
+  white-space: nowrap;
 }

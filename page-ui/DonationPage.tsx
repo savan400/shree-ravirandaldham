@@ -70,9 +70,9 @@ const categories: DonationCategory[] = [
     title: "Thaal (Dada no Bhog)",
     subtitle: "Choose From The Amount Listed:",
     amounts: [
-      { label: "₹ 1100", value: 1100 },
-      { label: "₹ 1500", value: 1500 },
-      { label: "₹ 2100", value: 2100 },
+      { label: "₹ 501", value: 501 },
+      { label: "₹ 1101", value: 1101 },
+      { label: "₹ 2101", value: 2101 },
     ],
     hasCustom: true,
     minCustom: 100,
@@ -80,11 +80,11 @@ const categories: DonationCategory[] = [
   {
     id: "yagna",
     icon: "🔥",
-    title: "Maruti Yagna (Family)",
+    title: "Navchandi Yagna",
     subtitle: "Choose From The Amount Listed:",
     amounts: [
-      { label: "₹ 51000 (One Day)", value: 51000 },
-      { label: "₹ 61000 (Two Days)", value: 61000 },
+      { label: "₹ 25000 (One Day)", value: 25000 },
+      { label: "₹ 21000 (Two Days)", value: 51000 },
     ],
     hasCustom: false,
   },

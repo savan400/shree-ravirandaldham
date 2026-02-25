@@ -234,17 +234,17 @@ const HeroBanner: React.FC = () => {
         }, 200);
       }, 500);
     },
-    [animating]
+    [animating],
   );
 
   const nextSlide = useCallback(
     () => goTo((current + 1) % BANNER_IMAGES.length),
-    [current, goTo]
+    [current, goTo],
   );
 
   const prevSlide = useCallback(
     () => goTo((current - 1 + BANNER_IMAGES.length) % BANNER_IMAGES.length),
-    [current, goTo]
+    [current, goTo],
   );
 
   useEffect(() => {
@@ -272,10 +272,22 @@ const HeroBanner: React.FC = () => {
       ))}
 
       {/* ── OVERLAYS ── */}
-      <div className={`${styles.overlay} ${styles["overlay--dark"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--vignette"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--topGlow"]}`} aria-hidden="true" />
-      <div className={`${styles.overlay} ${styles["overlay--bottomGradient"]}`} aria-hidden="true" />
+      <div
+        className={`${styles.overlay} ${styles["overlay--dark"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--vignette"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--topGlow"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.overlay} ${styles["overlay--bottomGradient"]}`}
+        aria-hidden="true"
+      />
 
       {/* ── SPINNING MANDALAS ── */}
       <div className={`${styles.mandala} ${styles["mandala--left"]}`}>
@@ -294,39 +306,56 @@ const HeroBanner: React.FC = () => {
       ))}
 
       {/* ── CORNER ORNAMENTS ── */}
-      <div className={`${styles.corner} ${styles["corner--tl"]}`}><CornerOrnament /></div>
-      <div className={`${styles.corner} ${styles["corner--tr"]}`}><CornerOrnament /></div>
-      <div className={`${styles.corner} ${styles["corner--bl"]}`}><CornerOrnament /></div>
-      <div className={`${styles.corner} ${styles["corner--br"]}`}><CornerOrnament /></div>
+      <div className={`${styles.corner} ${styles["corner--tl"]}`}>
+        <CornerOrnament />
+      </div>
+      <div className={`${styles.corner} ${styles["corner--tr"]}`}>
+        <CornerOrnament />
+      </div>
+      <div className={`${styles.corner} ${styles["corner--bl"]}`}>
+        <CornerOrnament />
+      </div>
+      <div className={`${styles.corner} ${styles["corner--br"]}`}>
+        <CornerOrnament />
+      </div>
 
       {/* ── BORDER BANDS ── */}
-      <div className={`${styles.borderBand} ${styles["borderBand--top"]}`} aria-hidden="true" />
-      <div className={`${styles.borderBand} ${styles["borderBand--bottom"]}`} aria-hidden="true" />
+      <div
+        className={`${styles.borderBand} ${styles["borderBand--top"]}`}
+        aria-hidden="true"
+      />
+      <div
+        className={`${styles.borderBand} ${styles["borderBand--bottom"]}`}
+        aria-hidden="true"
+      />
       <div className={styles.borderBandThin} aria-hidden="true" />
 
       {/* ── TEXT CONTENT ── */}
       <div className={styles.content}>
         {/* Sanskrit verse */}
-        <p className={textClass(textVisible, styles.verse)}>
-          {slide.verse}
-        </p>
+        <p className={textClass(textVisible, styles.verse)}>{slide.verse}</p>
 
         {/* OM */}
         <div className={textClass(textVisible, styles.om)} aria-label="Om">
-          ॐ
+          🔱 માં
         </div>
 
         {/* Divider */}
-        <div className={textClass(textVisible, styles.divider)} aria-hidden="true">
-          <div className={`${styles.dividerLine} ${styles["dividerLine--left"]}`} />
+        <div
+          className={textClass(textVisible, styles.divider)}
+          aria-hidden="true"
+        >
+          <div
+            className={`${styles.dividerLine} ${styles["dividerLine--left"]}`}
+          />
           <div className={styles.dividerDiamond} />
-          <div className={`${styles.dividerLine} ${styles["dividerLine--right"]}`} />
+          <div
+            className={`${styles.dividerLine} ${styles["dividerLine--right"]}`}
+          />
         </div>
 
         {/* Main heading */}
-        <h1 className={textClass(textVisible, styles.title)}>
-          {slide.title}
-        </h1>
+        <h1 className={textClass(textVisible, styles.title)}>{slide.title}</h1>
 
         {/* Subtitle */}
         <p className={textClass(textVisible, styles.subtitle)}>
@@ -362,8 +391,15 @@ const HeroBanner: React.FC = () => {
       </button>
 
       {/* ── DOTS / COUNTER ── */}
-      <div className={styles.dotsBar} role="tablist" aria-label="Slide navigation">
-        <span className={`${styles.slideCounter} ${styles["slideCounter--current"]}`} aria-hidden="true">
+      <div
+        className={styles.dotsBar}
+        role="tablist"
+        aria-label="Slide navigation"
+      >
+        <span
+          className={`${styles.slideCounter} ${styles["slideCounter--current"]}`}
+          aria-hidden="true"
+        >
           {String(current + 1).padStart(2, "0")}
         </span>
 
@@ -379,7 +415,10 @@ const HeroBanner: React.FC = () => {
           />
         ))}
 
-        <span className={`${styles.slideCounter} ${styles["slideCounter--total"]}`} aria-hidden="true">
+        <span
+          className={`${styles.slideCounter} ${styles["slideCounter--total"]}`}
+          aria-hidden="true"
+        >
           {String(BANNER_IMAGES.length).padStart(2, "0")}
         </span>
       </div>
