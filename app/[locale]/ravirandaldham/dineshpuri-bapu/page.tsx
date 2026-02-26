@@ -1,5 +1,5 @@
 import CMSContent from "@/components/CMSContent";
-import { fetchCMSPage } from "@/lib/api";
+import { fetchCMSPage } from "@/services/cms-service";
 import CMSPage from "@/page-ui/CMSPage";
 
 const Page = async () => {

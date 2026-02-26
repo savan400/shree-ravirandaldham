@@ -1,4 +1,5 @@
-import { apiClient, triggerRevalidate, API_URL } from "./api-client";
+import { apiClient, API_URL } from "./api-client";
+import { revalidatePhotoGallery } from "@/app/actions/revalidate";
 import { LocalizedString, PaginatedResponse } from "./events-service";
 
 export interface GalleryImageItem {
@@ -35,14 +36,20 @@ export async function fetchGalleries(
   page = 1,
   limit = 9,
 ): Promise<PaginatedResponse<GalleryEntry>> {
-  try {
-    const res = await apiClient.get('/galleries', {
-      params: { page, limit }
-    });
-    return res.data;
-  } catch {
-    return { data: [], total: 0, page, totalPages: 0 };
-  }
+  return unstable_cache(
+    async () => {
+      try {
+        const res = await apiClient.get('/galleries', {
+          params: { page, limit }
+        });
+        return res.data;
+      } catch {
+        return { data: [], total: 0, page, totalPages: 0 };
+      }
+    },
+    [`galleries-${page}-${limit}`],
+    { tags: ['photo-gallery'] }
+  )();
 }
 
 /** Public + Admin: single gallery by id */
@@ -74,44 +81,45 @@ export async function saveGallery(
   data: FormData,
   id?: string,
 ): Promise<GalleryEntry> {
-  const url = id ? `/galleries/admin/${id}` : `/galleries/admin`;
+  const url = id ? `/admin/photos/${id}` : `/admin/photos`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
   
-  if (res.data?._id) {
-    triggerRevalidate(`/gallery/${res.data._id}`);
-    triggerRevalidate(`/en/gallery/${res.data._id}`);
-    triggerRevalidate(`/gu/gallery/${res.data._id}`);
-    triggerRevalidate(`/hi/gallery/${res.data._id}`);
-  }
+  // Tag-based revalidation
+  await revalidatePhotoGallery();
 
-  triggerRevalidate('/', 'layout');
   return res.data;
 }
 
 export async function deleteGallery(id: string): Promise<void> {
   await apiClient.delete(`/galleries/admin/${id}`);
-  triggerRevalidate('/events/photo-gallery');
-  triggerRevalidate('/en/events/photo-gallery');
-  triggerRevalidate('/gu/events/photo-gallery');
-  triggerRevalidate('/hi/events/photo-gallery');
-  triggerRevalidate('/', 'layout');
+  await revalidatePhotoGallery();
 }
 
 // Video Galleries
+
+import { unstable_cache } from "next/cache";
+import { revalidateVideoGallery } from "@/app/actions/revalidate";
 
 /** Public: enabled video galleries, paginated */
 export async function fetchVideoGalleries(
   page = 1,
   limit = 8,
 ): Promise<PaginatedResponse<VideoGalleryEntry>> {
-  try {
-    const res = await apiClient.get('/video-galleries', {
-      params: { page, limit }
-    });
-    return res.data;
-  } catch {
-    return { data: [], total: 0, page, totalPages: 0 };
-  }
+  return unstable_cache(
+    async () => {
+      try {
+        const res = await apiClient.get('/video-galleries', {
+          params: { page, limit }
+        });
+        return res.data;
+      } catch (err) {
+        console.error("fetchVideoGalleries error:", err);
+        return { data: [], total: 0, page, totalPages: 0 };
+      }
+    },
+    [`video-galleries-${page}-${limit}`],
+    { tags: ['video-gallery'] }
+  )();
 }
 
 /** Admin: all video galleries, paginated */
@@ -149,13 +157,9 @@ export async function saveVideoGalleryJson(
   const url = id ? `/video-galleries/admin/${id}` : `/video-galleries/admin`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
   
-  // Revalidate lists for video gallery
-  triggerRevalidate('/events/video-gallery');
-  triggerRevalidate('/en/events/video-gallery');
-  triggerRevalidate('/gu/events/video-gallery');
-  triggerRevalidate('/hi/events/video-gallery');
+  // Tag-based revalidation
+  await revalidateVideoGallery();
 
-  triggerRevalidate('/', 'layout');
   return res.data;
 }
 
@@ -196,7 +200,7 @@ export async function saveVideoGallery(
 /** Delete a video gallery */
 export async function deleteVideoGallery(id: string): Promise<void> {
   await apiClient.delete(`/video-galleries/admin/${id}`);
-  triggerRevalidate('/', 'layout');
+  await revalidateVideoGallery();
 }
 
 /** Returns the streaming URL for a raw video file */

@@ -1,4 +1,4 @@
-import { fetchCMSPage } from '@/lib/api';
+import { fetchCMSPage } from "@/services/cms-service";
 import CMSPage from '@/page-ui/CMSPage'
 import ItihasPage from '@/page-ui/ItihasPage'
 import React from 'react'

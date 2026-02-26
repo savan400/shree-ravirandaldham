@@ -1,4 +1,6 @@
-import { apiClient, triggerRevalidate, API_URL } from "./api-client";
+import { unstable_cache } from "next/cache";
+import { apiClient, API_URL } from "./api-client";
+import { revalidateEvent } from "@/app/actions/revalidate";
 
 export interface LocalizedString {
   en: string;
@@ -29,15 +31,21 @@ export async function fetchEvents(
   page = 1,
   limit = 10,
 ): Promise<PaginatedResponse<EventEntry>> {
-  try {
-    const res = await apiClient.get('/events', {
-      params: { page, limit }
-    });
-    return res.data;
-  } catch (error) {
-    console.error("Error fetching events:", error);
-    return { data: [], total: 0, page, totalPages: 0 };
-  }
+  return unstable_cache(
+    async () => {
+      try {
+        const res = await apiClient.get('/events', {
+          params: { page, limit }
+        });
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        return { data: [], total: 0, page, totalPages: 0 };
+      }
+    },
+    [`events-${page}-${limit}`],
+    { tags: ['event'] }
+  )();
 }
 
 export async function saveEvent(
@@ -47,20 +55,15 @@ export async function saveEvent(
   const url = id ? `/events/admin/${id}` : `/events/admin`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
   
-  if (res.data?._id) {
-    triggerRevalidate(`/events/${res.data._id}`);
-    triggerRevalidate(`/en/events/${res.data._id}`);
-    triggerRevalidate(`/gu/events/${res.data._id}`);
-    triggerRevalidate(`/hi/events/${res.data._id}`);
-  }
+  // Tag-based revalidation
+  await revalidateEvent();
 
-  triggerRevalidate('/', 'layout');
   return res.data;
 }
 
 export async function deleteEvent(id: string): Promise<void> {
   await apiClient.delete(`/events/admin/${id}`);
-  triggerRevalidate('/', 'layout');
+  await revalidateEvent();
 }
 
 export function getImageUrl(path: string) {

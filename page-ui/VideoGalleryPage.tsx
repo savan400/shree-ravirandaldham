@@ -85,15 +85,22 @@ const VideoCard: React.FC<{
     );
 };
 
+interface VideoGalleryPageProps {
+    initialData?: {
+        data: VideoGalleryEntry[];
+        total: number;
+    } | null;
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
-const VideoGalleryPage = () => {
+const VideoGalleryPage = ({ initialData }: VideoGalleryPageProps) => {
     const locale = useLocale() as "en" | "hi" | "gu";
     const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({ threshold: 0.1 });
 
-    const [items, setItems] = useState<VideoGalleryEntry[]>([]);
-    const [total, setTotal] = useState(0);
+    const [items, setItems] = useState<VideoGalleryEntry[]>(initialData?.data ?? []);
+    const [total, setTotal] = useState(initialData?.total ?? 0);
     const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!initialData);
 
     const [selectedVideo, setSelectedVideo] = useState<VideoGalleryEntry | null>(null);
 
@@ -110,7 +117,10 @@ const VideoGalleryPage = () => {
         }
     }, []);
 
-    useEffect(() => { load(page); }, [page, load]);
+    useEffect(() => { 
+        if (page === 1 && initialData) return;
+        load(page); 
+    }, [page, load, initialData]);
 
     const handlePageChange = (p: number) => {
         setPage(p);

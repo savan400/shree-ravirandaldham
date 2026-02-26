@@ -1,4 +1,6 @@
-import { apiClient, triggerRevalidate } from "./api-client";
+import { unstable_cache } from "next/cache";
+import { apiClient } from "./api-client";
+import { revalidateTranslation } from "@/app/actions/revalidate";
 
 export interface TranslationEntry {
   _id: string;
@@ -24,13 +26,19 @@ export async function fetchTranslationsFlat(): Promise<TranslationEntry[]> {
 export async function fetchTranslationsNested(): Promise<
   Record<string, Record<string, { en: string; hi: string; gu: string }>>
 > {
-  try {
-    const res = await apiClient.get('/translations');
-    return res.data;
-  } catch (error) {
-    console.error("Error fetching translations nested:", error);
-    return {};
-  }
+  return unstable_cache(
+    async () => {
+      try {
+        const res = await apiClient.get('/translations');
+        return res.data;
+      } catch (error) {
+        console.error("Error fetching translations nested:", error);
+        return {};
+      }
+    },
+    ['translations-nested'],
+    { tags: ['translation'] }
+  )();
 }
 
 /** Upsert a translation key */
@@ -38,12 +46,12 @@ export async function saveTranslation(
   data: Omit<TranslationEntry, "_id">,
 ): Promise<TranslationEntry> {
   const res = await apiClient.post('/admin/translations', data);
-  triggerRevalidate('/', 'layout');
+  await revalidateTranslation();
   return res.data;
 }
 
 /** Delete a translation by ID */
 export async function deleteTranslation(id: string): Promise<void> {
   await apiClient.delete(`/admin/translations/${id}`);
-  triggerRevalidate('/', 'layout');
+  await revalidateTranslation();
 }
