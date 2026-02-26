@@ -6,7 +6,7 @@
     position: relative;
     padding: 100px 0 80px;
     overflow: hidden;
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: var(--font-cinzel);
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
@@ -167,6 +167,7 @@
     margin: 0 0 16px;
     line-height: 1.2;
     color: #E8F5E9;
+    font-weight: 700;
 }
 
 .titleAccent {
@@ -321,6 +322,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0;
+    z-index: 999;
 }
 
 .waCardTop {
@@ -517,6 +519,7 @@
     color: #e9edef;
     font-size: 14px;
     font-weight: 600;
+    font-family: var(--font-sans);
     margin: 0 0 2px;
 }
 
@@ -524,6 +527,7 @@
     color: rgba(233, 237, 239, 0.5);
     font-size: 11px;
     margin: 0;
+    font-family: var(--font-sans);
 }
 
 .chatMessages {
@@ -532,6 +536,7 @@
     flex-direction: column;
     gap: 10px;
     background: #0b141a;
+    font-family: var(--font-sans);
 }
 
 .chatMsg {

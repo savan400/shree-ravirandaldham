@@ -127,7 +127,7 @@ const platforms: SocialPlatform[] = [
     color: "#E1306C",
     icon: <InstagramIcon />,
     qrData: "instagram",
-    description: "Daily darshan photos & divine moments",
+    description: "Daily photos & divine moments",
   },
   {
     name: "YouTube",
@@ -301,7 +301,7 @@ export default function SocialMediaSection() {
                   <div className={styles.followersRow}>
                     <span
                       className={styles.followersNum}
-                      style={{ color: platform.color }}
+                      style={{ color: "#fff" }}
                     >
                       {platform.followers}
                     </span>
@@ -346,7 +346,10 @@ export default function SocialMediaSection() {
                   <p className={styles.qrTitle}>Scan to Follow</p>
                   <p
                     className={styles.qrPlatform}
-                    style={{ color: platform.color }}
+                    style={{
+                      color:
+                        platform.color === "#000000" ? "#fff" : platform.color,
+                    }}
                   >
                     {platform.name}
                   </p>
@@ -363,7 +366,10 @@ export default function SocialMediaSection() {
 
                   <p
                     className={styles.qrHandle}
-                    style={{ color: platform.color }}
+                    style={{
+                      color:
+                        platform.color === "#000000" ? "#fff" : platform.color,
+                    }}
                   >
                     {platform.handle}
                   </p>
@@ -384,11 +390,6 @@ export default function SocialMediaSection() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Bottom ornament */}
-        <div className={styles.bottomOrnament}>
-          <span className={styles.ornamentText}>॥ जय माँ रांदल ॥</span>
         </div>
       </div>
     </section>

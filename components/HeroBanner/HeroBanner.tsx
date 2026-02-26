@@ -337,7 +337,7 @@ const HeroBanner: React.FC = () => {
 
         {/* OM */}
         <div className={textClass(textVisible, styles.om)} aria-label="Om">
-          🔱 માં
+          🔱 MAA
         </div>
 
         {/* Divider */}

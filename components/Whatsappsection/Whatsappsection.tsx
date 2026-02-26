@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./WhatsAppSection.module.css";
+import styles from "./Whatsappsection.module.css";
 
 const WHATSAPP_LINK =
   "https://wa.me/919825835304?text=Jai%20Randal%20Maa!%20Please%20add%20me%20to%20Daily%20Darshan%20group";
@@ -318,16 +318,6 @@ export default function WhatsAppSection() {
               Join Now — Free
             </a>
           </div>
-        </div>
-
-        <div className={styles.footerOrnament}>
-          <span className={styles.ornLine} />
-          <span className={styles.florette}>🪔</span>
-          <span className={styles.ornLine} />
-          <span className={styles.ornFootText}>॥ जय माँ रांदल ॥</span>
-          <span className={styles.ornLine} />
-          <span className={styles.florette}>🪔</span>
-          <span className={styles.ornLine} />
         </div>
       </div>
     </section>

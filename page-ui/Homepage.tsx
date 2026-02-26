@@ -9,8 +9,10 @@ import HeroBanner from "@/components/HeroBanner/HeroBanner";
 import KashtabhanjanDev from "@/components/KashtabhanjanDev/KashtabhanjanDev";
 import KingOfSalangpur from "@/components/KingOfSalangpur/KingOfSalangpur";
 import LiveDarshan from "@/components/LiveDarshan/LiveDarshan";
+import SocialMediaSection from "@/components/Socialmediasection/Socialmediasection";
 import StatsSection from "@/components/StatsSection/StatsSection";
 import TypingText from "@/components/TypingText/TypingText";
+import WhatsAppSection from "@/components/Whatsappsection/Whatsappsection";
 import React from "react";
 
 const Homepage = () => {
@@ -23,7 +25,9 @@ const Homepage = () => {
       <KashtabhanjanDev />
       {/* <LiveDarshan /> */}
       <DailyDarshan />
+      <WhatsAppSection />
       <FacilitiesCards />
+      <SocialMediaSection />
       <StatsSection />
       <HariVani />
       <DarshanTimingsSidebar />
