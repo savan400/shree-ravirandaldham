@@ -12,6 +12,7 @@ const Event = require('../models/Event');
 const Gallery = require('../models/Gallery');
 const VideoGallery = require('../models/VideoGallery');
 const CMSPage = require('../models/CMSPage');
+const GlobalSettings = require('../models/GlobalSettings');
 const wasabi = require('../utils/wasabiClient');
 
 // ─────────────────────────────────────────────
@@ -79,34 +80,180 @@ const validateLocalized = (obj, fieldName) => {
  */
 
 // ─────────────────────────────────────────────
-// SEO Routes
+// SEO Routes (Consolidated & Localized)
 // ─────────────────────────────────────────────
 
+// PUBLIC: GET /api/seo - Fetch localized SEO metadata for a route
 router.get('/seo', async (req, res) => {
   try {
     const { route, locale } = req.query;
     if (!route || !locale) return res.status(400).json({ error: 'Missing route or locale' });
-    const seoData = await SeoMeta.findOne({ route, locale });
-    if (seoData) res.json(seoData);
-    else res.status(404).json({ error: 'SEO data not found' });
+    
+    const seoData = await SeoMeta.findOne({ route });
+    if (!seoData) return res.status(404).json({ error: 'SEO data not found' });
+
+    // Return localized fields based on requested locale
+    const result = {
+      route: seoData.route,
+      title: seoData.title[locale] || seoData.title.en,
+      description: seoData.description[locale] || seoData.description.en,
+      keywords: seoData.keywords[locale] || seoData.keywords.en,
+      canonicalUrl: seoData.canonicalUrl[locale] || seoData.canonicalUrl.en,
+      ogImage: seoData.ogImage,
+      noIndex: seoData.noIndex,
+      noFollow: seoData.noFollow
+    };
+    
+    res.json(result);
   } catch (error) {
     console.error('Error fetching SEO data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
+// ADMIN: GET /api/admin/seo-list - List all SEO records with search
+router.get('/admin/seo-list', async (req, res) => {
+  try {
+    const { search } = req.query;
+    let query = {};
+    if (search) {
+      query = { 
+        $or: [
+          { route: { $regex: search, $options: 'i' } },
+          { 'title.en': { $regex: search, $options: 'i' } }
+        ]
+      };
+    }
+    const list = await SeoMeta.find(query).sort({ updatedAt: -1 });
+    res.json(list);
+  } catch (error) {
+    console.error('Error fetching SEO list:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// ADMIN: POST /api/admin/seo - Save SEO record (Create/Update)
 router.post('/admin/seo', async (req, res) => {
   try {
-    const { route, locale, title, description, keywords, ogImage } = req.body;
-    if (!route || !locale || !title) return res.status(400).json({ error: 'Missing required fields' });
+    const { 
+      route, 
+      title, 
+      description, 
+      keywords, 
+      canonicalUrl, 
+      ogImage, 
+      noIndex, 
+      noFollow 
+    } = req.body;
+
+    // Strict validation for titles across all languages
+    if (!title) return res.status(400).json({ error: 'Title data is missing' });
+    
+    // Auto-normalize if title is a string (fallback)
+    let finalTitle = title;
+    if (typeof title === 'string') {
+      finalTitle = { en: title, hi: '', gu: '' };
+    }
+
+    if (!finalTitle.en?.trim()) return res.status(400).json({ error: 'English Title is required' });
+    if (!finalTitle.hi?.trim()) return res.status(400).json({ error: 'Hindi Title is required' });
+    if (!finalTitle.gu?.trim()) return res.status(400).json({ error: 'Gujarati Title is required' });
+
+    // Same for description, keywords, etc (normalize if strings)
+    const normalize = (val) => (typeof val === 'string' ? { en: val, hi: '', gu: '' } : val || { en: '', hi: '', gu: '' });
+    
+    const finalData = {
+      title: finalTitle,
+      description: normalize(description),
+      keywords: normalize(keywords),
+      canonicalUrl: normalize(canonicalUrl),
+      ogImage,
+      noIndex: !!noIndex,
+      noFollow: !!noFollow,
+      updatedAt: Date.now()
+    };
+
     const updatedSeo = await SeoMeta.findOneAndUpdate(
-      { route, locale },
-      { title, description, keywords, ogImage, updatedAt: Date.now() },
+      { route },
+      finalData,
       { new: true, upsert: true, setDefaultsOnInsert: true }
     );
     res.json(updatedSeo);
   } catch (error) {
     console.error('Error saving SEO data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// ADMIN: DELETE /api/admin/seo/:id - Delete SEO record
+router.delete('/admin/seo/:id', async (req, res) => {
+  try {
+    await SeoMeta.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting SEO data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// ADMIN: POST /api/admin/seo/upload - Upload OG Image to Wasabi
+router.post('/admin/seo/upload', async (req, res) => {
+  const busboy = Busboy({ headers: req.headers });
+  let uploadPromise;
+
+  busboy.on('file', (fieldname, file, info) => {
+    const { filename, mimeType } = info;
+    const wasabiKey = `seo/og-images/${Date.now()}-${filename}`;
+    uploadPromise = wasabi.uploadObject(wasabiKey, file, mimeType);
+  });
+
+  busboy.on('finish', async () => {
+    try {
+      if (!uploadPromise) return res.status(400).json({ error: 'No file uploaded' });
+      const publicUrl = await uploadPromise;
+      res.json({ url: publicUrl });
+    } catch (error) {
+      console.error('Wasabi SEO upload error:', error);
+      res.status(500).json({ error: 'Upload failed' });
+    }
+  });
+
+  req.pipe(busboy);
+});
+
+// GET /api/settings - Public settings
+router.get('/settings', async (req, res) => {
+  try {
+    const settings = await GlobalSettings.findOne({ key: 'global_seo' });
+    res.json(settings || {});
+  } catch (error) {
+    console.error('Error fetching settings:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// POST /api/admin/settings - Save settings
+router.post('/admin/settings', async (req, res) => {
+  try {
+    const updated = await GlobalSettings.findOneAndUpdate(
+      { key: 'global_seo' },
+      { ...req.body, updatedAt: Date.now() },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    res.json(updated);
+  } catch (error) {
+    console.error('Error saving settings:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// GET /api/seo-routes - Get all unique routes for sitemap
+router.get('/seo-routes', async (req, res) => {
+  try {
+    const routes = await SeoMeta.distinct('route', { noIndex: { $ne: true } });
+    res.json(routes);
+  } catch (error) {
+    console.error('Error fetching SEO routes:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

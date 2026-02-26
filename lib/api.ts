@@ -22,6 +22,18 @@ export async function fetchSeoData(route: string, locale: string) {
   }
 }
 
+export async function fetchSeoList(search?: string) {
+  try {
+    const url = search ? `${API_URL}/admin/seo-list?search=${encodeURIComponent(search)}` : `${API_URL}/admin/seo-list`;
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to fetch SEO list");
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching SEO list:", error);
+    return [];
+  }
+}
+
 export async function saveSeoData(data: any) {
   try {
     const res = await fetch(`${API_URL}/admin/seo`, {
@@ -29,11 +41,69 @@ export async function saveSeoData(data: any) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error("Failed to save SEO data");
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || "Failed to save SEO data");
+    }
     return res.json();
   } catch (error) {
     console.error("Error saving SEO data:", error);
     throw error;
+  }
+}
+
+export async function deleteSeoData(id: string) {
+  const res = await fetch(`${API_URL}/admin/seo/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete SEO data");
+  return res.json();
+}
+
+export async function uploadSeoImage(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(`${API_URL}/admin/seo/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Upload failed");
+  }
+
+  return res.json(); // returns { url: "..." }
+}
+
+export async function fetchGlobalSettings() {
+  try {
+    const res = await fetch(`${API_URL}/settings`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function saveGlobalSettings(data: any) {
+  const res = await fetch(`${API_URL}/admin/settings`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Failed to save global settings");
+  return res.json();
+}
+
+export async function fetchSeoRoutes(): Promise<string[]> {
+  try {
+    const res = await fetch(`${API_URL}/seo-routes`, { cache: 'no-store' });
+    if (!res.ok) return ['/'];
+    return res.json();
+  } catch {
+    return ['/'];
   }
 }
 

@@ -1,33 +1,33 @@
 const mongoose = require('mongoose');
 
+const LocalizedStringSchema = {
+    en: { type: String, default: '' },
+    hi: { type: String, default: '' },
+    gu: { type: String, default: '' }
+};
+
 const SeoMetaSchema = new mongoose.Schema({
   route: {
     type: String,
     required: true,
+    unique: true,
     index: true
   },
-  locale: {
-    type: String,
-    required: true,
-    enum: ['en', 'hi', 'gu'],
-    default: 'en'
-  },
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String
-  },
-  keywords: {
-    type: String
-  },
+  title: LocalizedStringSchema,
+  description: LocalizedStringSchema,
+  keywords: LocalizedStringSchema,
+  canonicalUrl: LocalizedStringSchema,
   ogImage: {
     type: String
+  },
+  noIndex: {
+    type: Boolean,
+    default: false
+  },
+  noFollow: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true });
-
-// Composite index for route and locale
-SeoMetaSchema.index({ route: 1, locale: 1 }, { unique: true });
 
 module.exports = mongoose.model('SeoMeta', SeoMetaSchema);

@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { saveSeoData } from "@/lib/api";
+import { fetchSeoData, saveSeoData } from "@/lib/api";
+import { useEffect } from "react";
 import TranslationCMS from "./TranslationCMS";
 import EventsCMS from "./EventsCMS";
 import GalleryCMS from "./GalleryCMS";
 import VideoGalleryCMS from "./VideoGalleryCMS";
 import PagesCMS from "./PagesCMS";
+import GlobalSettingsCMS from "./GlobalSettingsCMS";
+import SeoCMS from "./SeoCMS";
 import { AdminButton, Card } from "./components/AdminUI";
 import {
   Settings,
@@ -30,84 +33,12 @@ type Tab =
   | "events"
   | "gallery"
   | "video-gallery"
-  | "cms-pages";
+  | "cms-pages"
+  | "global-settings";
 
 export default function AdminForm({ locale }: { locale: string }) {
-  const t = useTranslations("Admin");
   const [activeTab, setActiveTab] = useState<Tab>("seo");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const [formData, setFormData] = useState({
-    route: "/",
-    locale: locale,
-    title: "",
-    description: "",
-    keywords: [] as string[],
-    ogImage: "",
-  });
-  const [keywordInput, setKeywordInput] = useState("");
-  const [status, setStatus] = useState("");
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const addKeyword = (val: string) => {
-    const parts = val
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-    if (parts.length === 0) return;
-    setFormData((prev) => ({
-      ...prev,
-      keywords: [
-        ...prev.keywords,
-        ...parts.filter((p) => !prev.keywords.includes(p)),
-      ],
-    }));
-    setKeywordInput("");
-  };
-
-  const removeKeyword = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      keywords: prev.keywords.filter((_, i) => i !== index),
-    }));
-  };
-
-  const handleKeywordKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === "Tab") {
-      e.preventDefault();
-      addKeyword(keywordInput);
-    } else if (e.key === ",") {
-      e.preventDefault();
-      addKeyword(keywordInput);
-    } else if (
-      e.key === "Backspace" &&
-      keywordInput === "" &&
-      formData.keywords.length > 0
-    ) {
-      removeKeyword(formData.keywords.length - 1);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("Saving...");
-    try {
-      await saveSeoData({
-        ...formData,
-        keywords: formData.keywords.join(", "),
-      });
-      setStatus("✅ Saved successfully!");
-    } catch {
-      setStatus("❌ Error saving data.");
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#FDF8F3] flex">
@@ -164,6 +95,22 @@ export default function AdminForm({ locale }: { locale: string }) {
             <Settings className="w-5 h-5" />
             <span className="flex-1 text-left text-sm">SEO Management</span>
             {activeTab === "seo" && <ChevronRight className="w-4 h-4" />}
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab("global-settings");
+              setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+              activeTab === "global-settings"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
+            }`}
+          >
+            <Globe className="w-5 h-5" />
+            <span className="flex-1 text-left text-sm">Site Settings</span>
+            {activeTab === "global-settings" && <ChevronRight className="w-4 h-4" />}
           </button>
 
           <button
@@ -290,159 +237,8 @@ export default function AdminForm({ locale }: { locale: string }) {
         <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
           <div className="w-full">
             {activeTab === "seo" && (
-              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="flex flex-col gap-1">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                    SEO Configuration
-                  </h2>
-                  <p className="text-sm md:text-base text-gray-500">
-                    Customize meta-tags and OpenGraph settings for each page.
-                  </p>
-                </div>
-
-                <Card className="p-4 md:p-8">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">
-                          Route Path
-                        </label>
-                        <input
-                          type="text"
-                          name="route"
-                          value={formData.route}
-                          onChange={handleChange}
-                          placeholder="/page-url"
-                          className="w-full bg-orange-50/30 border border-orange-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all font-medium"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">
-                          Display Locale
-                        </label>
-                        <select
-                          name="locale"
-                          value={formData.locale}
-                          onChange={handleChange}
-                          className="w-full bg-orange-50/30 border border-orange-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all font-bold text-orange-600 appearance-none pointer-events-auto"
-                        >
-                          <option value="en">🇬🇧 English</option>
-                          <option value="hi">🇮🇳 Hindi</option>
-                          <option value="gu">🇮🇳 Gujarati</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">
-                        Meta Title
-                      </label>
-                      <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder="Page Title"
-                        className="w-full bg-orange-50/30 border border-orange-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">
-                        Meta Description
-                      </label>
-                      <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        className="w-full bg-orange-50/30 border border-orange-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all resize-none"
-                        rows={4}
-                        placeholder="Search engine description..."
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* Keywords Tag Input */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">
-                          Keywords{" "}
-                          <span className="font-normal text-gray-400 text-xs">
-                            (Enter or Tab to add)
-                          </span>
-                        </label>
-                        <div
-                          className="flex flex-wrap gap-2 w-full bg-orange-50/30 border border-orange-100 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-orange-400 transition-all cursor-text min-h-[46px]"
-                          onClick={(e) =>
-                            (
-                              e.currentTarget.querySelector(
-                                "input",
-                              ) as HTMLInputElement
-                            )?.focus()
-                          }
-                        >
-                          {formData.keywords.map((tag, i) => (
-                            <span
-                              key={i}
-                              className="flex items-center gap-1 bg-orange-100 text-orange-700 text-xs font-semibold px-2.5 py-1 rounded-lg"
-                            >
-                              {tag}
-                              <button
-                                type="button"
-                                onClick={() => removeKeyword(i)}
-                                className="text-orange-400 hover:text-orange-600 text-base leading-none"
-                              >
-                                ×
-                              </button>
-                            </span>
-                          ))}
-                          <input
-                            type="text"
-                            value={keywordInput}
-                            onChange={(e) => setKeywordInput(e.target.value)}
-                            onKeyDown={handleKeywordKeyDown}
-                            onBlur={() => addKeyword(keywordInput)}
-                            placeholder={
-                              formData.keywords.length === 0
-                                ? "Add keywords..."
-                                : ""
-                            }
-                            className="flex-1 min-w-[120px] bg-transparent text-sm focus:outline-none py-1"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">
-                          OG Image URL
-                        </label>
-                        <input
-                          type="text"
-                          name="ogImage"
-                          value={formData.ogImage}
-                          onChange={handleChange}
-                          className="w-full bg-orange-50/30 border border-orange-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-4 border-t border-orange-50">
-                      <div className="flex items-center gap-3">
-                        <AdminButton type="submit" size="lg">
-                          Save Changes
-                        </AdminButton>
-                        {status && (
-                          <span
-                            className={`text-sm font-bold ${status.includes("✅") ? "text-green-600" : "text-orange-600"}`}
-                          >
-                            {status}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </form>
-                </Card>
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <SeoCMS />
               </div>
             )}
 
@@ -473,6 +269,12 @@ export default function AdminForm({ locale }: { locale: string }) {
             {activeTab === "cms-pages" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <PagesCMS />
+              </div>
+            )}
+
+            {activeTab === "global-settings" && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <GlobalSettingsCMS />
               </div>
             )}
           </div>
