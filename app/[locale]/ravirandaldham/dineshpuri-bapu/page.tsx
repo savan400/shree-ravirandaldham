@@ -1,10 +1,15 @@
-import DineshpuriBapuPage from '@/page-ui/DineshpuriBapuPage'
-import React from 'react'
+import CMSContent from "@/components/CMSContent";
+import { fetchCMSPage } from "@/lib/api";
+import CMSPage from "@/page-ui/CMSPage";
 
-const page = () => {
-    return (
-        <div><DineshpuriBapuPage /></div>
-    )
-}
+const Page = async () => {
+  const cmsData = await fetchCMSPage("dineshpuri-bapu");
+  console.log(cmsData, "cmsData");
+  return (
+    <div>
+      <CMSPage cmsData={cmsData} />
+    </div>
+  );
+};
 
-export default page
+export default Page;

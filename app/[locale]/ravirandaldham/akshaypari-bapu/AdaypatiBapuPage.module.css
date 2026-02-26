@@ -1,6 +1,5 @@
 /* ── Keyframes ── */
 @keyframes bgBreathe {
-
   0%,
   100% {
     background-position: 0% 50%;
@@ -29,11 +28,13 @@
 .section {
   position: relative;
   padding: 5rem 0;
-  background: linear-gradient(160deg,
-      #fff9f0 0%,
-      #fff5e5 30%,
-      #fffbf3 60%,
-      #fff0dc 100%);
+  background: linear-gradient(
+    160deg,
+    #fff9f0 0%,
+    #fff5e5 30%,
+    #fffbf3 60%,
+    #fff0dc 100%
+  );
   background-size: 200% 200%;
   animation: bgBreathe 12s ease-in-out infinite;
 }
@@ -120,12 +121,14 @@
   left: 10%;
   right: 10%;
   height: 3px;
-  background: linear-gradient(90deg,
-      transparent,
-      #ff6b00,
-      #ffd700,
-      #ff6b00,
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff6b00,
+    #ffd700,
+    #ff6b00,
+    transparent
+  );
   border-radius: 20px 20px 0 0;
 }
 
@@ -147,6 +150,8 @@
   text-align: justify;
   margin-bottom: 1.25rem;
   letter-spacing: 0.02em;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .sectionText p:last-child {

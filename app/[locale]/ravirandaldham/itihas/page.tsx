@@ -1,10 +1,14 @@
+import { fetchCMSPage } from '@/lib/api';
+import CMSPage from '@/page-ui/CMSPage'
 import ItihasPage from '@/page-ui/ItihasPage'
 import React from 'react'
 
-const page = () => {
+const Page = async () => {
+    const cmsData = await fetchCMSPage("itihas");
+    console.log(cmsData, "cmsData");
     return (
-        <div><ItihasPage /></div>
+        <div><CMSPage cmsData={cmsData} /></div>
     )
 }
 
-export default page
+export default Page
