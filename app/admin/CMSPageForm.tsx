@@ -9,6 +9,7 @@ import { getImageUrl, LocalizedString } from "@/services/events-service";
 import { AdminButton, Card } from "./components/AdminUI";
 import { X, CheckCircle2, AlertCircle, Plus, Trash2 } from "lucide-react";
 import ImageUploadGrid, { GridImage } from "./components/ImageUploadGrid";
+import RichTextEditor from "./components/RichTextEditor";
 
 interface CMSPageFormProps {
   page?: CMSPageEntry;
@@ -199,8 +200,8 @@ export default function CMSPageForm({
       newErrors.push("Hindi Description is required");
     if (!formData.description.gu.trim())
       newErrors.push("Gujarati Description is required");
-    
-    if (formData.type !== 'textonly' && images.length === 0) {
+
+    if (formData.type !== "textonly" && images.length === 0) {
       newErrors.push(`Images are mandatory for ${formData.type} pages`);
     }
 
@@ -255,6 +256,7 @@ export default function CMSPageForm({
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
+      
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">
@@ -308,7 +310,12 @@ export default function CMSPageForm({
                 <select
                   name="type"
                   value={formData.type}
-                  onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as any }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      type: e.target.value as any,
+                    }))
+                  }
                   className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-orange-400"
                 >
                   <option value="textonly">Text Only (Image Optional)</option>
@@ -393,18 +400,12 @@ export default function CMSPageForm({
                   <label className="text-sm font-bold text-gray-700">
                     Description / Rich Text ({activeTab.toUpperCase()}) *
                   </label>
-                  <textarea
-                    rows={10}
+                  <RichTextEditor
                     value={formData.description[activeTab]}
-                    onChange={(e) =>
-                      handleTranslationChange(
-                        "description",
-                        activeTab,
-                        e.target.value,
-                      )
+                    onChange={(content) =>
+                      handleTranslationChange("description", activeTab, content)
                     }
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-mono"
-                    placeholder="Enter HTML or text content. Use {quote} to inject the quote."
+                    placeholder="Enter description content. Use {quote} to inject the quote."
                   />
                 </div>
               </div>

@@ -3,6 +3,7 @@ import { fetchCMSPage } from "@/services/cms-service";
 import { generateAdvancedMetadata } from "@/lib/seo";
 import { Metadata } from "next";
 import React from "react";
+import CMSPage from "@/page-ui/CMSPage";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -18,7 +19,7 @@ const Page = async ({ params }: Props) => {
   const cmsData = await fetchCMSPage("parichay");
   return (
     <div>
-      <ParichayPage cmsData={cmsData} />
+      <CMSPage cmsData={cmsData} />
     </div>
   );
 };

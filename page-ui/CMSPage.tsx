@@ -22,9 +22,27 @@ export type Locale = "en" | "hi" | "gu";
  *  "text-only"     → Itihas style  (full-width text card, no image, paragraphs list)
  *  "profile"       → DineshpuriBapu style (left profile image + right content card)
  *  "temple"        → Parichay/ShanidevTemple style (left arch-framed image + right content)
+ *
+ * NOTE: The CMS API may return "textonly" (no hyphen). The component normalises this.
  */
+
+/**
+ * Image can be either a plain URL string or a CMS object with a url field.
+ * Caption is nested inside the image object per locale.
+ */
+export type CMSImage =
+  | string
+  | {
+    url: string;
+    _id?: string;
+    key?: string;
+    caption?: { en?: string; hi?: string; gu?: string };
+  };
+
 export interface CMSPageEntry {
-  layoutType: "text-only" | "profile" | "temple";
+  layoutType?: "text-only" | "profile" | "temple";
+  /** API may return "type" instead of "layoutType", and "textonly" instead of "text-only" */
+  type?: string;
   title: { en?: string; hi?: string; gu?: string };
   badgeText: { en?: string; hi?: string; gu?: string };
   description?: { en?: string; hi?: string; gu?: string };
@@ -38,9 +56,111 @@ export interface CMSPageEntry {
   cardContent?: { en?: string; hi?: string; gu?: string };
   /** Optional blockquote injected via {quote} placeholder in description */
   quote?: { en?: string; hi?: string; gu?: string };
-  images?: string[];
+  /** Index of the paragraph to render as a styled quote block (text-only layout) */
+  quoteIndex?: number;
+  /** Supports both plain URL strings and CMS image objects */
+  images?: CMSImage[];
+  /** Top-level image caption fallback */
   imageCaption?: { en?: string; hi?: string; gu?: string };
 }
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+
+/** Extract URL string from either a plain string or CMS image object */
+const getImageUrl = (image: CMSImage | undefined): string | undefined => {
+  if (!image) return undefined;
+  if (typeof image === "string") return image;
+  return image.url || undefined;
+};
+
+/**
+ * Extract caption for the given locale.
+ * Priority: image.caption[locale] → image.caption.en → top-level imageCaption[locale] → ""
+ */
+const getImageCaption = (
+  image: CMSImage | undefined,
+  locale: string,
+  fallback?: { en?: string; hi?: string; gu?: string },
+): string => {
+  if (image && typeof image !== "string" && image.caption) {
+    return (
+      image.caption[locale as Locale] ||
+      image.caption.en ||
+      fallback?.[locale as Locale] ||
+      fallback?.en ||
+      ""
+    );
+  }
+  return fallback?.[locale as Locale] || fallback?.en || "";
+};
+
+/**
+ * Normalise the raw CMS "type" / "layoutType" value.
+ * Handles: "textonly" → "text-only", already-hyphenated values, undefined.
+ */
+const normaliseLayoutType = (
+  raw: string | undefined,
+): "text-only" | "profile" | "temple" => {
+  if (!raw) return "temple";
+  // Map known variants
+  const map: Record<string, "text-only" | "profile" | "temple"> = {
+    textonly: "text-only",
+    "text-only": "text-only",
+    profile: "profile",
+    temple: "temple",
+  };
+  return map[raw.toLowerCase()] ?? "temple";
+};
+
+/**
+ * Convert CMS description string → paragraphs array for TextOnlyLayout.
+ *
+ * Priority:
+ *  1. cmsData.paragraphs[locale]  (already an array — use directly)
+ *  2. cmsData.description[locale] (newline-separated string — split it)
+ *
+ * If a quote exists it is appended as the last paragraph and its index returned.
+ * If cmsData.quoteIndex is explicitly set on the entry, that takes priority.
+ */
+const descriptionToParagraphs = (
+  cmsData: CMSPageEntry,
+  locale: string,
+): { paragraphs: string[]; quoteIndex: number } => {
+  // 1. Prefer explicit paragraphs array
+  if (cmsData.paragraphs?.[locale as Locale]?.length) {
+    return {
+      paragraphs: cmsData.paragraphs[locale as Locale]!,
+      quoteIndex: cmsData.quoteIndex ?? -1,
+    };
+  }
+
+  // 2. Fall back to splitting description by newline
+  const raw = cmsData.description?.[locale as Locale] || "";
+  const paragraphs = raw
+    .split("\n")
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  // 3. Append quote as a special final paragraph (if present)
+  const quote = cmsData.quote?.[locale as Locale] || cmsData.quote?.en || "";
+
+  // If quoteIndex is explicitly set on the CMS entry, honour it
+  if (cmsData.quoteIndex !== undefined && cmsData.quoteIndex >= 0) {
+    if (quote && !paragraphs[cmsData.quoteIndex]) {
+      paragraphs.push(quote);
+    }
+    return { paragraphs, quoteIndex: cmsData.quoteIndex };
+  }
+
+  // Otherwise append quote at the end
+  let quoteIndex = -1;
+  if (quote) {
+    paragraphs.push(quote);
+    quoteIndex = paragraphs.length - 1;
+  }
+
+  return { paragraphs, quoteIndex };
+};
 
 // ── Decorative SVGs ────────────────────────────────────────────────────────
 
@@ -196,44 +316,89 @@ const TextOnlyLayout = ({
   visible: boolean;
   locale: string;
 }) => {
-  const paragraphs = cmsData.paragraphs?.[locale as Locale] || [];
-  // Index of special quote paragraph — can be driven from CMS later
-  const quoteIndex = (cmsData as any).quoteIndex ?? -1;
+  const cleanCmsHtml = (html: string) => {
+    return html
+      .replace(/&nbsp;/g, " ")               // fix non-breaking spaces
+      .replace(/\u00A0/g, " ")              // fix actual unicode NBSP
+      .replace(/background-color:[^;"]+;?/g, ""); // optional: remove inline bg
+  };
+  const { paragraphs, quoteIndex } = descriptionToParagraphs(cmsData, locale);
+  const isRichText = cmsData.description?.[locale as Locale]?.includes("<");
+  let rawContent = cmsData.description?.[locale as Locale] || "";
+  let content = cleanCmsHtml(rawContent);
+  const rawQuote =
+    cmsData.quote?.[locale as Locale] || cmsData.quote?.en || "";
+  const quote = cleanCmsHtml(rawQuote);
+  if (content && quote && isRichText) {
+    content = content.replace(
+      /{quote}/g,
+      `<div class="${itihasStyles.quoteBlock}">
+        <div class="${itihasStyles.quoteMarkTopLeft}">
+          <svg width="32" height="28" viewBox="0 0 32 28" fill="none"><path d="M2 24 Q2 4 14 4 L14 12 Q7 12 7 20 L14 20 L14 24 Z" fill="url(#qm1)"/><path d="M18 24 Q18 4 30 4 L30 12 Q23 12 23 20 L30 20 L30 24 Z" fill="url(#qm1)"/><defs><linearGradient id="qm1" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#FF6B00" /><stop offset="1" stopColor="#FFD700" /></linearGradient></defs></svg>
+        </div>
+        <p class="${itihasStyles.quoteParagraph}">${quote}</p>
+        <div class="${itihasStyles.quoteMarkBottomRight}">
+          <svg width="32" height="28" viewBox="0 0 32 28" fill="none" class="${itihasStyles.quoteMarkFlipped}"><path d="M2 24 Q2 4 14 4 L14 12 Q7 12 7 20 L14 20 L14 24 Z" fill="url(#qm1)"/><path d="M18 24 Q18 4 30 4 L30 12 Q23 12 23 20 L30 20 L30 24 Z" fill="url(#qm1)"/><defs><linearGradient id="qm1" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#FF6B00" /><stop offset="1" stopColor="#FFD700" /></linearGradient></defs></svg>
+        </div>
+      </div>`,
+    );
+  }
 
   return (
     <div
       className={`${itihasStyles.contentCard} ${visible ? itihasStyles.visible : ""}`}
     >
       <div className={itihasStyles.contentCardTopBar} />
-      <div>
-        {paragraphs.map((para, i) => (
-          <div
-            key={i}
-            className={`${itihasStyles.paraWrapper} ${visible ? itihasStyles.visible : ""}`}
-            style={{ "--delay": `${0.4 + i * 0.08}s` } as React.CSSProperties}
-          >
-            {i === quoteIndex ? (
+      <div className="cms-rich-content">
+        {isRichText ? (
+          <>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+
+            {quote && (
               <div className={itihasStyles.quoteBlock}>
                 <div className={itihasStyles.quoteMarkTopLeft}>
                   <QuoteMark />
                 </div>
-                <p className={itihasStyles.quoteParagraph}>{para}</p>
+                <p className={itihasStyles.quoteParagraph}>
+                  {quote}
+                </p>
                 <div className={itihasStyles.quoteMarkBottomRight}>
                   <QuoteMark flip />
                 </div>
               </div>
-            ) : (
-              <p
-                className={itihasStyles.paragraph}
-                style={{
-                  marginBottom: i < paragraphs.length - 1 ? undefined : 0,
-                }}
-              >
-                {para}
-              </p>
             )}
-          </div>
-        ))}
+          </>
+        ) : (
+          paragraphs.map((para, i) => (
+            <div
+              key={i}
+              className={`${itihasStyles.paraWrapper} ${visible ? itihasStyles.visible : ""}`}
+              style={{ "--delay": `${0.4 + i * 0.08}s` } as React.CSSProperties}
+            >
+              {i === quoteIndex ? (
+                /* Styled quote block */
+                <div className={itihasStyles.quoteBlock}>
+                  <div className={itihasStyles.quoteMarkTopLeft}>
+                    <QuoteMark />
+                  </div>
+                  <p className={itihasStyles.quoteParagraph}>{para}</p>
+                  <div className={itihasStyles.quoteMarkBottomRight}>
+                    <QuoteMark flip />
+                  </div>
+                </div>
+              ) : (
+                <p
+                  className={itihasStyles.paragraph}
+                  style={{
+                    marginBottom: i < paragraphs.length - 1 ? undefined : 0,
+                  }}
+                >
+                  {para}
+                </p>
+              )}
+            </div>
+          ))
+        )}
       </div>
       <RandalSahayate />
     </div>
@@ -253,56 +418,89 @@ const ProfileLayout = ({
   const introTexts = cmsData.introTexts?.[locale as Locale] || [];
   const sectionTitle = cmsData.sectionTitle?.[locale as Locale] || "";
   const cardContent = cmsData.cardContent?.[locale as Locale] || "";
-  const displayImage = cmsData.images?.[0] || "/images/dineshpari-bapu.png";
-  const imageCaption = cmsData.imageCaption?.[locale as Locale] || "";
+
+  const primaryImage = cmsData.images?.[0];
+
+  // ✅ Extract image URL safely
+  const displayImage =
+    getImageUrl(primaryImage) || "/images/dineshpari-bapu.png";
+
+  // ✅ Extract caption safely
+  const imageCaption = getImageCaption(
+    primaryImage,
+    locale,
+    cmsData.imageCaption,
+  );
+
+  // ✅ Fallback: use description if cardContent is empty
+  const resolvedCardContent =
+    (cardContent || cmsData.description?.[locale as Locale] || "")
+      .replace(/&nbsp;/g, " ");
 
   return (
-    <div className={bapuStyles.grid}>
-      {/* Left: Image */}
-      <div className="sticky-img-class">
-        <ClickableImage
-          items={{ src: displayImage, alt: imageCaption, title: imageCaption }}
-        >
-          <div className={visibleClass("imageWrapper", visible)}>
-            <CommonImageProfileCard
-              src={displayImage}
-              alt={imageCaption}
-              caption={imageCaption}
-              priority
-            />
-          </div>
-        </ClickableImage>
-      </div>
+    <>
+      <div className={bapuStyles.grid}>
+        {/* ───────────── Left: Image ───────────── */}
+        <div className="sticky-img-class">
+          <ClickableImage
+            items={{
+              src: displayImage,
+              alt: imageCaption || "Profile Image",
+              title: imageCaption || "Profile Image",
+            }}
+          >
+            <div className={visibleClass("imageWrapper", visible)}>
+              <CommonImageProfileCard
+                src={displayImage}
+                alt={imageCaption}
+                caption={imageCaption}
+                priority
+              />
+            </div>
+          </ClickableImage>
+        </div>
 
-      {/* Right: Text */}
-      <div className={visibleClass("content", visible)}>
-        {introTexts.length > 0 && (
-          <div className={bapuStyles.contentIntro}>
-            {introTexts.map((text, i) => (
-              <p key={i} className={bapuStyles.introText}>
-                {text}
-              </p>
-            ))}
-          </div>
-        )}
-        <div className={bapuStyles.contentCard}>
-          <div className={bapuStyles.cardAccentBar} />
-          <div className={bapuStyles.contentSection}>
-            {sectionTitle && (
-              <h2 className={bapuStyles.sectionTitle}>{sectionTitle}</h2>
-            )}
-            <div
-              className={bapuStyles.sectionText}
-              dangerouslySetInnerHTML={{ __html: cardContent }}
-            />
+        {/* ───────────── Right: Content ───────────── */}
+        <div className={visibleClass("content", visible)}>
+          {/* Intro Texts (optional) */}
+          {introTexts.length > 0 && (
+            <div className={bapuStyles.contentIntro}>
+              {introTexts.map((text, i) => (
+                <p key={i} className={bapuStyles.introText}>
+                  {text}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {/* Main Content Card */}
+          <div className={bapuStyles.contentCard}>
+            <div className={bapuStyles.cardAccentBar} />
+
+            <div className={bapuStyles.contentSection}>
+              {sectionTitle && (
+                <h2 className={bapuStyles.sectionTitle}>
+                  {sectionTitle}
+                </h2>
+              )}
+
+              {resolvedCardContent && (
+                <div
+                  className={`${bapuStyles.sectionText} cms-rich-content`}
+                  dangerouslySetInnerHTML={{
+                    __html: resolvedCardContent.replace(/&nbsp;/g, " "),
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
-        <RandalSahayate />
       </div>
-    </div>
+
+      <RandalSahayate />
+    </>
   );
 };
-
 /** Layout 3: Temple / Parichay style */
 const TempleLayout = ({
   cmsData,
@@ -314,18 +512,50 @@ const TempleLayout = ({
   locale: string;
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const displayImage = cmsData.images?.[0] || "/images/banner-1.webp";
-  const title = cmsData.title?.[locale as Locale] || "";
-  const imageCaption =
-    cmsData.imageCaption?.[locale as Locale] || "॥ દિવ્ય દર્શન ॥";
-  let content = cmsData.description?.[locale as Locale] || "";
-  const quote = cmsData.quote?.[locale as Locale] || cmsData.quote?.en || "";
 
-  if (content && quote) {
+  const cleanCmsHtml = (html: string) => {
+    return html
+      .replace(/&nbsp;/g, " ")
+      .replace(/\u00A0/g, " ")
+      .replace(/background-color:[^;"]+;?/g, "");
+  };
+
+  const primaryImage = cmsData.images?.[0];
+  const displayImage =
+    getImageUrl(primaryImage) || "/images/banner-1.webp";
+
+  const title = cmsData.title?.[locale as Locale] || "";
+
+  const imageCaption =
+    getImageCaption(primaryImage, locale, cmsData.imageCaption) ||
+    "॥ દિવ્ય દર્શન ॥";
+
+  let rawContent = cmsData.description?.[locale as Locale] || "";
+  let content = cleanCmsHtml(rawContent);
+
+  const rawQuote =
+    cmsData.quote?.[locale as Locale] ||
+    cmsData.quote?.en ||
+    "";
+
+  const quote = cleanCmsHtml(rawQuote);
+
+  // ✅ If placeholder exists → replace
+  if (content.includes("{quote}") && quote) {
     content = content.replace(
       /{quote}/g,
-      `<blockquote class="cms-quote text-xl font-bold text-orange-600 my-6 pl-4 border-l-4 border-orange-500 italic">"${quote}"</blockquote>`,
+      `<blockquote class="cms-quote text-xl font-bold text-orange-600 my-6 pl-4 border-l-4 border-orange-500 italic">
+        "${quote}"
+      </blockquote>`
     );
+  }
+  // ✅ If no placeholder but quote exists → append at end
+  else if (quote) {
+    content += `
+      <blockquote class="cms-quote text-xl font-bold text-orange-600 my-6 pl-4 border-l-4 border-orange-500 italic">
+        "${quote}"
+      </blockquote>
+    `;
   }
 
   return (
@@ -370,7 +600,9 @@ const TempleLayout = ({
               dangerouslySetInnerHTML={{ __html: content }}
             />
           ) : (
-            <p className={styles.contentText}>No content available.</p>
+            <p className={styles.contentText}>
+              No content available.
+            </p>
           )}
           <RandalSahayate />
         </div>
@@ -395,7 +627,10 @@ const CMSPage = ({ cmsData }: CMSPageProps) => {
 
   const title = cmsData.title?.[locale as Locale] || "";
   const badge = cmsData.badgeText?.[locale as Locale] || "";
-  const layoutType = cmsData.layoutType || "temple";
+
+  // ✅ Support both "type" and "layoutType" fields, and normalise "textonly" → "text-only"
+  const rawType = cmsData.layoutType ?? cmsData.type;
+  const layoutType = normaliseLayoutType(rawType);
 
   // Choose section wrapper class based on layout
   const sectionClass =
