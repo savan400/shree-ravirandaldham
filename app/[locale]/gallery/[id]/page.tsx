@@ -1,4 +1,4 @@
-import { fetchGallery } from '@/lib/api';
+import { fetchGallery } from '@/services/gallery-service';
 import { notFound } from 'next/navigation';
 import GalleryDetailPage from '@/page-ui/GalleryDetailPage';
 

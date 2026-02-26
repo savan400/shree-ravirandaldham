@@ -9,7 +9,7 @@ import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import Lightbox, { LightboxItem } from "@/components/Lightbox/Lightbox";
 import RandalSahayate from "./randalSahayate";
 import { useInView } from "@/hooks/useInView";
-import { fetchGalleries, GalleryEntry } from "@/lib/api";
+import { fetchGalleries, GalleryEntry } from "@/services/gallery-service";
 import { useLocale } from "next-intl";
 import { Images } from "lucide-react";
 import Pagination from "@/components/Pagination/Pagination";

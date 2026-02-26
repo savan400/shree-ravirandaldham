@@ -65,7 +65,8 @@ const notoHindi = Noto_Sans_Devanagari({
 
 import { SEO_CONFIG } from "@/lib/seoConfig";
 import { generateStructuredData } from "@/lib/seo";
-import { fetchGlobalSettings } from "@/lib/api";
+import { getImageUrl, EventEntry, fetchEvents } from "@/services/events-service";
+import { fetchSeoData, fetchGlobalSettings } from "@/services/seo-service";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

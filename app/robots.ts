@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { fetchGlobalSettings } from '@/lib/api';
+import { fetchGlobalSettings } from '@/services/seo-service';
 import { SEO_CONFIG } from '@/lib/seoConfig';
 
 export default async function robots(): Promise<MetadataRoute.Robots> {

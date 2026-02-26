@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchSeoList, saveSeoData, deleteSeoData, uploadSeoImage } from '@/lib/api';
+import { fetchSeoList, saveSeoData, deleteSeoData, uploadSeoImage } from '@/services/seo-service';
 import { AdminButton, Card } from './components/AdminUI';
 import SingleImageUpload from './components/SingleImageUpload';
 import TagInput from './components/TagInput';
@@ -130,7 +130,7 @@ export default function SeoCMS() {
   const updateLocalizedField = (field: 'title' | 'description' | 'keywords' | 'canonicalUrl', value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: { ...prev[field], [activeLang]: value }
+      [field]: { ...(prev[field] as any), [activeLang]: value }
     }));
   };
 

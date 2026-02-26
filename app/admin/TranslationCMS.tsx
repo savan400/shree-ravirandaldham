@@ -6,7 +6,7 @@ import {
   saveTranslation,
   deleteTranslation,
   TranslationEntry,
-} from '@/lib/api';
+} from '@/services/translation-service';
 import { Modal, AdminButton, Card } from './components/AdminUI';
 import { Search, Plus, Edit2, Trash2, Filter, Languages, Info, CheckCircle2, AlertCircle } from 'lucide-react';
 

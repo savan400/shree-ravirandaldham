@@ -1,6 +1,11 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
-import { VideoGalleryEntry, saveVideoGallery, API_URL, getPresignedUploadUrls, saveVideoGalleryJson } from '@/lib/api';
+import {
+    VideoGalleryEntry,
+    saveVideoGalleryJson,
+    getPresignedUploadUrls
+} from '@/services/gallery-service';
+import { API_URL } from '@/services/api-client';
 import { AdminButton } from './components/AdminUI';
 import { X, Link2, Video, Image as ImageIcon } from 'lucide-react';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchEvents, deleteEvent, EventEntry, getImageUrl } from '@/lib/api';
+import { fetchEvents, deleteEvent, EventEntry, getImageUrl } from '@/services/events-service';
 import { AdminButton, Card } from './components/AdminUI';
 import { Plus, Edit2, Trash2, Calendar, MapPin } from 'lucide-react';
 import EventForm from './EventForm';

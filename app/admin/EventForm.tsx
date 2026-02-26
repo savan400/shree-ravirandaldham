@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { EventEntry, saveEvent, getImageUrl } from "@/lib/api";
+import { EventEntry, saveEvent, getImageUrl } from "@/services/events-service";
 import { AdminButton, Card } from "./components/AdminUI";
 import { X, CheckCircle2, AlertCircle } from "lucide-react";
 import ImageUploadGrid, { GridImage } from "./components/ImageUploadGrid";

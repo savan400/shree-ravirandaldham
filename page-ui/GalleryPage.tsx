@@ -3,12 +3,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { fetchGalleries, GalleryEntry } from '@/lib/api';
+import { fetchCMSPage } from "@/services/cms-service";
+import { fetchGalleries, GalleryEntry } from "@/services/gallery-service";
 import styles from './GalleryPage.module.css';
 import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/PageBackgroundDecorations';
 import CommonBadge from '@/components/CommonBadge/CommonBadge';
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';
+import { getImageUrl } from "@/services/events-service";
 import { Images } from 'lucide-react';
 import { useInView } from '@/hooks/useInView';
 import Pagination from '@/components/Pagination/Pagination';

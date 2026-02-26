@@ -4,9 +4,8 @@ import { useState, useCallback } from "react";
 import {
   CMSPageEntry,
   saveCMSPage,
-  getImageUrl,
-  LocalizedString,
-} from "@/lib/api";
+} from "@/services/cms-service";
+import { getImageUrl, LocalizedString } from "@/services/events-service";
 import { AdminButton, Card } from "./components/AdminUI";
 import { X, CheckCircle2, AlertCircle, Plus, Trash2 } from "lucide-react";
 import ImageUploadGrid, { GridImage } from "./components/ImageUploadGrid";
@@ -71,7 +70,7 @@ export default function CMSPageForm({
     setFormData((prev) => ({
       ...prev,
       [field]: {
-        ...prev[field],
+        ...(prev[field] as any),
         [lang]: value,
       },
     }));

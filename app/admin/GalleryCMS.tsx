@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchGalleriesAdmin, deleteGallery, GalleryEntry } from '@/lib/api';
+import { fetchGalleriesAdmin, deleteGallery, GalleryEntry } from '@/services/gallery-service';
 import { AdminButton, Card } from './components/AdminUI';
 import { Plus, Edit2, Trash2, Images, EyeOff } from 'lucide-react';
 import GalleryForm from './GalleryForm';

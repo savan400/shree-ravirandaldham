@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchGlobalSettings, saveGlobalSettings } from "@/lib/api";
+import { fetchGlobalSettings, saveGlobalSettings } from "@/services/seo-service";
 import { AdminButton, Card } from "./components/AdminUI";
 import { Save, Loader2, Globe, Building, Share2, Search, BarChart } from "lucide-react";
 import SingleImageUpload from "./components/SingleImageUpload";
-import { uploadSeoImage } from "@/lib/api";
+import { uploadSeoImage } from "@/services/seo-service";
+import { fetchSeoData, saveSeoData } from "@/services/seo-service";
 
 export default function GlobalSettingsCMS() {
   const [loading, setLoading] = useState(true);
@@ -73,7 +74,7 @@ export default function GlobalSettingsCMS() {
   const handleLocalizedChange = (field: 'siteName' | 'organizationName', locale: string, value: string) => {
     setSettings(prev => ({
       ...prev,
-      [field]: { ...prev[field], [locale]: value }
+      [field]: { ...(prev[field] as any), [locale]: value }
     }));
   };
 

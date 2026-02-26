@@ -1,5 +1,5 @@
 import ParichayPage, { Locale } from "@/page-ui/ParichayPage";
-import { fetchCMSPage } from "@/lib/api";
+import { fetchCMSPage } from "@/services/cms-service";
 import { generateAdvancedMetadata } from "@/lib/seo";
 import { Metadata } from "next";
 import React from "react";

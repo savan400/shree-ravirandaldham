@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
-import { GalleryEntry } from '@/lib/api';
+import { fetchGallery, GalleryEntry } from "@/services/gallery-service";
 import styles from './GalleryDetailPage.module.css';
 import PageBackgroundDecorations from '@/components/PageBackgroundDecorations/PageBackgroundDecorations';
 import LotusDivider from '@/components/LotusDivider/LotusDivider';

@@ -9,8 +9,9 @@ import CommonBadge from "@/components/CommonBadge/CommonBadge";
 import RandalSahayate from "./randalSahayate";
 import { useInView } from "@/hooks/useInView";
 import { visibleClass } from "@/lib/utils";
+import { CMSPageEntry } from "@/services/cms-service";
 import ClickableImage from "@/components/ClickableImage";
-import { CMSPageEntry } from "@/lib/api";
+import { fetchCMSPage } from "@/services/cms-service";
 import { useLocale } from "next-intl";
 
 export type Locale = "en" | "hi" | "gu";

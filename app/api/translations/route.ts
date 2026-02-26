@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:5050/api";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * GET /api/translations

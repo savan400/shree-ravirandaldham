@@ -8,7 +8,7 @@ import LotusDivider from '@/components/LotusDivider/LotusDivider';
 import { useInView } from '@/hooks/useInView';
 import { visibleClass } from '@/lib/utils';
 import RandalSahayate from './randalSahayate';
-import { fetchVideoGalleries, VideoGalleryEntry } from "@/lib/api";
+import { fetchVideoGalleries, VideoGalleryEntry } from "@/services/gallery-service";
 import { useLocale } from "next-intl";
 import VideoPlayerModal, { youtubeThumbnailUrl, extractYouTubeId } from "@/components/VideoPlayerModal/VideoPlayerModal";
 import Pagination from "@/components/Pagination/Pagination";

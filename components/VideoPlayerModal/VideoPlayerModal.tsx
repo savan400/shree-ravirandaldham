@@ -2,7 +2,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
 import { X, Play, Video, Link2 } from "lucide-react";
-import { VideoGalleryEntry, getVideoStreamUrl } from "@/lib/api";
+import { VideoGalleryEntry, getVideoStreamUrl } from "@/services/gallery-service";
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { fetchSeoData, saveSeoData } from "@/lib/api";
+import { fetchSeoData, saveSeoData } from "@/services/seo-service";
 import { useEffect } from "react";
 import TranslationCMS from "./TranslationCMS";
 import EventsCMS from "./EventsCMS";

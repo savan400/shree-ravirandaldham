@@ -1,11 +1,12 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { fetchEvents, deleteEvent, EventEntry, getImageUrl } from '@/services/events-service';
 import {
     VideoGalleryEntry,
     fetchVideoGalleriesAdmin,
     deleteVideoGallery,
-} from '@/lib/api';
+} from '@/services/gallery-service';
 import { AdminButton } from './components/AdminUI';
 import VideoGalleryForm from './VideoGalleryForm';
 import Pagination from '@/components/Pagination/Pagination';

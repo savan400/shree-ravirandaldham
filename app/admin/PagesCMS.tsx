@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchCMSPagesAdmin, deleteCMSPage, CMSPageEntry, getImageUrl } from '@/lib/api';
+import { fetchCMSPagesAdmin, deleteCMSPage, CMSPageEntry } from "@/services/cms-service";
+import { getImageUrl } from "@/services/events-service";
 import { AdminButton, Card } from './components/AdminUI';
 import { Plus, Edit2, Trash2, FileText, Layout } from 'lucide-react';
 import CMSPageForm from './CMSPageForm';

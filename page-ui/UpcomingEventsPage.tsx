@@ -9,7 +9,8 @@ import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import RandalSahayate from "./randalSahayate";
 import EventCard from "@/components/EventCard/EventCard";
 import { useInView } from "@/hooks/useInView";
-import { fetchEvents, EventEntry } from "@/lib/api";
+import { fetchGalleries, GalleryEntry } from "@/services/gallery-service";
+import { fetchEvents, EventEntry } from "@/services/events-service";
 import { useLocale } from "next-intl";
 import Pagination from "@/components/Pagination/Pagination";
 

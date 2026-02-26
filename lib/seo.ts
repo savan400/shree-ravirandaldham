@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { fetchSeoData, fetchGlobalSettings } from "./api";
+import { fetchSeoData, fetchGlobalSettings } from "@/services/seo-service";
 import { SEO_CONFIG } from "./seoConfig";
 
 export async function generateAdvancedMetadata(

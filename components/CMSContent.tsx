@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { fetchCMSPage, CMSPageEntry, getImageUrl } from '@/lib/api';
+import { getImageUrl } from "@/services/events-service";
+import { fetchCMSPage, CMSPageEntry } from "@/services/cms-service";
 import CommonTitle from '@/components/CommonTitle/CommonTitle';
 import CommonBadge from '@/components/CommonBadge/CommonBadge';
 import { Card } from '@/app/admin/components/AdminUI';
@@ -58,7 +59,7 @@ export default function CMSContent({ pageKey, locale, className = '' }: CMSConte
       {/* Header Section */}
       <div className="text-center space-y-4">
         {badge && <CommonBadge text={badge} />}
-        {title && <CommonTitle title={title} />}
+        {title && <CommonTitle text={title} />}
       </div>
 
       {/* Main Content & Images */}
