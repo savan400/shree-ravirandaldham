@@ -425,6 +425,7 @@ export interface CMSPageImage {
 export interface CMSPageEntry {
   _id: string;
   key: string;
+  type: 'textonly' | 'profile' | 'temple';
   title: LocalizedString;
   badgeText: LocalizedString;
   description: LocalizedString; // Rich text HTML

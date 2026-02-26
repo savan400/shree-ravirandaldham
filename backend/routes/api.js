@@ -1219,6 +1219,9 @@ router.post('/admin/cms-pages', upload.array('images'), async (req, res) => {
     
     // Strict Validations
     if (!data.key) return res.status(400).json({ error: 'Page key is required' });
+    if (['profile', 'temple'].includes(data.type) && (!req.files || req.files.length === 0)) {
+      return res.status(400).json({ error: `Images are mandatory for ${data.type} pages` });
+    }
     if (!/^[a-z0-9-]+$/.test(data.key)) {
       return res.status(400).json({ error: 'Page key must be lowercase alphanumeric and hyphens only' });
     }
@@ -1272,6 +1275,12 @@ router.put('/admin/cms-pages/:id', upload.array('images'), async (req, res) => {
     const data = JSON.parse(req.body.data || '{}');
 
     // Strict Validations
+    const activeType = data.type || existingPage.type;
+    const totalImagesCount = (req.files ? req.files.length : 0) + (data.images ? data.images.length : 0);
+    if (['profile', 'temple'].includes(activeType) && totalImagesCount === 0) {
+      return res.status(400).json({ error: `Images are mandatory for ${activeType} pages` });
+    }
+
     if (data.key && data.key !== existingPage.key) {
       if (!/^[a-z0-9-]+$/.test(data.key)) {
         return res.status(400).json({ error: 'Page key must be lowercase alphanumeric and hyphens only' });

@@ -165,7 +165,7 @@ const ParichayPage = ({ cmsData }: ParichayPageProps) => {
   const displayImage = images[0]
     ? typeof images[0] === "string"
       ? images[0]
-      : (images[0] as any).url
+      : images[0].url
     : "/images/banner-1.webp";
 
   useEffect(() => {

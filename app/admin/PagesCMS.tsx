@@ -82,7 +82,7 @@ export default function PagesCMS() {
                 <div className="w-full sm:w-40 h-48 sm:h-auto relative bg-orange-50 flex-shrink-0">
                   {p.images && p.images.length > 0 ? (
                     <img
-                      src={getImageUrl(p.images[0])}
+                      src={typeof p.images[0] === 'string' ? getImageUrl(p.images[0]) : p.images[0].url}
                       alt={p.title.en}
                       className="w-full h-full object-cover"
                     />

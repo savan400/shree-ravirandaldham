@@ -90,10 +90,10 @@ export default function CMSContent({ pageKey, locale, className = '' }: CMSConte
         {/* Image Display */}
         {page.images && page.images.length > 0 ? (
           <div className="grid grid-cols-1 gap-4">
-            {page.images.map((url, idx) => (
+            {page.images.map((img, idx) => (
               <div key={idx} className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white shadow-orange-900/10">
                 <img 
-                  src={url} 
+                  src={typeof img === 'string' ? img : img.url} 
                   alt={`${title} - ${idx + 1}`}
                   className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" 
                 />

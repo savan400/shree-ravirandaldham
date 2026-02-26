@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const cmsPageSchema = new mongoose.Schema({
   key: { type: String, required: true, unique: true },
+  type: { type: String, enum: ['textonly', 'profile', 'temple'], default: 'textonly' },
   title: {
     en: { type: String, required: true },
     hi: { type: String, required: true },

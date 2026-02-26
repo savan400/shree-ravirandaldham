@@ -21,6 +21,7 @@ type Locale = "en" | "hi" | "gu";
 
 interface CMSPageFormData {
   key: string;
+  type: "textonly" | "profile" | "temple";
   title: LocalizedString;
   badgeText: LocalizedString;
   description: LocalizedString;
@@ -39,6 +40,7 @@ export default function CMSPageForm({
 
   const [formData, setFormData] = useState<CMSPageFormData>({
     key: page?.key || "",
+    type: page?.type || "textonly",
     title: page?.title || { en: "", hi: "", gu: "" },
     badgeText: page?.badgeText || { en: "", hi: "", gu: "" },
     description: page?.description || { en: "", hi: "", gu: "" },
@@ -198,6 +200,10 @@ export default function CMSPageForm({
       newErrors.push("Hindi Description is required");
     if (!formData.description.gu.trim())
       newErrors.push("Gujarati Description is required");
+    
+    if (formData.type !== 'textonly' && images.length === 0) {
+      newErrors.push(`Images are mandatory for ${formData.type} pages`);
+    }
 
     setErrors(newErrors);
     return newErrors.length === 0;
@@ -294,6 +300,22 @@ export default function CMSPageForm({
                   placeholder="e.g. membership-info"
                   disabled={!!page}
                 />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-gray-700">
+                  Page Type *
+                </label>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as any }))}
+                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-orange-400"
+                >
+                  <option value="textonly">Text Only (Image Optional)</option>
+                  <option value="profile">Profile (Image Mandatory)</option>
+                  <option value="temple">Temple (Image Mandatory)</option>
+                </select>
               </div>
 
               <div className="flex bg-orange-100/50 p-1 rounded-xl">
