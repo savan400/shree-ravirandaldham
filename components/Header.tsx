@@ -94,6 +94,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/pavitra-sthalo/dineshpuribapu-samadhi",
       },
       { title: "Dashama Temple", href: "/pavitra-sthalo/dashama-temple" },
+      { title: "Mahadev Temple", href: "/pavitra-sthalo/mahadev-temple" },
+      { title: "Randal Maa no Rath", href: "/pavitra-sthalo/randal-maa-rath" },
+      {
+        title: "108 Jyot ni Mah Aaarti",
+        href: "/pavitra-sthalo/108-jyot-mah-aaarti",
+      },
     ],
   },
   {

@@ -13,23 +13,33 @@ import { useInView } from "@/hooks/useInView";
 const FACILITIES: FacilityCardData[] = [
   {
     image: "/images/bhojanalay.webp",
-    title: "શ્રી કષ્ટભંજનદેવ ભોજનાલય",
+    title: "ગૌશાળા",
     description:
       "7 વીઘા જેટલી વિશાળ જમીન પર 3,25,00 સ્ક્વેર ફીટ બાંધકામ ધરાવતું ગુજરાતનું સૌથી મોટું ભોજનાલય સાળંગપુરધામમાં આવેલું શ્રી કષ્ટભંજનદેવ ભોજનાલય છે.",
     icon: "🍽️",
     tag: "ભોજન સેવા",
     accentColor: "#FF6B00",
-    navigateTo: '/facilities/bhojan-shala'
+    navigateTo: "/facilities/bhojan-shala",
   },
   {
     image: "/images/yatrik-bhuvan.webp",
-    title: "શ્રી ગોપાળાનંદ સ્વામી યાત્રિક ભુવન",
+    title: "જમવાનો હોલ",
     description:
       "મંદિર પરિસરમાં જ 20 વીઘાની વિશાળતમ જગ્યા પર 8,85,000 સ્ક્વેર ફૂટમાં નિર્માણાધીન શ્રી ગોપાળાનંદ સ્વામી યાત્રિક ભવન ભારતનું સૌથી મોટું યાત્રિક ભવન બની રહેશે.",
     icon: "🏛️",
     tag: "આવાસ સેવા",
     accentColor: "#E8A000",
-    navigateTo: '/facilities/atithi-gruh'
+    navigateTo: "/facilities/atithi-gruh",
+  },
+  {
+    image: "/images/bhojanalay.webp",
+    title: "ઉતારા વ્યવસ્થા",
+    description:
+      "7 વીઘા જેટલી વિશાળ જમીન પર 3,25,00 સ્ક્વેર ફીટ બાંધકામ ધરાવતું ગુજરાતનું સૌથી મોટું ભોજનાલય સાળંગપુરધામમાં આવેલું શ્રી કષ્ટભંજનદેવ ભોજનાલય છે.",
+    icon: "🍽️",
+    tag: "ભોજન સેવા",
+    accentColor: "#FF6B00",
+    navigateTo: "/facilities/bhojan-shala",
   },
 ];
 
@@ -62,8 +72,9 @@ const FacilitiesCards: React.FC = () => {
       <div className={styles.container}>
         {/* Header */}
         <div
-          className={`${styles.header} ${visible ? styles["header--visible"] : styles["header--hidden"]
-            }`}
+          className={`${styles.header} ${
+            visible ? styles["header--visible"] : styles["header--hidden"]
+          }`}
         >
           <CommonBadge text="॥ ભક્તો માટે સેવા ॥" />
           <CommonTitle text=" સુવિધાઓ" />

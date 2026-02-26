@@ -144,14 +144,14 @@ const PavitraVavPage = () => {
           </div>
         </div>
       </section>
-      <CommonStatsSection
+      {/* <CommonStatsSection
         title="પવિત્ર વાવની વિશેષતાઓ"
         subtitle="પ્રભુ ધામની ભવ્યતા"
         footerNote="॥ રાંદલ ના દડવા ॥"
         stats={TEMPLE_STATS}
         countDuration={1800} // faster count-up
         threshold={0.3}
-      />
+      /> */}
     </>
   );
 };

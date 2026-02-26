@@ -147,7 +147,7 @@ const ParichayPage = ({ cmsData }: ParichayPageProps) => {
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
 
   const title = cmsData?.title?.[locale] || "પરિચય";
   const badge = cmsData?.badgeText?.[locale] || "॥ મંદિર વિશે ॥";

@@ -1,46 +1,111 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { saveSeoData } from '@/lib/api';
-import TranslationCMS from './TranslationCMS';
-import EventsCMS from './EventsCMS';
-import GalleryCMS from './GalleryCMS';
-import VideoGalleryCMS from './VideoGalleryCMS';
-import PagesCMS from './PagesCMS';
-import { AdminButton, Card } from './components/AdminUI';
-import { Settings, Globe, LogOut, LayoutDashboard, ChevronRight, Menu, X, Calendar, Images, Video, FileText } from 'lucide-react';
-import Link from 'next/link';
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { saveSeoData } from "@/lib/api";
+import TranslationCMS from "./TranslationCMS";
+import EventsCMS from "./EventsCMS";
+import GalleryCMS from "./GalleryCMS";
+import VideoGalleryCMS from "./VideoGalleryCMS";
+import PagesCMS from "./PagesCMS";
+import { AdminButton, Card } from "./components/AdminUI";
+import {
+  Settings,
+  Globe,
+  LogOut,
+  LayoutDashboard,
+  ChevronRight,
+  Menu,
+  X,
+  Calendar,
+  Images,
+  Video,
+  FileText,
+} from "lucide-react";
+import Link from "next/link";
 
-type Tab = 'seo' | 'translations' | 'events' | 'gallery' | 'video-gallery' | 'cms-pages';
+type Tab =
+  | "seo"
+  | "translations"
+  | "events"
+  | "gallery"
+  | "video-gallery"
+  | "cms-pages";
 
 export default function AdminForm({ locale }: { locale: string }) {
-  const t = useTranslations('Admin');
-  const [activeTab, setActiveTab] = useState<Tab>('seo');
+  const t = useTranslations("Admin");
+  const [activeTab, setActiveTab] = useState<Tab>("seo");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [formData, setFormData] = useState({
-    route: '/',
+    route: "/",
     locale: locale,
-    title: '',
-    description: '',
-    keywords: '',
-    ogImage: ''
+    title: "",
+    description: "",
+    keywords: [] as string[],
+    ogImage: "",
   });
-  const [status, setStatus] = useState('');
+  const [keywordInput, setKeywordInput] = useState("");
+  const [status, setStatus] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const addKeyword = (val: string) => {
+    const parts = val
+      .split(",")
+      .map((v) => v.trim())
+      .filter(Boolean);
+    if (parts.length === 0) return;
+    setFormData((prev) => ({
+      ...prev,
+      keywords: [
+        ...prev.keywords,
+        ...parts.filter((p) => !prev.keywords.includes(p)),
+      ],
+    }));
+    setKeywordInput("");
+  };
+
+  const removeKeyword = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      keywords: prev.keywords.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleKeywordKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === "Tab") {
+      e.preventDefault();
+      addKeyword(keywordInput);
+    } else if (e.key === ",") {
+      e.preventDefault();
+      addKeyword(keywordInput);
+    } else if (
+      e.key === "Backspace" &&
+      keywordInput === "" &&
+      formData.keywords.length > 0
+    ) {
+      removeKeyword(formData.keywords.length - 1);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('Saving...');
+    setStatus("Saving...");
     try {
-      await saveSeoData(formData);
-      setStatus('✅ Saved successfully!');
+      await saveSeoData({
+        ...formData,
+        keywords: formData.keywords.join(", "),
+      });
+      setStatus("✅ Saved successfully!");
     } catch {
-      setStatus('❌ Error saving data.');
+      setStatus("❌ Error saving data.");
     }
   };
 
@@ -48,29 +113,35 @@ export default function AdminForm({ locale }: { locale: string }) {
     <div className="min-h-screen bg-[#FDF8F3] flex">
       {/* Mobile Overlay */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[40] md:hidden transition-opacity"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={`
+      <aside
+        className={`
         fixed md:static inset-y-0 left-0 w-72 bg-[#1A0800] text-orange-50/90 flex flex-col border-r border-orange-900/20 z-[50]
         transition-transform duration-300 ease-in-out
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-      `}>
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+      `}
+      >
         <div className="p-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center font-bold text-white shadow-lg">
               SR
             </div>
             <div>
-              <h1 className="font-bold text-lg leading-tight text-white">Ravirandaldham</h1>
-              <p className="text-[10px] uppercase tracking-widest text-orange-400 font-bold">Admin Suite</p>
+              <h1 className="font-bold text-lg leading-tight text-white">
+                Ravirandaldham
+              </h1>
+              <p className="text-[10px] uppercase tracking-widest text-orange-400 font-bold">
+                Admin Suite
+              </p>
             </div>
           </div>
-          <button 
+          <button
             className="md:hidden p-2 text-orange-200 hover:text-white"
             onClick={() => setIsSidebarOpen(false)}
           >
@@ -80,87 +151,113 @@ export default function AdminForm({ locale }: { locale: string }) {
 
         <nav className="flex-1 px-4 space-y-1">
           <button
-            onClick={() => { setActiveTab('seo'); setIsSidebarOpen(false); }}
+            onClick={() => {
+              setActiveTab("seo");
+              setIsSidebarOpen(false);
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === 'seo' 
-              ? 'bg-orange-500/10 text-orange-400 font-bold' 
-              : 'hover:bg-white/5 text-orange-100/60'
+              activeTab === "seo"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
             }`}
           >
             <Settings className="w-5 h-5" />
             <span className="flex-1 text-left text-sm">SEO Management</span>
-            {activeTab === 'seo' && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "seo" && <ChevronRight className="w-4 h-4" />}
           </button>
-          
+
           <button
-            onClick={() => { setActiveTab('translations'); setIsSidebarOpen(false); }}
+            onClick={() => {
+              setActiveTab("translations");
+              setIsSidebarOpen(false);
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === 'translations' 
-              ? 'bg-orange-500/10 text-orange-400 font-bold' 
-              : 'hover:bg-white/5 text-orange-100/60'
+              activeTab === "translations"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
             }`}
           >
             <Globe className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Translations</span>
-            {activeTab === 'translations' && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "translations" && (
+              <ChevronRight className="w-4 h-4" />
+            )}
           </button>
 
           <button
-            onClick={() => { setActiveTab('events'); setIsSidebarOpen(false); }}
+            onClick={() => {
+              setActiveTab("events");
+              setIsSidebarOpen(false);
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === 'events' 
-              ? 'bg-orange-500/10 text-orange-400 font-bold' 
-              : 'hover:bg-white/5 text-orange-100/60'
+              activeTab === "events"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
             }`}
           >
             <Calendar className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Events Management</span>
-            {activeTab === 'events' && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "events" && <ChevronRight className="w-4 h-4" />}
           </button>
 
           <button
-            onClick={() => { setActiveTab('gallery'); setIsSidebarOpen(false); }}
+            onClick={() => {
+              setActiveTab("gallery");
+              setIsSidebarOpen(false);
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === 'gallery' 
-              ? 'bg-orange-500/10 text-orange-400 font-bold' 
-              : 'hover:bg-white/5 text-orange-100/60'
+              activeTab === "gallery"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
             }`}
           >
             <Images className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Photo Gallery</span>
-            {activeTab === 'gallery' && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "gallery" && <ChevronRight className="w-4 h-4" />}
           </button>
 
           <button
-            onClick={() => { setActiveTab('video-gallery'); setIsSidebarOpen(false); }}
+            onClick={() => {
+              setActiveTab("video-gallery");
+              setIsSidebarOpen(false);
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === 'video-gallery' 
-              ? 'bg-orange-500/10 text-orange-400 font-bold' 
-              : 'hover:bg-white/5 text-orange-100/60'
+              activeTab === "video-gallery"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
             }`}
           >
             <Video className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Video Gallery</span>
-            {activeTab === 'video-gallery' && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "video-gallery" && (
+              <ChevronRight className="w-4 h-4" />
+            )}
           </button>
-          
+
           <button
-            onClick={() => { setActiveTab('cms-pages'); setIsSidebarOpen(false); }}
+            onClick={() => {
+              setActiveTab("cms-pages");
+              setIsSidebarOpen(false);
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === 'cms-pages' 
-              ? 'bg-orange-500/10 text-orange-400 font-bold' 
-              : 'hover:bg-white/5 text-orange-100/60'
+              activeTab === "cms-pages"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
             }`}
           >
             <FileText className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">CMS Pages</span>
-            {activeTab === 'cms-pages' && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "cms-pages" && <ChevronRight className="w-4 h-4" />}
           </button>
         </nav>
 
         <div className="p-4 mt-auto">
           <Link href="/">
-            <AdminButton variant="ghost" className="w-full justify-start text-orange-100/40 hover:text-white" leftIcon={<LogOut className="w-4 h-4" />}>
+            <AdminButton
+              variant="ghost"
+              className="w-full justify-start text-orange-100/40 hover:text-white"
+              leftIcon={<LogOut className="w-4 h-4" />}
+            >
               Exit to Site
             </AdminButton>
           </Link>
@@ -172,7 +269,7 @@ export default function AdminForm({ locale }: { locale: string }) {
         {/* Top Navbar */}
         <header className="h-16 md:h-20 bg-white border-b border-orange-100 px-4 md:px-8 flex items-center justify-between sticky top-0 z-[30]">
           <div className="flex items-center gap-4">
-            <button 
+            <button
               className="md:hidden p-2 -ml-2 text-gray-400 hover:text-gray-900"
               onClick={() => setIsSidebarOpen(true)}
             >
@@ -182,7 +279,9 @@ export default function AdminForm({ locale }: { locale: string }) {
               <LayoutDashboard className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Dashboard</span>
               <ChevronRight className="w-3 h-3 md:w-4 md:h-4 shrink-0" />
-              <span className="text-gray-900 font-semibold capitalize truncate">{activeTab}</span>
+              <span className="text-gray-900 font-semibold capitalize truncate">
+                {activeTab}
+              </span>
             </div>
           </div>
         </header>
@@ -190,18 +289,24 @@ export default function AdminForm({ locale }: { locale: string }) {
         {/* Scrollable Area */}
         <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
           <div className="w-full">
-            {activeTab === 'seo' && (
+            {activeTab === "seo" && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">SEO Configuration</h2>
-                  <p className="text-sm md:text-base text-gray-500">Customize meta-tags and OpenGraph settings for each page.</p>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                    SEO Configuration
+                  </h2>
+                  <p className="text-sm md:text-base text-gray-500">
+                    Customize meta-tags and OpenGraph settings for each page.
+                  </p>
                 </div>
-                
+
                 <Card className="p-4 md:p-8">
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">Route Path</label>
+                        <label className="text-sm font-bold text-gray-700">
+                          Route Path
+                        </label>
                         <input
                           type="text"
                           name="route"
@@ -213,7 +318,9 @@ export default function AdminForm({ locale }: { locale: string }) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">Display Locale</label>
+                        <label className="text-sm font-bold text-gray-700">
+                          Display Locale
+                        </label>
                         <select
                           name="locale"
                           value={formData.locale}
@@ -228,7 +335,9 @@ export default function AdminForm({ locale }: { locale: string }) {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">Meta Title</label>
+                      <label className="text-sm font-bold text-gray-700">
+                        Meta Title
+                      </label>
                       <input
                         type="text"
                         name="title"
@@ -241,7 +350,9 @@ export default function AdminForm({ locale }: { locale: string }) {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-700">Meta Description</label>
+                      <label className="text-sm font-bold text-gray-700">
+                        Meta Description
+                      </label>
                       <textarea
                         name="description"
                         value={formData.description}
@@ -253,18 +364,59 @@ export default function AdminForm({ locale }: { locale: string }) {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Keywords Tag Input */}
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">Keywords (Comma separated)</label>
-                        <input
-                          type="text"
-                          name="keywords"
-                          value={formData.keywords}
-                          onChange={handleChange}
-                          className="w-full bg-orange-50/30 border border-orange-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
-                        />
+                        <label className="text-sm font-bold text-gray-700">
+                          Keywords{" "}
+                          <span className="font-normal text-gray-400 text-xs">
+                            (Enter or Tab to add)
+                          </span>
+                        </label>
+                        <div
+                          className="flex flex-wrap gap-2 w-full bg-orange-50/30 border border-orange-100 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-orange-400 transition-all cursor-text min-h-[46px]"
+                          onClick={(e) =>
+                            (
+                              e.currentTarget.querySelector(
+                                "input",
+                              ) as HTMLInputElement
+                            )?.focus()
+                          }
+                        >
+                          {formData.keywords.map((tag, i) => (
+                            <span
+                              key={i}
+                              className="flex items-center gap-1 bg-orange-100 text-orange-700 text-xs font-semibold px-2.5 py-1 rounded-lg"
+                            >
+                              {tag}
+                              <button
+                                type="button"
+                                onClick={() => removeKeyword(i)}
+                                className="text-orange-400 hover:text-orange-600 text-base leading-none"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          ))}
+                          <input
+                            type="text"
+                            value={keywordInput}
+                            onChange={(e) => setKeywordInput(e.target.value)}
+                            onKeyDown={handleKeywordKeyDown}
+                            onBlur={() => addKeyword(keywordInput)}
+                            placeholder={
+                              formData.keywords.length === 0
+                                ? "Add keywords..."
+                                : ""
+                            }
+                            className="flex-1 min-w-[120px] bg-transparent text-sm focus:outline-none py-1"
+                          />
+                        </div>
                       </div>
+
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-700">OG Image URL</label>
+                        <label className="text-sm font-bold text-gray-700">
+                          OG Image URL
+                        </label>
                         <input
                           type="text"
                           name="ogImage"
@@ -281,7 +433,9 @@ export default function AdminForm({ locale }: { locale: string }) {
                           Save Changes
                         </AdminButton>
                         {status && (
-                          <span className={`text-sm font-bold ${status.includes('✅') ? 'text-green-600' : 'text-orange-600'}`}>
+                          <span
+                            className={`text-sm font-bold ${status.includes("✅") ? "text-green-600" : "text-orange-600"}`}
+                          >
                             {status}
                           </span>
                         )}
@@ -292,40 +446,39 @@ export default function AdminForm({ locale }: { locale: string }) {
               </div>
             )}
 
-            {activeTab === 'translations' && (
+            {activeTab === "translations" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <TranslationCMS />
               </div>
             )}
 
-            {activeTab === 'events' && (
+            {activeTab === "events" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <EventsCMS />
               </div>
             )}
 
-            {activeTab === 'gallery' && (
+            {activeTab === "gallery" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <GalleryCMS />
               </div>
             )}
 
-            {activeTab === 'video-gallery' && (
+            {activeTab === "video-gallery" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <VideoGalleryCMS />
               </div>
             )}
 
-            {activeTab === 'cms-pages' && (
+            {activeTab === "cms-pages" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <PagesCMS />
               </div>
             )}
-
           </div>
         </div>
       </main>
-      
+
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -334,11 +487,11 @@ export default function AdminForm({ locale }: { locale: string }) {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #EEDDCC;
+          background: #eeddcc;
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #DDCBAA;
+          background: #ddcbaa;
         }
       `}</style>
     </div>

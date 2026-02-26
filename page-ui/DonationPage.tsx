@@ -84,7 +84,7 @@ const categories: DonationCategory[] = [
     subtitle: "Choose From The Amount Listed:",
     amounts: [
       { label: "₹ 25000 (One Day)", value: 25000 },
-      { label: "₹ 21000 (Two Days)", value: 51000 },
+      { label: "₹ 51000 (Two Days)", value: 51000 },
     ],
     hasCustom: false,
   },

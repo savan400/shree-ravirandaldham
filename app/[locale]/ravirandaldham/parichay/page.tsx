@@ -6,7 +6,7 @@ const Page = async ({ params: { locale } }: { params: { locale: Locale } }) => {
   const cmsData = await fetchCMSPage("parichay");
   return (
     <div>
-      <ParichayPage cmsData={cmsData} locale={locale} />
+      <ParichayPage cmsData={cmsData} />
     </div>
   );
 };
