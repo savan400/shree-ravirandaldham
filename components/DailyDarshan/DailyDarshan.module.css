@@ -33,7 +33,6 @@
 }
 
 @keyframes dd-bg-breathe {
-
   0%,
   100% {
     background-position: 0% 50%;
@@ -50,11 +49,13 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4.5rem;
-  background: linear-gradient(150deg,
-      #fff9f0 0%,
-      #fff5e5 30%,
-      #fffbf3 60%,
-      #fff0dc 100%);
+  background: linear-gradient(
+    150deg,
+    #fff9f0 0%,
+    #fff5e5 30%,
+    #fffbf3 60%,
+    #fff0dc 100%
+  );
   background-size: 200% 200%;
   animation: dd-bg-breathe 10s ease-in-out infinite;
 }
@@ -164,12 +165,6 @@
   height: 14px;
 }
 
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-}
-
 .cardGrid {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
@@ -196,4 +191,16 @@
   border: 1px solid rgba(253, 230, 138, 0.25);
   pointer-events: none;
   white-space: nowrap;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  .cardGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  .dateBadgeWrap {
+    display: none;
+  }
 }

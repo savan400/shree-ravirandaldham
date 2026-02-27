@@ -238,7 +238,7 @@ const TopBar: React.FC = () => (
       </div>
 
       <div className="flex items-center gap-4">
-        <address className="hidden sm:block not-italic text-xs">
+        <address className="hidden lg:block not-italic text-xs">
           {CONTACT_ADDRESS}
         </address>
         {/* ── Language Switcher ── */}

@@ -66,10 +66,10 @@ export default function CMSContent({ pageKey, locale, className = '' }: CMSConte
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="space-y-6">
           {description && (
-             <div 
-               className="prose prose-orange lg:prose-lg max-w-none text-gray-700 leading-relaxed cms-rich-text"
-               dangerouslySetInnerHTML={{ __html: description }}
-             />
+            <div
+              className="prose prose-orange lg:prose-lg max-w-none text-gray-700 leading-relaxed cms-rich-text"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
           )}
 
           {/* Analytics / Stats Section */}
@@ -93,17 +93,17 @@ export default function CMSContent({ pageKey, locale, className = '' }: CMSConte
           <div className="grid grid-cols-1 gap-4">
             {page.images.map((img, idx) => (
               <div key={idx} className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white shadow-orange-900/10">
-                <img 
-                  src={typeof img === 'string' ? img : img.url} 
+                <img
+                  src={typeof img === 'string' ? img : img.url}
                   alt={`${title} - ${idx + 1}`}
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" 
+                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
             ))}
           </div>
         ) : (
           <div className="hidden lg:flex items-center justify-center aspect-video bg-orange-50 rounded-3xl border-2 border-dashed border-orange-100 text-orange-200">
-             <ImageIcon className="w-16 h-16" />
+            <ImageIcon className="w-16 h-16" />
           </div>
         )}
       </div>

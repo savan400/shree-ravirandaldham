@@ -15,12 +15,15 @@
 
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   .container {
     padding: 0 1rem;
+  }
+  .darshanImage {
+    aspect-ratio: auto;
   }
 }
 

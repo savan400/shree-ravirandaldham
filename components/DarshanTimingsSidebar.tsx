@@ -1,51 +1,162 @@
 "use client";
-import { Clock, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { X } from "lucide-react";
+import styles from "./DarshanTimingsSidebar.module.css";
+
+const timings = [
+  {
+    label: "મંગળા આરતી",
+    labelEn: "Mangala Aarti",
+    time: "06:15",
+    period: "સવારે",
+    periodEn: "Morning",
+    icon: "🌅",
+  },
+  {
+    label: "થાળ",
+    labelEn: "Thal",
+    time: "11:00",
+    period: "બપોરે",
+    periodEn: "Afternoon",
+    icon: "🪔",
+  },
+  {
+    label: "સંધ્યા આરતી",
+    labelEn: "Sandhya Aarti",
+    time: "06:30",
+    period: "સાંજે",
+    periodEn: "Evening",
+    icon: "🌙",
+  },
+];
+
+const staggerClasses = [styles.stagger1, styles.stagger2, styles.stagger3];
 
 const DarshanTimingsSidebar = () => {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [diyas, setDiyas] = useState<{ id: number; x: number; delay: number; dur: number }[]>([]);
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => setVisible(true), 10);
+      setDiyas(
+        Array.from({ length: 6 }, (_, i) => ({
+          id: i,
+          x: 10 + i * 15,
+          delay: i * 0.3,
+          dur: 2 + Math.random() * 1.5,
+        }))
+      );
+    } else {
+      setVisible(false);
+    }
+  }, [open]);
 
   return (
     <>
-      {/* Fixed sidebar button with glow */}
+      {/* Trigger Button */}
       <button
-        onClick={() => setOpen(!open)}
-        className="fixed right-3 md:right-0 bottom-3 md:bottom-1/3  z-50 bg-primary text-primary-foreground p-3 md:px-2.5 md:py-4 rounded-full md:rounded-none md:rounded-r-0 md:rounded-l-xl shadow-lg hover:bg-saffron-dark transition-all duration-300 animate-pulse-glow hover:pr-4"
-        style={{ writingMode: "vertical-rl" }}
+        onClick={() => setOpen(true)}
+        className={styles.templeBtn}
+        aria-label="Open Darshan Timings"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold">
-          <Clock className="md:w-4 md:h-4 h-5 w-5" />
-          <span className="hidden md:block">Darshan Timings</span>
+        <span className={styles.templeBtnInner}>
+          <span className={styles.bellIcon}>🔔</span>
+          <span>Darshan Timings</span>
         </span>
       </button>
 
-      {/* Timings panel */}
+      {/* Overlay */}
       {open && (
-        <>
-          <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 transition-opacity"
-            onClick={() => setOpen(false)}
-          />
-          <div className="fixed right-0 top-0 h-full w-80 bg-card shadow-2xl z-50 overflow-y-auto animate-slide-in-right">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-bold gradient-text">Darshan Timings</h3>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-destructive/10 transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="section-divider mb-6" />
-              <img
-                src="https://salangpurhanumanji.org/wp-content/uploads/2024/02/new_time1.png"
-                alt="Darshan Timings"
-                className="w-full rounded-xl shadow-md"
-              />
+        <div
+          className={styles.overlay}
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Panel */}
+      {open && (
+        <div className={`${styles.panel} ${visible ? styles.panelVisible : ""}`}>
+
+          {/* Decorative diya bar at top */}
+          <div className={styles.diyaBar}>
+            <div className={styles.diyaRow}>
+              {diyas.map((d) => (
+                <div key={d.id} className={styles.diyaWrap}>
+                  <div
+                    className={styles.diyaFlame}
+                    style={{ "--dur": `${d.dur}s`, animationDelay: `${d.delay}s` } as React.CSSProperties}
+                  >
+                    <div className={styles.flameShape} />
+                  </div>
+                  <div className={styles.diyaBase} />
+                </div>
+              ))}
             </div>
           </div>
-        </>
+
+          {/* Top divider */}
+          <div className={styles.divider} />
+
+          {/* Header */}
+          <div className={styles.header}>
+            <div className={styles.headerInner}>
+              <div className={styles.titleWrap}>
+                <h3 className={styles.titleMain}>Darshan</h3>
+                <h4 className={styles.titleSub}>Timings</h4>
+                <p className={styles.titleGu}>દર્શન સમય</p>
+              </div>
+              <button className={styles.closeBtn} onClick={() => setOpen(false)}>
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.dividerBottom} />
+
+          {/* Timing Cards */}
+          <div className={styles.cardList}>
+            {timings.map((item, i) => (
+              <div key={i} className={`${styles.timingCard} ${staggerClasses[i]}`}>
+
+                {/* Floating particles */}
+                {[...Array(3)].map((_, p) => (
+                  <div
+                    key={p}
+                    className={styles.particle}
+                    style={{
+                      left: `${20 + p * 30}%`,
+                      bottom: "12px",
+                      "--dur": `${2 + p * 0.7}s`,
+                      "--delay": `${p * 0.5}s`,
+                    } as React.CSSProperties}
+                  />
+                ))}
+
+                <div className={styles.cardBody}>
+                  <div className={styles.cardLeft}>
+                    <div className={styles.iconCircle}>{item.icon}</div>
+                    <div>
+                      <p className={styles.labelGu}>{item.label}</p>
+                      <p className={styles.labelEn}>{item.labelEn}</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.cardRight}>
+                    <p className={styles.timeDisplay}>{item.time}</p>
+                    <p className={styles.periodLabel}>
+                      {item.period} · <span style={{ fontFamily: 'var(--font-cinzel)' }}>{item.periodEn}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className={styles.cardDivider} />
+              </div>
+            ))}
+          </div>
+
+        </div>
       )}
     </>
   );
