@@ -1,6 +1,5 @@
 /* ─── Darshan Card ─────────────────────────────────────────────────────────── */
 @keyframes dd-glow-halo {
-
   0%,
   100% {
     opacity: 0.3;
@@ -14,7 +13,6 @@
 }
 
 @keyframes dd-frame-glow {
-
   0%,
   100% {
     box-shadow:
@@ -64,9 +62,11 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: radial-gradient(ellipse 60% 50% at 50% 35%,
-      rgba(255, 180, 0, 0.12),
-      transparent);
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 35%,
+    rgba(255, 180, 0, 0.12),
+    transparent
+  );
   animation: dd-glow-halo 4s ease-in-out infinite;
   pointer-events: none;
 }
@@ -85,10 +85,12 @@
   top: 0;
   bottom: 0;
   width: 35%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.06),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
 }
 
 .shineSweep--active {
@@ -120,10 +122,12 @@
   left: 0;
   right: 0;
   z-index: 4;
-  background: linear-gradient(to top,
-      rgba(10, 3, 0, 0.92) 0%,
-      rgba(10, 3, 0, 0.6) 50%,
-      transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(10, 3, 0, 0.92) 0%,
+    rgba(10, 3, 0, 0.6) 50%,
+    transparent 100%
+  );
   padding: 2rem 1.5rem 0;
 }
 
@@ -134,4 +138,14 @@
   letter-spacing: 0.1em;
   margin-bottom: 0.6rem;
   font-style: italic;
+}
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .darshanImage {
+    aspect-ratio: auto;
+  }
 }

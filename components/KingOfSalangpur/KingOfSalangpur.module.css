@@ -239,6 +239,7 @@
   border-radius: 12px;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .statsDivider {
@@ -279,6 +280,7 @@
   .statueCol {
     flex: unset;
     min-height: unset;
+    margin: auto;
   }
 
   .container {

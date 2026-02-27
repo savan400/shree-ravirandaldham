@@ -1,0 +1,472 @@
+/* ── Trigger Button ── */
+.templeBtn {
+  background: linear-gradient(
+    135deg,
+    #b5451b 0%,
+    #e07b39 40%,
+    #f5a623 70%,
+    #b5451b 100%
+  );
+  border: 2px solid #f5a623;
+  box-shadow:
+    0 0 20px rgba(245, 166, 35, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font-family: var(--font-cinzel);
+  animation: templeGlow 2.5s ease-in-out infinite alternate;
+  position: fixed;
+  right: 0;
+  bottom: 33.333%;
+  z-index: 50;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.75rem 0 0 0.75rem;
+  writing-mode: vertical-rl;
+  cursor: pointer;
+}
+
+@keyframes templeGlow {
+  0% {
+    box-shadow:
+      0 0 10px rgba(245, 166, 35, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow:
+      0 0 28px rgba(245, 166, 35, 0.9),
+      0 0 50px rgba(176, 69, 27, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+.templeBtnInner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Bell Icon ── */
+.bellIcon {
+  animation: bellRing 4s ease-in-out infinite;
+  transform-origin: top center;
+  display: inline-block;
+  font-size: 1rem;
+}
+
+@keyframes bellRing {
+  0%,
+  90%,
+  100% {
+    transform: rotate(0deg);
+  }
+  92% {
+    transform: rotate(12deg);
+  }
+  94% {
+    transform: rotate(-12deg);
+  }
+  96% {
+    transform: rotate(8deg);
+  }
+  98% {
+    transform: rotate(-8deg);
+  }
+}
+
+/* ── Overlay ── */
+.overlay {
+  background: radial-gradient(
+    ellipse at right center,
+    rgba(176, 69, 27, 0.15) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  backdrop-filter: blur(4px);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  transition: opacity 0.3s;
+}
+
+/* ── Panel ── */
+.panel {
+  background: linear-gradient(
+    175deg,
+    #1a0800 0%,
+    #2d0f00 30%,
+    #1a0800 60%,
+    #0f0400 100%
+  );
+  border-left: 1px solid rgba(245, 166, 35, 0.4);
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 340px;
+  z-index: 50;
+  overflow-y: auto;
+  transform: translateX(100%);
+  opacity: 0;
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.45s ease;
+}
+
+.panelVisible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* ── Diya Bar ── */
+.diyaBar {
+  position: relative;
+  width: 100%;
+  height: 3.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #1a0800, #3d1200, #1a0800);
+}
+
+.diyaRow {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 1rem 0.25rem;
+}
+
+.diyaWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.diyaFlame {
+  animation: flicker var(--dur, 2s) ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.7;
+    transform: scaleY(1) scaleX(1);
+  }
+  33% {
+    opacity: 1;
+    transform: scaleY(1.15) scaleX(0.9);
+  }
+  66% {
+    opacity: 0.85;
+    transform: scaleY(0.95) scaleX(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1.1) scaleX(0.95);
+  }
+}
+
+.flameShape {
+  width: 8px;
+  height: 14px;
+  background: radial-gradient(
+    ellipse at bottom,
+    #fff 0%,
+    #ffe066 30%,
+    #f5a623 60%,
+    transparent 100%
+  );
+  border-radius: 50% 50% 30% 30%;
+  filter: blur(1px);
+}
+
+.diyaBase {
+  width: 14px;
+  height: 6px;
+  background: linear-gradient(180deg, #c47a15, #8b5e00);
+  border-radius: 0 0 50% 50%;
+}
+
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 166, 35, 0.6),
+    rgba(245, 166, 35, 0.9),
+    rgba(245, 166, 35, 0.6),
+    transparent
+  );
+  position: relative;
+  margin: 0.25rem 1rem 0;
+}
+
+.divider::after {
+  content: "✦";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #f5a623;
+  font-size: 10px;
+  background: #1a0800;
+  padding: 0 6px;
+}
+
+.dividerBottom {
+  composes: divider;
+  margin: 0 1rem 1.25rem;
+}
+
+/* ── Header ── */
+.header {
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+.headerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titleWrap {
+  /* container for titles */
+}
+
+.titleMain {
+  background: linear-gradient(
+    135deg,
+    #f5d060 0%,
+    #e8a020 40%,
+    #f5d060 70%,
+    #c47a15 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-cinzel);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.titleSub {
+  composes: titleMain;
+  margin-top: -0.25rem;
+}
+
+.titleGu {
+  font-family: var(--font-sans);
+  color: rgba(245, 200, 100, 0.7);
+  font-size: 0.75rem;
+  margin-top: 0.125rem;
+}
+
+/* ── Close Button ── */
+.closeBtn {
+  background: rgba(245, 166, 35, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  transition: all 0.2s ease;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbbf24;
+  margin-top: 0.25rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  background: rgba(176, 69, 27, 0.4);
+  border-color: rgba(245, 166, 35, 0.7);
+}
+
+/* ── Timing Cards ── */
+.cardList {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.timingCard {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 166, 35, 0.08) 0%,
+    rgba(176, 69, 27, 0.05) 100%
+  );
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  padding: 1rem;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: cardIn 0.5s ease forwards;
+}
+
+.timingCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 166, 35, 0.12) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.timingCard:hover::before {
+  opacity: 1;
+}
+
+.timingCard:hover {
+  border-color: rgba(245, 166, 35, 0.6);
+  box-shadow:
+    0 4px 20px rgba(245, 166, 35, 0.15),
+    inset 0 1px 0 rgba(245, 166, 35, 0.1);
+  transform: translateY(-1px);
+}
+
+@keyframes cardIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.stagger1 {
+  animation-delay: 0.1s;
+}
+.stagger2 {
+  animation-delay: 0.25s;
+}
+.stagger3 {
+  animation-delay: 0.4s;
+}
+
+/* Particles */
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f5a623;
+  animation: floatUp var(--dur) ease-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.3);
+  }
+}
+
+/* Card Layout */
+.cardBody {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.iconCircle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 166, 35, 0.2),
+    rgba(176, 69, 27, 0.2)
+  );
+  border: 1px solid rgba(245, 166, 35, 0.3);
+}
+
+.labelGu {
+  font-family: var(--font-sans);
+  color: #f5d060;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.labelEn {
+  font-family: var(--font-cinzel);
+  color: rgba(245, 166, 35, 0.55);
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  margin-top: 0.125rem;
+}
+
+.cardRight {
+  text-align: right;
+}
+
+.timeDisplay {
+  background: linear-gradient(
+    135deg,
+    #f5d060 0%,
+    #e8a020 40%,
+    #f5d060 70%,
+    #c47a15 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: 1.5rem;
+  font-family: var(--font-cinzel);
+  line-height: 1;
+  margin: 0;
+}
+
+.periodLabel {
+  font-family: var(--font-sans);
+  color: rgba(245, 166, 35, 0.6);
+  font-size: 0.6875rem;
+  margin-top: 0.1875rem;
+}
+
+.cardDivider {
+  margin-top: 0.75rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 166, 35, 0.4),
+    transparent
+  );
+}

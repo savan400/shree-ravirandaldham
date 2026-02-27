@@ -62,10 +62,11 @@ export default function CMSPageForm({
       } as GridImage & { key: string };
     }),
   ]);
+  type TranslatableField = "title" | "badgeText" | "description" | "quote";
 
   const handleTranslationChange = (
-    field: keyof Omit<CMSPageFormData, "key" | "analytics">,
-    lang: string,
+    field: TranslatableField,
+    lang: Locale,
     value: string,
   ) => {
     setFormData((prev) => ({
@@ -75,6 +76,7 @@ export default function CMSPageForm({
         [lang]: value,
       },
     }));
+
     if (errors.length > 0) setErrors([]);
   };
 
@@ -107,17 +109,17 @@ export default function CMSPageForm({
         prev.map((img) =>
           img.id === id
             ? {
-                ...img,
-                caption: {
-                  ...(img as any).caption,
-                  [lang]: value,
-                },
-                // Also update description to keep it compatible with ImageUploadGrid internal expectations if any
-                description: {
-                  ...(img as any).description,
-                  [lang]: value,
-                },
-              }
+              ...img,
+              caption: {
+                ...(img as any).caption,
+                [lang]: value,
+              },
+              // Also update description to keep it compatible with ImageUploadGrid internal expectations if any
+              description: {
+                ...(img as any).description,
+                [lang]: value,
+              },
+            }
             : img,
         ),
       );
@@ -256,7 +258,7 @@ export default function CMSPageForm({
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
-      
+
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">
@@ -330,11 +332,10 @@ export default function CMSPageForm({
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                      activeTab === tab.id
+                    className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${activeTab === tab.id
                         ? "bg-white shadow text-orange-600"
                         : "text-gray-500 hover:text-orange-400"
-                    }`}
+                      }`}
                   >
                     {tab.label}
                   </button>

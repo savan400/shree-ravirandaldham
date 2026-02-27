@@ -281,7 +281,7 @@ export default function SocialMediaSection() {
                   <div
                     className={styles.cardGlow}
                     style={{
-                      background: `radial-gradient(circle at 50% 0%, ${platform.color}33, transparent 70%)`,
+                      background: `radial-gradient(circle at 50% 0%, ${platform.color === "#000000" ? "#ffffff" : platform.color}33, transparent 70%)`,
                     }}
                   />
                   <div className={styles.cardBorder} />
@@ -290,7 +290,9 @@ export default function SocialMediaSection() {
                     <div className={styles.cardIcon}>{platform.icon}</div>
                     <div
                       className={styles.cardIconRing}
-                      style={{ borderColor: `${platform.color}66` }}
+                      style={{
+                        borderColor: `${platform.color === "#000000" ? "#ffffff" : platform.color}66`,
+                      }}
                     />
                   </div>
 
