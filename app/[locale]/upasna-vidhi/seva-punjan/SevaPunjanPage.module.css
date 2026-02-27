@@ -712,6 +712,7 @@
 
   .contentCard {
     padding: 20px;
+    border-radius: 0px;
   }
 
   .titleContainer {
