@@ -261,7 +261,7 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
 }) => {
   const isHash = item.href.startsWith("#");
   const linkClass =
-    "flex items-center text-white gap-1 px-3 py-4 text-[13px] font-medium transition-colors relative " +
+    "flex items-center text-white gap-1 px-3 py-4 text-[12px] xl:text-[13px] font-medium transition-colors relative " +
     "after:absolute after:bottom-2 after:left-3 after:right-3 after:h-0.5 " +
     "after:bg-primary after:scale-x-0 after:origin-left " +
     "after:transition-transform after:duration-300 hover:after:scale-x-100";

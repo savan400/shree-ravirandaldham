@@ -158,7 +158,6 @@
 }
 
 @keyframes iconFloat {
-
   0%,
   100% {
     transform: translateY(0);
@@ -224,9 +223,11 @@
 
 .donOptionActive {
   border-color: #c45400;
-  background: linear-gradient(135deg,
-      rgba(255, 248, 230, 0.95),
-      rgba(254, 240, 200, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 248, 230, 0.95),
+    rgba(254, 240, 200, 0.95)
+  );
   box-shadow:
     0 0 0 2px rgba(196, 84, 0, 0.2),
     0 2px 8px rgba(139, 26, 26, 0.1);
@@ -318,11 +319,13 @@
   border-radius: 40px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  background: linear-gradient(135deg,
-      #5c0f0f 0%,
-      #c45400 40%,
-      #c8922a 70%,
-      #c45400 100%);
+  background: linear-gradient(
+    135deg,
+    #5c0f0f 0%,
+    #c45400 40%,
+    #c8922a 70%,
+    #c45400 100%
+  );
   background-size: 200% 200%;
   background-position: 0% 50%;
   color: #fff8e7;
@@ -348,10 +351,12 @@
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.22),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
   transform: skewX(-20deg);
   transition: none;
 }
@@ -375,6 +380,11 @@
 }
 
 /* ── Responsive ───────────────────────────────────── */
+@media (max-width: 891px) {
+  .donGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 @media (max-width: 768px) {
   .section {
     padding: 3rem 0;

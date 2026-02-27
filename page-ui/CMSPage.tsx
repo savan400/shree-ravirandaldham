@@ -33,11 +33,11 @@ export type Locale = "en" | "hi" | "gu";
 export type CMSImage =
   | string
   | {
-    url: string;
-    _id?: string;
-    key?: string;
-    caption?: { en?: string; hi?: string; gu?: string };
-  };
+      url: string;
+      _id?: string;
+      key?: string;
+      caption?: { en?: string; hi?: string; gu?: string };
+    };
 
 export interface CMSPageEntry {
   layoutType?: "text-only" | "profile" | "temple";
@@ -318,16 +318,15 @@ const TextOnlyLayout = ({
 }) => {
   const cleanCmsHtml = (html: string) => {
     return html
-      .replace(/&nbsp;/g, " ")               // fix non-breaking spaces
-      .replace(/\u00A0/g, " ")              // fix actual unicode NBSP
+      .replace(/&nbsp;/g, " ") // fix non-breaking spaces
+      .replace(/\u00A0/g, " ") // fix actual unicode NBSP
       .replace(/background-color:[^;"]+;?/g, ""); // optional: remove inline bg
   };
   const { paragraphs, quoteIndex } = descriptionToParagraphs(cmsData, locale);
   const isRichText = cmsData.description?.[locale as Locale]?.includes("<");
   let rawContent = cmsData.description?.[locale as Locale] || "";
   let content = cleanCmsHtml(rawContent);
-  const rawQuote =
-    cmsData.quote?.[locale as Locale] || cmsData.quote?.en || "";
+  const rawQuote = cmsData.quote?.[locale as Locale] || cmsData.quote?.en || "";
   const quote = cleanCmsHtml(rawQuote);
   if (content && quote && isRichText) {
     content = content.replace(
@@ -359,9 +358,7 @@ const TextOnlyLayout = ({
                 <div className={itihasStyles.quoteMarkTopLeft}>
                   <QuoteMark />
                 </div>
-                <p className={itihasStyles.quoteParagraph}>
-                  {quote}
-                </p>
+                <p className={itihasStyles.quoteParagraph}>{quote}</p>
                 <div className={itihasStyles.quoteMarkBottomRight}>
                   <QuoteMark flip />
                 </div>
@@ -433,9 +430,11 @@ const ProfileLayout = ({
   );
 
   // ✅ Fallback: use description if cardContent is empty
-  const resolvedCardContent =
-    (cardContent || cmsData.description?.[locale as Locale] || "")
-      .replace(/&nbsp;/g, " ");
+  const resolvedCardContent = (
+    cardContent ||
+    cmsData.description?.[locale as Locale] ||
+    ""
+  ).replace(/&nbsp;/g, " ");
 
   return (
     <>
@@ -479,9 +478,7 @@ const ProfileLayout = ({
 
             <div className={bapuStyles.contentSection}>
               {sectionTitle && (
-                <h2 className={bapuStyles.sectionTitle}>
-                  {sectionTitle}
-                </h2>
+                <h2 className={bapuStyles.sectionTitle}>{sectionTitle}</h2>
               )}
 
               {resolvedCardContent && (
@@ -521,8 +518,7 @@ const TempleLayout = ({
   };
 
   const primaryImage = cmsData.images?.[0];
-  const displayImage =
-    getImageUrl(primaryImage) || "/images/banner-1.webp";
+  const displayImage = getImageUrl(primaryImage) || "/images/banner-1.webp";
 
   const title = cmsData.title?.[locale as Locale] || "";
 
@@ -533,10 +529,7 @@ const TempleLayout = ({
   let rawContent = cmsData.description?.[locale as Locale] || "";
   let content = cleanCmsHtml(rawContent);
 
-  const rawQuote =
-    cmsData.quote?.[locale as Locale] ||
-    cmsData.quote?.en ||
-    "";
+  const rawQuote = cmsData.quote?.[locale as Locale] || cmsData.quote?.en || "";
 
   const quote = cleanCmsHtml(rawQuote);
 
@@ -546,7 +539,7 @@ const TempleLayout = ({
       /{quote}/g,
       `<blockquote class="cms-quote text-xl font-bold text-orange-600 my-6 pl-4 border-l-4 border-orange-500 italic">
         "${quote}"
-      </blockquote>`
+      </blockquote>`,
     );
   }
   // ✅ If no placeholder but quote exists → append at end
@@ -600,9 +593,7 @@ const TempleLayout = ({
               dangerouslySetInnerHTML={{ __html: content }}
             />
           ) : (
-            <p className={styles.contentText}>
-              No content available.
-            </p>
+            <p className={styles.contentText}>No content available.</p>
           )}
           <RandalSahayate />
         </div>
