@@ -33,25 +33,25 @@ const SLIDE_DATA: SlideData[] = [
   {
     title: "Shree Ravirandaldham",
     subtitle: "Randaldhma Mandir, Dadva",
-    verse: "॥ श्री राम जय राम जय जय राम ॥",
+    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
     accent: "#FF8C00",
   },
   {
     title: "Pavitra Dham",
     subtitle: "A Sacred Abode of Peace & Devotion",
-    verse: "॥ हरि ओम तत्सत् ॥",
+    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
     accent: "#FF6B00",
   },
   {
     title: "Upasna & Aradhana",
     subtitle: "Embrace the Divine Light Within",
-    verse: "॥ ओम नमः शिवाय ॥",
+    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
     accent: "#E8A000",
   },
   {
     title: "Darshan & Seva",
     subtitle: "Come, Seek Blessings & Tranquility",
-    verse: "॥ जय श्री राम ॥",
+    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
     accent: "#FF5500",
   },
 ];

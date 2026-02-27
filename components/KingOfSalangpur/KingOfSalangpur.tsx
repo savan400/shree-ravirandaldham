@@ -28,7 +28,6 @@ interface StatBadgeData {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-
 const STATS: StatBadgeData[] = [
   { number: "54ft", label: "કુલ ઊંચાઈ" },
   { number: "1851", label: "નિર્માણ વર્ષ" },
@@ -55,7 +54,11 @@ interface AnnotationPinProps {
   index: number;
 }
 
-const AnnotationPin: React.FC<AnnotationPinProps> = ({ annotation, visible, index }) => {
+const AnnotationPin: React.FC<AnnotationPinProps> = ({
+  annotation,
+  visible,
+  index,
+}) => {
   const isLeft = annotation.lineDir === "left";
   const transitionDelay = `${0.2 + index * 0.08}s`;
 
@@ -67,20 +70,30 @@ const AnnotationPin: React.FC<AnnotationPinProps> = ({ annotation, visible, inde
         left: annotation.left,
         // Per-pin staggered transition — delay must be runtime-computed
         opacity: visible ? 1 : 0,
-        transform: visible ? "none" : `translateX(${isLeft ? "-20px" : "20px"})`,
+        transform: visible
+          ? "none"
+          : `translateX(${isLeft ? "-20px" : "20px"})`,
         transition: `opacity 0.5s ease ${transitionDelay}, transform 0.5s ease ${transitionDelay}`,
       }}
     >
-      <div className={`${styles.pinInner} ${isLeft ? styles["pinInner--left"] : styles["pinInner--right"]}`}>
+      <div
+        className={`${styles.pinInner} ${isLeft ? styles["pinInner--left"] : styles["pinInner--right"]}`}
+      >
         {/* Text bubble */}
-        <div className={`${styles.pinBubble} ${isLeft ? styles["pinBubble--left"] : styles["pinBubble--right"]}`}>
+        <div
+          className={`${styles.pinBubble} ${isLeft ? styles["pinBubble--left"] : styles["pinBubble--right"]}`}
+        >
           <p className={styles.pinLabel}>{annotation.label}</p>
           <p className={styles.pinValue}>{annotation.value}</p>
         </div>
 
         {/* Connector line + dot */}
         <div className={styles.pinConnector}>
-          <div className={isLeft ? styles["pinLine--left"] : styles["pinLine--right"]} />
+          <div
+            className={
+              isLeft ? styles["pinLine--left"] : styles["pinLine--right"]
+            }
+          />
           <div className={styles.pinDot} />
         </div>
       </div>
@@ -127,19 +140,37 @@ const KingOfSalangpur: React.FC = () => {
       <PageBackgroundDecorations />
       <div className={styles.container}>
         <div className={styles.grid}>
-
           {/* ── LEFT: Statue with annotation pins ── */}
-          <div className={`${styles.statueCol} ${visible ? styles["leftCol--visible"] : styles.hidden}`}>
+          <div
+            className={`${styles.statueCol} ${visible ? styles["leftCol--visible"] : styles.hidden}`}
+          >
             {/* Radial glow behind statue */}
             <div className={styles.statueGlow} aria-hidden="true" />
 
             {/* Spinning decorative ring */}
             <div className={styles.statueRingWrap} aria-hidden="true">
-              <svg viewBox="0 0 200 200" fill="none" className={styles.statueRing}>
-                <circle cx="100" cy="100" r="95" stroke="#FF8C00" strokeWidth="1" strokeDasharray="6 4" />
-                <circle cx="100" cy="100" r="80" stroke="#FFD700" strokeWidth="0.5" />
+              <svg
+                viewBox="0 0 200 200"
+                fill="none"
+                className={styles.statueRing}
+              >
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="95"
+                  stroke="#FF8C00"
+                  strokeWidth="1"
+                  strokeDasharray="6 4"
+                />
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="80"
+                  stroke="#FFD700"
+                  strokeWidth="0.5"
+                />
                 {Array.from({ length: 16 }, (_, i) => {
-                  const a = (i * 360 / 16) * Math.PI / 180;
+                  const a = (((i * 360) / 16) * Math.PI) / 180;
                   return (
                     <line
                       key={i}
@@ -157,22 +188,22 @@ const KingOfSalangpur: React.FC = () => {
 
             {/* Statue image */}
             <Image
-              src="/images/king-of-salangpur.webp"
+              src="/images/trishul.png"
               alt="King of Salangpur — Shree Hanumanji Maharaj, 54-foot statue"
               width={400}
               height={560}
               className={styles.statueImage}
             />
-
           </div>
 
           {/* ── RIGHT: Text content ── */}
-          <div className={`${styles.textCol} ${visible ? styles["rightCol--visible"] : styles.hidden}`}>
-
+          <div
+            className={`${styles.textCol} ${visible ? styles["rightCol--visible"] : styles.hidden}`}
+          >
             <CommonBadge text="ગુજરાતની ગૌરવ" />
 
             {/* Heading */}
-            <CommonTitle text="કિંગ ઓફ સાળંગપુર" />
+            <CommonTitle text="માતાજી નું ત્રિશૂલ" />
             <DiamondRule />
 
             {/* Description */}
@@ -180,8 +211,8 @@ const KingOfSalangpur: React.FC = () => {
               ગુજરાતમાં પંચધાતુમાં નિર્મિત શ્રી હનુમાનજી મહારાજની સૌથી ઉંચી
               પ્રતિમા 'કિંગ ઓફ સાળંગપુર' ભક્તિ, સેવા અને કળાનાં દિવ્યતા અને
               ભવ્યતાનાં સંગમ સમાન છે. માત્ર સ્વામિનારાયણ સંપ્રદાય જ નહીં પરંતુ
-              ગુજરાત અને સનાતન ધર્મનાં ગૌરવ સમાન આ પ્રતિમા સાળંગપુરધામમાં
-              સૌને દર્શન આપે છે.
+              ગુજરાત અને સનાતન ધર્મનાં ગૌરવ સમાન આ પ્રતિમા સાળંગપુરધામમાં સૌને
+              દર્શન આપે છે.
             </p>
 
             {/* Stats */}
@@ -189,19 +220,21 @@ const KingOfSalangpur: React.FC = () => {
               {STATS.map((stat, i) => (
                 <React.Fragment key={stat.label}>
                   <StatBadge
-
                     stat={stat}
                     visible={visible}
                     delay={0.6 + i * 0.1}
                   />
                   {i < STATS.length - 1 && (
-                    <div key={`div-${i}`} className={styles.statsDivider} aria-hidden="true" />
+                    <div
+                      key={`div-${i}`}
+                      className={styles.statsDivider}
+                      aria-hidden="true"
+                    />
                   )}
                 </React.Fragment>
               ))}
             </div>
             <CommonButton text="READ MORE" variant="primary" icon={true} />
-
           </div>
         </div>
       </div>

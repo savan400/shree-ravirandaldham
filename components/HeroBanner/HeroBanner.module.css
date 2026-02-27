@@ -334,7 +334,6 @@
   font-family: var(--font-devanagari);
   font-size: clamp(0.75rem, 1.5vw, 1rem);
   color: var(--gold-bright);
-  letter-spacing: 0.25em;
   margin-bottom: 1.5rem;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
   transition:
