@@ -154,7 +154,7 @@
 }
 
 .cardTitle {
-  font-family: var(--font-cormorant);
+  font-family: var(--font-cinzel);
   font-size: 1.25rem;
   font-weight: 600;
   color: #3a1800;
@@ -165,7 +165,6 @@
 
 .cardMeta {
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
 }
 

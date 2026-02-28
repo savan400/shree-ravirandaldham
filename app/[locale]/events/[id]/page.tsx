@@ -332,7 +332,7 @@ export default async function EventDetailPage({
             {!isPast && (
               <div className={styles.ctaCard}>
                 <div className={styles.ctaGlow} aria-hidden="true" />
-                <p className={styles.ctaTagline}>જય કષ્ટભંજનદેવ</p>
+                <p className={styles.ctaTagline}>શ્રી રાવીરાંદલ ધામ</p>
                 <p className={styles.ctaSubline}>
                   All are welcome. Entry free.
                 </p>

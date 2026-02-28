@@ -17,7 +17,8 @@
   position: relative;
   background: linear-gradient(145deg, #fffdf8 0%, #fef5e0 100%);
   border: 1px solid rgba(200, 146, 42, 0.35);
-  border-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-left-radius: 6px;
   padding: 20px 20px 20px 22px;
   box-shadow:
     0 4px 18px rgba(139, 26, 26, 0.08),

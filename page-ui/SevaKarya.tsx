@@ -21,6 +21,8 @@ const FACILITIES: FacilityCardData[] = [
         icon: "🐄",
         tag: "ગૌ સેવા",
         accentColor: "#4CAF50",
+        navigateTo: '/seva-karya/gaushala'
+
     },
     {
         image: "/images/seva-2.jpg",
@@ -30,6 +32,7 @@ const FACILITIES: FacilityCardData[] = [
         icon: "🙏",
         tag: "યુવા વિકાસ",
         accentColor: "#9C27B0",
+        navigateTo: '/seva-karya/yuva-satsang-kendra'
     },
     {
         image: "/images/seva-3.jpg",
@@ -39,6 +42,7 @@ const FACILITIES: FacilityCardData[] = [
         icon: "📚",
         tag: "શિક્ષણ સેવા",
         accentColor: "#2196F3",
+        navigateTo: '/seva-karya/shaikshanik-kit'
     },
     {
         image: "/images/seva-4.jpg",
@@ -48,6 +52,7 @@ const FACILITIES: FacilityCardData[] = [
         icon: "💍",
         tag: "સામાજિક સેવા",
         accentColor: "#E91E63",
+        navigateTo: '/seva-karya/samuh-lagna'
     },
     {
         image: "/images/seva-5.jpg",
@@ -57,6 +62,7 @@ const FACILITIES: FacilityCardData[] = [
         icon: "🆘",
         tag: "રાહત સેવા",
         accentColor: "#FF5722",
+        navigateTo: '/seva-karya/rahat-karya'
     },
     {
         image: "/images/seva-6.jpg",
@@ -66,6 +72,7 @@ const FACILITIES: FacilityCardData[] = [
         icon: "🏥",
         tag: "આરોગ્ય સેવા",
         accentColor: "#00BCD4",
+        navigateTo: '/seva-karya/medical-camp'
     },
 ];
 // ── Page component ─────────────────────────────────────────────────────────

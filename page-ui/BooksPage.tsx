@@ -41,7 +41,7 @@ const BooksPage = () => {
                             </div>
                         </div>
                     </div>
-                    <RandalSahayate />
+                    <RandalSahayate />  
                 </div>
             </div>
         </section>

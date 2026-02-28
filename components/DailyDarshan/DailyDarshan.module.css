@@ -203,4 +203,7 @@
   .dateBadgeWrap {
     display: none;
   }
+  .section {
+    padding: 3rem 0 3rem;
+  }
 }

@@ -1,7 +1,6 @@
 /* ── Animations ────────────────────────────────────────────────────── */
 
 @keyframes floatNote {
-
   0%,
   100% {
     transform: translateY(0) rotate(0deg);
@@ -15,7 +14,6 @@
 }
 
 @keyframes cornerGlow {
-
   0%,
   100% {
     opacity: 0.4;
@@ -83,10 +81,12 @@
 .dividerLine {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right,
-      transparent,
-      rgba(245, 166, 35, 0.5),
-      transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(245, 166, 35, 0.5),
+    transparent
+  );
 }
 
 .dividerDiamond {
@@ -188,6 +188,9 @@
 
   .lyricsInner {
     padding: 1rem;
+  }
+  .musicNote {
+    display: none;
   }
 }
 

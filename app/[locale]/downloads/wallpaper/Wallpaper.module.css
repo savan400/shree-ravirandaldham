@@ -62,12 +62,14 @@
   margin: 8px auto 0;
   width: 120px;
   height: 2px;
-  background: linear-gradient(90deg,
-      transparent,
-      #f0b040,
-      #d4500a,
-      #f0b040,
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f0b040,
+    #d4500a,
+    #f0b040,
+    transparent
+  );
   border-radius: 2px;
 }
 
@@ -228,12 +230,14 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg,
-      transparent,
-      #d4500a 20%,
-      #f0b040 50%,
-      #d4500a 80%,
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d4500a 20%,
+    #f0b040 50%,
+    #d4500a 80%,
+    transparent
+  );
   z-index: 2;
   opacity: 0;
   transition: opacity 0.35s ease;
@@ -248,10 +252,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg,
-      transparent 30%,
-      rgba(255, 200, 80, 0.16) 50%,
-      transparent 70%);
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 200, 80, 0.16) 50%,
+    transparent 70%
+  );
   background-size: 250% 100%;
   background-position: -150% 0;
   pointer-events: none;
@@ -271,9 +277,11 @@
   left: 0;
   right: 0;
   padding: 28px 14px 10px;
-  background: linear-gradient(to top,
-      rgba(92, 15, 15, 0.78) 0%,
-      transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(92, 15, 15, 0.78) 0%,
+    transparent 100%
+  );
   color: #ffe4aa;
   font-family: var(--font-cormorant);
   font-size: 0.82rem;
@@ -318,11 +326,13 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
 
-  background: linear-gradient(135deg,
-      #5c0f0f 0%,
-      #c45400 35%,
-      #c8922a 65%,
-      #c45400 100%);
+  background: linear-gradient(
+    135deg,
+    #5c0f0f 0%,
+    #c45400 35%,
+    #c8922a 65%,
+    #c45400 100%
+  );
   background-size: 200% 200%;
   background-position: 0% 50%;
 
@@ -353,10 +363,12 @@
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.22),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
   transform: skewX(-20deg);
   transition: none;
 }
@@ -389,7 +401,6 @@
 }
 
 @keyframes nudgeDown {
-
   0%,
   100% {
     transform: translateY(0);
@@ -426,7 +437,6 @@
 }
 
 @keyframes flamePulse {
-
   0%,
   100% {
     transform: scale(1) translateY(0);
@@ -439,6 +449,12 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .gridMobile {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}
 @media (max-width: 768px) {
   .section {
     padding: 3rem 0;
@@ -467,7 +483,7 @@
 
   .gridMobile {
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 20px;
   }
 
   .card:hover {

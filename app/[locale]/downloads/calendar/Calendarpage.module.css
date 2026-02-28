@@ -125,7 +125,6 @@
 
 /* ── Animations ── */
 @keyframes dotPulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -137,7 +136,12 @@
     opacity: 1;
   }
 }
+@media screen and (max-width: 768px) {
+  .csWrapper {
 
+    padding: 0px 20px 0px;
+  }
+}
 /* ── Responsive ── */
 @media (max-width: 480px) {
   .csCard {

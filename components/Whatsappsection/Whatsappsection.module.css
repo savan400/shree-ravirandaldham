@@ -718,9 +718,14 @@
   }
 }
 
+@media (max-width: 768px) {
+  .subDesc {
+    margin: 0 auto 30px;
+  }
+}
 @media (max-width: 600px) {
   .section {
-    padding: 70px 0 60px;
+    padding: 30px 0 30px;
   }
 
   .benefitsList {
@@ -730,5 +735,17 @@
   .bannerContent {
     flex-direction: column;
     text-align: center;
+  }
+  .diyas {
+    display: none;
+  }
+  .benefitsColumn {
+    display: none;
+  }
+  .previewColumn {
+    display: none;
+  }
+  .bottomBanner {
+    display: none;
   }
 }
