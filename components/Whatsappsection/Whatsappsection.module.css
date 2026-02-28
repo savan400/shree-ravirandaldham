@@ -749,3 +749,11 @@
     display: none;
   }
 }
+@media (max-width: 400px) {
+  .title {
+    font-size: 30px;
+  }
+  .subDesc {
+    margin-bottom: 10px;
+  }
+}

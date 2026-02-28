@@ -242,6 +242,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: 0px;
+    padding-bottom: 0px;
   }
   .section {
     padding: 30px 0 30px;

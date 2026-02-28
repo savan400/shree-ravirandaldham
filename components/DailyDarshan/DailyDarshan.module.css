@@ -207,3 +207,8 @@
     padding: 3rem 0 3rem;
   }
 }
+@media screen and (max-width: 400px) {
+  .cardGrid{
+    margin-bottom: 5px;
+  }
+}

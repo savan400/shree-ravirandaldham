@@ -292,7 +292,12 @@
   .container {
     padding: 0 1rem;
   }
-.section {
-  padding: 3rem 0 3rem;
+  .section {
+    padding: 3rem 0 3rem;
+  }
 }
+@media screen and (max-width: 400px) {
+  .grid {
+    gap: 1rem;
+  }
 }
