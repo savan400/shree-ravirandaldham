@@ -100,6 +100,7 @@ import { routing } from "@/i18n/routing";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export default async function RootLayout({
   children,
@@ -127,20 +128,22 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-             __html: JSON.stringify(await generateStructuredData("Organization", locale)),
+            __html: JSON.stringify(await generateStructuredData("Organization", locale)),
           }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-             __html: JSON.stringify(await generateStructuredData("Website", locale)),
+            __html: JSON.stringify(await generateStructuredData("Website", locale)),
           }}
         />
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          <Header />
-          {children}
-          <Footer />
-        </NextIntlClientProvider>
+        <SmoothScrollProvider>
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            <Header />
+            {children}
+            <Footer />
+          </NextIntlClientProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   );
