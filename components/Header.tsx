@@ -16,13 +16,13 @@ interface DesktopNavItemProps {
 
 interface SubmenuItem {
   title: string;
-  key?: string;
+  key: string;
   href: string;
 }
 
 interface MenuItem {
   title: string;
-  key?: string;
+  key: string;
   href: string;
   submenu?: SubmenuItem[];
   comingSoon?: boolean;
@@ -36,106 +36,122 @@ const MENU_ITEMS: MenuItem[] = [
     key: "ravirandal_dham",
     href: "#",
     submenu: [
-      { title: "Parichay", href: "/ravirandaldham/parichay" },
-      { title: "Itihas", href: "/ravirandaldham/itihas" },
-      { title: "Mahima", href: "/ravirandaldham/mahima" },
+      { title: "Parichay", key: "parichay", href: "/ravirandaldham/parichay" },
+      { title: "Itihas", key: "itihas", href: "/ravirandaldham/itihas" },
+      { title: "Mahima", key: "mahima", href: "/ravirandaldham/mahima" },
       {
         title: "Shree Dineshpuri Bapu",
+        key: "shree_dineshpuri_bapu",
         href: "/ravirandaldham/dineshpuri-bapu",
       },
       {
         title: "Shree 1008 Akshaypari Bapu",
+        key: "shree_1008_akshaypari_bapu",
         href: "/ravirandaldham/akshaypari-bapu",
       },
-      { title: "Shree Ajaypari Bapu", href: "/ravirandaldham/ajaypari-bapu" },
-
-      { title: "Seva Karya", href: "/ravirandaldham/seva-karya" },
+      {
+        title: "Shree Ajaypari Bapu",
+        key: "shree_ajaypari_bapu",
+        href: "/ravirandaldham/ajaypari-bapu",
+      },
+      { title: "Seva Karya", key: "seva_karya", href: "/ravirandaldham/seva-karya" },
     ],
   },
   {
     title: "Upasna Vidhi",
+    key: "upasna_vidhi",
     href: "#",
     submenu: [
-      { title: "Darshan Timing", href: "/upasna-vidhi/darshan-timing" },
-      { title: "Seva Punjan", href: "/upasna-vidhi/seva-punjan" },
-      { title: "Bhakti", href: "/upasna-vidhi/bhakti" },
-      { title: "Utsav", href: "/upasna-vidhi/utsav" },
-      { title: "Randal Tedvanu Booking", href: "/upasna-vidhi/randal-booking" },
-      { title: "Yagna Booking", href: "/upasna-vidhi/yagna-booking" },
-      { title: "Aarti", href: "/upasna-vidhi/aarti" },
-      { title: "Mataji Darshan", href: "/upasna-vidhi/mataji-darshan" },
+      { title: "Darshan Timing", key: "darshan_timing", href: "/upasna-vidhi/darshan-timing" },
+      { title: "Seva Punjan", key: "seva_punjan", href: "/upasna-vidhi/seva-punjan" },
+      { title: "Bhakti", key: "bhakti", href: "/upasna-vidhi/bhakti" },
+      { title: "Utsav", key: "utsav", href: "/upasna-vidhi/utsav" },
+      { title: "Randal Tedvanu Booking", key: "randal_tedvanu_booking", href: "/upasna-vidhi/randal-booking" },
+      { title: "Yagna Booking", key: "yagna_booking", href: "/upasna-vidhi/yagna-booking" },
+      { title: "Aarti", key: "aarti", href: "/upasna-vidhi/aarti" },
+      { title: "Mataji Darshan", key: "mataji_darshan", href: "/upasna-vidhi/mataji-darshan" },
     ],
   },
   {
     title: "Facilities",
+    key: "facilities",
     href: "#",
     submenu: [
-      { title: "Bhojan Shala", href: "/facilities/bhojan-shala" },
-      { title: "108 Randal", href: "/facilities/108-randal" },
-      { title: "Atithi Gruh", href: "/facilities/atithi-gruh" },
+      { title: "Bhojan Shala", key: "bhojan_shala", href: "/facilities/bhojan-shala" },
+      { title: "108 Randal", key: "108_randal", href: "/facilities/108-randal" },
+      { title: "Atithi Gruh", key: "atithi_gruh", href: "/facilities/atithi-gruh" },
     ],
   },
   {
     title: "Pavitra Sthalo",
+    key: "pavitra_sthalo",
     href: "#",
     submenu: [
       {
         title: "Shree Ravirandal Temple",
+        key: "shree_ravirandal_temple",
         href: "/pavitra-sthalo/ravirandal-temple",
       },
-      { title: "Pavitra Vav", href: "/pavitra-sthalo/pavitra-vav" },
+      { title: "Pavitra Vav", key: "pavitra_vav", href: "/pavitra-sthalo/pavitra-vav" },
       {
         title: "Shree Shanidev Temple",
+        key: "shree_shanidev_temple",
         href: "/pavitra-sthalo/shanidev-temple",
       },
-      { title: "108 Randal", href: "/facilities/108-randal" },
+      { title: "108 Randal", key: "108_randal", href: "/facilities/108-randal" },
       {
         title: "Shree Dineshpuri Bapu Samadhi Sthan",
+        key: "shree_dineshpuri_bapu_samadhi_sthan",
         href: "/pavitra-sthalo/dineshpuribapu-samadhi",
       },
-      { title: "Dashama Temple", href: "/pavitra-sthalo/dashama-temple" },
-      { title: "Mahadev Temple", href: "/pavitra-sthalo/mahadev-temple" },
-      { title: "Randal Maa no Rath", href: "/pavitra-sthalo/randal-maa-rath" },
+      { title: "Dashama Temple", key: "dashama_temple", href: "/pavitra-sthalo/dashama-temple" },
+      { title: "Mahadev Temple", key: "mahadev_temple", href: "/pavitra-sthalo/mahadev-temple" },
+      { title: "Randal Maa no Rath", key: "randal_maa_no_rath", href: "/pavitra-sthalo/randal-maa-rath" },
       {
         title: "108 Jyot ni Mah Aaarti",
+        key: "108_jyot_ni_mah_aaarti",
         href: "/pavitra-sthalo/108-jyot-mah-aaarti",
       },
     ],
   },
   {
     title: "Events",
+    key: "events",
     href: "#",
     submenu: [
-      { title: "Upcoming Events", href: "/events/upcoming-events" },
-      { title: "Video Gallery", href: "/events/video-gallery" },
-      { title: "Photo Gallery", href: "/events/photo-gallery" },
+      { title: "Upcoming Events", key: "upcoming_events", href: "/events/upcoming-events" },
+      { title: "Video Gallery", key: "video_gallery", href: "/events/video-gallery" },
+      { title: "Photo Gallery", key: "photo_gallery", href: "/events/photo-gallery" },
     ],
   },
   {
     title: "History",
+    key: "history",
     href: "#",
     submenu: [
       {
         title: "History of Randaldham",
+        key: "history_of_randaldham",
         href: "/history/history-of-randaldham",
       },
-      { title: "Randal Prerna", href: "/history/randal-prerna" },
+      { title: "Randal Prerna", key: "randal_prerna", href: "/history/randal-prerna" },
     ],
   },
   {
     title: "Downloads",
+    key: "downloads",
     href: "#",
     submenu: [
-      { title: "Wallpaper", href: "/downloads/wallpaper" },
-      { title: "Calendar", href: "/downloads/calendar" },
-      { title: "Books", href: "/downloads/books" },
-      { title: "Audio", href: "/downloads/audio" },
+      { title: "Wallpaper", key: "wallpaper", href: "/downloads/wallpaper" },
+      { title: "Calendar", key: "calendar", href: "/downloads/calendar" },
+      { title: "Books", key: "books", href: "/downloads/books" },
+      { title: "Audio", key: "audio", href: "/downloads/audio" },
     ],
   },
-  { title: "Thoughts of Bapu", href: "/thoughts-of-bapu" },
-  { title: "Store", href: "#store", comingSoon: true },
-  { title: "Donation", href: "/donation" },
-  { title: "Contact Us", href: "/contact-us" },
+  { title: "Thoughts of Bapu", key: "thoughts_of_bapu", href: "/thoughts-of-bapu" },
+  { title: "Store", key: "store", href: "#store", comingSoon: true },
+  { title: "Donation", key: "donation", href: "/donation" },
+  { title: "Contact Us", key: "contact_us", href: "/contact-us" },
 ];
 
 const CONTACT_PHONE = "98258 35304, 05, 06";
@@ -175,9 +191,8 @@ const LanguageDropdown: React.FC = () => {
         <Globe className="w-3 h-3 shrink-0" />
         <span className="hidden sm:inline">{selected.nativeLabel}</span>
         <ChevronDown
-          className={`w-3 h-3 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
+          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""
+            }`}
         />
       </button>
 
@@ -250,15 +265,11 @@ const TopBar: React.FC = () => (
 
 // ─── Desktop Nav Item ─────────────────────────────────────────────────────────
 
-interface DesktopNavItemProps {
-  item: MenuItem;
-  closeSubmenu: () => void;
-}
-
 const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
   item,
   closeSubmenu,
 }) => {
+  const t = useTranslations("menuitems");
   const isHash = item.href.startsWith("#");
   const linkClass =
     "flex items-center text-white gap-1 px-3 py-4 text-[12px] xl:text-[13px] font-medium transition-colors relative " +
@@ -266,13 +277,11 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
     "after:bg-primary after:scale-x-0 after:origin-left " +
     "after:transition-transform after:duration-300 hover:after:scale-x-100";
 
-  const t = useTranslations("menuitems");
-
   return (
     <div className="nav-item relative group">
       {isHash ? (
         <a href={item.href} className={linkClass}>
-          {item.title}
+          {t(item.key)}
           {item.comingSoon && (
             <span className="ml-1.5 text-[9px] font-bold uppercase tracking-wide bg-yellow-400 text-yellow-900 px-1.5 py-0.5 rounded-full leading-none">
               Soon
@@ -287,7 +296,7 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
         </a>
       ) : (
         <Link href={item.href} className={linkClass}>
-          {item.title}
+          {t(item.key)}
           {item.submenu && (
             <ChevronDown
               className="w-3 h-3 transition-transform group-hover:rotate-180"
@@ -301,28 +310,28 @@ const DesktopNavItem: React.FC<DesktopNavItemProps> = ({
         <div
           className="nav-dropdown"
           role="menu"
-          aria-label={`${item.title} submenu`}
+          aria-label={`${t(item.key)} submenu`}
         >
           {item.submenu.map((sub) =>
             sub.href.startsWith("#") ? (
               <a
-                key={sub.title}
+                key={sub.key}
                 href={sub.href}
                 className="nav-dropdown-item"
                 role="menuitem"
                 onClick={closeSubmenu}
               >
-                {sub.title}
+                {t(sub.key)}
               </a>
             ) : (
               <Link
-                key={sub.title}
+                key={sub.key}
                 href={sub.href}
                 className="nav-dropdown-item"
                 role="menuitem"
                 onClick={closeSubmenu}
               >
-                {sub.title}
+                {t(sub.key)}
               </Link>
             ),
           )}
@@ -347,6 +356,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
   onToggle,
   onClose,
 }) => {
+  const t = useTranslations("menuitems");
   const mobileLinkClass =
     "w-full flex items-center justify-between px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary hover:text-primary transition-colors";
 
@@ -360,8 +370,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
           aria-expanded={isOpen}
           aria-haspopup="true"
         >
-          {item.title}
-
+          {t(item.key)}
           <ChevronDown
             className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
             aria-hidden="true"
@@ -369,7 +378,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
         </button>
       ) : item.href.startsWith("#") ? (
         <a href={item.href} className={mobileLinkClass} onClick={onClose}>
-          {item.title}
+          {t(item.key)}
           {item.comingSoon && (
             <span className="text-[9px] font-bold uppercase tracking-wide bg-yellow-400 text-yellow-900 px-1.5 py-0.5 rounded-full leading-none">
               Soon
@@ -378,7 +387,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
         </a>
       ) : (
         <Link href={item.href} className={mobileLinkClass} onClick={onClose}>
-          {item.title}
+          {t(item.key)}
         </Link>
       )}
 
@@ -387,23 +396,23 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
           {item.submenu.map((sub) =>
             sub.href.startsWith("#") ? (
               <a
-                key={sub.title}
+                key={sub.key}
                 href={sub.href}
                 className="block px-10 py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
                 role="menuitem"
                 onClick={onClose}
               >
-                {sub.title}
+                {t(sub.key)}
               </a>
             ) : (
               <Link
-                key={sub.title}
+                key={sub.key}
                 href={sub.href}
                 className="block px-10 py-2.5 text-sm text-muted-foreground hover:text-primary transition-colors"
                 role="menuitem"
                 onClick={onClose}
               >
-                {sub.title}
+                {t(sub.key)}
               </Link>
             ),
           )}
@@ -458,11 +467,10 @@ const Header: React.FC = () => {
       <TopBar />
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-card/95 backdrop-blur-md shadow-lg"
-            : "bg-card shadow-sm"
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
+          ? "bg-card/95 backdrop-blur-md shadow-lg"
+          : "bg-card shadow-sm"
+          }`}
       >
         {/* Decorative bottom gradient border */}
         <div
@@ -483,7 +491,6 @@ const Header: React.FC = () => {
           >
             <Image
               src="/logo-optional.png"
-              // src="/logo.png"
               alt="Shree Ravirandaldham logo"
               width={64}
               height={64}
@@ -563,7 +570,7 @@ const Header: React.FC = () => {
             >
               {MENU_ITEMS.map((item) => (
                 <DesktopNavItem
-                  key={item.title}
+                  key={item.key}
                   item={item}
                   closeSubmenu={() => setOpenSubmenu(null)}
                 />
@@ -582,7 +589,7 @@ const Header: React.FC = () => {
             <div className="max-h-[400px] overflow-y-auto">
               {MENU_ITEMS.map((item) => (
                 <MobileNavItem
-                  key={item.title}
+                  key={item.key}
                   item={item}
                   isOpen={openSubmenu === item.title}
                   onToggle={handleSubmenuToggle}

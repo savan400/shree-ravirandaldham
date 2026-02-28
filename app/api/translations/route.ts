@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050/api";
 
 /**
  * GET /api/translations
@@ -9,20 +10,22 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
  */
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const locale = searchParams.get('locale') || 'en';
+  const locale = searchParams.get("locale") || "en";
 
   try {
     const res = await fetch(`${BACKEND_URL}/translations?locale=${locale}`, {
-      cache: 'no-store',
+      cache: "no-store",
     });
-    
+
     if (res.ok) {
-        const data = await res.json();
-        console.log(`[Next.js API] Received ${Object.keys(data).length} sections from backend.`);
-        return NextResponse.json(data);
+      const data = await res.json();
+      console.log(
+        `[Next.js API] Received ${Object.keys(data).length} sections from backend.`,
+      );
+      return NextResponse.json(data);
     }
   } catch (error) {
-    console.error('Translation fetch proxy error:', error);
+    console.error("Translation fetch proxy error:", error);
     return NextResponse.json({});
   }
 }
