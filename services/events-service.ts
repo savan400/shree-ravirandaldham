@@ -1,4 +1,4 @@
-import { unstable_cache } from "next/cache";
+import { unstable_cache } from "@/lib/cache";
 import { apiClient, API_URL } from "./api-client";
 import { revalidateEvent } from "@/app/actions/revalidate";
 
@@ -34,8 +34,8 @@ export async function fetchEvents(
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/events', {
-          params: { page, limit }
+        const res = await apiClient.get("/events", {
+          params: { page, limit },
         });
         return res.data;
       } catch (error) {
@@ -44,7 +44,7 @@ export async function fetchEvents(
       }
     },
     [`events-${page}-${limit}`],
-    { tags: ['event'] }
+    { tags: ["event"] },
   )();
 }
 
@@ -54,7 +54,7 @@ export async function saveEvent(
 ): Promise<EventEntry> {
   const url = id ? `/events/admin/${id}` : `/events/admin`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
-  
+
   // Tag-based revalidation
   await revalidateEvent();
 

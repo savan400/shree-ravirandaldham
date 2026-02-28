@@ -1,4 +1,4 @@
-import { unstable_cache } from "next/cache";
+import { unstable_cache } from "@/lib/cache";
 import { apiClient } from "./api-client";
 import { revalidateSeo, revalidateSettings } from "@/app/actions/revalidate";
 
@@ -6,8 +6,8 @@ export async function fetchSeoData(route: string, locale: string) {
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/seo', {
-          params: { route, locale }
+        const res = await apiClient.get("/seo", {
+          params: { route, locale },
         });
         return res.data;
       } catch (err: any) {
@@ -16,14 +16,14 @@ export async function fetchSeoData(route: string, locale: string) {
       }
     },
     [`seo-${route}-${locale}`],
-    { tags: ['seo'] }
+    { tags: ["seo"] },
   )();
 }
 
 export async function fetchSeoList(search?: string) {
   try {
-    const res = await apiClient.get('/admin/seo-list', {
-      params: search ? { search } : {}
+    const res = await apiClient.get("/admin/seo-list", {
+      params: search ? { search } : {},
     });
     return res.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export async function fetchSeoList(search?: string) {
 
 export async function saveSeoData(data: any) {
   try {
-    const res = await apiClient.post('/admin/seo', data);
+    const res = await apiClient.post("/admin/seo", data);
     await revalidateSeo();
     return res.data;
   } catch (error) {
@@ -57,8 +57,8 @@ export async function deleteSeoData(id: string) {
 export async function uploadSeoImage(file: File) {
   const formData = new FormData();
   formData.append("file", file);
-  const res = await apiClient.post('/admin/seo/upload', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
+  const res = await apiClient.post("/admin/seo/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
   });
   return res.data;
 }
@@ -67,14 +67,14 @@ export async function fetchSeoRoutes(): Promise<string[]> {
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/seo-routes');
+        const res = await apiClient.get("/seo-routes");
         return res.data;
       } catch {
-        return ['/'];
+        return ["/"];
       }
     },
-    ['seo-routes'],
-    { tags: ['seo'] }
+    ["seo-routes"],
+    { tags: ["seo"] },
   )();
 }
 
@@ -82,19 +82,19 @@ export async function fetchGlobalSettings() {
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/settings');
+        const res = await apiClient.get("/settings");
         return res.data;
       } catch {
         return null;
       }
     },
-    ['global-settings'],
-    { tags: ['settings'] }
+    ["global-settings"],
+    { tags: ["settings"] },
   )();
 }
 
 export async function saveGlobalSettings(data: any) {
-  const res = await apiClient.post('/admin/settings', data);
+  const res = await apiClient.post("/admin/settings", data);
   await revalidateSettings();
   return res.data;
 }

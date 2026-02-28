@@ -4,14 +4,14 @@ import { LocalizedString, PaginatedResponse } from "./events-service";
 
 export interface GalleryImageItem {
   _id: string;
-  url: string; 
+  url: string;
   description: LocalizedString;
 }
 
 export interface GalleryEntry {
   _id: string;
   title: LocalizedString;
-  coverImage: string; 
+  coverImage: string;
   images: GalleryImageItem[];
   isEnabled: boolean;
   createdAt: string;
@@ -22,10 +22,10 @@ export interface VideoGalleryEntry {
   _id: string;
   title: LocalizedString;
   videoType: "link" | "file";
-  videoUrl: string; 
-  videoKey: string; 
+  videoUrl: string;
+  videoKey: string;
   thumbnailKey: string;
-  thumbnailUrl: string; 
+  thumbnailUrl: string;
   isEnabled: boolean;
   createdAt: string;
   updatedAt: string;
@@ -39,8 +39,8 @@ export async function fetchGalleries(
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/galleries', {
-          params: { page, limit }
+        const res = await apiClient.get("/galleries", {
+          params: { page, limit },
         });
         return res.data;
       } catch {
@@ -48,7 +48,7 @@ export async function fetchGalleries(
       }
     },
     [`galleries-${page}-${limit}`],
-    { tags: ['photo-gallery'] }
+    { tags: ["photo-gallery"] },
   )();
 }
 
@@ -68,8 +68,8 @@ export async function fetchGalleriesAdmin(
   limit = 9,
 ): Promise<PaginatedResponse<GalleryEntry>> {
   try {
-    const res = await apiClient.get('/galleries/admin', {
-      params: { page, limit }
+    const res = await apiClient.get("/galleries/admin", {
+      params: { page, limit },
     });
     return res.data;
   } catch {
@@ -83,7 +83,7 @@ export async function saveGallery(
 ): Promise<GalleryEntry> {
   const url = id ? `/admin/photos/${id}` : `/admin/photos`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
-  
+
   // Tag-based revalidation
   await revalidatePhotoGallery();
 
@@ -97,7 +97,7 @@ export async function deleteGallery(id: string): Promise<void> {
 
 // Video Galleries
 
-import { unstable_cache } from "next/cache";
+import { unstable_cache } from "@/lib/cache";
 import { revalidateVideoGallery } from "@/app/actions/revalidate";
 
 /** Public: enabled video galleries, paginated */
@@ -108,8 +108,8 @@ export async function fetchVideoGalleries(
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/video-galleries', {
-          params: { page, limit }
+        const res = await apiClient.get("/video-galleries", {
+          params: { page, limit },
         });
         return res.data;
       } catch (err) {
@@ -118,7 +118,7 @@ export async function fetchVideoGalleries(
       }
     },
     [`video-galleries-${page}-${limit}`],
-    { tags: ['video-gallery'] }
+    { tags: ["video-gallery"] },
   )();
 }
 
@@ -128,8 +128,8 @@ export async function fetchVideoGalleriesAdmin(
   limit = 8,
 ): Promise<PaginatedResponse<VideoGalleryEntry>> {
   try {
-    const res = await apiClient.get('/video-galleries/admin', {
-      params: { page, limit }
+    const res = await apiClient.get("/video-galleries/admin", {
+      params: { page, limit },
     });
     return res.data;
   } catch {
@@ -143,8 +143,8 @@ export async function getPresignedUploadUrls(params: {
   videoExt?: string;
   thumbExt?: string;
 }) {
-  const res = await apiClient.get('/video-galleries/presign-upload', {
-    params
+  const res = await apiClient.get("/video-galleries/presign-upload", {
+    params,
   });
   return res.data;
 }
@@ -156,7 +156,7 @@ export async function saveVideoGalleryJson(
 ): Promise<VideoGalleryEntry> {
   const url = id ? `/video-galleries/admin/${id}` : `/video-galleries/admin`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
-  
+
   // Tag-based revalidation
   await revalidateVideoGallery();
 
@@ -186,8 +186,11 @@ export async function saveVideoGallery(
     }
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
-        try { resolve(JSON.parse(xhr.responseText)); } 
-        catch (err) { reject(new Error("Failed to parse response")); }
+        try {
+          resolve(JSON.parse(xhr.responseText));
+        } catch (err) {
+          reject(new Error("Failed to parse response"));
+        }
       } else {
         reject(new Error(xhr.statusText || "Failed to save video gallery"));
       }

@@ -1,4 +1,4 @@
-import { unstable_cache } from "next/cache";
+import { unstable_cache } from "@/lib/cache";
 import { apiClient } from "./api-client";
 import { revalidateCmsPage } from "@/app/actions/revalidate";
 import { LocalizedString, PaginatedResponse } from "./events-service";
@@ -6,7 +6,7 @@ import { LocalizedString, PaginatedResponse } from "./events-service";
 export interface CMSPageAnalytics {
   key?: string;
   value?: string;
-  image?: string; 
+  image?: string;
   title?: LocalizedString;
   description?: LocalizedString;
 }
@@ -19,12 +19,12 @@ export interface CMSPageImage {
 export interface CMSPageEntry {
   _id: string;
   key: string;
-  type: 'textonly' | 'profile' | 'temple';
+  type: "textonly" | "profile" | "temple";
   title: LocalizedString;
   badgeText: LocalizedString;
-  description: LocalizedString; 
+  description: LocalizedString;
   quote?: LocalizedString;
-  images: CMSPageImage[]; 
+  images: CMSPageImage[];
   analytics: CMSPageAnalytics[];
   createdAt: string;
   updatedAt: string;
@@ -41,7 +41,7 @@ export async function fetchCMSPage(key: string): Promise<CMSPageEntry | null> {
       }
     },
     [`cms-page-${key}`],
-    { tags: ['cms-page'] }
+    { tags: ["cms-page"] },
   )();
 }
 
@@ -50,8 +50,8 @@ export async function fetchCMSPagesAdmin(
   limit = 10,
 ): Promise<PaginatedResponse<CMSPageEntry>> {
   try {
-    const res = await apiClient.get('/admin/cms-pages', {
-      params: { page, limit }
+    const res = await apiClient.get("/admin/cms-pages", {
+      params: { page, limit },
     });
     return res.data;
   } catch {
@@ -65,7 +65,7 @@ export async function saveCMSPage(
 ): Promise<CMSPageEntry> {
   const url = id ? `/admin/cms-pages/${id}` : `/admin/cms-pages`;
   const res = await (id ? apiClient.put(url, data) : apiClient.post(url, data));
-  
+
   // Tag-based revalidation
   await revalidateCmsPage();
 

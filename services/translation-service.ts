@@ -1,4 +1,4 @@
-import { unstable_cache } from "next/cache";
+import { unstable_cache } from "@/lib/cache";
 import { apiClient } from "./api-client";
 import { revalidateTranslation } from "@/app/actions/revalidate";
 
@@ -14,7 +14,7 @@ export interface TranslationEntry {
 /** Fetch all translations as a flat array (for admin table) */
 export async function fetchTranslationsFlat(): Promise<TranslationEntry[]> {
   try {
-    const res = await apiClient.get('/translations/flat');
+    const res = await apiClient.get("/translations/flat");
     return res.data;
   } catch (error) {
     console.error("Error fetching translations:", error);
@@ -29,15 +29,15 @@ export async function fetchTranslationsNested(): Promise<
   return unstable_cache(
     async () => {
       try {
-        const res = await apiClient.get('/translations');
+        const res = await apiClient.get("/translations");
         return res.data;
       } catch (error) {
         console.error("Error fetching translations nested:", error);
         return {};
       }
     },
-    ['translations-nested'],
-    { tags: ['translation'] }
+    ["translations-nested"],
+    { tags: ["translation"] },
   )();
 }
 
@@ -45,7 +45,7 @@ export async function fetchTranslationsNested(): Promise<
 export async function saveTranslation(
   data: Omit<TranslationEntry, "_id">,
 ): Promise<TranslationEntry> {
-  const res = await apiClient.post('/admin/translations', data);
+  const res = await apiClient.post("/admin/translations", data);
   await revalidateTranslation();
   return res.data;
 }
