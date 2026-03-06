@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "export:translations": "node scripts/exportTranslations.js",
+    "import:translations": "node scripts/seedTranslations.js",
+    "seed": "npm run import:translations"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.996.0",

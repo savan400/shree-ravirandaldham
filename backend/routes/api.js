@@ -88,7 +88,7 @@ router.get('/seo', async (req, res) => {
   try {
     const { route, locale } = req.query;
     if (!route || !locale) return res.status(400).json({ error: 'Missing route or locale' });
-    
+
     const seoData = await SeoMeta.findOne({ route });
     if (!seoData) return res.status(404).json({ error: 'SEO data not found' });
 
@@ -103,7 +103,7 @@ router.get('/seo', async (req, res) => {
       noIndex: seoData.noIndex,
       noFollow: seoData.noFollow
     };
-    
+
     res.json(result);
   } catch (error) {
     console.error('Error fetching SEO data:', error);
@@ -117,7 +117,7 @@ router.get('/admin/seo-list', async (req, res) => {
     const { search } = req.query;
     let query = {};
     if (search) {
-      query = { 
+      query = {
         $or: [
           { route: { $regex: search, $options: 'i' } },
           { 'title.en': { $regex: search, $options: 'i' } }
@@ -135,20 +135,20 @@ router.get('/admin/seo-list', async (req, res) => {
 // ADMIN: POST /api/admin/seo - Save SEO record (Create/Update)
 router.post('/admin/seo', async (req, res) => {
   try {
-    const { 
-      route, 
-      title, 
-      description, 
-      keywords, 
-      canonicalUrl, 
-      ogImage, 
-      noIndex, 
-      noFollow 
+    const {
+      route,
+      title,
+      description,
+      keywords,
+      canonicalUrl,
+      ogImage,
+      noIndex,
+      noFollow
     } = req.body;
 
     // Strict validation for titles across all languages
     if (!title) return res.status(400).json({ error: 'Title data is missing' });
-    
+
     // Auto-normalize if title is a string (fallback)
     let finalTitle = title;
     if (typeof title === 'string') {
@@ -161,7 +161,7 @@ router.post('/admin/seo', async (req, res) => {
 
     // Same for description, keywords, etc (normalize if strings)
     const normalize = (val) => (typeof val === 'string' ? { en: val, hi: '', gu: '' } : val || { en: '', hi: '', gu: '' });
-    
+
     const finalData = {
       title: finalTitle,
       description: normalize(description),
@@ -210,7 +210,11 @@ router.post('/admin/seo/upload', async (req, res) => {
   busboy.on('finish', async () => {
     try {
       if (!uploadPromise) return res.status(400).json({ error: 'No file uploaded' });
-      const publicUrl = await uploadPromise;
+      const uploadResult = await uploadPromise;
+      // Wasabi's upload.done() can return an object or string depending on S3 lib internals/fallback.
+      const publicUrl = typeof uploadResult === 'object' && uploadResult.Location
+        ? uploadResult.Location
+        : uploadResult;
       res.json({ url: publicUrl });
     } catch (error) {
       console.error('Wasabi SEO upload error:', error);
@@ -219,6 +223,71 @@ router.post('/admin/seo/upload', async (req, res) => {
   });
 
   req.pipe(busboy);
+});
+
+// ADMIN: POST /api/admin/dynamic-content/upload - Upload dynamic image to Wasabi
+router.post('/admin/dynamic-content/upload', async (req, res) => {
+  const busboy = Busboy({ headers: req.headers });
+  let uploadPromise;
+
+  busboy.on('file', (fieldname, file, info) => {
+    const { filename, mimeType } = info;
+    const wasabiKey = `dynamic-content/${Date.now()}-${filename}`;
+    uploadPromise = wasabi.uploadObject(wasabiKey, file, mimeType);
+  });
+
+  busboy.on('finish', async () => {
+    try {
+      if (!uploadPromise) return res.status(400).json({ error: 'No file uploaded' });
+      const uploadResult = await uploadPromise;
+      const publicUrl = typeof uploadResult === 'object' && uploadResult.Location
+        ? uploadResult.Location
+        : uploadResult;
+      res.json({ url: publicUrl });
+    } catch (error) {
+      console.error('Wasabi dynamic-content upload error:', error);
+      res.status(500).json({ error: 'Upload failed' });
+    }
+  });
+
+  req.pipe(busboy);
+});
+
+// PUBLIC: POST /api/presign - Presign Wasabi URLs on demand
+router.post('/presign', async (req, res) => {
+  try {
+    const { urls } = req.body;
+    if (!urls || (!Array.isArray(urls) && typeof urls !== 'string')) {
+      return res.status(400).json({ error: 'Provide an array or a single url to presign' });
+    }
+
+    const processUrl = async (url) => {
+      if (!url || typeof url !== 'string') return url;
+      if (!process.env.WASABI_BUCKET) return url;
+
+      const match = url.match(/(seo\/og-images\/[^\?]+|dynamic-content\/[^\?]+|events\/[^/]+\/images\/[^\?]+|gallery\/[^\?]+)/);
+      if (match) {
+        try {
+          return await wasabi.presignGetUrl(match[1]);
+        } catch (e) {
+          console.error("Presign error:", e);
+          return url;
+        }
+      }
+      return url;
+    };
+
+    if (Array.isArray(urls)) {
+      const presignedUrls = await Promise.all(urls.map(u => processUrl(u)));
+      return res.json({ urls: presignedUrls });
+    } else {
+      const presignedUrl = await processUrl(urls);
+      return res.json({ url: presignedUrl });
+    }
+  } catch (error) {
+    console.error('Error generating presigned URLs:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // GET /api/settings - Public settings
@@ -271,6 +340,7 @@ router.get('/translations', async (req, res) => {
       if (!result[doc.section]) result[doc.section] = {};
       result[doc.section][doc.key] = doc[locale] || '';
     }
+    // console.log('res.json(result)', res.json(result));
     res.json(result);
   } catch (error) {
     console.error('Fetch translations error:', error);
@@ -334,9 +404,9 @@ router.get('/events/image/*', async (req, res) => {
 // Get all events (supports ?page=&limit= for server-side pagination)
 router.get('/events', async (req, res) => {
   try {
-    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 10);
-    const skip  = (page - 1) * limit;
+    const skip = (page - 1) * limit;
 
     const [total, events] = await Promise.all([
       Event.countDocuments(),
@@ -350,7 +420,7 @@ router.get('/events', async (req, res) => {
 
     const data = await Promise.all(events.map(async (event) => ({
       ...event,
-      images:     await Promise.all((event.images || []).map(resolveUrl)),
+      images: await Promise.all((event.images || []).map(resolveUrl)),
       coverImage: await resolveUrl(event.coverImage),
     })));
 
@@ -366,7 +436,7 @@ router.get('/events', async (req, res) => {
 router.post('/events/admin', upload.array('images', 10), async (req, res) => {
   try {
     if (!req.body.data) {
-       return res.status(400).json({ error: 'Missing event data' });
+      return res.status(400).json({ error: 'Missing event data' });
     }
     const eventData = JSON.parse(req.body.data);
 
@@ -379,9 +449,9 @@ router.post('/events/admin', upload.array('images', 10), async (req, res) => {
       // For new events, we need at least one image
       return res.status(400).json({ error: 'At least one event image is required' });
     }
-    
+
     const eventId = new mongoose.Types.ObjectId();
-    
+
     const newEvent = new Event({
       ...eventData,
       _id: eventId,
@@ -425,7 +495,7 @@ router.put('/events/admin/:id', upload.array('images', 10), async (req, res) => 
 
     const storedKeys = existingEvent.images || [];          // raw Wasabi keys in DB
     const clientImages = eventData.images || [];            // may be full URLs or keys
-    const clientCover  = eventData.coverImage || '';        // may be full URL or key
+    const clientCover = eventData.coverImage || '';        // may be full URL or key
 
     // Resolve each stored key to its URL so we can match what the client sent
     const resolveKey = async (key) => {
@@ -539,9 +609,9 @@ const resolveGallery = async (gallery) => {
 // GET /api/galleries — public list (enabled only, paginated)
 router.get('/galleries', async (req, res) => {
   try {
-    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 10);
-    const skip  = (page - 1) * limit;
+    const skip = (page - 1) * limit;
     const filter = { isEnabled: true };
 
     const [total, galleries] = await Promise.all([
@@ -560,9 +630,9 @@ router.get('/galleries', async (req, res) => {
 // GET /api/galleries/admin — admin list (all, paginated)
 router.get('/galleries/admin', async (req, res) => {
   try {
-    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 10);
-    const skip  = (page - 1) * limit;
+    const skip = (page - 1) * limit;
 
     const [total, galleries] = await Promise.all([
       Gallery.countDocuments(),
@@ -660,7 +730,7 @@ router.put('/galleries/admin/:id', upload.array('images'), async (req, res) => {
     const keepIds = (data.keepImageIds || []).map(String);
     const toDelete = gallery.images.filter(img => !keepIds.includes(String(img._id)));
     for (const img of toDelete) {
-      try { await wasabi.deleteObjects([img.key]); } catch {}
+      try { await wasabi.deleteObjects([img.key]); } catch { }
     }
     gallery.images = gallery.images.filter(img => keepIds.includes(String(img._id)));
 
@@ -728,9 +798,9 @@ const resolveThumbnailUrl = async (key) => {
 // GET /api/video-galleries — public paginated list (enabled only)
 router.get('/video-galleries', async (req, res) => {
   try {
-    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 8);
-    const skip  = (page - 1) * limit;
+    const skip = (page - 1) * limit;
     const filter = { isEnabled: true };
 
     const [total, docs] = await Promise.all([
@@ -753,9 +823,9 @@ router.get('/video-galleries', async (req, res) => {
 // GET /api/video-galleries/admin — admin paginated list (all)
 router.get('/video-galleries/admin', async (req, res) => {
   try {
-    const page  = Math.max(1, parseInt(req.query.page)  || 1);
+    const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 8);
-    const skip  = (page - 1) * limit;
+    const skip = (page - 1) * limit;
 
     const [total, docs] = await Promise.all([
       VideoGallery.countDocuments(),
@@ -785,14 +855,14 @@ router.get('/video-galleries/stream/*', async (req, res) => {
 
     // HEAD: get file size and content type
     const head = await wasabi.headObject(key);
-    const fileSize   = head.ContentLength;
+    const fileSize = head.ContentLength;
     const contentType = head.ContentType || 'video/mp4';
 
     const range = req.headers.range;
     if (range) {
       const [startStr, endStr] = range.replace(/bytes=/, '').split('-');
       const start = parseInt(startStr, 10);
-      const end   = endStr ? parseInt(endStr, 10) : Math.min(start + 2 * 1024 * 1024 - 1, fileSize - 1);
+      const end = endStr ? parseInt(endStr, 10) : Math.min(start + 2 * 1024 * 1024 - 1, fileSize - 1);
       const chunkSize = end - start + 1;
 
       const cmd = new GetObjectCommand({
@@ -803,10 +873,10 @@ router.get('/video-galleries/stream/*', async (req, res) => {
       const { Body } = await wasabi.wasabiClient.send(cmd);
 
       res.writeHead(206, {
-        'Content-Range':  `bytes ${start}-${end}/${fileSize}`,
-        'Accept-Ranges':  'bytes',
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
         'Content-Length': chunkSize,
-        'Content-Type':   contentType,
+        'Content-Type': contentType,
       });
       pipeline(Body, res, (err) => {
         if (err && err.code !== 'ERR_STREAM_PREMATURE_CLOSE') {
@@ -818,8 +888,8 @@ router.get('/video-galleries/stream/*', async (req, res) => {
       const { Body } = await wasabi.wasabiClient.send(cmd);
       res.writeHead(200, {
         'Content-Length': fileSize,
-        'Content-Type':   contentType,
-        'Accept-Ranges':  'bytes',
+        'Content-Type': contentType,
+        'Accept-Ranges': 'bytes',
       });
       pipeline(Body, res, (err) => {
         if (err && err.code !== 'ERR_STREAM_PREMATURE_CLOSE') {
@@ -904,7 +974,7 @@ router.post('/video-galleries/admin', async (req, res) => {
   busboy.on('file', (name, file, info) => {
     const { filename, mimeType } = info;
     const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(filename);
-    
+
     let key = '';
     if (name === 'video') {
       key = `video-galleries/${id}/video/${uniqueName}`;
@@ -925,7 +995,7 @@ router.post('/video-galleries/admin', async (req, res) => {
     try {
       if (errorSent) return;
       await Promise.all(uploads);
-      
+
       const data = JSON.parse(fields.data || '{}');
       const titleErr = validateLocalized(data.title, 'Title');
       if (titleErr) return res.status(400).json({ error: titleErr });
@@ -980,22 +1050,22 @@ router.put('/video-galleries/admin/:id', async (req, res) => {
       if (data.videoType === 'link') {
         doc.videoUrl = data.videoUrl || '';
         if (doc.videoKey) {
-           try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
-           doc.videoKey = '';
+          try { await wasabi.deleteObjects([doc.videoKey]); } catch { }
+          doc.videoKey = '';
         }
       }
       if (data.isEnabled !== undefined) doc.isEnabled = data.isEnabled;
 
       if (data.videoKey) {
         if (doc.videoKey && doc.videoKey !== data.videoKey) {
-           try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
+          try { await wasabi.deleteObjects([doc.videoKey]); } catch { }
         }
         doc.videoKey = data.videoKey;
       }
 
       if (data.thumbnailKey) {
         if (doc.thumbnailKey && doc.thumbnailKey !== data.thumbnailKey) {
-           try { await wasabi.deleteObjects([doc.thumbnailKey]); } catch {}
+          try { await wasabi.deleteObjects([doc.thumbnailKey]); } catch { }
         }
         doc.thumbnailKey = data.thumbnailKey;
       }
@@ -1025,7 +1095,7 @@ router.put('/video-galleries/admin/:id', async (req, res) => {
     busboy.on('file', (name, file, info) => {
       const { filename, mimeType } = info;
       const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(filename);
-      
+
       let key = '';
       if (name === 'video') {
         key = `video-galleries/${doc._id}/video/${uniqueName}`;
@@ -1046,7 +1116,7 @@ router.put('/video-galleries/admin/:id', async (req, res) => {
       try {
         if (errorSent) return;
         await Promise.all(uploads);
-        
+
         const data = JSON.parse(fields.data || '{}');
         const titleErr = validateLocalized(data.title, 'Title');
         if (titleErr) return res.status(400).json({ error: titleErr });
@@ -1056,22 +1126,22 @@ router.put('/video-galleries/admin/:id', async (req, res) => {
         if (data.videoType === 'link') {
           doc.videoUrl = data.videoUrl || '';
           if (doc.videoKey) {
-             try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
-             doc.videoKey = '';
+            try { await wasabi.deleteObjects([doc.videoKey]); } catch { }
+            doc.videoKey = '';
           }
         }
         if (data.isEnabled !== undefined) doc.isEnabled = data.isEnabled;
 
         if (newVideoKey) {
           if (doc.videoKey) {
-             try { await wasabi.deleteObjects([doc.videoKey]); } catch {}
+            try { await wasabi.deleteObjects([doc.videoKey]); } catch { }
           }
           doc.videoKey = newVideoKey;
         }
 
         if (newThumbnailKey) {
           if (doc.thumbnailKey) {
-             try { await wasabi.deleteObjects([doc.thumbnailKey]); } catch {}
+            try { await wasabi.deleteObjects([doc.thumbnailKey]); } catch { }
           }
           doc.thumbnailKey = newThumbnailKey;
         }
@@ -1199,11 +1269,11 @@ router.post('/galleries', upload.array('images'), async (req, res) => {
     // Identify coverImage key
     let coverKey = '';
     if (data.coverImageId && data.coverImageId.startsWith('new-')) {
-       // Backend would need to know which index this "new-" maps to. 
-       // For simplicity, if not provided, use first image.
-       coverKey = imageItems[0]?.key || '';
+      // Backend would need to know which index this "new-" maps to. 
+      // For simplicity, if not provided, use first image.
+      coverKey = imageItems[0]?.key || '';
     } else {
-       coverKey = imageItems[0]?.key || '';
+      coverKey = imageItems[0]?.key || '';
     }
 
     const gallery = await Gallery.create({
@@ -1236,7 +1306,7 @@ router.put('/galleries/:id', upload.array('images'), async (req, res) => {
     const imagesToRemove = gallery.images.filter(img => !keepIds.includes(img._id.toString()));
     if (imagesToRemove.length > 0) {
       const keys = imagesToRemove.map(img => img.key);
-      try { await wasabi.deleteObjects(keys); } catch {}
+      try { await wasabi.deleteObjects(keys); } catch { }
     }
     gallery.images = gallery.images.filter(img => keepIds.includes(img._id.toString()));
 
@@ -1287,7 +1357,7 @@ router.delete('/galleries/:id', async (req, res) => {
 
     const keys = gallery.images.map(img => img.key);
     if (keys.length > 0) {
-      try { await wasabi.deleteObjects(keys); } catch {}
+      try { await wasabi.deleteObjects(keys); } catch { }
     }
 
     await Gallery.findByIdAndDelete(req.params.id);
@@ -1342,9 +1412,9 @@ router.get('/cms-pages/:key', async (req, res) => {
 // GET /api/cms-pages/admin — admin list (paginated)
 router.get('/admin/cms-pages', async (req, res) => {
   try {
-    const pageNum  = Math.max(1, parseInt(req.query.page)  || 1);
+    const pageNum = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.max(1, parseInt(req.query.limit) || 10);
-    const skip  = (pageNum - 1) * limit;
+    const skip = (pageNum - 1) * limit;
 
     const [total, pages] = await Promise.all([
       CMSPage.countDocuments(),
@@ -1363,7 +1433,7 @@ router.get('/admin/cms-pages', async (req, res) => {
 router.post('/admin/cms-pages', upload.array('images'), async (req, res) => {
   try {
     const data = JSON.parse(req.body.data || '{}');
-    
+
     // Strict Validations
     if (!data.key) return res.status(400).json({ error: 'Page key is required' });
     if (['profile', 'temple'].includes(data.type) && (!req.files || req.files.length === 0)) {
@@ -1387,7 +1457,7 @@ router.post('/admin/cms-pages', upload.array('images'), async (req, res) => {
 
     const pageId = new mongoose.Types.ObjectId();
     const uploadedImages = [];
-    
+
     // Handle main images
     if (req.files && req.files.length > 0) {
       for (const file of req.files) {
@@ -1475,7 +1545,7 @@ router.put('/admin/cms-pages/:id', upload.array('images'), async (req, res) => {
     const finalKeys = finalImages.map(img => img.url);
     const toDelete = (existingPage.images || []).map(img => typeof img === 'string' ? img : img.url)
       .filter(k => !finalKeys.includes(k));
-    
+
     if (toDelete.length > 0) {
       try { await wasabi.deleteObjects(toDelete); } catch (err) { console.error('Wasabi cleanup error:', err); }
     }
@@ -1513,6 +1583,9 @@ router.delete('/admin/cms-pages/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+const dynamicContentRoutes = require('./dynamicContent');
+router.use('/dynamic-content', dynamicContentRoutes);
 
 module.exports = router;
 

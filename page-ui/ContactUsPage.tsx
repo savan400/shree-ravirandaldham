@@ -6,11 +6,13 @@ import PageBackgroundDecorations from "@/components/PageBackgroundDecorations/Pa
 import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
+import { useTranslations } from "next-intl";
 import { useInView } from "@/hooks/useInView";
 import { visibleClass } from "@/lib/utils";
 import RandalSahayate from "./randalSahayate";
 
 const ContactUsPage = () => {
+  const t = useTranslations("ContactUs");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -41,7 +43,7 @@ const ContactUsPage = () => {
 
       <div className={cu.container}>
         <div className={visibleClass("header", visible)}>
-          <CommonTitle text="Contact Us" />
+          <CommonTitle text={t("cu_title")} />
           <LotusDivider />
 
           {/* ── Two-column: Info + Form ── */}
@@ -52,10 +54,9 @@ const ContactUsPage = () => {
                 <div className={cu.cuInfoRow}>
                   <span className={cu.cuInfoIcon}>📍</span>
                   <div>
-                    <p className={cu.cuInfoLabel}>Address</p>
+                    <p className={cu.cuInfoLabel}>{t("cu_address_label")}</p>
                     <p className={cu.cuInfoValue}>
-                      Ravi, near Dadva Road, near vasavad, Ravi Randal Na,
-                      Randal Na Dadava, Dadva, Gujarat 365460
+                      {t("cu_address_value")}
                     </p>
                   </div>
                 </div>
@@ -65,7 +66,7 @@ const ContactUsPage = () => {
                 <div className={cu.cuInfoRow}>
                   <span className={cu.cuInfoIcon}>📞</span>
                   <div>
-                    <p className={cu.cuInfoLabel}>Phone</p>
+                    <p className={cu.cuInfoLabel}>{t("cu_phone_label")}</p>
                     <p className={cu.cuInfoValue}>
                       <a href="tel:+919825835304">98258 35304</a>
                     </p>
@@ -77,7 +78,7 @@ const ContactUsPage = () => {
                 <div className={cu.cuInfoRow}>
                   <span className={cu.cuInfoIcon}>✉️</span>
                   <div>
-                    <p className={cu.cuInfoLabel}>Email</p>
+                    <p className={cu.cuInfoLabel}>{t("cu_email_label")}</p>
                     <p className={cu.cuInfoValue}>
                       <a href="mailto:shreesalangpur@gmail.com">
                         shreesalangpur@gmail.com
@@ -91,11 +92,11 @@ const ContactUsPage = () => {
                 <div className={cu.cuInfoRow}>
                   <span className={cu.cuInfoIcon}>🕐</span>
                   <div>
-                    <p className={cu.cuInfoLabel}>Darshan Timings</p>
+                    <p className={cu.cuInfoLabel}>{t("cu_timings_label")}</p>
                     <p className={cu.cuInfoValue}>
-                      Morning: 6:00 AM – 12:00 PM
+                      {t("cu_timings_morning")}
                       <br />
-                      Evening: 4:00 PM – 9:00 PM
+                      {t("cu_timings_evening")}
                     </p>
                   </div>
                 </div>
@@ -105,10 +106,10 @@ const ContactUsPage = () => {
             {/* Contact Form */}
             <div className={cu.cuFormWrap}>
               <h3 className={cu.cuMapHeading} style={{ paddingTop: "30px" }}>
-                Find Us
+                {t("cu_find_us_heading")}
               </h3>
               <p className={cu.cuMapSub}>
-                Salangpur Dham — Kashtabhanjan Dev Mandir
+                {t("cu_find_us_sub")}
               </p>
               <div className={cu.cuMapAccent} />
               <iframe

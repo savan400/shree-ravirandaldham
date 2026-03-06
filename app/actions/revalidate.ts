@@ -36,3 +36,8 @@ export async function revalidateTranslation() {
   console.log('[Action] Revalidating translation tag');
   revalidateTag('translation', 'max');
 }
+
+export async function revalidateDynamicContent() {
+  console.log('[Action] Revalidating dynamic-content tag');
+  revalidateTag('dynamic-content', 'max');
+}

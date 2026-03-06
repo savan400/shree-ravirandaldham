@@ -11,6 +11,7 @@ import VideoGalleryCMS from "./VideoGalleryCMS";
 import PagesCMS from "./PagesCMS";
 import GlobalSettingsCMS from "./GlobalSettingsCMS";
 import SeoCMS from "./SeoCMS";
+import DynamicContentCMS from "./DynamicContentCMS";
 import { AdminButton, Card } from "./components/AdminUI";
 import {
   Settings,
@@ -24,6 +25,7 @@ import {
   Images,
   Video,
   FileText,
+  LayoutTemplate,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -34,7 +36,8 @@ type Tab =
   | "gallery"
   | "video-gallery"
   | "cms-pages"
-  | "global-settings";
+  | "global-settings"
+  | "dynamic-content";
 
 export default function AdminForm({ locale }: { locale: string }) {
   const [activeTab, setActiveTab] = useState<Tab>("seo");
@@ -86,11 +89,10 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("seo");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "seo"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "seo"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <Settings className="w-5 h-5" />
             <span className="flex-1 text-left text-sm">SEO Management</span>
@@ -102,11 +104,10 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("global-settings");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "global-settings"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "global-settings"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <Globe className="w-5 h-5" />
             <span className="flex-1 text-left text-sm">Site Settings</span>
@@ -118,11 +119,10 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("translations");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "translations"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "translations"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <Globe className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Translations</span>
@@ -136,11 +136,10 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("events");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "events"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "events"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <Calendar className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Events Management</span>
@@ -152,11 +151,10 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("gallery");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "gallery"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "gallery"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <Images className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Photo Gallery</span>
@@ -168,11 +166,10 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("video-gallery");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "video-gallery"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "video-gallery"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <Video className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">Video Gallery</span>
@@ -186,15 +183,29 @@ export default function AdminForm({ locale }: { locale: string }) {
               setActiveTab("cms-pages");
               setIsSidebarOpen(false);
             }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-              activeTab === "cms-pages"
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "cms-pages"
                 ? "bg-orange-500/10 text-orange-400 font-bold"
                 : "hover:bg-white/5 text-orange-100/60"
-            }`}
+              }`}
           >
             <FileText className="w-4 h-4 md:w-5 md:h-5" />
             <span className="flex-1 text-left text-sm">CMS Pages</span>
             {activeTab === "cms-pages" && <ChevronRight className="w-4 h-4" />}
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab("dynamic-content");
+              setIsSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "dynamic-content"
+                ? "bg-orange-500/10 text-orange-400 font-bold"
+                : "hover:bg-white/5 text-orange-100/60"
+              }`}
+          >
+            <LayoutTemplate className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="flex-1 text-left text-sm">Dynamic Content</span>
+            {activeTab === "dynamic-content" && <ChevronRight className="w-4 h-4" />}
           </button>
         </nav>
 
@@ -275,6 +286,12 @@ export default function AdminForm({ locale }: { locale: string }) {
             {activeTab === "global-settings" && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <GlobalSettingsCMS />
+              </div>
+            )}
+
+            {activeTab === "dynamic-content" && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <DynamicContentCMS />
               </div>
             )}
           </div>

@@ -425,6 +425,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({
 // ─── Main Header ──────────────────────────────────────────────────────────────
 
 const Header: React.FC = () => {
+  const tCommon = useTranslations("common");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
@@ -499,10 +500,10 @@ const Header: React.FC = () => {
             />
             <div className="hidden sm:block">
               <p className="text-sm font-bold text-primary leading-tight">
-                Shree Ravirandaldham
+                {tCommon("site_title")}
               </p>
               <p className="text-xs text-muted-foreground leading-tight">
-                Randaldhma Mandir, Dadva
+                {tCommon("site_subtitle")}
               </p>
             </div>
           </Link>

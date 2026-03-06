@@ -2,16 +2,23 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
 import styles from "./HeroBanner.module.css";
 import CommonButton from "../CommonButton/CommonButton";
+import { API_URL } from "@/services/api-client";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+interface LocalizedString {
+  en: string;
+  hi: string;
+  gu: string;
+}
+
 interface SlideData {
-  title: string;
-  subtitle: string;
-  verse: string;
-  accent: string;
+  image: string;
+  title: LocalizedString;
+  subtitle: LocalizedString;
 }
 
 interface ParticleData {
@@ -22,38 +29,17 @@ interface ParticleData {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const BANNER_IMAGES: string[] = [
-  "/images/banner-1.webp",
-  "/images/banner-2.webp",
-  "/images/banner-3.webp",
-  "/images/banner-4.webp",
-];
-
-const SLIDE_DATA: SlideData[] = [
+const DEFAULT_BANNER_IMAGES: SlideData[] = [
   {
-    title: "Shree Ravirandaldham",
-    subtitle: "Randaldhma Mandir, Dadva",
-    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
-    accent: "#FF8C00",
+    image: "/images/banner-1.webp",
+    title: { en: "Shree Ravirandaldham", hi: "श्री रविरांदलधाम", gu: "શ્રી રવિરાંદલધામ" },
+    subtitle: { en: "Randaldhma Mandir, Dadva", hi: "रांदलधाम मंदिर, दाडवा", gu: "રાંદલધામ મંદિર, દડવા" }
   },
   {
-    title: "Pavitra Dham",
-    subtitle: "A Sacred Abode of Peace & Devotion",
-    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
-    accent: "#FF6B00",
-  },
-  {
-    title: "Upasna & Aradhana",
-    subtitle: "Embrace the Divine Light Within",
-    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
-    accent: "#E8A000",
-  },
-  {
-    title: "Darshan & Seva",
-    subtitle: "Come, Seek Blessings & Tranquility",
-    verse: "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥",
-    accent: "#FF5500",
-  },
+    image: "/images/banner-2.webp",
+    title: { en: "Pavitra Dham", hi: "पवित्र धाम", gu: "પવિત્ર ધામ" },
+    subtitle: { en: "A Sacred Abode of Peace & Devotion", hi: "शांति और भक्ति का पवित्र निवास", gu: "શાંતિ અને ભક્તિનું પવિત્ર નિવાસસ્થાન" }
+  }
 ];
 
 const AUTO_PLAY_INTERVAL = 7000;
@@ -211,9 +197,51 @@ function textClass(visible: boolean, ...extra: string[]): string {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const HeroBanner: React.FC = () => {
+  const t = useTranslations("Homepage");
+  const locale = useLocale() as 'en' | 'hi' | 'gu';
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
+  const [bannerImages, setBannerImages] = useState<SlideData[]>(DEFAULT_BANNER_IMAGES);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const res = await fetch(`${API_URL}/dynamic-content/homepage_banners`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.value && data.value.length > 0) {
+            const banners = data.value;
+            const urls = banners.map((b: any) => b.image);
+            try {
+              const presignRes = await fetch(`${API_URL}/presign`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ urls })
+              });
+              if (presignRes.ok) {
+                const presigned = await presignRes.json();
+                if (presigned.urls) {
+                  banners.forEach((b: any, index: number) => {
+                    if (presigned.urls[index]) {
+                      b.image = presigned.urls[index];
+                    }
+                  });
+                }
+              }
+            } catch (e) {
+              console.error("Presign fetch failed", e);
+            }
+            setBannerImages(banners);
+            return;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load dynamic banners, falling back to default");
+      }
+    };
+    fetchBanners();
+  }, []);
 
   const particles: ParticleData[] = Array.from({ length: 12 }, (_, i) => ({
     left: `${5 + i * 8}%`,
@@ -234,17 +262,17 @@ const HeroBanner: React.FC = () => {
         }, 200);
       }, 500);
     },
-    [animating],
+    [animating, bannerImages.length],
   );
 
   const nextSlide = useCallback(
-    () => goTo((current + 1) % BANNER_IMAGES.length),
-    [current, goTo],
+    () => goTo((current + 1) % bannerImages.length),
+    [current, goTo, bannerImages.length],
   );
 
   const prevSlide = useCallback(
-    () => goTo((current - 1 + BANNER_IMAGES.length) % BANNER_IMAGES.length),
-    [current, goTo],
+    () => goTo((current - 1 + bannerImages.length) % bannerImages.length),
+    [current, goTo, bannerImages.length],
   );
 
   useEffect(() => {
@@ -252,19 +280,17 @@ const HeroBanner: React.FC = () => {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
-  const slide = SLIDE_DATA[current];
-
   return (
     <section className={styles.section} aria-label="Hero banner">
       {/* ── IMAGE SLIDES ── */}
-      {BANNER_IMAGES.map((img, i) => (
+      {bannerImages.map((slide, i) => (
         <div
-          key={img}
+          key={i}
           className={`${styles.slide} ${i === current ? styles["slide--active"] : styles["slide--inactive"]}`}
         >
           <div
             className={`${styles.slideImage} ${i === current ? styles["slideImage--kenBurns"] : ""}`}
-            style={{ backgroundImage: `url(${img})` }}
+            style={{ backgroundImage: `url(${slide.image})` }}
             role="img"
             aria-label={`Banner slide ${i + 1}`}
           />
@@ -333,7 +359,7 @@ const HeroBanner: React.FC = () => {
       {/* ── TEXT CONTENT ── */}
       <div className={styles.content}>
         {/* Sanskrit verse */}
-        <p className={textClass(textVisible, styles.verse)}>{slide.verse}</p>
+        <p className={textClass(textVisible, styles.verse)}>{t("hero_verse")}</p>
 
         {/* OM */}
         <div className={textClass(textVisible, styles.om)} aria-label="Om">
@@ -355,17 +381,17 @@ const HeroBanner: React.FC = () => {
         </div>
 
         {/* Main heading */}
-        <h1 className={textClass(textVisible, styles.title)}>{slide.title}</h1>
+        <h1 className={textClass(textVisible, styles.title)}>{bannerImages[current]?.title?.[locale] || bannerImages[current]?.title?.en || "Shree Ravirandaldham"}</h1>
 
         {/* Subtitle */}
         <p className={textClass(textVisible, styles.subtitle)}>
-          {slide.subtitle}
+          {bannerImages[current]?.subtitle?.[locale] || bannerImages[current]?.subtitle?.en || "Randaldhma Mandir, Dadva"}
         </p>
 
         {/* CTA buttons */}
         <div className={textClass(textVisible, styles.ctaGroup)}>
-          <CommonButton text="Darshan Timings" variant="primary" />
-          <CommonButton text="Explore Dham" variant="outline" />
+          <CommonButton text={t("darshan_timings")} variant="primary" />
+          <CommonButton text={t("explore_dham")} variant="outline" />
         </div>
       </div>
 
@@ -403,7 +429,7 @@ const HeroBanner: React.FC = () => {
           {String(current + 1).padStart(2, "0")}
         </span>
 
-        {BANNER_IMAGES.map((_, i) => (
+        {bannerImages.map((_, i) => (
           <button
             key={i}
             type="button"
@@ -419,7 +445,7 @@ const HeroBanner: React.FC = () => {
           className={`${styles.slideCounter} ${styles["slideCounter--total"]}`}
           aria-hidden="true"
         >
-          {String(BANNER_IMAGES.length).padStart(2, "0")}
+          {String(bannerImages.length).padStart(2, "0")}
         </span>
       </div>
     </section>

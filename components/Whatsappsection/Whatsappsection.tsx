@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./Whatsappsection.module.css";
 
 const WHATSAPP_LINK =
@@ -104,15 +105,16 @@ const DarshanBenefit = ({
 };
 
 const benefits = [
-  { icon: "🌅", text: "Morning Darshan every day", delay: 100 },
-  { icon: "🌆", text: "Evening Aarti updates", delay: 200 },
-  { icon: "📿", text: "Divine blessings & mantras", delay: 300 },
-  { icon: "🎉", text: "Festival & event notifications", delay: 400 },
-  { icon: "📸", text: "Exclusive temple photos", delay: 500 },
-  { icon: "🙏", text: "Bapu's spiritual messages", delay: 600 },
+  { icon: "🌅", text: "wa_benefit_1", delay: 100 },
+  { icon: "🌆", text: "wa_benefit_2", delay: 200 },
+  { icon: "📿", text: "wa_benefit_3", delay: 300 },
+  { icon: "🎉", text: "wa_benefit_4", delay: 400 },
+  { icon: "📸", text: "wa_benefit_5", delay: 500 },
+  { icon: "🙏", text: "wa_benefit_6", delay: 600 },
 ];
 
 export default function WhatsAppSection() {
+  const t = useTranslations("Homepage");
   const [sectionVisible, setSectionVisible] = useState(false);
   const [pulse, setPulse] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -177,35 +179,34 @@ export default function WhatsAppSection() {
           <span className={styles.ornLine} />
         </div>
 
-        <div className={styles.subLabel}>ભગવાનનાં દરરોજ દર્શન</div>
+        <div className={styles.subLabel}>{t("wa_sub_label")}</div>
 
         <h2 className={styles.title}>
-          Join Our Daily
+          {t("wa_title_1")}
           <br />
-          <span className={styles.titleAccent}>Darshan</span>{" "}
-          <span className={styles.titleWa}>WhatsApp</span>
+          <span className={styles.titleAccent}>{t("wa_title_2")}</span>{" "}
+          <span className={styles.titleWa}>{t("wa_title_3")}</span>
         </h2>
 
         <p className={styles.subDesc}>
-          Begin your day with divine blessings — receive daily darshan of Shree
-          Ravirandal Maa directly on WhatsApp
+          {t("wa_sub_desc")}
         </p>
 
         {/* Main content area */}
         <div className={styles.content}>
           {/* Left — benefits */}
           <div className={styles.benefitsColumn}>
-            <h3 className={styles.benefitsTitle}>What you'll receive:</h3>
+            <h3 className={styles.benefitsTitle}>{t("wa_benefits_title")}</h3>
             <div className={styles.benefitsList}>
               {benefits.map((b) => (
-                <DarshanBenefit key={b.text} {...b} />
+                <DarshanBenefit key={b.text} icon={b.icon} text={t(b.text as any)} delay={b.delay} />
               ))}
             </div>
 
             <div className={styles.memberCount}>
               <span className={styles.memberNum}>{GROUP_MEMBERS}</span>
               <span className={styles.memberLabel}>
-                devotees already joined
+                {t("wa_member_label")}
               </span>
             </div>
           </div>
@@ -225,13 +226,13 @@ export default function WhatsAppSection() {
                 <div className={styles.waIconWrap}>
                   <WhatsAppIcon size={72} />
                 </div>
-                <p className={styles.waCardTitle}>Daily Darshan Group</p>
+                <p className={styles.waCardTitle}>{t("wa_card_title")}</p>
                 <p className={styles.waCardNumber}>{WHATSAPP_NUMBER}</p>
               </div>
 
               {/* QR code */}
               <div className={styles.qrSection}>
-                <p className={styles.qrLabel}>📷 Scan to Join</p>
+                <p className={styles.qrLabel}>{t("wa_qr_label")}</p>
                 <div className={styles.qrBox}>
                   <div className={styles.qrCorner} data-pos="tl" />
                   <div className={styles.qrCorner} data-pos="tr" />
@@ -241,7 +242,7 @@ export default function WhatsAppSection() {
                     <WhatsAppQR />
                   </div>
                 </div>
-                <p className={styles.qrOr}>— or —</p>
+                <p className={styles.qrOr}>{t("wa_qr_or")}</p>
               </div>
 
               {/* CTA button */}
@@ -252,49 +253,43 @@ export default function WhatsAppSection() {
                 className={styles.joinBtn}
               >
                 <WhatsAppIcon size={22} />
-                <span>Join on WhatsApp</span>
+                <span>{t("wa_join_btn")}</span>
               </a>
 
               <p className={styles.joinNote}>
-                Free to join · No spam · Only divine updates
+                {t("wa_join_note")}
               </p>
             </div>
           </div>
 
           {/* Right — preview */}
           <div className={styles.previewColumn}>
-            <h3 className={styles.previewTitle}>Daily message preview:</h3>
+            <h3 className={styles.previewTitle}>{t("wa_preview_title")}</h3>
 
             <div className={styles.chatPreview}>
               <div className={styles.chatHeader}>
                 <div className={styles.chatAvatar}>🙏</div>
                 <div>
-                  <p className={styles.chatName}>Shree Ravirandaldham</p>
-                  <p className={styles.chatStatus}>🟢 Daily Darshan Group</p>
+                  <p className={styles.chatName}>{t("wa_chat_name")}</p>
+                  <p className={styles.chatStatus}>{t("wa_chat_status")}</p>
                 </div>
               </div>
 
               <div className={styles.chatMessages}>
                 <div className={styles.chatMsg}>
                   <span className={styles.chatTime}>6:00 AM</span>
-                  <p>
-                    🌅 <strong>Mangala Aarti</strong> — Jai Randal Maa!
-                  </p>
-                  <p className={styles.chatSub}>📸 Today's Morning Darshan</p>
+                  <p dangerouslySetInnerHTML={{ __html: t("wa_msg_1") }} />
+                  <p className={styles.chatSub}>{t("wa_sub_1")}</p>
                 </div>
                 <div className={`${styles.chatMsg} ${styles.chatMsgAlt}`}>
                   <span className={styles.chatTime}>7:30 AM</span>
-                  <p>
-                    🪷 <em>Shree Ravirandal Maa Ni Jai!</em>
-                  </p>
-                  <p className={styles.chatSub}>3 photos attached</p>
+                  <p dangerouslySetInnerHTML={{ __html: t("wa_msg_2") }} />
+                  <p className={styles.chatSub}>{t("wa_sub_2")}</p>
                 </div>
                 <div className={styles.chatMsg}>
                   <span className={styles.chatTime}>6:30 PM</span>
-                  <p>
-                    🌆 <strong>Sandhya Aarti</strong> Time
-                  </p>
-                  <p className={styles.chatSub}>🎶 Aarti video · 2:34</p>
+                  <p dangerouslySetInnerHTML={{ __html: t("wa_msg_3") }} />
+                  <p className={styles.chatSub}>{t("wa_sub_3")}</p>
                 </div>
               </div>
             </div>
@@ -306,8 +301,7 @@ export default function WhatsAppSection() {
           <div className={styles.bannerContent}>
             <span className={styles.bannerIcon}>🔔</span>
             <p className={styles.bannerText}>
-              Never miss a darshan — Join free and receive blessings every
-              morning
+              {t("wa_banner_text")}
             </p>
             <a
               href={WHATSAPP_LINK}
@@ -315,7 +309,7 @@ export default function WhatsAppSection() {
               rel="noopener noreferrer"
               className={styles.bannerBtn}
             >
-              Join Now — Free
+              {t("wa_banner_btn")}
             </a>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./KashtabhanjanDev.module.css";
 import CommonButton from "../CommonButton/CommonButton";
 import { useInView } from "@/hooks/useInView";
@@ -115,6 +116,7 @@ const FloatingParticle: React.FC<FloatingParticleProps> = ({ particle }) => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const KashtabhanjanDev: React.FC = () => {
+  const t = useTranslations("Homepage");
   const [scrollY, setScrollY] = useState(0);
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
@@ -199,7 +201,7 @@ const KashtabhanjanDev: React.FC = () => {
             className={`${styles.badge} ${visible ? styles["badge--visible"] : styles.hidden}`}
           >
             <div className={styles.badgeDot} aria-hidden="true" />
-            <span className={styles.badgeText}>॥ રાંદલના દડવા ॥</span>
+            <span className={styles.badgeText}>{t("kashta_badge")}</span>
             <div className={styles.badgeDot} aria-hidden="true" />
           </div>
 
@@ -208,7 +210,7 @@ const KashtabhanjanDev: React.FC = () => {
             id="kd-title"
             className={`${styles.title} ${visible ? styles["title--visible"] : styles.hidden}`}
           >
-            શ્રી રવિરાંદલ માં
+            {t("kashta_title")}
           </h2>
 
           {/* Gold rule */}
@@ -220,11 +222,7 @@ const KashtabhanjanDev: React.FC = () => {
           <p
             className={`${styles.para} ${visible ? styles["para--visible"] : styles.hidden}`}
           >
-            શ્રી કષ્ટભંજનદેવની શરણમાં આવેલો જીવ ક્યારેય ખાલી હાથે પાછો ગયો નથી.
-            તેમની મનોકામના સદૈવ પૂર્ણ થઈ છે. દાદાનાં દર્શન, સાધના અને સેવાથી એવા
-            એક નહીં પણ અસંખ્ય માનવીઓ અને પરિવારોએ શાંતિ, સુરક્ષા અને સુખ
-            મેળવ્યાં છે. દેશ-વિદેશની અગણિત પેઢીઓ હનુમાનજીનાં આશીર્વાદ થકી સમૃદ્ધ
-            થઈ છે.
+            {t("kashta_desc")}
           </p>
 
           {/* CTA */}

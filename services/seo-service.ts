@@ -63,6 +63,15 @@ export async function uploadSeoImage(file: File) {
   return res.data;
 }
 
+export async function uploadDynamicImage(file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await apiClient.post("/admin/dynamic-content/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+}
+
 export async function fetchSeoRoutes(): Promise<string[]> {
   return unstable_cache(
     async () => {

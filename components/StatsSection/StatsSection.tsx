@@ -2,18 +2,20 @@
 
 import styles from "./StatsSection.module.css";
 import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
+import { useTranslations } from "next-intl";
 import CommonTitle from "../CommonTitle/CommonTitle";
 import { useInView } from "@/hooks/useInView";
 
 const CONTACT_BOXES = [
-  { label: "Matajina Shangar Mate", contact: "9879276966" },
-  { label: "Randal Tedva Mate", contact: "9879276966" },
-  { label: "Mata na Thal Mate", contact: "9879276966" },
-  { label: "Gaushala ni Mate", contact: "8282827766" },
-  { label: "Akhand Jyot Mate", contact: "8282827766" },
+  { label: "stats_label_1", contact: "9879276966" },
+  { label: "stats_label_2", contact: "9879276966" },
+  { label: "stats_label_3", contact: "9879276966" },
+  { label: "stats_label_4", contact: "8282827766" },
+  { label: "stats_label_5", contact: "8282827766" },
 ];
 
 const StatsSection: React.FC = () => {
+  const t = useTranslations("Homepage");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -28,12 +30,12 @@ const StatsSection: React.FC = () => {
         <div
           className={`${styles.header} ${visible ? styles["header--visible"] : styles["header--hidden"]}`}
         >
-          <CommonTitle text={"શ્રી રાવીરાંદલધામ માં"} />
+          <CommonTitle text={t("stats_sup_title")} />
 
           <p
             className={`${styles.subtitle} ${visible ? styles["subtitle--visible"] : styles["subtitle--hidden"]}`}
           >
-            આવનાર શ્રદ્ધાળુ ની વ્યવસ્થા
+            {t("stats_sub_title")}
           </p>
 
           <div className={styles.divider} aria-hidden="true">
@@ -70,7 +72,7 @@ const StatsSection: React.FC = () => {
                 </svg>
               </div>
 
-              <div className={styles.contactLabel}>{box.label}</div>
+              <div className={styles.contactLabel}>{t(box.label as any)}</div>
               <div className={styles.contactNumber}>{box.contact}</div>
               <div className={styles.contactAccentLine} aria-hidden="true" />
             </a>

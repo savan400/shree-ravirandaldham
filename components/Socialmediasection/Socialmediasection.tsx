@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./SocialMediaSection.module.css";
 
 interface SocialPlatform {
@@ -127,7 +128,7 @@ const platforms: SocialPlatform[] = [
     color: "#E1306C",
     icon: <InstagramIcon />,
     qrData: "instagram",
-    description: "Daily photos & divine moments",
+    description: "social_desc_1",
   },
   {
     name: "YouTube",
@@ -137,7 +138,7 @@ const platforms: SocialPlatform[] = [
     color: "#FF0000",
     icon: <YouTubeIcon />,
     qrData: "youtube",
-    description: "Aarti, bhajans & live events",
+    description: "social_desc_2",
   },
   {
     name: "Facebook",
@@ -147,7 +148,7 @@ const platforms: SocialPlatform[] = [
     color: "#1877F2",
     icon: <FacebookIcon />,
     qrData: "facebook",
-    description: "Updates, events & community seva",
+    description: "social_desc_3",
   },
   {
     name: "X (Twitter)",
@@ -157,13 +158,14 @@ const platforms: SocialPlatform[] = [
     color: "#000000",
     icon: <TwitterIcon />,
     qrData: "twitter",
-    description: "Divine thoughts & blessings daily",
+    description: "social_desc_4",
   },
 ];
 
 const qrSeeds = [13, 7, 19, 11];
 
 export default function SocialMediaSection() {
+  const t = useTranslations("Homepage");
   const [visibleCards, setVisibleCards] = useState<boolean[]>(
     new Array(platforms.length).fill(false),
   );
@@ -235,14 +237,13 @@ export default function SocialMediaSection() {
             <span className={styles.ornamentLineInner} />
             <span className={styles.ornamentDot} />
           </div>
-          <p className={styles.subTitle}>ભગવાનની દિવ્ય ઉપસ્થિતિ</p>
+          <p className={styles.subTitle}>{t("social_sub_title")}</p>
           <h2 className={styles.title}>
-            <span className={styles.titleGold}>Social</span>{" "}
-            <span className={styles.titleSaffron}>Media</span>
+            <span className={styles.titleGold}>{t("social_title_1")}</span>{" "}
+            <span className={styles.titleSaffron}>{t("social_title_2")}</span>
           </h2>
           <p className={styles.desc}>
-            Follow Shree Ravirandaldham on our sacred digital yatra — receive
-            blessings, darshan & divine updates every day
+            {t("social_desc")}
           </p>
           <div className={styles.ornamentLine}>
             <span className={styles.ornamentDot} />
@@ -298,7 +299,7 @@ export default function SocialMediaSection() {
 
                   <h3 className={styles.platformName}>{platform.name}</h3>
                   <p className={styles.platformHandle}>{platform.handle}</p>
-                  <p className={styles.platformDesc}>{platform.description}</p>
+                  <p className={styles.platformDesc}>{t(platform.description as any)}</p>
 
                   <div className={styles.followersRow}>
                     <span
@@ -307,7 +308,7 @@ export default function SocialMediaSection() {
                     >
                       {platform.followers}
                     </span>
-                    <span className={styles.followersLabel}>Followers</span>
+                    <span className={styles.followersLabel}>{t("social_followers_label")}</span>
                   </div>
 
                   <a
@@ -320,11 +321,11 @@ export default function SocialMediaSection() {
                     }
                     onClick={(e) => e.stopPropagation()}
                   >
-                    Follow Now
+                    {t("social_follow_btn")}
                   </a>
 
                   <div className={styles.flipHint}>
-                    <span>📲 Tap for QR</span>
+                    <span>{t("social_flip_hint")}</span>
                   </div>
                 </div>
 
@@ -345,7 +346,7 @@ export default function SocialMediaSection() {
                   />
                   <div className={styles.cardBorder} />
 
-                  <p className={styles.qrTitle}>Scan to Follow</p>
+                  <p className={styles.qrTitle}>{t("social_qr_title")}</p>
                   <p
                     className={styles.qrPlatform}
                     style={{
@@ -382,11 +383,11 @@ export default function SocialMediaSection() {
                     className={styles.qrLink}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    Open Link →
+                    {t("social_qr_link")}
                   </a>
 
                   <div className={styles.flipHint}>
-                    <span>↩ Tap to go back</span>
+                    <span>{t("social_qr_flip_hint")}</span>
                   </div>
                 </div>
               </div>

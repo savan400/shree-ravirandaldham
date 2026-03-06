@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./HariVani.module.css";
 import LotusDivider from "../LotusDivider/LotusDivider";
 import { useInView } from "@/hooks/useInView";
@@ -59,6 +60,7 @@ const QuoteOrnament: React.FC<QuoteOrnamentProps> = ({ flip = false }) => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const HariVani: React.FC = () => {
+  const t = useTranslations("Homepage");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -111,7 +113,7 @@ const HariVani: React.FC = () => {
           <div className={styles.tagPill}>
             <div className={styles.tagDot} aria-hidden="true" />
             <span id="hv-title" className={styles.tagText}>
-              ॥ કૈલાશ નિવાસી મહંત શ્રી દિનેશપુરીબાપુ ના ગુરુવચન ॥
+              {t("hari_vani_tag")}
             </span>
             <div className={styles.tagDot} aria-hidden="true" />
           </div>
@@ -135,16 +137,13 @@ const HariVani: React.FC = () => {
           </div>
 
           {/* Quote text */}
-          <p className={styles.quoteText}>
-            ઈચ્છા પૂરી ના થાય તો ક્રોધ વધે છે,<br />
-            ને ઈચ્છા પૂરી થાય તો લોભ વધે છે
-          </p>
+          <p className={styles.quoteText} dangerouslySetInnerHTML={{ __html: t("hari_vani_quote") }} />
 
           {/* Attribution */}
           <footer className={`${styles.attribution} ${visible ? styles["attribution--visible"] : styles.hidden}`}>
             <div className={styles.attributionLine} aria-hidden="true" />
             <div className={styles.attributionDiamond} aria-hidden="true" />
-            <cite className={styles.attributionText}>— પ. પૂ. દીનેશપરી બાપુ</cite>
+            <cite className={styles.attributionText}>{t("hari_vani_attr")}</cite>
           </footer>
         </blockquote>
 

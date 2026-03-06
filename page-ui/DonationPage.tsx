@@ -7,6 +7,7 @@ import CommonTitle from "@/components/CommonTitle/CommonTitle";
 import LotusDivider from "@/components/LotusDivider/LotusDivider";
 import DiamondDivider from "@/components/DiamondDivider/DiamondDivider";
 import { useInView } from "@/hooks/useInView";
+import { useTranslations } from "next-intl";
 import { visibleClass } from "@/lib/utils";
 import RandalSahayate from "./randalSahayate";
 import PaymentModal from "@/components/Paymentmodal/Paymentmodal";
@@ -27,8 +28,8 @@ const categories: DonationCategory[] = [
   {
     id: "gaudaan",
     icon: "🐄",
-    title: "Gaudaan",
-    subtitle: "Gayo na ghaaschaara mate",
+    title: "don_cat_gaudaan",
+    subtitle: "don_cat_gaudaan_sub",
     amounts: [
       { label: "₹ 251", value: 251 },
       { label: "₹ 551", value: 551 },
@@ -40,8 +41,8 @@ const categories: DonationCategory[] = [
   {
     id: "bhavan",
     icon: "🏛️",
-    title: "Nutan Yatrik Bhavan",
-    subtitle: "Construction Help",
+    title: "don_cat_bhavan",
+    subtitle: "don_cat_bhavan_sub",
     amounts: [
       { label: "₹ 1100", value: 1100 },
       { label: "₹ 2100", value: 2100 },
@@ -54,8 +55,8 @@ const categories: DonationCategory[] = [
   {
     id: "maanta",
     icon: "🙏",
-    title: "Maanta (Mannat)",
-    subtitle: "Choose From The Amount Listed:",
+    title: "don_cat_maanta",
+    subtitle: "don_choose_listed",
     amounts: [
       { label: "₹ 251", value: 251 },
       { label: "₹ 551", value: 551 },
@@ -67,8 +68,8 @@ const categories: DonationCategory[] = [
   {
     id: "thaal",
     icon: "🍱",
-    title: "Thaal (Dada no Bhog)",
-    subtitle: "Choose From The Amount Listed:",
+    title: "don_cat_thaal",
+    subtitle: "don_choose_listed",
     amounts: [
       { label: "₹ 501", value: 501 },
       { label: "₹ 1101", value: 1101 },
@@ -80,19 +81,19 @@ const categories: DonationCategory[] = [
   {
     id: "yagna",
     icon: "🔥",
-    title: "Navchandi Yagna",
-    subtitle: "Choose From The Amount Listed:",
+    title: "don_cat_yagna",
+    subtitle: "don_choose_listed",
     amounts: [
-      { label: "₹ 25000 (One Day)", value: 25000 },
-      { label: "₹ 51000 (Two Days)", value: 51000 },
+      { label: "don_yagna_1", value: 25000 },
+      { label: "don_yagna_2", value: 51000 },
     ],
     hasCustom: false,
   },
   {
     id: "bhet",
     icon: "🤲",
-    title: "Bhet (Swaichhik Donation)",
-    subtitle: "Choose From The Amount Listed:",
+    title: "don_cat_bhet",
+    subtitle: "don_choose_listed",
     amounts: [
       { label: "₹ 251", value: 251 },
       { label: "₹ 551", value: 551 },
@@ -109,6 +110,7 @@ interface DonationCardProps {
 
 // ── Donation Card ─────────────────────────────────────────────────────────────
 const DonationCard = ({ cat, onPay }: DonationCardProps) => {
+  const t = useTranslations("Donation");
   const [selected, setSelected] = useState<number | "custom" | null>(null);
   const [customAmt, setCustomAmt] = useState("");
 
@@ -130,8 +132,8 @@ const DonationCard = ({ cat, onPay }: DonationCardProps) => {
       <div className={don.donCardHeader}>
         <span className={don.donIcon}>{cat.icon}</span>
         <div>
-          <h3 className={don.donTitle}>{cat.title}</h3>
-          <p className={don.donSub}>{cat.subtitle}</p>
+          <h3 className={don.donTitle}>{t(cat.title as any)}</h3>
+          <p className={don.donSub}>{t(cat.subtitle as any)}</p>
         </div>
       </div>
 
@@ -149,7 +151,7 @@ const DonationCard = ({ cat, onPay }: DonationCardProps) => {
               onChange={() => handleSelect(a.value)}
             />
             <span className={don.donRadio} />
-            <span className={don.donAmountLabel}>{a.label}</span>
+            <span className={don.donAmountLabel}>{cat.id === "yagna" ? t(a.label as any) : a.label}</span>
           </label>
         ))}
 
@@ -165,7 +167,7 @@ const DonationCard = ({ cat, onPay }: DonationCardProps) => {
               onChange={() => handleSelect("custom")}
             />
             <span className={don.donRadio} />
-            <span className={don.donAmountLabel}>Custom Amount</span>
+            <span className={don.donAmountLabel}>{t("don_custom_amt")}</span>
           </label>
         )}
       </div>
@@ -176,7 +178,7 @@ const DonationCard = ({ cat, onPay }: DonationCardProps) => {
           <input
             className={don.donCustomInput}
             type="number"
-            placeholder={`Minimum amt. ${cat.minCustom} or higher`}
+            placeholder={`${t("don_min_amt_prefix")} ${cat.minCustom} ${t("don_min_amt_suffix")}`}
             value={customAmt}
             min={cat.minCustom}
             onChange={(e) => setCustomAmt(e.target.value)}
@@ -186,13 +188,13 @@ const DonationCard = ({ cat, onPay }: DonationCardProps) => {
 
       {!selected && cat.hasCustom && (
         <div className={don.donHint}>
-          Minimum amt. {cat.minCustom} or higher
+          {t("don_min_amt_prefix")} {cat.minCustom} {t("don_min_amt_suffix")}
         </div>
       )}
 
       <button className={don.donPayBtn} onClick={handlePay}>
         <span className={don.donPayGlow} />
-        Pay Now
+        {t("don_pay_now")}
       </button>
     </div>
   );
@@ -200,6 +202,7 @@ const DonationCard = ({ cat, onPay }: DonationCardProps) => {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 const DonationPage = () => {
+  const t = useTranslations("Donation");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -221,7 +224,7 @@ const DonationPage = () => {
 
       <div className={don.container}>
         <div className={visibleClass("header", visible)}>
-          <CommonTitle text="Donation" />
+          <CommonTitle text={t("don_title")} />
           <LotusDivider />
 
           {/* ── Donor Info Fields ── */}
@@ -230,7 +233,7 @@ const DonationPage = () => {
               <span className={don.donFieldIcon}>👤</span>
               <input
                 type="text"
-                placeholder="Donor's Name"
+                placeholder={t("don_donor_name")}
                 value={donorName}
                 onChange={(e) => setDonorName(e.target.value)}
               />
@@ -239,7 +242,7 @@ const DonationPage = () => {
               <span className={don.donFieldIcon}>✉️</span>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t("don_email")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -248,7 +251,7 @@ const DonationPage = () => {
               <span className={don.donFieldIcon}>📞</span>
               <input
                 type="tel"
-                placeholder="Contact"
+                placeholder={t("don_contact")}
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
               />

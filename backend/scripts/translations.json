@@ -1,0 +1,1318 @@
+[
+  {
+    "section": "ContactUs",
+    "key": "cu_address_label",
+    "en": "Address",
+    "hi": "पता",
+    "gu": "સરનામું"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_address_value",
+    "en": "Ravi, near Dadva Road, near vasavad, Ravi Randal Na, Randal Na Dadava, Dadva, Gujarat 365460",
+    "hi": "रवि, दाडवा रोड के पास, वासवाड़ के पास, रवि रांदल ना, रांदल ना दाडवा, दाडवा, गुजरात 365460",
+    "gu": "રવિ, દડવા રોડ પાસે, વાસાવડ પાસે, રવિ રાંદલ ના, રાંદલ ના દડવા, દડવા, ગુજરાત 365460"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_email_label",
+    "en": "Email",
+    "hi": "ईमेल",
+    "gu": "ઈમેલ"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_find_us_heading",
+    "en": "Find Us",
+    "hi": "हमें खोजें",
+    "gu": "અમને શોધો"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_find_us_sub",
+    "en": "Salangpur Dham — Kashtabhanjan Dev Mandir",
+    "hi": "साळंगपुर धाम — कष्टभंजन देव मंदिर",
+    "gu": "સાળંગપુર ધામ — કષ્ટભંજન દેવ મંદિર"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_phone_label",
+    "en": "Phone",
+    "hi": "फ़ोन",
+    "gu": "ફોન"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_timings_evening",
+    "en": "Evening: 4:00 PM – 9:00 PM",
+    "hi": "शाम: 4:00 PM – 9:00 PM",
+    "gu": "સાંજે: 4:00 PM – 9:00 PM"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_timings_label",
+    "en": "Darshan Timings",
+    "hi": "दर्शन का समय",
+    "gu": "દર્શન સમય"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_timings_morning",
+    "en": "Morning: 6:00 AM – 12:00 PM",
+    "hi": "सुबह: 6:00 AM – 12:00 PM",
+    "gu": "સવારે: 6:00 AM – 12:00 PM"
+  },
+  {
+    "section": "ContactUs",
+    "key": "cu_title",
+    "en": "Contact Us",
+    "hi": "हमसे संपर्क करें",
+    "gu": "અમારો સંપર્ક કરો"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_bhavan",
+    "en": "Nutan Yatrik Bhavan",
+    "hi": "नूतन यात्री भवन",
+    "gu": "નૂતન યાત્રિક ભવન"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_bhavan_sub",
+    "en": "Construction Help",
+    "hi": "निर्माण में सहायता",
+    "gu": "બાંધકામ માટે સહાય"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_bhet",
+    "en": "Bhet (Swaichhik Donation)",
+    "hi": "भेंट (स्वैच्छिक दान)",
+    "gu": "ભેટ (સ્વૈચ્છિક દાન)"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_gaudaan",
+    "en": "Gaudaan",
+    "hi": "गौदान",
+    "gu": "ગૌદાન"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_gaudaan_sub",
+    "en": "Gayo na ghaaschaara mate",
+    "hi": "गायों के चारे के लिए",
+    "gu": "ગાયોના ઘાસચારા માટે"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_maanta",
+    "en": "Maanta (Mannat)",
+    "hi": "मानता (मन्नत)",
+    "gu": "માનતા (મન્નત)"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_thaal",
+    "en": "Thaal (Dada no Bhog)",
+    "hi": "थाल (दादा का भोग)",
+    "gu": "થાળ (દાદા નો ભોગ)"
+  },
+  {
+    "section": "Donation",
+    "key": "don_cat_yagna",
+    "en": "Navchandi Yagna",
+    "hi": "नवचंडी यज्ञ",
+    "gu": "નવચંડી યજ્ઞ"
+  },
+  {
+    "section": "Donation",
+    "key": "don_choose_listed",
+    "en": "Choose From The Amount Listed:",
+    "hi": "सूचीबद्ध राशि में से चुनें:",
+    "gu": "સૂચિબદ્ધ રકમમાંથી પસંદ કરો:"
+  },
+  {
+    "section": "Donation",
+    "key": "don_contact",
+    "en": "Contact",
+    "hi": "संपर्क",
+    "gu": "સંપર્ક"
+  },
+  {
+    "section": "Donation",
+    "key": "don_custom_amt",
+    "en": "Custom Amount",
+    "hi": "कस्टम राशि",
+    "gu": "અન્ય રકમ"
+  },
+  {
+    "section": "Donation",
+    "key": "don_donor_name",
+    "en": "Donor's Name",
+    "hi": "दाता का नाम",
+    "gu": "દાતાનું નામ"
+  },
+  {
+    "section": "Donation",
+    "key": "don_email",
+    "en": "Email",
+    "hi": "ईमेल",
+    "gu": "ઈમેલ"
+  },
+  {
+    "section": "Donation",
+    "key": "don_min_amt_prefix",
+    "en": "Minimum amt.",
+    "hi": "न्यूनतम राशि",
+    "gu": "ન્યૂનતમ રકમ"
+  },
+  {
+    "section": "Donation",
+    "key": "don_min_amt_suffix",
+    "en": "or higher",
+    "hi": "या अधिक",
+    "gu": "અથવા વધુ"
+  },
+  {
+    "section": "Donation",
+    "key": "don_pay_now",
+    "en": "Pay Now",
+    "hi": "अब भुगतान करें",
+    "gu": "હવે ચૂકવણી કરો"
+  },
+  {
+    "section": "Donation",
+    "key": "don_title",
+    "en": "Donation",
+    "hi": "दान",
+    "gu": "દાન"
+  },
+  {
+    "section": "Donation",
+    "key": "don_yagna_1",
+    "en": "₹ 25000 (One Day)",
+    "hi": "₹ 25000 (एक दिन)",
+    "gu": "₹ 25000 (એક દિવસ)"
+  },
+  {
+    "section": "Donation",
+    "key": "don_yagna_2",
+    "en": "₹ 51000 (Two Days)",
+    "hi": "₹ 51000 (दो दिन)",
+    "gu": "₹ 51000 (બે દિવસ)"
+  },
+  {
+    "section": "Homepage",
+    "key": "daily_evening",
+    "en": "Evening Darshan",
+    "hi": "शाम के दर्शन",
+    "gu": "સાંજના દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "daily_mangala",
+    "en": "Mangala Aarti",
+    "hi": "मंगला आरती",
+    "gu": "મંગળા આરતી"
+  },
+  {
+    "section": "Homepage",
+    "key": "daily_morning",
+    "en": "Morning Darshan",
+    "hi": "सुबह के दर्शन",
+    "gu": "સવારના દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "daily_tag",
+    "en": "Daily Darshan of Lord",
+    "hi": "भगवान के दैनिक दर्शन",
+    "gu": "ભગવાનનાં દરરોજ દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "daily_title",
+    "en": "Daily Darshan",
+    "hi": "डेली दर्शन",
+    "gu": "ડેઈલી દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "daily_view_all",
+    "en": "VIEW ALL DARSHAN",
+    "hi": "सभी दर्शन देखें",
+    "gu": "બધા દર્શન જુઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "darshan_timings",
+    "en": "Darshan Timings",
+    "hi": "दर्शन का समय",
+    "gu": "દર્શનનો સમય"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_afternoon_en",
+    "en": "Afternoon",
+    "hi": "Afternoon",
+    "gu": "Afternoon"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_afternoon_local",
+    "en": "Afternoon",
+    "hi": "दोपहर",
+    "gu": "બપોરે"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_btn_text",
+    "en": "Darshan Timings",
+    "hi": "दर्शन का समय",
+    "gu": "દર્શન સમય"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_evening_en",
+    "en": "Evening",
+    "hi": "Evening",
+    "gu": "Evening"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_evening_local",
+    "en": "Evening",
+    "hi": "शाम",
+    "gu": "સાંજે"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_mangala_en",
+    "en": "Mangala Aarti",
+    "hi": "Mangala Aarti",
+    "gu": "Mangala Aarti"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_mangala_local",
+    "en": "Mangala Aarti",
+    "hi": "मंगला आरती",
+    "gu": "મંગળા આરતી"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_morning_en",
+    "en": "Morning",
+    "hi": "Morning",
+    "gu": "Morning"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_morning_local",
+    "en": "Morning",
+    "hi": "सुबह",
+    "gu": "સવારે"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_sandhya_en",
+    "en": "Sandhya Aarti",
+    "hi": "Sandhya Aarti",
+    "gu": "Sandhya Aarti"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_sandhya_local",
+    "en": "Sandhya Aarti",
+    "hi": "संध्या आरती",
+    "gu": "સંધ્યા આરતી"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_thal_en",
+    "en": "Thal",
+    "hi": "Thal",
+    "gu": "Thal"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_thal_local",
+    "en": "Thal",
+    "hi": "थाल",
+    "gu": "થાળ"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_title_gu",
+    "en": "Darshan Samay",
+    "hi": "दर्शन समय",
+    "gu": "દર્શન સમય"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_title_main",
+    "en": "Darshan",
+    "hi": "दर्शन",
+    "gu": "દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "dt_title_sub",
+    "en": "Timings",
+    "hi": "का समय",
+    "gu": "સમય"
+  },
+  {
+    "section": "Homepage",
+    "key": "explore_dham",
+    "en": "Explore Dham",
+    "hi": "धाम का अन्वेषण करें",
+    "gu": "ધામનું અન્વેષણ કરો"
+  },
+  {
+    "section": "Homepage",
+    "key": "facilities_badge",
+    "en": "॥ Service for Devotees ॥",
+    "hi": "॥ भक्तों के लिए सेवा ॥",
+    "gu": "॥ ભક્તો માટે સેવા ॥"
+  },
+  {
+    "section": "Homepage",
+    "key": "facilities_title",
+    "en": "Facilities",
+    "hi": "सुविधाएं",
+    "gu": "સુવિધાઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_1_desc",
+    "en": "Shree Kashtabhanjandev Bhojanalay located in Salangpurdham is the largest dining hall in Gujarat with a construction of 3,25,000 square feet on a huge land of 7 bighas.",
+    "hi": "सालंगपुर धाम में स्थित श्री कष्टभंजनदेव भोजनालय गुजरात का सबसे बड़ा भोजनालय है जो 7 बीघा की विशाल भूमि पर 3,25,000 वर्ग फुट के निर्माण के साथ है।",
+    "gu": "7 વીઘા જેટલી વિશાળ જમીન પર 3,25,00 સ્ક્વેર ફીટ બાંધકામ ધરાવતું ગુજરાતનું સૌથી મોટું ભોજનાલય સાળંગપુરધામમાં આવેલું શ્રી કષ્ટભંજનદેવ ભોજનાલય છે."
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_1_tag",
+    "en": "Food Service",
+    "hi": "भोजन सेवा",
+    "gu": "ભોજન સેવા"
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_1_title",
+    "en": "Gaushala",
+    "hi": "गौशाला",
+    "gu": "ગૌશાળા"
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_2_desc",
+    "en": "Shree Gopalanand Swami Yatrik Bhavan, under construction on a vast area of 20 bighas in the temple premises itself, will be the largest Yatrik Bhavan in India.",
+    "hi": "मंदिर परिसर में ही 20 बीघा के विशाल क्षेत्र पर निर्माणाधीन श्री गोपालनंद स्वामी यात्री भवन भारत का सबसे बड़ा यात्री भवन होगा।",
+    "gu": "મંદિર પરિસરમાં જ 20 વીઘાની વિશાળતમ જગ્યા પર 8,85,000 સ્ક્વેર ફૂટમાં નિર્માણાધીન શ્રી ગોપાળાનંદ સ્વામી યાત્રિક ભવન ભારતનું સૌથી મોટું યાત્રિક ભવન બની રહેશે."
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_2_tag",
+    "en": "Accommodation Service",
+    "hi": "आवास सेवा",
+    "gu": "આવાસ સેવા"
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_2_title",
+    "en": "Dining Hall",
+    "hi": "डाइनिंग हॉल",
+    "gu": "જમવાનો હોલ"
+  },
+  {
+    "section": "Homepage",
+    "key": "facility_3_title",
+    "en": "Accommodation Facility",
+    "hi": "आवास सुविधा",
+    "gu": "ઉતારા વ્યવસ્થા"
+  },
+  {
+    "section": "Homepage",
+    "key": "hari_vani_attr",
+    "en": "— H.H. Dineshpuri Bapu",
+    "hi": "— प. पू. दिनेशपुरी बापू",
+    "gu": "— પ. પૂ. દીનેશપરી બાપુ"
+  },
+  {
+    "section": "Homepage",
+    "key": "hari_vani_quote",
+    "en": "If desires are not fulfilled, anger increases,<br />And if desires are fulfilled, greed increases",
+    "hi": "इच्छा पूरी न होने पर क्रोध बढ़ता है,<br />और इच्छा पूरी होने पर लोभ बढ़ता है",
+    "gu": "ઈચ્છા પૂરી ના થાય તો ક્રોધ વધે છે,<br />ને ઈચ્છા પૂરી થાય તો લોભ વધે છે"
+  },
+  {
+    "section": "Homepage",
+    "key": "hari_vani_tag",
+    "en": "॥ Preachings of Late Mahant Shree Dineshpuri Bapu ॥",
+    "hi": "॥ कैलाश निवासी महंत श्री दिनेशपुरी बापू के गुरुवचन ॥",
+    "gu": "॥ કૈલાશ નિવાસી મહંત શ્રી દિનેશપુરીબાપુ ના ગુરુવચન ॥"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_subtitle_1",
+    "en": "Randaldhma Mandir, Dadva",
+    "hi": "रांदल धाम मंदिर, दडवा",
+    "gu": "રાંદલ ધામ મંદિર, દડવા"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_subtitle_2",
+    "en": "A Sacred Abode of Peace & Devotion",
+    "hi": "शांति और भक्ति का एक पवित्र निवास",
+    "gu": "શાંતિ અને ભક્તિનું પવિત્ર નિવાસસ્થાન"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_subtitle_3",
+    "en": "Embrace the Divine Light Within",
+    "hi": "भीतर के दिव्य प्रकाश को अपनाएं",
+    "gu": "તમારી અંદરના દિવ્ય પ્રકાશને અપનાવો"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_subtitle_4",
+    "en": "Come, Seek Blessings & Tranquility",
+    "hi": "आइए, आशीर्वाद और शांति प्राप्त करें",
+    "gu": "આવો, આશીર્વાદ અને શાંતિ મેળવો"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_title",
+    "en": "Shree Ravirandaldham",
+    "hi": "श्री रविरंदल धाम",
+    "gu": "શ્રી રવિરાંદલ ધામ"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_title_2",
+    "en": "Pavitra Dham",
+    "hi": "पवित्र धाम",
+    "gu": "પવિત્ર ધામ"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_title_3",
+    "en": "Upasna & Aradhana",
+    "hi": "उपासना और आराधना",
+    "gu": "ઉપાસના અને આરાધના"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_title_4",
+    "en": "Darshan & Seva",
+    "hi": "दर्शन और सेवा",
+    "gu": "દર્શન અને સેવા"
+  },
+  {
+    "section": "Homepage",
+    "key": "hero_verse",
+    "en": "॥ Dadva Gaam Ej Shree Ravirandaldham ॥",
+    "hi": "॥ दडवा गाम एज श्री रविरंदलधाम ॥",
+    "gu": "॥ દડવા ગામ એજ શ્રી રવિરાંદલધામ ॥"
+  },
+  {
+    "section": "Homepage",
+    "key": "kashta_badge",
+    "en": "॥ Randal's Dadva ॥",
+    "hi": "॥ रांदल के दडवा ॥",
+    "gu": "॥ રાંદલના દડવા ॥"
+  },
+  {
+    "section": "Homepage",
+    "key": "kashta_desc",
+    "en": "A soul that comes to the refuge of Shree Kashtabhanjandev has never gone back empty-handed.",
+    "hi": "श्री कष्टभंजनदेव की शरण में आया कोई भी जीव कभी खाली हाथ नहीं लौटा है।",
+    "gu": "શ્રી કષ્ટભંજનદેવની શરણમાં આવેલો જીવ ક્યારેય ખાલી હાથે પાછો ગયો નથી. તેમની મનોકામના સદૈવ પૂર્ણ થઈ છે. દાદાનાં દર્શન, સાધના અને સેવાથી એવા એક નહીં પણ અસંખ્ય માનવીઓ અને પરિવારોએ શાંતિ, સુરક્ષા અને સુખ મેળવ્યાં છે. દેશ-વિદેશની અગણિત પેઢીઓ હનુમાનજીનાં આશીર્વાદ થકી સમૃદ્ધ થઈ છે."
+  },
+  {
+    "section": "Homepage",
+    "key": "kashta_title",
+    "en": "Shree Ravirandal Maa",
+    "hi": "श्री रविरंदल मां",
+    "gu": "શ્રી રવિરાંદલ માં"
+  },
+  {
+    "section": "Homepage",
+    "key": "king_desc",
+    "en": "The tallest statue of Shree Hanumanji Maharaj built in Panchadhatu in Gujarat, 'King of Salangpur', is a confluence of devotion, service, and art.",
+    "hi": "गुजरात में पंचधातु से निर्मित श्री हनुमानजी महाराज की सबसे ऊंची प्रतिमा 'किंग ऑफ सालंगपुर' भक्ति, सेवा और कला का संगम है।",
+    "gu": "ગુજરાતમાં પંચધાતુમાં નિર્મિત શ્રી હનુમાનજી મહારાજની સૌથી ઉંચી પ્રતિમા 'કિંગ ઓફ સાળંગપુર' ભક્તિ, સેવા અને કળાનાં દિવ્યતા અને ભવ્યતાનાં સંગમ સમાન છે. માત્ર સ્વામિનારાયણ સંપ્રદાય જ નહીં પરંતુ ગુજરાત અને સનાતન ધર્મનાં ગૌરવ સમાન આ પ્રતિમા સાળંગપુરધામમાં સૌને દર્શન આપે છે."
+  },
+  {
+    "section": "Homepage",
+    "key": "king_stat_1",
+    "en": "Total Height",
+    "hi": "कुल ऊंचाई",
+    "gu": "કુલ ઊંચાઈ"
+  },
+  {
+    "section": "Homepage",
+    "key": "king_stat_2",
+    "en": "Year Built",
+    "hi": "निर्माण वर्ष",
+    "gu": "નિર્માણ વર્ષ"
+  },
+  {
+    "section": "Homepage",
+    "key": "king_stat_3",
+    "en": "Devotees' Love",
+    "hi": "भक्तों का स्नेह",
+    "gu": "ભક્તોનો સ્નેહ"
+  },
+  {
+    "section": "Homepage",
+    "key": "king_tag",
+    "en": "Pride of Gujarat",
+    "hi": "गुजरात का गौरव",
+    "gu": "ગુજરાતની ગૌરવ"
+  },
+  {
+    "section": "Homepage",
+    "key": "king_title",
+    "en": "Mataji's Trishul",
+    "hi": "माताजी का त्रिशूल",
+    "gu": "માતાજી નું ત્રિશૂલ"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_desc",
+    "en": "Follow Shree Ravirandaldham on our sacred digital yatra — receive blessings, darshan & divine updates every day",
+    "hi": "हमारी पवित्र डिजिटल यात्रा पर श्री रविरंदलधाम का पालन करें — हर दिन आशीर्वाद, दर्शन और दिव्य अपडेट प्राप्त करें",
+    "gu": "અમારી પવિત્ર ડિજિટલ યાત્રા પર શ્રી રવિરાંદલધામને અનુસરો — દરરોજ આશીર્વાદ, દર્શન અને દિવ્ય અપડેટ્સ મેળવો"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_desc_1",
+    "en": "Daily photos & divine moments",
+    "hi": "दैनिक तस्वीरें और दिव्य क्षण",
+    "gu": "દૈનિક ફોટા અને દિવ્ય ક્ષણો"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_desc_2",
+    "en": "Aarti, bhajans & live events",
+    "hi": "आरती, भजन और लाइव इवेंट",
+    "gu": "આરતી, ભજનો અને લાઈવ ઇવેન્ટ્સ"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_desc_3",
+    "en": "Updates, events & community seva",
+    "hi": "अपडेट, इवेंट और सामुदायिक सेवा",
+    "gu": "અપડેટ્સ, ઇવેન્ટ્સ અને સામુદાયિક સેવા"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_desc_4",
+    "en": "Divine thoughts & blessings daily",
+    "hi": "दैनिक दिव्य विचार और आशीर्वाद",
+    "gu": "દૈનિક દિવ્ય વિચારો અને આશીર્વાદ"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_flip_hint",
+    "en": "📲 Tap for QR",
+    "hi": "📲 क्यूआर के लिए टैप करें",
+    "gu": "📲 QR માટે ટેપ કરો"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_follow_btn",
+    "en": "Follow Now",
+    "hi": "अभी फॉलो करें",
+    "gu": "અત્યારે જ અનુસરો"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_followers_label",
+    "en": "Followers",
+    "hi": "फॉलोअर्स",
+    "gu": "અનુયાયીઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_qr_flip_hint",
+    "en": "↩ Tap to go back",
+    "hi": "↩ वापस जाने के लिए टैप करें",
+    "gu": "↩ પાછા જવા માટે ટેપ કરો"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_qr_link",
+    "en": "Open Link →",
+    "hi": "लिंक खोलें →",
+    "gu": "લિંક ખોલો →"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_qr_title",
+    "en": "Scan to Follow",
+    "hi": "फॉलो करने के लिए स्कैन करें",
+    "gu": "અનુસરવા માટે સ્કેન કરો"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_sub_title",
+    "en": "Divine presence of the Lord",
+    "hi": "भगवान की दिव्य उपस्थिति",
+    "gu": "ભગવાનની દિવ્ય ઉપસ્થિતિ"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_title_1",
+    "en": "Social",
+    "hi": "सोशल",
+    "gu": "સોશિયલ"
+  },
+  {
+    "section": "Homepage",
+    "key": "social_title_2",
+    "en": "Media",
+    "hi": "मीडिया",
+    "gu": "મીડિયા"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_label_1",
+    "en": "For Mataji's Adornment",
+    "hi": "माताजी के श्रृंगार के लिए",
+    "gu": "માતાજી ના શણગાર માટે"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_label_2",
+    "en": "For Inviting Randal Maa",
+    "hi": "रांदल मां को बुलाने के लिए",
+    "gu": "રાંદલ તેડવા માટે"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_label_3",
+    "en": "For Mother's Food Offering",
+    "hi": "माता के थाल के लिए",
+    "gu": "માતા ના થાળ માટે"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_label_4",
+    "en": "For Gaushala",
+    "hi": "गौशाला के लिए",
+    "gu": "ગૌશાળા માટે"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_label_5",
+    "en": "For Akhand Jyot",
+    "hi": "अखंड ज्योत के लिए",
+    "gu": "અખંડ જ્યોત માટે"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_sub_title",
+    "en": "Arrangements for visiting devotees",
+    "hi": "आने वाले भक्तों के लिए व्यवस्था",
+    "gu": "આવનાર શ્રદ્ધાળુ ની વ્યવસ્થા"
+  },
+  {
+    "section": "Homepage",
+    "key": "stats_sup_title",
+    "en": "At Shree Ravirandaldham",
+    "hi": "श्री रविरंदलधाम में",
+    "gu": "શ્રી રાવીરાંદલધામ માં"
+  },
+  {
+    "section": "Homepage",
+    "key": "typing_text",
+    "en": "Another name for faith is Shree Ravirandaldham",
+    "hi": "श्रद्धा का दूसरा नाम श्री रवीरांदल धाम",
+    "gu": "શ્રદ્ધાનું બીજું નામ શ્રી રવિરાંદલ ધામ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_banner_btn",
+    "en": "Join Now — Free",
+    "hi": "अभी जुड़ें — मुफ़्त",
+    "gu": "અત્યારે જ જોડાઓ — મફત"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_banner_text",
+    "en": "Never miss a darshan — Join free and receive blessings every morning",
+    "hi": "कभी दर्शन न चूकें — मुफ़्त जुड़ें और हर सुबह आशीर्वाद प्राप्त करें",
+    "gu": "ક્યારેય દર્શન ચૂકશો નહીં — મફત જોડાઓ અને દરરોજ સવારે આશીર્વાદ મેળવો"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefit_1",
+    "en": "Morning Darshan every day",
+    "hi": "प्रतिदिन सुबह के दर्शन",
+    "gu": "રોજ સવારના દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefit_2",
+    "en": "Evening Aarti updates",
+    "hi": "शाम की आरती अपडेट",
+    "gu": "સાંજના આરતી અપડેટ્સ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefit_3",
+    "en": "Divine blessings & mantras",
+    "hi": "दिव्य आशीर्वाद और मंत्र",
+    "gu": "દિવ્ય આશીર્વાદ અને મંત્રો"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefit_4",
+    "en": "Festival & event notifications",
+    "hi": "त्योहार और कार्यक्रम की सूचनाएं",
+    "gu": "ઉત્સવ અને ઇવેન્ટ સૂચનાઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefit_5",
+    "en": "Exclusive temple photos",
+    "hi": "विशेष मंदिर तस्वीरें",
+    "gu": "મંદિરના વિશેષ ફોટા"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefit_6",
+    "en": "Bapu's spiritual messages",
+    "hi": "बापू के आध्यात्मिक संदेश",
+    "gu": "બાપુના આધ્યાત્મિક સંદેશાઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_benefits_title",
+    "en": "What you'll receive:",
+    "hi": "आपको क्या मिलेगा:",
+    "gu": "તમને શું પ્રાપ્ત થશે:"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_card_title",
+    "en": "Daily Darshan Group",
+    "hi": "डेली दर्शन ग्रुप",
+    "gu": "ડેઈલી દર્શન ગ્રુપ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_chat_name",
+    "en": "Shree Ravirandaldham",
+    "hi": "श्री रविरंदलधाम",
+    "gu": "શ્રી રવિરાંદલધામ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_chat_status",
+    "en": "🟢 Daily Darshan Group",
+    "hi": "🟢 डेली दर्शन ग्रुप",
+    "gu": "🟢 ડેઈલી દર્શન ગ્રુપ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_join_btn",
+    "en": "Join on WhatsApp",
+    "hi": "WhatsApp पर जुड़ें",
+    "gu": "WhatsApp પર જોડાઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_join_note",
+    "en": "Free to join · No spam · Only divine updates",
+    "hi": "जुड़ना मुफ़्त है · कोई स्पैम नहीं · केवल दैवीय अपडेट",
+    "gu": "જોડાવા માટે મફત · કોઈ સ્પામ નહીં · માત્ર દિવ્ય અપડેટ્સ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_member_label",
+    "en": "devotees already joined",
+    "hi": "भक्त पहले ही जुड़ चुके हैं",
+    "gu": "ભક્તો પહેલેથી જ જોડાયા છે"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_msg_1",
+    "en": "🌅 <strong>Mangala Aarti</strong> — Jai Randal Maa!",
+    "hi": "🌅 <strong>मंगला आरती</strong> — जय रांदल मां!",
+    "gu": "🌅 <strong>મંગળા આરતી</strong> — જય રાંદલ માં!"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_msg_2",
+    "en": "🪷 <em>Shree Ravirandal Maa Ni Jai!</em>",
+    "hi": "🪷 <em>श्री रविरंदल मां नी जय!</em>",
+    "gu": "🪷 <em>શ્રી રવિરાંદલ માં ની જય!</em>"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_msg_3",
+    "en": "🌆 <strong>Sandhya Aarti</strong> Time",
+    "hi": "🌆 <strong>संध्या आरती</strong> का समय",
+    "gu": "🌆 <strong>સંઘ્યા આરતી</strong> નો સમય"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_preview_title",
+    "en": "Daily message preview:",
+    "hi": "दैनिक संदेश पूर्वावलोकन:",
+    "gu": "દૈનિક સંદેશ પૂર્વાવલોકન:"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_qr_label",
+    "en": "📷 Scan to Join",
+    "hi": "📷 जुड़ने के लिए स्कैन करें",
+    "gu": "📷 જોડાવા માટે સ્કેન કરો"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_qr_or",
+    "en": "— or —",
+    "hi": "— या —",
+    "gu": "— અથવા —"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_sub_1",
+    "en": "📸 Today's Morning Darshan",
+    "hi": "📸 आज के सुबह के दर्शन",
+    "gu": "📸 આજના સવારના દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_sub_2",
+    "en": "3 photos attached",
+    "hi": "3 तस्वीरें संलग्न हैं",
+    "gu": "3 ફોટા જોડાયેલા છે"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_sub_3",
+    "en": "🎶 Aarti video · 2:34",
+    "hi": "🎶 आरती वीडियो · 2:34",
+    "gu": "🎶 આરતી વિડિઓ · 2:34"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_sub_desc",
+    "en": "Begin your day with divine blessings — receive daily darshan of Shree Ravirandal Maa directly on WhatsApp",
+    "hi": "अपने दिन की शुरुआत दैवीय आशीर्वाद से करें — व्हाट्सएप पर सीधे श्री रविरंदल मां के दैनिक दर्शन प्राप्त करें",
+    "gu": "દિવ્ય આશીર્વાદથી તમારા દિવસની શરૂઆત કરો — સીધા WhatsApp પર શ્રી રવિરાંદલ માના દૈનિક દર્શન મેળવો"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_sub_label",
+    "en": "Daily Darshan of Lord",
+    "hi": "भगवान के दैनिक दर्शन",
+    "gu": "ભગવાનનાં દરરોજ દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_title_1",
+    "en": "Join Our Daily",
+    "hi": "हमारे दैनिक से जुड़ें",
+    "gu": "અમારા દૈનિકમાં જોડાઓ"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_title_2",
+    "en": "Darshan",
+    "hi": "दर्शन",
+    "gu": "દર્શન"
+  },
+  {
+    "section": "Homepage",
+    "key": "wa_title_3",
+    "en": "WhatsApp",
+    "hi": "WhatsApp",
+    "gu": "WhatsApp"
+  },
+  {
+    "section": "common",
+    "key": "all_rights_reserved",
+    "en": "Shree Ravirandaldham Mandir, Dadva. All Rights Reserved.",
+    "hi": "श्री रविरंदल धाम मंदिर, दडवा. सर्वाधिकार सुरक्षित.",
+    "gu": "શ્રી રવિરાંદલ ધામ મંદિર, દડવા. સર્વાધિકાર સુરક્ષિત."
+  },
+  {
+    "section": "common",
+    "key": "coming_soon",
+    "en": "Soon",
+    "hi": "जल्द",
+    "gu": "ટૂંક સમયમાં"
+  },
+  {
+    "section": "common",
+    "key": "contact",
+    "en": "Contact",
+    "hi": "संपर्क",
+    "gu": "સંપર્ક"
+  },
+  {
+    "section": "common",
+    "key": "footer_address_hindi",
+    "en": "Shree Swaminarayan Mandir Vadtaldham tabanu Shree Kashtabhanjandev Hanumanji Mandir-Salangpur",
+    "hi": "श्री स्वामीनारायण मंदिर वडतालधाम ताबा का श्री कष्टभंजनदेव हनुमानजी मंदिर-सालंगपुर",
+    "gu": "શ્રી સ્વામિનારાયણ મંદિર વડતાલધામ તાબાનું શ્રી કષ્ટભંજનદેવ હનુમાનજી મંદિર-સાળંગપુર"
+  },
+  {
+    "section": "common",
+    "key": "quick_links",
+    "en": "Quick Links",
+    "hi": "त्वरित लिंक",
+    "gu": "ઝડપી લિંક્સ"
+  },
+  {
+    "section": "common",
+    "key": "read_more",
+    "en": "Read More",
+    "hi": "और पढ़ें",
+    "gu": "વધુ વાંચો"
+  },
+  {
+    "section": "common",
+    "key": "site_subtitle",
+    "en": "Randaldhma Mandir, Dadva",
+    "hi": "रांदल धाम मंदिर, दडवा",
+    "gu": "રાંદલ ધામ મંદિર, દડવા"
+  },
+  {
+    "section": "common",
+    "key": "site_title",
+    "en": "Shree Ravirandaldham",
+    "hi": "श्री रविरंदल धाम",
+    "gu": "શ્રી રવિરાંદલ ધામ"
+  },
+  {
+    "section": "menuitems",
+    "key": "108_jyot_ni_mah_aaarti",
+    "en": "108 Jyot ni Mah Aaarti",
+    "hi": "108 ज्योत की महा आरती",
+    "gu": "108 જ્યોત ની મહા આરતી"
+  },
+  {
+    "section": "menuitems",
+    "key": "108_randal",
+    "en": "108 Randal",
+    "hi": "108 रांदल",
+    "gu": "108 રાંદલ"
+  },
+  {
+    "section": "menuitems",
+    "key": "aarti",
+    "en": "Aarti",
+    "hi": "आरती",
+    "gu": "આરતી"
+  },
+  {
+    "section": "menuitems",
+    "key": "atithi_gruh",
+    "en": "Atithi Gruh",
+    "hi": "अतिथि गृह",
+    "gu": "અતિથિ ગૃહ"
+  },
+  {
+    "section": "menuitems",
+    "key": "audio",
+    "en": "Audio",
+    "hi": "ऑडियो",
+    "gu": "ઓડિયો"
+  },
+  {
+    "section": "menuitems",
+    "key": "bhakti",
+    "en": "Bhakti",
+    "hi": "भक्ति",
+    "gu": "ભક્તિ"
+  },
+  {
+    "section": "menuitems",
+    "key": "bhojan_shala",
+    "en": "Bhojan Shala",
+    "hi": "भोजन शाला",
+    "gu": "ભોજન શાળા"
+  },
+  {
+    "section": "menuitems",
+    "key": "books",
+    "en": "Books",
+    "hi": "किताबें",
+    "gu": "પુસ્તકો"
+  },
+  {
+    "section": "menuitems",
+    "key": "calendar",
+    "en": "Calendar",
+    "hi": "कैलेंडर",
+    "gu": "કેલેન્ડર"
+  },
+  {
+    "section": "menuitems",
+    "key": "contact_us",
+    "en": "Contact Us",
+    "hi": "संपर्क करें",
+    "gu": "સંપર્ક કરો"
+  },
+  {
+    "section": "menuitems",
+    "key": "darshan_timing",
+    "en": "Darshan Timing",
+    "hi": "दर्शन समय",
+    "gu": "દર્શન સમય"
+  },
+  {
+    "section": "menuitems",
+    "key": "dashama_temple",
+    "en": "Dashama Temple",
+    "hi": "दशामा मंदिर",
+    "gu": "દશામા મંદિર"
+  },
+  {
+    "section": "menuitems",
+    "key": "donation",
+    "en": "Donation",
+    "hi": "दान",
+    "gu": "દાન"
+  },
+  {
+    "section": "menuitems",
+    "key": "downloads",
+    "en": "Downloads",
+    "hi": "डाउनलोड",
+    "gu": "ડાઉનલોડ્સ"
+  },
+  {
+    "section": "menuitems",
+    "key": "events",
+    "en": "Events",
+    "hi": "आयोजन",
+    "gu": "આયોજન"
+  },
+  {
+    "section": "menuitems",
+    "key": "facilities",
+    "en": "Facilities",
+    "hi": "सुविधाएं",
+    "gu": "સુવિધાઓ"
+  },
+  {
+    "section": "menuitems",
+    "key": "history",
+    "en": "History",
+    "hi": "इतिहास",
+    "gu": "ઇતિહાસ"
+  },
+  {
+    "section": "menuitems",
+    "key": "history_of_randaldham",
+    "en": "History of Randaldham",
+    "hi": "रविरंदल धाम का इतिहास",
+    "gu": "રાંદલધામનો ઇતિહાસ"
+  },
+  {
+    "section": "menuitems",
+    "key": "itihas",
+    "en": "Itihas",
+    "hi": "इतिहास",
+    "gu": "ઇતિહાસ"
+  },
+  {
+    "section": "menuitems",
+    "key": "mahadev_temple",
+    "en": "Mahadev Temple",
+    "hi": "महादेव मंदिर",
+    "gu": "મહાદેવ મંદિર"
+  },
+  {
+    "section": "menuitems",
+    "key": "mahima",
+    "en": "Mahima",
+    "hi": "महिमा",
+    "gu": "મહિમા"
+  },
+  {
+    "section": "menuitems",
+    "key": "mataji_darshan",
+    "en": "Mataji Darshan",
+    "hi": "माताजी दर्शन",
+    "gu": "માતાજી દર્શન"
+  },
+  {
+    "section": "menuitems",
+    "key": "parichay",
+    "en": "Parichay",
+    "hi": "परिचय",
+    "gu": "પરિચય"
+  },
+  {
+    "section": "menuitems",
+    "key": "pavitra_sthalo",
+    "en": "Pavitra Sthalo",
+    "hi": "पवित्र स्थल",
+    "gu": "પવિત્ર સ્થળો"
+  },
+  {
+    "section": "menuitems",
+    "key": "pavitra_vav",
+    "en": "Pavitra Vav",
+    "hi": "पवित्र वाव",
+    "gu": "પવિત્ર વાવ"
+  },
+  {
+    "section": "menuitems",
+    "key": "photo_gallery",
+    "en": "Photo Gallery",
+    "hi": "फोटो गैलरी",
+    "gu": "ફોટો ગેલેરી"
+  },
+  {
+    "section": "menuitems",
+    "key": "randal_maa_no_rath",
+    "en": "Randal Maa no Rath",
+    "hi": "रांदल मां का रथ",
+    "gu": "રાંદલ માં નો રથ"
+  },
+  {
+    "section": "menuitems",
+    "key": "randal_prerna",
+    "en": "Randal Prerna",
+    "hi": "रांदल प्रेरणा",
+    "gu": "રાંદલ પ્રેરણા"
+  },
+  {
+    "section": "menuitems",
+    "key": "randal_tedvanu_booking",
+    "en": "Randal Tedvanu Booking",
+    "hi": "रांदल तेड़वानु बुकिंग",
+    "gu": "રાંદલ તેડવાંનુ બુકિંગ"
+  },
+  {
+    "section": "menuitems",
+    "key": "ravirandal_dham",
+    "en": "Ravirandal Dham",
+    "hi": "रविरंदल धाम",
+    "gu": "રવિરાંદલ ધામ"
+  },
+  {
+    "section": "menuitems",
+    "key": "seva_karya",
+    "en": "Seva Karya",
+    "hi": "सेवा कार्य",
+    "gu": "સેવા કાર્ય"
+  },
+  {
+    "section": "menuitems",
+    "key": "seva_punjan",
+    "en": "Seva Punjan",
+    "hi": "सेवा पूजन",
+    "gu": "સેવા પૂજન"
+  },
+  {
+    "section": "menuitems",
+    "key": "shree_1008_akshaypari_bapu",
+    "en": "Shree 1008 Akshaypari Bapu",
+    "hi": "श्री 1008 अक्षयपरी बापू",
+    "gu": "શ્રી 1008 અક્ષયપરી બાપુ"
+  },
+  {
+    "section": "menuitems",
+    "key": "shree_ajaypari_bapu",
+    "en": "Shree Ajaypari Bapu",
+    "hi": "श्री अजयपरी बापू",
+    "gu": "શ્રી અજયપરી બાપુ"
+  },
+  {
+    "section": "menuitems",
+    "key": "shree_dineshpuri_bapu",
+    "en": "Shree Dineshpuri Bapu",
+    "hi": "श्री दिनेशपुरी बापू",
+    "gu": "શ્રી દિનેશપુરી બાપુ"
+  },
+  {
+    "section": "menuitems",
+    "key": "shree_dineshpuri_bapu_samadhi_sthan",
+    "en": "Shree Dineshpuri Bapu Samadhi Sthan",
+    "hi": "श्री दिनेशपुरी बापू समाधि स्थान",
+    "gu": "શ્રી દિનેશપુરી બાપુ સમાધિ સ્થાન"
+  },
+  {
+    "section": "menuitems",
+    "key": "shree_ravirandal_temple",
+    "en": "Shree Ravirandal Temple",
+    "hi": "श्री रविरंदल मंदिर",
+    "gu": "શ્રી રવિરાંદલ મંદિર"
+  },
+  {
+    "section": "menuitems",
+    "key": "shree_shanidev_temple",
+    "en": "Shree Shanidev Temple",
+    "hi": "श्री शनिदेव मंदिर",
+    "gu": "શ્રી શનિદેવ મંદિર"
+  },
+  {
+    "section": "menuitems",
+    "key": "store",
+    "en": "Store",
+    "hi": "स्टोर",
+    "gu": "સ્ટોર"
+  },
+  {
+    "section": "menuitems",
+    "key": "thoughts_of_bapu",
+    "en": "Thoughts of Bapu",
+    "hi": "बापू के विचार",
+    "gu": "બાપુના વિચાર"
+  },
+  {
+    "section": "menuitems",
+    "key": "upasna_vidhi",
+    "en": "Upasna Vidhi",
+    "hi": "उपासना विधि",
+    "gu": "ઉપાસના વિધિ"
+  },
+  {
+    "section": "menuitems",
+    "key": "upcoming_events",
+    "en": "Upcoming Events",
+    "hi": "आगामी आयोजन",
+    "gu": "આગામી ઇવેન્ટ્સ"
+  },
+  {
+    "section": "menuitems",
+    "key": "utsav",
+    "en": "Utsav",
+    "hi": "उत्सव",
+    "gu": "ઉત્સવ"
+  },
+  {
+    "section": "menuitems",
+    "key": "video_gallery",
+    "en": "Video Gallery",
+    "hi": "वीडियो गैलरी",
+    "gu": "વીડિયો ગેલેરી"
+  },
+  {
+    "section": "menuitems",
+    "key": "wallpaper",
+    "en": "Wallpaper",
+    "hi": "वॉलपेपर",
+    "gu": "વોલપેપર"
+  },
+  {
+    "section": "menuitems",
+    "key": "yagna_booking",
+    "en": "Yagna Booking",
+    "hi": "यज्ञ बुकिंग",
+    "gu": "યજ્ઞ બુકિંગ"
+  }
+]

@@ -1,31 +1,32 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import styles from "./DarshanTimingsSidebar.module.css";
 
 const timings = [
   {
-    label: "મંગળા આરતી",
-    labelEn: "Mangala Aarti",
+    label: "dt_mangala_local",
+    labelEn: "dt_mangala_en",
     time: "06:15",
-    period: "સવારે",
-    periodEn: "Morning",
+    period: "dt_morning_local",
+    periodEn: "dt_morning_en",
     icon: "🌅",
   },
   {
-    label: "થાળ",
-    labelEn: "Thal",
+    label: "dt_thal_local",
+    labelEn: "dt_thal_en",
     time: "11:00",
-    period: "બપોરે",
-    periodEn: "Afternoon",
+    period: "dt_afternoon_local",
+    periodEn: "dt_afternoon_en",
     icon: "🪔",
   },
   {
-    label: "સંધ્યા આરતી",
-    labelEn: "Sandhya Aarti",
+    label: "dt_sandhya_local",
+    labelEn: "dt_sandhya_en",
     time: "06:30",
-    period: "સાંજે",
-    periodEn: "Evening",
+    period: "dt_evening_local",
+    periodEn: "dt_evening_en",
     icon: "🌙",
   },
 ];
@@ -33,6 +34,7 @@ const timings = [
 const staggerClasses = [styles.stagger1, styles.stagger2, styles.stagger3];
 
 const DarshanTimingsSidebar = () => {
+  const t = useTranslations("Homepage");
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [diyas, setDiyas] = useState<{ id: number; x: number; delay: number; dur: number }[]>([]);
@@ -63,7 +65,7 @@ const DarshanTimingsSidebar = () => {
       >
         <span className={styles.templeBtnInner}>
           <span className={styles.bellIcon}>🔔</span>
-          <span>Darshan Timings</span>
+          <span>{t("dt_btn_text")}</span>
         </span>
       </button>
 
@@ -103,9 +105,9 @@ const DarshanTimingsSidebar = () => {
           <div className={styles.header}>
             <div className={styles.headerInner}>
               <div className={styles.titleWrap}>
-                <h3 className={styles.titleMain}>Darshan</h3>
-                <h4 className={styles.titleSub}>Timings</h4>
-                <p className={styles.titleGu}>દર્શન સમય</p>
+                <h3 className={styles.titleMain}>{t("dt_title_main")}</h3>
+                <h4 className={styles.titleSub}>{t("dt_title_sub")}</h4>
+                <p className={styles.titleGu}>{t("dt_title_gu")}</p>
               </div>
               <button className={styles.closeBtn} onClick={() => setOpen(false)}>
                 <X className="w-4 h-4" />
@@ -138,15 +140,15 @@ const DarshanTimingsSidebar = () => {
                   <div className={styles.cardLeft}>
                     <div className={styles.iconCircle}>{item.icon}</div>
                     <div>
-                      <p className={styles.labelGu}>{item.label}</p>
-                      <p className={styles.labelEn}>{item.labelEn}</p>
+                      <p className={styles.labelGu}>{t(item.label as any)}</p>
+                      <p className={styles.labelEn}>{t(item.labelEn as any)}</p>
                     </div>
                   </div>
 
                   <div className={styles.cardRight}>
                     <p className={styles.timeDisplay}>{item.time}</p>
                     <p className={styles.periodLabel}>
-                      {item.period} · <span style={{ fontFamily: 'var(--font-cinzel)' }}>{item.periodEn}</span>
+                      {t(item.period as any)} · <span style={{ fontFamily: 'var(--font-cinzel)' }}>{t(item.periodEn as any)}</span>
                     </p>
                   </div>
                 </div>

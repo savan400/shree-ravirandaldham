@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./KingOfSalangpur.module.css";
 import CommonTitle from "../CommonTitle/CommonTitle";
 import PageBackgroundDecorations from "../PageBackgroundDecorations/PageBackgroundDecorations";
@@ -29,9 +30,9 @@ interface StatBadgeData {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const STATS: StatBadgeData[] = [
-  { number: "54ft", label: "કુલ ઊંચાઈ" },
-  { number: "1851", label: "નિર્માણ વર્ષ" },
-  { number: "∞", label: "ભક્તોનો સ્નેહ" },
+  { number: "54ft", label: "king_stat_1" },
+  { number: "1851", label: "king_stat_2" },
+  { number: "∞", label: "king_stat_3" },
 ];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -109,24 +110,28 @@ interface StatBadgeProps {
   delay: number;
 }
 
-const StatBadge: React.FC<StatBadgeProps> = ({ stat, visible, delay }) => (
-  <div
-    className={styles.statBadge}
-    style={{
-      // Per-badge staggered transition — delay must be runtime-computed
-      opacity: visible ? 1 : 0,
-      transform: visible ? "none" : "translateY(16px)",
-      transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
-    }}
-  >
-    <div className={styles.statNumber}>{stat.number}</div>
-    <div className={styles.statLabel}>{stat.label}</div>
-  </div>
-);
+const StatBadge: React.FC<StatBadgeProps> = ({ stat, visible, delay }) => {
+  const t = useTranslations("Homepage");
+  return (
+    <div
+      className={styles.statBadge}
+      style={{
+        // Per-badge staggered transition — delay must be runtime-computed
+        opacity: visible ? 1 : 0,
+        transform: visible ? "none" : "translateY(16px)",
+        transition: `opacity 0.5s ease ${delay}s, transform 0.5s ease ${delay}s`,
+      }}
+    >
+      <div className={styles.statNumber}>{stat.number}</div>
+      <div className={styles.statLabel}>{t(stat.label)}</div>
+    </div>
+  );
+};
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const KingOfSalangpur: React.FC = () => {
+  const t = useTranslations("Homepage");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -200,19 +205,15 @@ const KingOfSalangpur: React.FC = () => {
           <div
             className={`${styles.textCol} ${visible ? styles["rightCol--visible"] : styles.hidden}`}
           >
-            <CommonBadge text="ગુજરાતની ગૌરવ" />
+            <CommonBadge text={t("king_tag")} />
 
             {/* Heading */}
-            <CommonTitle text="માતાજી નું ત્રિશૂલ" />
+            <CommonTitle text={t("king_title")} />
             <DiamondRule />
 
             {/* Description */}
             <p className={styles.description}>
-              ગુજરાતમાં પંચધાતુમાં નિર્મિત શ્રી હનુમાનજી મહારાજની સૌથી ઉંચી
-              પ્રતિમા 'કિંગ ઓફ સાળંગપુર' ભક્તિ, સેવા અને કળાનાં દિવ્યતા અને
-              ભવ્યતાનાં સંગમ સમાન છે. માત્ર સ્વામિનારાયણ સંપ્રદાય જ નહીં પરંતુ
-              ગુજરાત અને સનાતન ધર્મનાં ગૌરવ સમાન આ પ્રતિમા સાળંગપુરધામમાં સૌને
-              દર્શન આપે છે.
+              {t("king_desc")}
             </p>
 
             {/* Stats */}

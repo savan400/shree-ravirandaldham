@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./TypingText.module.css";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const FULL_TEXT = "श्रद्धा का दूसरा नाम श्री रवीरांदल धाम";
 const TYPING_SPEED_MS = 70;
 const PAUSE_AFTER_MS = 2800;
 const DOT_CHAIN_WIDTH = 220;
@@ -22,10 +22,10 @@ const LotusIcon: React.FC = () => (
     aria-hidden="true"
   >
     <ellipse cx="14" cy="20" rx="3" ry="6" fill="url(#lp1)" opacity="0.9" />
-    <ellipse cx="8"  cy="18" rx="3" ry="5" transform="rotate(-30 8 18)"  fill="url(#lp2)" opacity="0.8" />
-    <ellipse cx="20" cy="18" rx="3" ry="5" transform="rotate(30 20 18)"  fill="url(#lp2)" opacity="0.8" />
-    <ellipse cx="5"  cy="16" rx="2.5" ry="4" transform="rotate(-55 5 16)"  fill="url(#lp3)" opacity="0.6" />
-    <ellipse cx="23" cy="16" rx="2.5" ry="4" transform="rotate(55 23 16)"  fill="url(#lp3)" opacity="0.6" />
+    <ellipse cx="8" cy="18" rx="3" ry="5" transform="rotate(-30 8 18)" fill="url(#lp2)" opacity="0.8" />
+    <ellipse cx="20" cy="18" rx="3" ry="5" transform="rotate(30 20 18)" fill="url(#lp2)" opacity="0.8" />
+    <ellipse cx="5" cy="16" rx="2.5" ry="4" transform="rotate(-55 5 16)" fill="url(#lp3)" opacity="0.6" />
+    <ellipse cx="23" cy="16" rx="2.5" ry="4" transform="rotate(55 23 16)" fill="url(#lp3)" opacity="0.6" />
     <path d="M4 22 Q14 14 24 22" stroke="url(#lg1)" strokeWidth="1.5" fill="none" />
     <defs>
       <linearGradient id="lp1" x1="0" y1="0" x2="0" y2="1">
@@ -94,6 +94,8 @@ const DotChain: React.FC<DotChainProps> = ({ width = 200 }) => {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const TypingText: React.FC = () => {
+  const t = useTranslations("Homepage");
+  const FULL_TEXT = t("typing_text");
   const [displayed, setDisplayed] = useState("");
   const [typing, setTyping] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -123,12 +125,12 @@ const TypingText: React.FC = () => {
     }, TYPING_SPEED_MS);
 
     return () => clearInterval(interval);
-  }, [typing]);
+  }, [typing, FULL_TEXT]);
 
   return (
     <section className={styles.section} aria-label="Tagline banner">
       {/* ── Border Bands ── */}
-      <div className={`${styles.borderBand} ${styles["borderBand--top"]}`}    aria-hidden="true" />
+      <div className={`${styles.borderBand} ${styles["borderBand--top"]}`} aria-hidden="true" />
       <div className={`${styles.borderBandThin} ${styles["borderBandThin--top"]}`} aria-hidden="true" />
       <div className={`${styles.borderBand} ${styles["borderBand--bottom"]}`} aria-hidden="true" />
       <div className={`${styles.borderBandThin} ${styles["borderBandThin--bottom"]}`} aria-hidden="true" />
@@ -146,7 +148,7 @@ const TypingText: React.FC = () => {
 
       {/* ── OM watermarks ── */}
       <div className={`${styles.watermark} ${styles["watermark--right"]}`} aria-hidden="true">ॐ</div>
-      <div className={`${styles.watermark} ${styles["watermark--left"]}`}  aria-hidden="true">ॐ</div>
+      <div className={`${styles.watermark} ${styles["watermark--left"]}`} aria-hidden="true">ॐ</div>
 
       {/* ── Main content ── */}
       <div className={styles.content}>

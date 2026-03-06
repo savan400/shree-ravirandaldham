@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./FacilitiesCards.module.css";
 import FacilityCard, { FacilityCardData } from "./Facilitycard";
 import CommonTitle from "../CommonTitle/CommonTitle";
@@ -13,31 +14,28 @@ import { useInView } from "@/hooks/useInView";
 const FACILITIES: FacilityCardData[] = [
   {
     image: "/images/bhojanalay.webp",
-    title: "ગૌશાળા",
-    description:
-      "7 વીઘા જેટલી વિશાળ જમીન પર 3,25,00 સ્ક્વેર ફીટ બાંધકામ ધરાવતું ગુજરાતનું સૌથી મોટું ભોજનાલય સાળંગપુરધામમાં આવેલું શ્રી કષ્ટભંજનદેવ ભોજનાલય છે.",
+    title: "facility_1_title",
+    description: "facility_1_desc",
     icon: "🍽️",
-    tag: "ભોજન સેવા",
+    tag: "facility_1_tag",
     accentColor: "#FF6B00",
     navigateTo: "/facilities/bhojan-shala",
   },
   {
     image: "/images/yatrik-bhuvan.webp",
-    title: "જમવાનો હોલ",
-    description:
-      "મંદિર પરિસરમાં જ 20 વીઘાની વિશાળતમ જગ્યા પર 8,85,000 સ્ક્વેર ફૂટમાં નિર્માણાધીન શ્રી ગોપાળાનંદ સ્વામી યાત્રિક ભવન ભારતનું સૌથી મોટું યાત્રિક ભવન બની રહેશે.",
+    title: "facility_2_title",
+    description: "facility_2_desc",
     icon: "🏛️",
-    tag: "આવાસ સેવા",
+    tag: "facility_2_tag",
     accentColor: "#E8A000",
     navigateTo: "/facilities/atithi-gruh",
   },
   {
     image: "/images/bhojanalay.webp",
-    title: "ઉતારા વ્યવસ્થા",
-    description:
-      "7 વીઘા જેટલી વિશાળ જમીન પર 3,25,00 સ્ક્વેર ફીટ બાંધકામ ધરાવતું ગુજરાતનું સૌથી મોટું ભોજનાલય સાળંગપુરધામમાં આવેલું શ્રી કષ્ટભંજનદેવ ભોજનાલય છે.",
+    title: "facility_3_title",
+    description: "facility_1_desc",
     icon: "🍽️",
-    tag: "ભોજન સેવા",
+    tag: "facility_1_tag",
     accentColor: "#FF6B00",
     navigateTo: "/facilities/bhojan-shala",
   },
@@ -58,6 +56,7 @@ const DiamondDivider: React.FC = () => (
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const FacilitiesCards: React.FC = () => {
+  const t = useTranslations("Homepage");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -72,12 +71,11 @@ const FacilitiesCards: React.FC = () => {
       <div className={styles.container}>
         {/* Header */}
         <div
-          className={`${styles.header} ${
-            visible ? styles["header--visible"] : styles["header--hidden"]
-          }`}
+          className={`${styles.header} ${visible ? styles["header--visible"] : styles["header--hidden"]
+            }`}
         >
-          <CommonBadge text="॥ ભક્તો માટે સેવા ॥" />
-          <CommonTitle text=" સુવિધાઓ" />
+          <CommonBadge text={t("facilities_badge")} />
+          <CommonTitle text={t("facilities_title")} />
         </div>
 
         <DiamondDivider />
@@ -87,7 +85,12 @@ const FacilitiesCards: React.FC = () => {
           {FACILITIES.map((facility, i) => (
             <FacilityCard
               key={facility.title}
-              facility={facility}
+              facility={{
+                ...facility,
+                title: t(facility.title as any),
+                description: t(facility.description as any),
+                tag: t(facility.tag as any)
+              }}
               index={i}
               visible={visible}
             />

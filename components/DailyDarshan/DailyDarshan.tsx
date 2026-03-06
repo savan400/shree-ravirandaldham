@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { ChevronRight } from "lucide-react";
 import styles from "./DailyDarshan.module.css";
@@ -38,7 +39,7 @@ export const darshanList: DarshanItem[] = [
     coverImage: "/images/salangpurhanumanji.jpg",
     date: "17-02-2026",
     day: "TUESDAY",
-    title: "Morning Darshan",
+    title: "daily_morning",
     images: [
       { src: "/images/salangpurhanumanji.jpg", alt: "Morning Darshan 1" },
       { src: "/images/salangpurhanumanji.jpg", alt: "Morning Darshan 2" },
@@ -52,7 +53,7 @@ export const darshanList: DarshanItem[] = [
     coverImage: "/images/salangpurhanumanji.jpg",
     date: "17-02-2026",
     day: "TUESDAY",
-    title: "Evening Darshan",
+    title: "daily_evening",
     images: [
       { src: "/images/salangpurhanumanji.jpg", alt: "Evening Darshan 1" },
       { src: "/images/salangpurhanumanji.jpg", alt: "Evening Darshan 2" },
@@ -64,7 +65,7 @@ export const darshanList: DarshanItem[] = [
     coverImage: "/images/salangpurhanumanji.jpg",
     date: "17-02-2026",
     day: "TUESDAY",
-    title: "Mangala Aarti",
+    title: "daily_mangala",
     images: [
       { src: "/images/salangpurhanumanji.jpg", alt: "Mangala Aarti 1" },
       { src: "/images/salangpurhanumanji.jpg", alt: "Mangala Aarti 2" },
@@ -77,6 +78,7 @@ export const darshanList: DarshanItem[] = [
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const DailyDarshan: React.FC = () => {
+  const t = useTranslations("Homepage");
   const { ref: sectionRef, isVisible: visible } = useInView<HTMLElement>({
     threshold: 0.1,
   });
@@ -89,8 +91,8 @@ const DailyDarshan: React.FC = () => {
   const openLightbox = (darshan: DarshanItem) => {
     const items: LightboxItem[] = darshan.images.map((img, i) => ({
       src: img.src,
-      alt: img.alt ?? `${darshan.title ?? "Darshan"} — photo ${i + 1}`,
-      title: `${darshan.title ?? "Darshan"} — ${darshan.day}, ${darshan.date}`,
+      alt: img.alt ?? `${darshan.title ? t(darshan.title as any) : "Darshan"} — photo ${i + 1}`,
+      title: `${darshan.title ? t(darshan.title as any) : "Darshan"} — ${darshan.day}, ${darshan.date}`,
     }));
 
     if (items.length === 0) return;
@@ -124,9 +126,9 @@ const DailyDarshan: React.FC = () => {
               <span className={styles.tagEmoji} aria-hidden="true">
                 🪷
               </span>
-              <span className={styles.tagText}>ભગવાનનાં દરરોજ દર્શન</span>
+              <span className={styles.tagText}>{t("daily_tag")}</span>
             </div>
-            <CommonTitle text="ડેઈલી દર્શન" />
+            <CommonTitle text={t("daily_title")} />
             <LotusDivider />
           </div>
 
@@ -139,14 +141,14 @@ const DailyDarshan: React.FC = () => {
                 onClick={() => openLightbox(item)}
                 role="button"
                 tabIndex={0}
-                aria-label={`View ${item.title ?? "Darshan"} — ${item.images.length} photo${item.images.length !== 1 ? "s" : ""}`}
+                aria-label={`View ${item.title ? t(item.title as any) : "Darshan"} — ${item.images.length} photo${item.images.length !== 1 ? "s" : ""}`}
                 onKeyDown={(e) => e.key === "Enter" && openLightbox(item)}
                 style={{ cursor: "pointer" }}
               >
                 {/* Badge: session title + date */}
                 <div className={styles.dateBadgeWrap}>
                   <CommonBadge
-                    text={`${item.title?.toUpperCase() ?? item.day} — ${item.date}`}
+                    text={`${item.title ? t(item.title as any).toUpperCase() : item.day} — ${item.date}`}
                   />
                 </div>
                 <div className="relative">
@@ -174,7 +176,7 @@ const DailyDarshan: React.FC = () => {
               href="/upasna-vidhi/mataji-darshan"
               className={styles.viewAllLink}
             >
-              VIEW ALL DARSHAN
+              {t("daily_view_all")}
               <ChevronRight className={styles.viewAllIcon} aria-hidden="true" />
             </Link>
           </div>
